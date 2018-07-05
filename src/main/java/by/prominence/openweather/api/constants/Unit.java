@@ -20,22 +20,12 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.provider;
+package by.prominence.openweather.api.constants;
 
-import by.prominence.openweather.api.exception.InvalidAuthTokenException;
-import by.prominence.openweather.api.model.Coordinates;
-import by.prominence.openweather.api.model.WeatherResponse;
+public class Unit {
 
-public interface WeatherProvider {
-
-    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException;
-    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException;
-    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException;
-    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException;
-    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException;
-
-    public WeatherProvider setLanguage(String language);
-    public WeatherProvider setUnit(String unit);
-    public WeatherProvider setAccuracy(String accuracy);
+    public static final String METRIC = "metric";
+    public static final String IMPERIAL = "imperial";
+    public static final String STANDARD = null;
 
 }

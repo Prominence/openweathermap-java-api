@@ -22,6 +22,7 @@
 
 package by.prominence.openweather.api.provider;
 
+import by.prominence.openweather.api.exception.InvalidAuthTokenException;
 import by.prominence.openweather.api.model.Coordinates;
 import by.prominence.openweather.api.model.WeatherResponse;
 import by.prominence.openweather.api.utils.JsonUtils;
@@ -39,33 +40,64 @@ public class DefaultWeatherProvider implements WeatherProvider {
 
     private final String authToken;
 
+    private String language;
+    private String unit;
+    private String accuracy;
+
     public DefaultWeatherProvider(String authToken) {
         this.authToken = authToken;
     }
 
-    public WeatherResponse getByCityId(String id) {
+    public WeatherProvider setLanguage(String language) {
+        this.language = language;
+        return this;
+    }
+
+    public WeatherProvider setUnit(String unit) {
+        this.unit = unit;
+        return this;
+    }
+
+    public WeatherProvider setAccuracy(String accuracy) {
+        this.accuracy = accuracy;
+        return this;
+    }
+
+    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException {
         return executeRequest("?id=" + id);
     }
 
-    public WeatherResponse getByCityName(String name) {
+    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException {
         return executeRequest("?q=" + name);
     }
 
-    public WeatherResponse getByCoordinates(double latitude, double longitude) {
+    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException {
         return executeRequest("?lat=" + latitude + "&lon=" + longitude);
     }
 
-    public WeatherResponse getByCoordinates(Coordinates coordinates) {
+    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException {
         return getByCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
     }
 
-    public WeatherResponse getByZIPCode(String zipCode, String countryCode) {
+    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException {
         return executeRequest("?zip=" + zipCode + "," + countryCode);
     }
 
-    private WeatherResponse executeRequest(String parameterString) {
+    private WeatherResponse executeRequest(String parameterString) throws InvalidAuthTokenException {
 
         String url = OPEN_WEATHER_API_URL + parameterString + "&appid=" + authToken;
+
+        if (language != null) {
+            url += "&lang=" + language;
+        }
+
+        if (unit != null) {
+            url += "&units=" + unit;
+        }
+
+        if (accuracy != null) {
+            url += "&type=" + accuracy;
+        }
 
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
@@ -81,6 +113,10 @@ public class DefaultWeatherProvider implements WeatherProvider {
         if (response != null) {
             try {
                 weatherResponse = (WeatherResponse)JsonUtils.parseJson(response.getEntity().getContent(), WeatherResponse.class);
+
+                if (weatherResponse.getResponseCode() == 401) {
+                    throw new InvalidAuthTokenException();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
