@@ -20,23 +20,15 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.provider;
+package by.prominence.openweather.api.exception;
 
-import by.prominence.openweather.api.exception.DataNotFoundException;
-import by.prominence.openweather.api.exception.InvalidAuthTokenException;
-import by.prominence.openweather.api.model.Coordinates;
-import by.prominence.openweather.api.model.WeatherResponse;
+public class DataNotFoundException extends Exception {
 
-public interface WeatherProvider {
+    public DataNotFoundException() {
+        super("Data for provided parameters wasn't found. Please, check your request.");
+    }
 
-    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException;
-
-    public WeatherProvider setLanguage(String language);
-    public WeatherProvider setUnit(String unit);
-    public WeatherProvider setAccuracy(String accuracy);
-
+    public DataNotFoundException(String message) {
+        super(message);
+    }
 }

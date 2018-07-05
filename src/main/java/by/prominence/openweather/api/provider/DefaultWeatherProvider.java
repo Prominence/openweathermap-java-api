@@ -22,6 +22,7 @@
 
 package by.prominence.openweather.api.provider;
 
+import by.prominence.openweather.api.exception.DataNotFoundException;
 import by.prominence.openweather.api.exception.InvalidAuthTokenException;
 import by.prominence.openweather.api.model.Coordinates;
 import by.prominence.openweather.api.model.WeatherResponse;
@@ -63,27 +64,27 @@ public class DefaultWeatherProvider implements WeatherProvider {
         return this;
     }
 
-    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException {
+    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?id=" + id);
     }
 
-    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException {
+    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?q=" + name);
     }
 
-    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException {
+    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?lat=" + latitude + "&lon=" + longitude);
     }
 
-    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException {
+    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException {
         return getByCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
     }
 
-    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException {
+    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?zip=" + zipCode + "," + countryCode);
     }
 
-    private WeatherResponse executeRequest(String parameterString) throws InvalidAuthTokenException {
+    private WeatherResponse executeRequest(String parameterString) throws InvalidAuthTokenException, DataNotFoundException {
 
         String url = OPEN_WEATHER_API_URL + parameterString + "&appid=" + authToken;
 
@@ -117,6 +118,11 @@ public class DefaultWeatherProvider implements WeatherProvider {
                 if (weatherResponse.getResponseCode() == 401) {
                     throw new InvalidAuthTokenException();
                 }
+
+                if (weatherResponse.getResponseCode() == 404) {
+                    throw new DataNotFoundException();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
