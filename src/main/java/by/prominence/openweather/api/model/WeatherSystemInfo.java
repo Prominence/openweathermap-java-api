@@ -24,7 +24,7 @@ package by.prominence.openweather.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class WeatherSystemInfo {
@@ -47,11 +47,11 @@ public class WeatherSystemInfo {
 
     @JSONField(name = "sunrise")
     // Sunrise time, unix, UTC
-    private LocalTime sunrise;
+    private long sunrise;
 
     @JSONField(name = "sunset")
     // Sunset time, unix, UTC
-    private LocalTime sunset;
+    private long sunset;
 
     public short getType() {
         return type;
@@ -85,19 +85,19 @@ public class WeatherSystemInfo {
         this.country = country;
     }
 
-    public LocalTime getSunrise() {
+    public long getSunrise() {
         return sunrise;
     }
 
-    public void setSunrise(LocalTime sunrise) {
+    public void setSunrise(long sunrise) {
         this.sunrise = sunrise;
     }
 
-    public LocalTime getSunset() {
+    public long getSunset() {
         return sunset;
     }
 
-    public void setSunset(LocalTime sunset) {
+    public void setSunset(long sunset) {
         this.sunset = sunset;
     }
 
@@ -108,8 +108,8 @@ public class WeatherSystemInfo {
                 ", id=" + id +
                 ", message=" + message +
                 ", country='" + country + '\'' +
-                ", sunrise=" + sunrise +
-                ", sunset=" + sunset +
+                ", sunrise=" + new Date(sunrise * 1000) +
+                ", sunset=" + new Date(sunset * 1000) +
                 '}';
     }
 

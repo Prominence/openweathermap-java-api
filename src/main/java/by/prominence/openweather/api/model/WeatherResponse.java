@@ -24,7 +24,7 @@ package by.prominence.openweather.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 public class WeatherResponse {
@@ -60,7 +60,7 @@ public class WeatherResponse {
     private Snow snow;
 
     @JSONField(name = "dt")
-    private LocalTime dataCalculationTime;
+    private long dataCalculationTime;
 
     @JSONField(name = "sys")
     private WeatherSystemInfo weatherSystemInfo;
@@ -148,11 +148,11 @@ public class WeatherResponse {
         this.snow = snow;
     }
 
-    public LocalTime getDataCalculationTime() {
+    public long getDataCalculationTime() {
         return dataCalculationTime;
     }
 
-    public void setDataCalculationTime(LocalTime dataCalculationTime) {
+    public void setDataCalculationTime(long dataCalculationTime) {
         this.dataCalculationTime = dataCalculationTime;
     }
 
@@ -185,7 +185,7 @@ public class WeatherResponse {
                 ",\n clouds=" + clouds +
                 ",\n rain=" + rain +
                 ",\n snow=" + snow +
-                ",\n dataCalculationTime=" + dataCalculationTime +
+                ",\n dataCalculationTime=" + new Date(dataCalculationTime * 1000) +
                 ",\n weatherSystemInfo=" + weatherSystemInfo +
                 ",\n responseCode=" + responseCode +
                 '}';
