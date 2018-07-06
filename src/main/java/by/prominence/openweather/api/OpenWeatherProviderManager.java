@@ -20,15 +20,25 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.exception;
+package by.prominence.openweather.api;
 
-public class InvalidAuthTokenException extends Exception {
+import by.prominence.openweather.api.provider.ForecastProvider;
+import by.prominence.openweather.api.provider.WeatherProvider;
+import by.prominence.openweather.api.provider.OpenWeatherProvider;
 
-    public InvalidAuthTokenException() {
-        super("Please, check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
+public class OpenWeatherProviderManager {
+
+    private String authToken;
+
+    public OpenWeatherProviderManager(String token) {
+        this.authToken = token;
     }
 
-    public InvalidAuthTokenException(String message) {
-        super(message);
+    public OpenWeatherProvider getWeather() {
+        return new WeatherProvider(authToken);
     }
+    public OpenWeatherProvider getForecast() {
+        return new ForecastProvider(authToken);
+    }
+
 }

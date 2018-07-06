@@ -20,15 +20,10 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.exception;
+package by.prominence.openweather.api.constants;
 
-public class InvalidAuthTokenException extends Exception {
+public class System {
 
-    public InvalidAuthTokenException() {
-        super("Please, check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
-    }
-
-    public InvalidAuthTokenException(String message) {
-        super(message);
-    }
+    public static final String OPEN_WEATHER_API_VERSION = "2.5";
+    public static final String OPEN_WEATHER_API_URL = "http://api.openweathermap.org/data/" + OPEN_WEATHER_API_VERSION + "/";
 }

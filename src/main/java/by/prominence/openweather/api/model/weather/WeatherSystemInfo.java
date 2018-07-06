@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.model;
+package by.prominence.openweather.api.model.weather;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

@@ -20,15 +20,17 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.exception;
+package by.prominence.openweather.api.provider;
 
-public class InvalidAuthTokenException extends Exception {
+import by.prominence.openweather.api.model.forecast.ForecastResponse;
 
-    public InvalidAuthTokenException() {
-        super("Please, check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
+public class ForecastProvider extends AbstractOpenWeatherProvider<ForecastResponse> {
+
+    public ForecastProvider(String authToken) {
+        super(authToken);
     }
 
-    public InvalidAuthTokenException(String message) {
-        super(message);
+    protected String getRequestType() {
+        return "forecast";
     }
 }

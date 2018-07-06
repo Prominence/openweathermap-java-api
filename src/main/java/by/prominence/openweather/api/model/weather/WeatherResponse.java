@@ -20,14 +20,15 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.model;
+package by.prominence.openweather.api.model.weather;
 
+import by.prominence.openweather.api.model.*;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
 import java.util.List;
 
-public class WeatherResponse {
+public class WeatherResponse implements OpenWeatherResponse {
 
     @JSONField(name = "id")
     private long cityId;

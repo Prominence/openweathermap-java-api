@@ -20,15 +20,9 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.exception;
+package by.prominence.openweather.api.model;
 
-public class InvalidAuthTokenException extends Exception {
+public interface OpenWeatherResponse {
 
-    public InvalidAuthTokenException() {
-        super("Please, check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
-    }
-
-    public InvalidAuthTokenException(String message) {
-        super(message);
-    }
+    short getResponseCode();
 }

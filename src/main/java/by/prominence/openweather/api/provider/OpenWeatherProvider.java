@@ -20,15 +20,23 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.exception;
+package by.prominence.openweather.api.provider;
 
-public class InvalidAuthTokenException extends Exception {
+import by.prominence.openweather.api.exception.DataNotFoundException;
+import by.prominence.openweather.api.exception.InvalidAuthTokenException;
+import by.prominence.openweather.api.model.Coordinates;
+import by.prominence.openweather.api.model.OpenWeatherResponse;
 
-    public InvalidAuthTokenException() {
-        super("Please, check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
-    }
+public interface OpenWeatherProvider {
 
-    public InvalidAuthTokenException(String message) {
-        super(message);
-    }
+    OpenWeatherResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException;
+    OpenWeatherResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException;
+    OpenWeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException;
+    OpenWeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException;
+    OpenWeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException;
+
+    OpenWeatherProvider setLanguage(String language);
+    OpenWeatherProvider setUnit(String unit);
+    OpenWeatherProvider setAccuracy(String accuracy);
+
 }

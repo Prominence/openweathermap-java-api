@@ -20,21 +20,40 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api;
+package by.prominence.openweather.api.model.forecast;
 
-import by.prominence.openweather.api.provider.DefaultWeatherProvider;
-import by.prominence.openweather.api.provider.WeatherProvider;
+import java.util.Objects;
 
-public class WeatherProviderManager {
+public class ForecastSystemInfo {
 
-    private String authToken;
+    private String pod;
 
-    public WeatherProviderManager(String token) {
-        this.authToken = token;
+    public String getPod() {
+        return pod;
     }
 
-    public WeatherProvider getProvider() {
-        return new DefaultWeatherProvider(authToken);
+    public void setPod(String pod) {
+        this.pod = pod;
     }
 
+    @Override
+    public String toString() {
+        return "ForecastSystemInfo{" +
+                "pod='" + pod + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ForecastSystemInfo that = (ForecastSystemInfo) o;
+        return Objects.equals(pod, that.pod);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(pod);
+    }
 }

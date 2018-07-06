@@ -22,21 +22,15 @@
 
 package by.prominence.openweather.api.provider;
 
-import by.prominence.openweather.api.exception.DataNotFoundException;
-import by.prominence.openweather.api.exception.InvalidAuthTokenException;
-import by.prominence.openweather.api.model.Coordinates;
-import by.prominence.openweather.api.model.WeatherResponse;
+import by.prominence.openweather.api.model.weather.WeatherResponse;
 
-public interface WeatherProvider {
+public class WeatherProvider extends AbstractOpenWeatherProvider<WeatherResponse> {
 
-    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException;
-    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException;
+    public WeatherProvider(String authToken) {
+        super(authToken);
+    }
 
-    public WeatherProvider setLanguage(String language);
-    public WeatherProvider setUnit(String unit);
-    public WeatherProvider setAccuracy(String accuracy);
-
+    protected String getRequestType() {
+        return "weather";
+    }
 }

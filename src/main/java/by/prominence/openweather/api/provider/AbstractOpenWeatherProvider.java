@@ -22,10 +22,11 @@
 
 package by.prominence.openweather.api.provider;
 
+import by.prominence.openweather.api.constants.System;
 import by.prominence.openweather.api.exception.DataNotFoundException;
 import by.prominence.openweather.api.exception.InvalidAuthTokenException;
 import by.prominence.openweather.api.model.Coordinates;
-import by.prominence.openweather.api.model.WeatherResponse;
+import by.prominence.openweather.api.model.OpenWeatherResponse;
 import by.prominence.openweather.api.utils.JsonUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -33,60 +34,60 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
 
-public class DefaultWeatherProvider implements WeatherProvider {
+public abstract class AbstractOpenWeatherProvider<T extends OpenWeatherResponse> implements OpenWeatherProvider {
 
-    private static final String OPEN_WEATHER_API_VERSION = "2.5";
-    private static final String OPEN_WEATHER_API_URL = "http://api.openweathermap.org/data/" + OPEN_WEATHER_API_VERSION + "/weather";
+    protected final String authToken;
 
-    private final String authToken;
+    protected String language;
+    protected String unit;
+    protected String accuracy;
+    private Class<T> type;
 
-    private String language;
-    private String unit;
-    private String accuracy;
-
-    public DefaultWeatherProvider(String authToken) {
+    public AbstractOpenWeatherProvider(String authToken) {
         this.authToken = authToken;
+        type = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public WeatherProvider setLanguage(String language) {
+    public OpenWeatherProvider setLanguage(String language) {
         this.language = language;
         return this;
     }
 
-    public WeatherProvider setUnit(String unit) {
+    public OpenWeatherProvider setUnit(String unit) {
         this.unit = unit;
         return this;
     }
 
-    public WeatherProvider setAccuracy(String accuracy) {
+    public OpenWeatherProvider setAccuracy(String accuracy) {
         this.accuracy = accuracy;
         return this;
     }
 
-    public WeatherResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?id=" + id);
     }
 
-    public WeatherResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?q=" + name);
     }
 
-    public WeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?lat=" + latitude + "&lon=" + longitude);
     }
 
-    public WeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException {
         return getByCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
     }
 
-    public WeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException {
         return executeRequest("?zip=" + zipCode + "," + countryCode);
     }
 
-    private WeatherResponse executeRequest(String parameterString) throws InvalidAuthTokenException, DataNotFoundException {
+    protected T executeRequest(String parameterString) throws InvalidAuthTokenException, DataNotFoundException {
 
-        String url = OPEN_WEATHER_API_URL + parameterString + "&appid=" + authToken;
+        String url = getRequestUrl() + parameterString + "&appid=" + authToken;
 
         if (language != null) {
             url += "&lang=" + language;
@@ -102,32 +103,40 @@ public class DefaultWeatherProvider implements WeatherProvider {
 
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
-        HttpResponse response = null;
+        HttpResponse httpResponse = null;
 
         try {
-            response = httpClient.execute(request);
+            httpResponse = httpClient.execute(request);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        WeatherResponse weatherResponse = null;
-        if (response != null) {
+        T openWeatherResponse = null;
+        if (httpResponse != null) {
             try {
-                weatherResponse = (WeatherResponse)JsonUtils.parseJson(response.getEntity().getContent(), WeatherResponse.class);
+                openWeatherResponse = type.cast(JsonUtils.parseJson(httpResponse.getEntity().getContent(), type));
 
-                if (weatherResponse.getResponseCode() == 401) {
+                if (openWeatherResponse.getResponseCode() == 401) {
                     throw new InvalidAuthTokenException();
                 }
 
-                if (weatherResponse.getResponseCode() == 404) {
+                if (openWeatherResponse.getResponseCode() == 404) {
                     throw new DataNotFoundException();
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (ClassCastException cce) {
+                cce.printStackTrace();
             }
         }
 
-        return weatherResponse;
+        return openWeatherResponse;
     }
+
+    private String getRequestUrl() {
+        return System.OPEN_WEATHER_API_URL + getRequestType();
+    }
+
+    protected abstract String getRequestType();
 }
