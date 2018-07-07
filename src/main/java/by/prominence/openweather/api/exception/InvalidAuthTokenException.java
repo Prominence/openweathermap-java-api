@@ -25,7 +25,7 @@ package by.prominence.openweather.api.exception;
 public class InvalidAuthTokenException extends Exception {
 
     public InvalidAuthTokenException() {
-        super("Please, check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
+        super("Check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/. Please, notice that some requests requires non-free subscription plan.");
     }
 
     public InvalidAuthTokenException(String message) {

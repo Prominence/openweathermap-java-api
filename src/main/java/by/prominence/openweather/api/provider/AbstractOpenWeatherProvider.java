@@ -29,9 +29,12 @@ import by.prominence.openweather.api.model.Coordinates;
 import by.prominence.openweather.api.model.OpenWeatherResponse;
 import by.prominence.openweather.api.utils.JsonUtils;
 
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 public abstract class AbstractOpenWeatherProvider<T extends OpenWeatherResponse> implements OpenWeatherProvider {
 
@@ -82,52 +85,70 @@ public abstract class AbstractOpenWeatherProvider<T extends OpenWeatherResponse>
         return executeRequest("?zip=" + zipCode + "," + countryCode);
     }
 
-    protected T executeRequest(String parameterString) throws InvalidAuthTokenException, DataNotFoundException {
-
-        String url = getRequestUrl() + parameterString + "&appid=" + authToken;
-
-        if (language != null) {
-            url += "&lang=" + language;
-        }
-
-        if (unit != null) {
-            url += "&units=" + unit;
-        }
-
-        if (accuracy != null) {
-            url += "&type=" + accuracy;
-        }
+    protected T executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
 
         T openWeatherResponse = null;
 
         try {
-            URL requestUrl = new URL(url);
+            URL requestUrl = buildURL(requestSpecificParameters);
 
             HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
             connection.setRequestMethod("GET");
 
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                openWeatherResponse = type.cast(JsonUtils.parseJson(connection.getInputStream(), type));
-
-                if (openWeatherResponse.getResponseCode() == 401) {
+            switch (connection.getResponseCode()) {
+                case HttpURLConnection.HTTP_OK:
+                    openWeatherResponse = type.cast(JsonUtils.parseJson(connection.getInputStream(), type));
+                    break;
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
                     throw new InvalidAuthTokenException();
-                }
-
-                if (openWeatherResponse.getResponseCode() == 404) {
+                case HttpURLConnection.HTTP_NOT_FOUND:
                     throw new DataNotFoundException();
-                }
-            } else {
-                throw new DataNotFoundException();
             }
-        } catch (Exception ex) {
+        } catch (IOException | ClassCastException ex) {
             ex.printStackTrace();
         }
 
         return openWeatherResponse;
     }
 
-    private String getRequestUrl() {
+    protected String getRequestUrl() {
         return System.OPEN_WEATHER_API_URL + getRequestType();
+    }
+
+    protected Map<String, String> getAdditionalParameters() {
+        return null;
+    }
+
+    private URL buildURL(String requestSpecificParameters) throws MalformedURLException {
+
+        StringBuilder urlBuilder = new StringBuilder(getRequestUrl() + requestSpecificParameters + "&appid=" + authToken);
+
+        if (language != null) {
+            urlBuilder.append("&lang=");
+            urlBuilder.append(language);
+        }
+
+        if (unit != null) {
+            urlBuilder.append("&units=");
+            urlBuilder.append(unit);
+        }
+
+        if (accuracy != null) {
+            urlBuilder.append("&type=");
+            urlBuilder.append(accuracy);
+        }
+
+        Map<String, String> additionalParameters = getAdditionalParameters();
+        if (additionalParameters != null) {
+            additionalParameters.forEach((key, value) -> {
+                urlBuilder.append("&");
+                urlBuilder.append(key);
+                urlBuilder.append("=");
+                urlBuilder.append(value);
+            });
+        }
+
+        return new URL(urlBuilder.toString());
     }
 
     protected abstract String getRequestType();

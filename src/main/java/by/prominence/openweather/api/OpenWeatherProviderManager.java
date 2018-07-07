@@ -24,7 +24,6 @@ package by.prominence.openweather.api;
 
 import by.prominence.openweather.api.provider.ForecastProvider;
 import by.prominence.openweather.api.provider.WeatherProvider;
-import by.prominence.openweather.api.provider.OpenWeatherProvider;
 
 public class OpenWeatherProviderManager {
 
@@ -34,11 +33,16 @@ public class OpenWeatherProviderManager {
         this.authToken = token;
     }
 
-    public OpenWeatherProvider getWeather() {
+    public WeatherProvider getWeather() {
         return new WeatherProvider(authToken);
     }
-    public OpenWeatherProvider getForecast() {
+
+    public ForecastProvider getForecast() {
         return new ForecastProvider(authToken);
+    }
+
+    public ForecastProvider getForecast(int amountOfDays) {
+        return new ForecastProvider(authToken, amountOfDays);
     }
 
 }

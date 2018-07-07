@@ -24,13 +24,37 @@ package by.prominence.openweather.api.provider;
 
 import by.prominence.openweather.api.model.forecast.ForecastResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ForecastProvider extends AbstractOpenWeatherProvider<ForecastResponse> {
+
+    private int amountOfDays = -1;
 
     public ForecastProvider(String authToken) {
         super(authToken);
     }
 
+    public ForecastProvider(String authToken, int amountOfDays) {
+        super(authToken);
+        this.amountOfDays = amountOfDays;
+    }
+
     protected String getRequestType() {
+        if (amountOfDays != -1) {
+            return "forecast/daily";
+        }
         return "forecast";
+    }
+
+    @Override
+    protected Map<String, String> getAdditionalParameters() {
+        Map<String, String> additionalParameters = null;
+        if (amountOfDays != -1) {
+            additionalParameters = new HashMap<>();
+            additionalParameters.put("cnt", String.valueOf(amountOfDays));
+        }
+
+        return additionalParameters;
     }
 }
