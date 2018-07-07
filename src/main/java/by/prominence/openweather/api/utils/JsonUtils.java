@@ -35,7 +35,7 @@ public class JsonUtils {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         StringBuffer result = new StringBuffer();
-        String line = "";
+        String line;
         while ((line = reader.readLine()) != null) {
             result.append(line);
         }
