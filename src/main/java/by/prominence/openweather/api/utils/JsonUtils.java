@@ -40,6 +40,8 @@ public class JsonUtils {
             result.append(line);
         }
 
+        reader.close();
+
         return JSON.parseObject(result.toString(), clazz);
     }
 }

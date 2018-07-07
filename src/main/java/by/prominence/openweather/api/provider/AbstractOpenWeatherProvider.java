@@ -28,13 +28,10 @@ import by.prominence.openweather.api.exception.InvalidAuthTokenException;
 import by.prominence.openweather.api.model.Coordinates;
 import by.prominence.openweather.api.model.OpenWeatherResponse;
 import by.prominence.openweather.api.utils.JsonUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public abstract class AbstractOpenWeatherProvider<T extends OpenWeatherResponse> implements OpenWeatherProvider {
 
@@ -101,20 +98,16 @@ public abstract class AbstractOpenWeatherProvider<T extends OpenWeatherResponse>
             url += "&type=" + accuracy;
         }
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet request = new HttpGet(url);
-        HttpResponse httpResponse = null;
+        T openWeatherResponse = null;
 
         try {
-            httpResponse = httpClient.execute(request);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            URL requestUrl = new URL(url);
 
-        T openWeatherResponse = null;
-        if (httpResponse != null) {
-            try {
-                openWeatherResponse = type.cast(JsonUtils.parseJson(httpResponse.getEntity().getContent(), type));
+            HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
+            connection.setRequestMethod("GET");
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                openWeatherResponse = type.cast(JsonUtils.parseJson(connection.getInputStream(), type));
 
                 if (openWeatherResponse.getResponseCode() == 401) {
                     throw new InvalidAuthTokenException();
@@ -123,12 +116,11 @@ public abstract class AbstractOpenWeatherProvider<T extends OpenWeatherResponse>
                 if (openWeatherResponse.getResponseCode() == 404) {
                     throw new DataNotFoundException();
                 }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassCastException cce) {
-                cce.printStackTrace();
+            } else {
+                throw new DataNotFoundException();
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         return openWeatherResponse;
