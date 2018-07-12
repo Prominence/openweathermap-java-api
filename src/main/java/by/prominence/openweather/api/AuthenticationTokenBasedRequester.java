@@ -20,41 +20,14 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.provider;
+package by.prominence.openweather.api;
 
-import by.prominence.openweather.api.model.forecast.ForecastResponse;
+abstract class AuthenticationTokenBasedRequester {
 
-import java.util.HashMap;
-import java.util.Map;
+    protected String authToken;
 
-public class ForecastProvider extends AbstractOpenWeatherProvider<ForecastResponse> {
-
-    private int amountOfDays = -1;
-
-    public ForecastProvider(String authToken) {
-        super(authToken);
+    protected AuthenticationTokenBasedRequester(String authToken) {
+        this.authToken = authToken;
     }
 
-    public ForecastProvider(String authToken, int amountOfDays) {
-        super(authToken);
-        this.amountOfDays = amountOfDays;
-    }
-
-    protected String getRequestType() {
-        if (amountOfDays != -1) {
-            return "forecast/daily";
-        }
-        return "forecast";
-    }
-
-    @Override
-    protected Map<String, String> getAdditionalParameters() {
-        Map<String, String> additionalParameters = null;
-        if (amountOfDays != -1) {
-            additionalParameters = new HashMap<>();
-            additionalParameters.put("cnt", String.valueOf(amountOfDays));
-        }
-
-        return additionalParameters;
-    }
 }

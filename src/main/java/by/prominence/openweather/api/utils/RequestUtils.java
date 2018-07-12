@@ -20,23 +20,39 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweather.api.provider;
+package by.prominence.openweather.api.utils;
 
 import by.prominence.openweather.api.exception.DataNotFoundException;
 import by.prominence.openweather.api.exception.InvalidAuthTokenException;
-import by.prominence.openweather.api.model.Coordinates;
-import by.prominence.openweather.api.model.OpenWeatherResponse;
 
-public interface OpenWeatherProvider {
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-    OpenWeatherResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException;
-    OpenWeatherResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException;
-    OpenWeatherResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException;
-    OpenWeatherResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException;
-    OpenWeatherResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException;
+public class RequestUtils {
 
-    OpenWeatherProvider setLanguage(String language);
-    OpenWeatherProvider setUnit(String unit);
-    OpenWeatherProvider setAccuracy(String accuracy);
+    public static InputStream executeGetRequest(URL requestUrl) throws InvalidAuthTokenException, DataNotFoundException {
+        InputStream resultStream = null;
+
+        try {
+            HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
+            connection.setRequestMethod("GET");
+
+            switch (connection.getResponseCode()) {
+                case HttpURLConnection.HTTP_OK:
+                    resultStream = connection.getInputStream();
+                    break;
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    throw new InvalidAuthTokenException();
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    throw new DataNotFoundException();
+            }
+        } catch (IOException | ClassCastException ex) {
+            ex.printStackTrace();
+        }
+
+        return resultStream;
+    }
 
 }

@@ -22,27 +22,19 @@
 
 package by.prominence.openweather.api;
 
-import by.prominence.openweather.api.provider.ForecastProvider;
-import by.prominence.openweather.api.provider.WeatherProvider;
-
-public class OpenWeatherProviderManager {
+public class OpenWeatherMapManager {
 
     private String authToken;
 
-    public OpenWeatherProviderManager(String token) {
+    public OpenWeatherMapManager(String token) {
         this.authToken = token;
     }
 
-    public WeatherProvider getWeather() {
-        return new WeatherProvider(authToken);
+    public WeatherRequester getWeatherRequester() {
+        return new WeatherRequester(authToken);
     }
 
-    public ForecastProvider getForecast() {
-        return new ForecastProvider(authToken);
+    public ForecastRequester getForecastRequester() {
+        return new ForecastRequester(authToken);
     }
-
-    public ForecastProvider getForecast(int amountOfDays) {
-        return new ForecastProvider(authToken, amountOfDays);
-    }
-
 }
