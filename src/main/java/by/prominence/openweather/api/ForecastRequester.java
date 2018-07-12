@@ -24,7 +24,6 @@ package by.prominence.openweather.api;
 
 import by.prominence.openweather.api.exception.DataNotFoundException;
 import by.prominence.openweather.api.exception.InvalidAuthTokenException;
-import by.prominence.openweather.api.model.Coordinates;
 import by.prominence.openweather.api.model.forecast.ForecastResponse;
 import by.prominence.openweather.api.utils.JsonUtils;
 import by.prominence.openweather.api.utils.RequestUtils;
@@ -34,7 +33,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ForecastRequester extends BasicRequester {
+public class ForecastRequester extends BasicRequester<ForecastResponse> {
 
     private int amountOfDays = -1;
 
@@ -62,26 +61,6 @@ public class ForecastRequester extends BasicRequester {
         return this;
     }
 
-    public ForecastResponse getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException {
-        return executeRequest("?id=" + id);
-    }
-
-    public ForecastResponse getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException {
-        return executeRequest("?q=" + name);
-    }
-
-    public ForecastResponse getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException {
-        return executeRequest("?lat=" + latitude + "&lon=" + longitude);
-    }
-
-    public ForecastResponse getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException {
-        return getByCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
-    }
-
-    public ForecastResponse getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException {
-        return executeRequest("?zip=" + zipCode + "," + countryCode);
-    }
-
     @Override
     protected Map<String, String> getAdditionalParameters() {
         Map<String, String> additionalParameters = null;
@@ -100,7 +79,7 @@ public class ForecastRequester extends BasicRequester {
         return "forecast";
     }
 
-    private ForecastResponse executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
+    protected ForecastResponse executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
 
         try {
             InputStream requestResult = RequestUtils.executeGetRequest(buildURL(requestSpecificParameters));

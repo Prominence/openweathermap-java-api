@@ -23,12 +23,15 @@
 package by.prominence.openweather.api;
 
 import by.prominence.openweather.api.constants.System;
+import by.prominence.openweather.api.exception.DataNotFoundException;
+import by.prominence.openweather.api.exception.InvalidAuthTokenException;
+import by.prominence.openweather.api.model.Coordinates;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-abstract class BasicRequester extends AuthenticationTokenBasedRequester {
+abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
 
     protected String language;
     protected String unit;
@@ -36,6 +39,26 @@ abstract class BasicRequester extends AuthenticationTokenBasedRequester {
 
     protected BasicRequester(String authToken) {
         super(authToken);
+    }
+
+    public T getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException {
+        return executeRequest("?id=" + id);
+    }
+
+    public T getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException {
+        return executeRequest("?q=" + name);
+    }
+
+    public T getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException {
+        return executeRequest("?lat=" + latitude + "&lon=" + longitude);
+    }
+
+    public T getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException {
+        return getByCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
+    }
+
+    public T getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException {
+        return executeRequest("?zip=" + zipCode + "," + countryCode);
     }
 
     protected URL buildURL(String requestSpecificParameters) throws MalformedURLException {
@@ -81,5 +104,6 @@ abstract class BasicRequester extends AuthenticationTokenBasedRequester {
     }
 
     protected abstract String getRequestType();
+    protected abstract T executeRequest(String requestSpecificParamsString) throws InvalidAuthTokenException, DataNotFoundException;
 
 }
