@@ -25,7 +25,7 @@ package by.prominence.openweathermap.api;
 import by.prominence.openweathermap.api.constants.Unit;
 import by.prominence.openweathermap.api.exception.DataNotFoundException;
 import by.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import by.prominence.openweathermap.api.model.forecast.ForecastResponse;
+import by.prominence.openweathermap.api.model.response.ForecastResponse;
 import by.prominence.openweathermap.api.utils.JsonUtils;
 import by.prominence.openweathermap.api.utils.RequestUtils;
 
