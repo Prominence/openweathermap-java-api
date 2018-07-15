@@ -24,5 +24,9 @@ package by.prominence.openweathermap.api.model;
 
 public interface OpenWeatherResponse {
 
+    String getCityName();
+    long getCityId();
+    String getCountry();
+    Coordinates getCoordinates();
     short getResponseCode();
 }

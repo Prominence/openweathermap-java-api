@@ -40,25 +40,19 @@ public class WeatherResponse implements OpenWeatherResponse {
     @JSONField(name = "coord")
     private Coordinates coordinates;
 
-    @JSONField(name = "weather")
     private List<Weather> weather;
 
-    @JSONField(name = "base")
     private String base;
 
     @JSONField(name = "main")
     private WeatherInfo weatherInfo;
 
-    @JSONField(name = "wind")
     private Wind wind;
 
-    @JSONField(name = "clouds")
     private Clouds clouds;
 
-    @JSONField(name = "rain")
     private Rain rain;
 
-    @JSONField(name = "snow")
     private Snow snow;
 
     @JSONField(name = "dt")
@@ -174,6 +168,41 @@ public class WeatherResponse implements OpenWeatherResponse {
         this.responseCode = responseCode;
     }
 
+    public String getCountry() {
+        return weatherSystemInfo.country;
+    }
+
+    public String getWeatherDescription() {
+        if (weather != null && weather.size() > 0) {
+            return weather.get(0).getDescription();
+        }
+        return null;
+    }
+
+    public Date getDataCalculationDate() {
+        return new Date(dataCalculationTime * 1000);
+    }
+
+    public float getTemperature() {
+        return weatherInfo.temperature;
+    }
+
+    public char getTemperatureUnit() {
+        return weatherInfo.temperatureUnit;
+    }
+
+    public short getPressure() {
+        return weatherInfo.pressure;
+    }
+
+    public String getPressureUnit() {
+        return weatherInfo.getPressureUnit();
+    }
+
+    public byte getHumidityPercentage() {
+        return weatherInfo.humidity;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -208,7 +237,7 @@ public class WeatherResponse implements OpenWeatherResponse {
             stringBuilder.append('\n');
         }
         stringBuilder.append("Data calculation time: ");
-        stringBuilder.append(new Date(dataCalculationTime * 1000));
+        stringBuilder.append(getDataCalculationDate());
 
         return stringBuilder.toString();
     }

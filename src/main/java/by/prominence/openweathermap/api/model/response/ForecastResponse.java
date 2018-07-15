@@ -25,6 +25,7 @@ package by.prominence.openweathermap.api.model.response;
 import by.prominence.openweathermap.api.model.*;
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -83,6 +84,62 @@ public class ForecastResponse implements OpenWeatherResponse {
 
     public void setCityInfo(CityInfo cityInfo) {
         this.cityInfo = cityInfo;
+    }
+
+    public String getCityName() {
+        return cityInfo.name;
+    }
+
+    public long getCityId() {
+        return cityInfo.id;
+    }
+
+    public String getCountry() {
+        return cityInfo.country;
+    }
+
+    public Coordinates getCoordinates() {
+        return cityInfo.coordinates;
+    }
+
+    public float getAverageTemperature() {
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.temperature).average().orElse(0f);
+    }
+
+    public float getMinimumTemperature() {
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.temperature).min().orElse(0f);
+    }
+
+    public float getMaximumTemperature() {
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.temperature).max().orElse(0f);
+    }
+
+    public ForecastInfo getByMinimumTemperature() {
+        return forecasts.stream().min(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.minimumTemperature)).orElse(null);
+    }
+
+    public ForecastInfo getByMaximumTemperature() {
+        return forecasts.stream().max(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.maximumTemperature)).orElse(null);
+    }
+
+    public float getAveragePressure() {
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.pressure).average().orElse(0f);
+    }
+
+    public float getMinimumPressure() {
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.pressure).min().orElse(0f);
+    }
+
+    public float getMaximumPressure() {
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.pressure).max().orElse(0f);
+    }
+
+    public ForecastInfo getByMinimumPressure() {
+        return forecasts.stream().min(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.pressure)).orElse(null);
+    }
+
+    public ForecastInfo getByMaximumPressure() {
+        return forecasts.stream().max(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.pressure)).orElse(null);
     }
 
     @Override
@@ -288,7 +345,7 @@ public class ForecastResponse implements OpenWeatherResponse {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("Time: ");
             stringBuilder.append(new Date(dataCalculationTime * 1000));
-            stringBuilder.append(" — ");
+            stringBuilder.append(". ");
             if (weathers.size() == 1) {
                 stringBuilder.append(weathers.get(0));
             } else {
