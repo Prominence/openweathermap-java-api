@@ -34,7 +34,7 @@ WeatherRequester weatherRequester = openWeatherManager.getWeatherRequester();
 ```
 after you are able to set preferable options(via chain methods) and execute appropriate request:
 ```
-WeatherResponse weatherResponse = weatherRequester
+Weather weatherResponse = weatherRequester
     .setLanguage(Language.ENGLISH)
     .setUnitSystem(Unit.METRIC_SYSTEM)
     .setAccuracy(Accuracy.ACCURATE)
@@ -99,7 +99,7 @@ ForecastRequester forecastRequester = openWeatherManager.getForecastRequester();
 ```
 after you are able to set preferable options(via chain methods) and execute appropriate request:
 ```
-ForecastResponse forecastResponse = forecastRequester
+HourlyForecast forecastResponse = forecastRequester
     .setLanguage(Language.ENGLISH)
     .setUnitSystem(Unit.METRIC_SYSTEM)
     .setAccuracy(Accuracy.ACCURATE)
