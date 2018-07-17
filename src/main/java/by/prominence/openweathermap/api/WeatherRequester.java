@@ -25,14 +25,14 @@ package by.prominence.openweathermap.api;
 import by.prominence.openweathermap.api.constants.Unit;
 import by.prominence.openweathermap.api.exception.DataNotFoundException;
 import by.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import by.prominence.openweathermap.api.model.response.WeatherResponse;
+import by.prominence.openweathermap.api.model.response.Weather;
 import by.prominence.openweathermap.api.utils.JsonUtils;
 import by.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public class WeatherRequester extends BasicRequester<WeatherResponse> {
+public class WeatherRequester extends BasicRequester<Weather> {
 
     WeatherRequester(String authToken) {
         super(authToken);
@@ -57,21 +57,21 @@ public class WeatherRequester extends BasicRequester<WeatherResponse> {
         return "weather";
     }
 
-    protected WeatherResponse executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
+    protected Weather executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
 
-        WeatherResponse weatherResponse = null;
+        Weather weather = null;
 
         try {
             InputStream requestResult = RequestUtils.executeGetRequest(buildURL(requestSpecificParameters));
-            weatherResponse = (WeatherResponse)JsonUtils.parseJson(requestResult, WeatherResponse.class);
+            weather = (Weather)JsonUtils.parseJson(requestResult, Weather.class);
 
-            weatherResponse.getWind().setUnit(Unit.getWindUnit(unitSystem));
-            weatherResponse.getWeatherInfo().setTemperatureUnit(Unit.getTemperatureUnit(unitSystem));
+            weather.getWind().setUnit(Unit.getWindUnit(unitSystem));
+            weather.getWeatherInfo().setTemperatureUnit(Unit.getTemperatureUnit(unitSystem));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        return weatherResponse;
+        return weather;
     }
 
 }

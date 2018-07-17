@@ -28,7 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-public class Weather {
+public class WeatherState {
 
     @JSONField(name = "id")
     // Weather condition id
@@ -97,11 +97,11 @@ public class Weather {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Weather weather = (Weather) o;
-        return conditionId == weather.conditionId &&
-                Objects.equals(weatherGroup, weather.weatherGroup) &&
-                Objects.equals(description, weather.description) &&
-                Objects.equals(iconId, weather.iconId);
+        WeatherState weatherState = (WeatherState) o;
+        return conditionId == weatherState.conditionId &&
+                Objects.equals(weatherGroup, weatherState.weatherGroup) &&
+                Objects.equals(description, weatherState.description) &&
+                Objects.equals(iconId, weatherState.iconId);
     }
 
     @Override

@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class WeatherResponse implements OpenWeatherResponse {
+public class Weather implements OpenWeatherResponse {
 
     @JSONField(name = "id")
     private long cityId;
@@ -40,7 +40,8 @@ public class WeatherResponse implements OpenWeatherResponse {
     @JSONField(name = "coord")
     private Coordinates coordinates;
 
-    private List<Weather> weather;
+    @JSONField(name = "weather")
+    private List<WeatherState> weatherStates;
 
     private String base;
 
@@ -88,12 +89,12 @@ public class WeatherResponse implements OpenWeatherResponse {
         this.coordinates = coordinates;
     }
 
-    public List<Weather> getWeather() {
-        return weather;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
-    public void setWeather(List<Weather> weather) {
-        this.weather = weather;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     public String getBase() {
@@ -173,8 +174,8 @@ public class WeatherResponse implements OpenWeatherResponse {
     }
 
     public String getWeatherDescription() {
-        if (weather != null && weather.size() > 0) {
-            return weather.get(0).getDescription();
+        if (weatherStates != null && weatherStates.size() > 0) {
+            return weatherStates.get(0).getDescription();
         }
         return null;
     }
@@ -216,10 +217,10 @@ public class WeatherResponse implements OpenWeatherResponse {
         stringBuilder.append('\n');
         stringBuilder.append(weatherSystemInfo);
         stringBuilder.append('\n');
-        if (weather.size() == 1) {
-            stringBuilder.append(weather.get(0));
+        if (weatherStates.size() == 1) {
+            stringBuilder.append(weatherStates.get(0));
         } else {
-            stringBuilder.append(weather);
+            stringBuilder.append(weatherStates);
         }
         stringBuilder.append('\n');
         stringBuilder.append(weatherInfo);

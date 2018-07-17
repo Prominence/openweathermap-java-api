@@ -49,25 +49,25 @@ Available requests:
 * `getByCoordinates(Coordinates coordinates)`
 * `getByZIPCode(String zipCode, String countryCode)`
 
-`WeatherResponse`'s useful public methods(setters are not listed):
+`Weather`'s useful public methods(setters are not listed):
 
 | Method                    | Description                                                                                                                                                     |
 |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `getCityId()`             | Returns city ID. Example: `625144` for Minsk.                                                                                                                   |   
 | `getCityName()`           | Returns city name. Example: `Minsk`.                                                                                                                            |
 | `getCoordinates()`        | Returns `Coordinates` instance that contains *latitude* and *longitude* information.                                                                            |
-| `getWeather()`            | Returns list of `Weather` instances with the only `getDescription` useful method.                                                                               |
+| `getWeatherStates()`      | Returns list of `WeatherState` instances with the only `getDescription` useful method.                                                                               |
 | `getBase()`               | Returns `String` with some internal information. Example: `cmc stations` - from official documentation.                                                         |
-| `getWeatherInfo()`        | Returns `WeatherResponse.WeatherInfo` instance that contains information about temperature, pressure and humidity.                                              |
+| `getWeatherInfo()`        | Returns `Weather.WeatherInfo` instance that contains information about temperature, pressure and humidity.                                              |
 | `getWind()`               | Returns `Wind` instance that contains information about speed and degree.                                                                                       |
 | `getClouds()`             | Returns `Clouds` instance that contains *cloudiness* percentage information.                                                                                    |
 | `getRain()`               | Returns `Rain` instance that contains information about rain volume for the last 3 hours.                                                                       |
 | `getSnow()`               | Returns `Snow` instance that contains information about snow volume for the last 3 hours.                                                                       |
 | `getDataCalculationTime()`| Returns `long` value that represents data calculation timestamp.                                                                                                |
-| `getWeatherSystemInfo()`  | Returns `WeatherResponse.WeatherSystemInfo` instance that contains internal information. There is also an information about country, sunrise and sunset times.  |
+| `getWeatherSystemInfo()`  | Returns `Weather.WeatherSystemInfo` instance that contains internal information. There is also an information about country, sunrise and sunset times.  |
 | `getResponseCode()`       | Returns OpenWeatherMap response code. Internal information.                                                                                                     |
 | `getCountry()`            | An alias for `getWeatherSystemInfo().getCountry()`.                                                                                                             |
-| `getWeatherDescription()` | An alias for `getWeather.get(0).getDescription()`.                                                                                                              |
+| `getWeatherDescription()` | An alias for `getWeatherStates.get(0).getDescription()`.                                                                                                              |
 | `getDataCalculationDate()`| Returns data calculation time in `Date` representation.                                                                                                         |
 | `getTemperature()`        | An alias for `getWeatherInfo().getTemperature()`.                                                                                                               |
 | `getTemperatureUnit()`    | An alias for `getWeatherInfo().getTemperatureUnit()`.                                                                                                           |
@@ -114,27 +114,27 @@ Available requests:
 * `getByCoordinates(Coordinates coordinates)`
 * `getByZIPCode(String zipCode, String countryCode)`
 
-`ForecastResponse`'s useful public methods(setters are not listed):
+`HourlyForecast`'s useful public methods(setters are not listed):
 
 | Method                      | Description                                                                                |
 |-----------------------------|--------------------------------------------------------------------------------------------|
 | `getCityId()`               | Returns city ID. Example: `625144` for Minsk.                                              |
 | `getCityName()`             | Returns city name. Example: `Minsk`.                                                       |
 | `getCoordinates()`          | Returns `Coordinates` instance that contains *latitude* and *longitude* information.       |
-| `getCityInfo()`             | Returns `ForecastResponse.CityInfo` instance that contains information about city.         |
+| `getCityInfo()`             | Returns `HourlyForecast.CityInfo` instance that contains information about city.         |
 | `getResponseCode()`         | Returns OpenWeatherMap response code. Internal information.                                |
 | `getCountry()`              | An alias for `getCityInfo().getCountry()`.                                                 |
-| `getForecasts()`            | Returns `List<ForecastResponse.ForecastInfo>` collection with all forecast information.    |
+| `getForecasts()`            | Returns `List<HourlyForecast.ForecastInfo>` collection with all forecast information.    |
 | `getAverageTemperature()`   | Returns average temperature from forecasts.                                                |
 | `getMinimumTemperature()`   | Returns minimum temperature from forecasts.                                                |
 | `getMaximumTemperature()`   | Returns maximum temperature from forecasts.                                                |
-| `getByMinimumTemperature()` | Returns `ForecastResponse.ForecastInfo` for the time where temperature is minimal.         |
-| `getByMaximumTemperature()` | Returns `ForecastResponse.ForecastInfo` for the time where temperature is maximal.         |
+| `getByMinimumTemperature()` | Returns `HourlyForecast.ForecastInfo` for the time where temperature is minimal.         |
+| `getByMaximumTemperature()` | Returns `HourlyForecast.ForecastInfo` for the time where temperature is maximal.         |
 | `getAveragePressure()`      | Returns average pressure from forecasts.                                                   |
 | `getMinimumPressure()`      | Returns minimum pressure from forecasts.                                                   |
 | `getMaximumPressure()`      | Returns maximum pressure from forecasts.                                                   |
-| `getByMinimumPressure()`    | Returns `ForecastResponse.ForecastInfo` for the time where pressure is minimal.            |
-| `getByMaximumPressure()`    | Returns `ForecastResponse.ForecastInfo` for the time where pressure is maximal.            |
+| `getByMinimumPressure()`    | Returns `HourlyForecast.ForecastInfo` for the time where pressure is minimal.            |
+| `getByMaximumPressure()`    | Returns `HourlyForecast.ForecastInfo` for the time where pressure is maximal.            |
 | `toString()`                | Returns pretty string for the whole available forecast information.                        |
 
 `toString()` output example:
@@ -189,13 +189,14 @@ Forecasts:
 | Method                      | Description                                                                                                      |
 |-----------------------------|------------------------------------------------------------------------------------------------------------------|
 | `getDataCalculationTime()`  | Returns `long` value that represents data calculation timestamp.                                                 |
-| `getMainInfo()`             | Returns `ForecastResponse.MainInfo` instance that contains information about temperature, pressure and humidity. |
-| `getWeathers()`             | Returns list of `Weather` instances with the only `getDescription` useful method.                                |
+| `getDataCalculationDate()`  | Returns data calculation time in `Date` representation.                                                          |
+| `getMainInfo()`             | Returns `HourlyForecast.MainInfo` instance that contains information about temperature, pressure and humidity. |
+| `getWeatherStates()`        | Returns list of `WeatherState` instances with the only `getDescription` useful method.                                |
 | `getClouds()`               | Returns `Clouds` instance that contains *cloudiness* percentage information.                                     |
 | `getWind()`                 | Returns `Wind` instance that contains information about speed and degree.                                        |
 | `getSnow()`                 | Returns `Snow` instance that contains information about snow volume for the last 3 hours.                        |
 | `getRain()`                 | Returns `Rain` instance that contains information about rain volume for the last 3 hours.                        |
-| `getSystemInfo()`           | Returns `ForecastResponse.ForecastSystemInfo` instance with internal information.                                |
+| `getSystemInfo()`           | Returns `HourlyForecast.ForecastSystemInfo` instance with internal information.                                |
 | `getDt_txt()`               | Returns `String` value that represents data calculation time.                                                    |
 | `toString()`                | Returns pretty string for the whole available weather information.                                               |
 

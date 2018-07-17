@@ -25,26 +25,17 @@ package by.prominence.openweathermap.api;
 import by.prominence.openweathermap.api.constants.Unit;
 import by.prominence.openweathermap.api.exception.DataNotFoundException;
 import by.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import by.prominence.openweathermap.api.model.response.ForecastResponse;
+import by.prominence.openweathermap.api.model.response.HourlyForecast;
 import by.prominence.openweathermap.api.utils.JsonUtils;
 import by.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
-public class ForecastRequester extends BasicRequester<ForecastResponse> {
-
-    private int amountOfDays = -1;
+public class ForecastRequester extends BasicRequester<HourlyForecast> {
 
     ForecastRequester(String authToken) {
         super(authToken);
-    }
-
-    public ForecastRequester setAmountOfDays(int amountOfDays) {
-        this.amountOfDays = amountOfDays;
-        return this;
     }
 
     public ForecastRequester setLanguage(String language) {
@@ -62,31 +53,17 @@ public class ForecastRequester extends BasicRequester<ForecastResponse> {
         return this;
     }
 
-    @Override
-    protected Map<String, String> getAdditionalParameters() {
-        Map<String, String> additionalParameters = null;
-        if (amountOfDays != -1) {
-            additionalParameters = new HashMap<>();
-            additionalParameters.put("cnt", String.valueOf(amountOfDays));
-        }
-
-        return additionalParameters;
-    }
-
     protected String getRequestType() {
-        if (amountOfDays != -1) {
-            return "forecast/daily";
-        }
         return "forecast";
     }
 
-    protected ForecastResponse executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
+    protected HourlyForecast executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
 
-        ForecastResponse forecastResponse = null;
+        HourlyForecast forecastResponse = null;
 
         try {
             InputStream requestResult = RequestUtils.executeGetRequest(buildURL(requestSpecificParameters));
-            forecastResponse = (ForecastResponse)JsonUtils.parseJson(requestResult, ForecastResponse.class);
+            forecastResponse = (HourlyForecast)JsonUtils.parseJson(requestResult, HourlyForecast.class);
 
             char temperatureUnit = Unit.getTemperatureUnit(unitSystem);
             String windUnit = Unit.getWindUnit(unitSystem);

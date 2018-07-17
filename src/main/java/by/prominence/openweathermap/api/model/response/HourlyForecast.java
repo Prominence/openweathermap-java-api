@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ForecastResponse implements OpenWeatherResponse {
+public class HourlyForecast implements OpenWeatherResponse {
 
     @JSONField(name = "cod")
     private short responseCode;
@@ -158,7 +158,7 @@ public class ForecastResponse implements OpenWeatherResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ForecastResponse that = (ForecastResponse) o;
+        HourlyForecast that = (HourlyForecast) o;
         return responseCode == that.responseCode &&
                 Double.compare(that.message, message) == 0 &&
                 cnt == that.cnt &&
@@ -252,7 +252,7 @@ public class ForecastResponse implements OpenWeatherResponse {
         private MainInfo mainInfo;
 
         @JSONField(name = "weather")
-        private List<Weather> weathers;
+        private List<WeatherState> weatherStates;
 
         private Clouds clouds;
 
@@ -276,6 +276,10 @@ public class ForecastResponse implements OpenWeatherResponse {
             this.dataCalculationTime = dataCalculationTime;
         }
 
+        public Date getDataCalculationDate() {
+            return new Date(dataCalculationTime * 1000);
+        }
+
         public MainInfo getMainInfo() {
             return mainInfo;
         }
@@ -284,12 +288,12 @@ public class ForecastResponse implements OpenWeatherResponse {
             this.mainInfo = mainInfo;
         }
 
-        public List<Weather> getWeathers() {
-            return weathers;
+        public List<WeatherState> getWeatherStates() {
+            return weatherStates;
         }
 
-        public void setWeathers(List<Weather> weathers) {
-            this.weathers = weathers;
+        public void setWeatherStates(List<WeatherState> weatherStates) {
+            this.weatherStates = weatherStates;
         }
 
         public Clouds getClouds() {
@@ -346,10 +350,10 @@ public class ForecastResponse implements OpenWeatherResponse {
             stringBuilder.append("Time: ");
             stringBuilder.append(new Date(dataCalculationTime * 1000));
             stringBuilder.append(". ");
-            if (weathers.size() == 1) {
-                stringBuilder.append(weathers.get(0));
+            if (weatherStates.size() == 1) {
+                stringBuilder.append(weatherStates.get(0));
             } else {
-                stringBuilder.append(weathers);
+                stringBuilder.append(weatherStates);
             }
             stringBuilder.append(". ");
             stringBuilder.append(mainInfo);
@@ -380,7 +384,7 @@ public class ForecastResponse implements OpenWeatherResponse {
             ForecastInfo that = (ForecastInfo) o;
             return dataCalculationTime == that.dataCalculationTime &&
                     Objects.equals(mainInfo, that.mainInfo) &&
-                    Objects.equals(weathers, that.weathers) &&
+                    Objects.equals(weatherStates, that.weatherStates) &&
                     Objects.equals(clouds, that.clouds) &&
                     Objects.equals(wind, that.wind) &&
                     Objects.equals(snow, that.snow) &&
@@ -392,7 +396,7 @@ public class ForecastResponse implements OpenWeatherResponse {
         @Override
         public int hashCode() {
 
-            return Objects.hash(dataCalculationTime, mainInfo, weathers, clouds, wind, snow, rain, systemInfo, dt_txt);
+            return Objects.hash(dataCalculationTime, mainInfo, weatherStates, clouds, wind, snow, rain, systemInfo, dt_txt);
         }
 
         public static class ForecastSystemInfo {
