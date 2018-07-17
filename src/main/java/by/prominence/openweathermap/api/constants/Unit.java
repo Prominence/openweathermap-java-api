@@ -22,7 +22,9 @@
 
 package by.prominence.openweathermap.api.constants;
 
-public class Unit {
+public final class Unit {
+
+    private Unit() {}
 
     public static final String METRIC_SYSTEM = "metric";
     public static final String IMPERIAL_SYSTEM = "imperial";

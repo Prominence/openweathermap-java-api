@@ -28,7 +28,4 @@ public class DataNotFoundException extends Exception {
         super("Data for provided parameters wasn't found. Please, check your request.");
     }
 
-    public DataNotFoundException(String message) {
-        super(message);
-    }
 }

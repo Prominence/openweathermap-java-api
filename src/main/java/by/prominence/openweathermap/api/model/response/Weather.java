@@ -424,11 +424,11 @@ public class Weather implements OpenWeatherResponse {
 
         @JSONField(name = "sunrise")
         // Sunrise time, unix, UTC
-        private long sunrise;
+        private long sunriseTimestamp;
 
         @JSONField(name = "sunset")
         // Sunset time, unix, UTC
-        private long sunset;
+        private long sunsetTimestamp;
 
         public short getType() {
             return type;
@@ -462,20 +462,28 @@ public class Weather implements OpenWeatherResponse {
             this.country = country;
         }
 
-        public long getSunrise() {
-            return sunrise;
+        public long getSunriseTimestamp() {
+            return sunriseTimestamp;
         }
 
-        public void setSunrise(long sunrise) {
-            this.sunrise = sunrise;
+        public void setSunriseTimestamp(long sunriseTimestamp) {
+            this.sunriseTimestamp = sunriseTimestamp;
         }
 
-        public long getSunset() {
-            return sunset;
+        public Date getSunriseDate() {
+            return new Date(sunriseTimestamp * 1000);
         }
 
-        public void setSunset(long sunset) {
-            this.sunset = sunset;
+        public long getSunsetTimestamp() {
+            return sunsetTimestamp;
+        }
+
+        public void setSunsetTimestamp(long sunsetTimestamp) {
+            this.sunsetTimestamp = sunsetTimestamp;
+        }
+
+        public Date getSunsetDate() {
+            return new Date(sunsetTimestamp * 1000);
         }
 
         @Override
@@ -487,14 +495,14 @@ public class Weather implements OpenWeatherResponse {
                 stringBuilder.append(country);
                 stringBuilder.append('\n');
             }
-            if (sunrise > 0) {
+            if (sunriseTimestamp > 0) {
                 stringBuilder.append("Sunrise: ");
-                stringBuilder.append(new Date(sunrise * 1000));
+                stringBuilder.append(getSunriseDate());
                 stringBuilder.append('\n');
             }
-            if (sunset > 0) {
+            if (sunsetTimestamp > 0) {
                 stringBuilder.append("Sunset: ");
-                stringBuilder.append(new Date(sunset * 1000));
+                stringBuilder.append(getSunsetDate());
             }
 
             return stringBuilder.toString();
@@ -509,14 +517,14 @@ public class Weather implements OpenWeatherResponse {
                     id == that.id &&
                     Double.compare(that.message, message) == 0 &&
                     Objects.equals(country, that.country) &&
-                    Objects.equals(sunrise, that.sunrise) &&
-                    Objects.equals(sunset, that.sunset);
+                    Objects.equals(sunriseTimestamp, that.sunriseTimestamp) &&
+                    Objects.equals(sunsetTimestamp, that.sunsetTimestamp);
         }
 
         @Override
         public int hashCode() {
 
-            return Objects.hash(type, id, message, country, sunrise, sunset);
+            return Objects.hash(type, id, message, country, sunriseTimestamp, sunsetTimestamp);
         }
     }
 }

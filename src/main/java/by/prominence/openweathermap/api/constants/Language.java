@@ -22,7 +22,9 @@
 
 package by.prominence.openweathermap.api.constants;
 
-public class Language {
+public final class Language {
+
+    private Language() {}
 
     public static final String ARABIC = "ar";
     public static final String BULGARIAN = "bg";

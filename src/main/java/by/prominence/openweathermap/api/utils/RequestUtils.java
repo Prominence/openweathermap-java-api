@@ -30,7 +30,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class RequestUtils {
+public final class RequestUtils {
+
+    private RequestUtils() {}
 
     public static InputStream executeGetRequest(URL requestUrl) throws InvalidAuthTokenException, DataNotFoundException {
         InputStream resultStream = null;

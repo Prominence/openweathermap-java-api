@@ -174,10 +174,10 @@ public class HourlyForecast implements OpenWeatherResponse {
 
     public static class CityInfo {
 
-        // CityInfo ID
+        // City ID
         private long id;
 
-        // CityInfo name
+        // City name
         private String name;
 
         @JSONField(name = "coord")

@@ -30,7 +30,7 @@ public class Rain {
 
     @JSONField(name = "3h")
     // Rain volume for the last 3 hours
-    byte rainVolumeLast3Hrs;
+    private byte rainVolumeLast3Hrs;
 
     public byte getRainVolumeLast3Hrs() {
         return rainVolumeLast3Hrs;
