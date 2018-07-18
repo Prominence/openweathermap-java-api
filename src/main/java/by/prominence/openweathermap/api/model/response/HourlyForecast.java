@@ -41,7 +41,7 @@ public class HourlyForecast implements OpenWeatherResponse {
     private short cnt;
 
     @JSONField(name = "list")
-    private List<ForecastInfo> forecasts;
+    private List<Forecast> forecasts;
 
     @JSONField(name = "city")
     private CityInfo cityInfo;
@@ -70,11 +70,11 @@ public class HourlyForecast implements OpenWeatherResponse {
         this.cnt = cnt;
     }
 
-    public List<ForecastInfo> getForecasts() {
+    public List<Forecast> getForecasts() {
         return forecasts;
     }
 
-    public void setForecasts(List<ForecastInfo> forecasts) {
+    public void setForecasts(List<Forecast> forecasts) {
         this.forecasts = forecasts;
     }
 
@@ -103,43 +103,43 @@ public class HourlyForecast implements OpenWeatherResponse {
     }
 
     public float getAverageTemperature() {
-        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.temperature).average().orElse(0f);
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.weatherInfo.temperature).average().orElse(0f);
     }
 
     public float getMinimumTemperature() {
-        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.temperature).min().orElse(0f);
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.weatherInfo.temperature).min().orElse(0f);
     }
 
     public float getMaximumTemperature() {
-        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.temperature).max().orElse(0f);
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.weatherInfo.temperature).max().orElse(0f);
     }
 
-    public ForecastInfo getByMinimumTemperature() {
-        return forecasts.stream().min(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.minimumTemperature)).orElse(null);
+    public Forecast getByMinimumTemperature() {
+        return forecasts.stream().min(Comparator.comparing(forecast -> forecast.weatherInfo.minimumTemperature)).orElse(null);
     }
 
-    public ForecastInfo getByMaximumTemperature() {
-        return forecasts.stream().max(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.maximumTemperature)).orElse(null);
+    public Forecast getByMaximumTemperature() {
+        return forecasts.stream().max(Comparator.comparing(forecast -> forecast.weatherInfo.maximumTemperature)).orElse(null);
     }
 
     public float getAveragePressure() {
-        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.pressure).average().orElse(0f);
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.weatherInfo.pressure).average().orElse(0f);
     }
 
     public float getMinimumPressure() {
-        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.pressure).min().orElse(0f);
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.weatherInfo.pressure).min().orElse(0f);
     }
 
     public float getMaximumPressure() {
-        return (float)forecasts.stream().mapToDouble(forecast -> forecast.mainInfo.pressure).max().orElse(0f);
+        return (float)forecasts.stream().mapToDouble(forecast -> forecast.weatherInfo.pressure).max().orElse(0f);
     }
 
-    public ForecastInfo getByMinimumPressure() {
-        return forecasts.stream().min(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.pressure)).orElse(null);
+    public Forecast getByMinimumPressure() {
+        return forecasts.stream().min(Comparator.comparing(forecast -> forecast.weatherInfo.pressure)).orElse(null);
     }
 
-    public ForecastInfo getByMaximumPressure() {
-        return forecasts.stream().max(Comparator.comparing(forecastInfo -> forecastInfo.mainInfo.pressure)).orElse(null);
+    public Forecast getByMaximumPressure() {
+        return forecasts.stream().max(Comparator.comparing(forecast -> forecast.weatherInfo.pressure)).orElse(null);
     }
 
     @Override
@@ -147,9 +147,9 @@ public class HourlyForecast implements OpenWeatherResponse {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(cityInfo);
         stringBuilder.append("\nForecasts: ");
-        forecasts.forEach(forecastInfo -> {
+        forecasts.forEach(forecast -> {
             stringBuilder.append("\n\t");
-            stringBuilder.append(forecastInfo);
+            stringBuilder.append(forecast);
         });
         return stringBuilder.toString();
     }
@@ -242,14 +242,14 @@ public class HourlyForecast implements OpenWeatherResponse {
 
     }
 
-    public static class ForecastInfo {
+    public static class Forecast {
 
         @JSONField(name = "dt")
-        // Time of data forecasted, unix, UTC
+        // Time of data calculation, unix, UTC
         private long dataCalculationTime;
 
         @JSONField(name = "main")
-        private MainInfo mainInfo;
+        private WeatherInfo weatherInfo;
 
         @JSONField(name = "weather")
         private List<WeatherState> weatherStates;
@@ -280,12 +280,12 @@ public class HourlyForecast implements OpenWeatherResponse {
             return new Date(dataCalculationTime * 1000);
         }
 
-        public MainInfo getMainInfo() {
-            return mainInfo;
+        public WeatherInfo getWeatherInfo() {
+            return weatherInfo;
         }
 
-        public void setMainInfo(MainInfo mainInfo) {
-            this.mainInfo = mainInfo;
+        public void setWeatherInfo(WeatherInfo weatherInfo) {
+            this.weatherInfo = weatherInfo;
         }
 
         public List<WeatherState> getWeatherStates() {
@@ -356,7 +356,7 @@ public class HourlyForecast implements OpenWeatherResponse {
                 stringBuilder.append(weatherStates);
             }
             stringBuilder.append(". ");
-            stringBuilder.append(mainInfo);
+            stringBuilder.append(weatherInfo);
             if (clouds != null) {
                 stringBuilder.append(". ");
                 stringBuilder.append(clouds);
@@ -381,9 +381,9 @@ public class HourlyForecast implements OpenWeatherResponse {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            ForecastInfo that = (ForecastInfo) o;
+            Forecast that = (Forecast) o;
             return dataCalculationTime == that.dataCalculationTime &&
-                    Objects.equals(mainInfo, that.mainInfo) &&
+                    Objects.equals(weatherInfo, that.weatherInfo) &&
                     Objects.equals(weatherStates, that.weatherStates) &&
                     Objects.equals(clouds, that.clouds) &&
                     Objects.equals(wind, that.wind) &&
@@ -396,7 +396,7 @@ public class HourlyForecast implements OpenWeatherResponse {
         @Override
         public int hashCode() {
 
-            return Objects.hash(dataCalculationTime, mainInfo, weatherStates, clouds, wind, snow, rain, systemInfo, dt_txt);
+            return Objects.hash(dataCalculationTime, weatherInfo, weatherStates, clouds, wind, snow, rain, systemInfo, dt_txt);
         }
 
         public static class ForecastSystemInfo {
@@ -433,7 +433,7 @@ public class HourlyForecast implements OpenWeatherResponse {
             }
         }
 
-        public static class MainInfo {
+        public static class WeatherInfo {
 
             @JSONField(name = "temp")
             // Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
@@ -587,15 +587,15 @@ public class HourlyForecast implements OpenWeatherResponse {
             public boolean equals(Object o) {
                 if (this == o) return true;
                 if (o == null || getClass() != o.getClass()) return false;
-                MainInfo mainInfo = (MainInfo) o;
-                return Float.compare(mainInfo.temperature, temperature) == 0 &&
-                        Float.compare(mainInfo.minimumTemperature, minimumTemperature) == 0 &&
-                        Float.compare(mainInfo.maximumTemperature, maximumTemperature) == 0 &&
-                        Float.compare(mainInfo.pressure, pressure) == 0 &&
-                        Float.compare(mainInfo.seaLevelPressure, seaLevelPressure) == 0 &&
-                        Float.compare(mainInfo.groundLevelPressure, groundLevelPressure) == 0 &&
-                        humidity == mainInfo.humidity &&
-                        Float.compare(mainInfo.temperatureCoefficient, temperatureCoefficient) == 0;
+                WeatherInfo weatherInfo = (WeatherInfo) o;
+                return Float.compare(weatherInfo.temperature, temperature) == 0 &&
+                        Float.compare(weatherInfo.minimumTemperature, minimumTemperature) == 0 &&
+                        Float.compare(weatherInfo.maximumTemperature, maximumTemperature) == 0 &&
+                        Float.compare(weatherInfo.pressure, pressure) == 0 &&
+                        Float.compare(weatherInfo.seaLevelPressure, seaLevelPressure) == 0 &&
+                        Float.compare(weatherInfo.groundLevelPressure, groundLevelPressure) == 0 &&
+                        humidity == weatherInfo.humidity &&
+                        Float.compare(weatherInfo.temperatureCoefficient, temperatureCoefficient) == 0;
             }
 
             @Override

@@ -92,7 +92,7 @@ Data calculation time: Mon Jul 16 00:00:00 MSK 2018
 ```
 
 #### 5 day / 3 hour forecast
-First step is retrieving `ForecastRequester` instance:
+First step is retrieving `HourlyForecastRequester` instance:
 ```java
 OpenWeatherMapManager openWeatherManager = new OpenWeatherMapManager(API_TOKEN);
 ForecastRequester forecastRequester = openWeatherManager.getForecastRequester();
@@ -124,17 +124,17 @@ Available requests:
 | `getCityInfo()`             | Returns `HourlyForecast.CityInfo` instance that contains information about city.           |
 | `getResponseCode()`         | Returns OpenWeatherMap response code. Internal information.                                |
 | `getCountry()`              | An alias for `getCityInfo().getCountry()`.                                                 |
-| `getForecasts()`            | Returns `List<HourlyForecast.ForecastInfo>` collection with all forecast information.      |
+| `getForecasts()`            | Returns `List<HourlyForecast.Forecast>` collection with all forecast information.          |
 | `getAverageTemperature()`   | Returns average temperature from forecasts.                                                |
 | `getMinimumTemperature()`   | Returns minimum temperature from forecasts.                                                |
 | `getMaximumTemperature()`   | Returns maximum temperature from forecasts.                                                |
-| `getByMinimumTemperature()` | Returns `HourlyForecast.ForecastInfo` for the time where temperature is minimal.           |
-| `getByMaximumTemperature()` | Returns `HourlyForecast.ForecastInfo` for the time where temperature is maximal.           |
+| `getByMinimumTemperature()` | Returns `HourlyForecast.Forecast` for the time where temperature is minimal.               |
+| `getByMaximumTemperature()` | Returns `HourlyForecast.Forecast` for the time where temperature is maximal.               |
 | `getAveragePressure()`      | Returns average pressure from forecasts.                                                   |
 | `getMinimumPressure()`      | Returns minimum pressure from forecasts.                                                   |
 | `getMaximumPressure()`      | Returns maximum pressure from forecasts.                                                   |
-| `getByMinimumPressure()`    | Returns `HourlyForecast.ForecastInfo` for the time where pressure is minimal.              |
-| `getByMaximumPressure()`    | Returns `HourlyForecast.ForecastInfo` for the time where pressure is maximal.              |
+| `getByMinimumPressure()`    | Returns `HourlyForecast.Forecast` for the time where pressure is minimal.                  |
+| `getByMaximumPressure()`    | Returns `HourlyForecast.Forecast` for the time where pressure is maximal.                  |
 | `toString()`                | Returns pretty string for the whole available forecast information.                        |
 
 `toString()` output example:
@@ -184,13 +184,13 @@ Forecasts:
     Time: Sat Jul 21 21:00:00 MSK 2018. Weather: scattered clouds. Temperature: 22.56 ℃. Minimum temperature: 22.56 ℃. Maximum temperature: 22.56 ℃. Pressure: 1001.72 hPa. Sea-level pressure: 1022.7 hPa. Ground-level pressure: 1001.72 hPa. Humidity: 66%. Cloudiness: 48%. Wind: 3.96 meter/sec, 312 degrees. Rain(last 3 hrs): 0 mm
 ```
 
-`ForecastInfo`'s useful public methods(setters are not listed):
+`Forecast`'s useful public methods(setters are not listed):
 
 | Method                      | Description                                                                                                      |
 |-----------------------------|------------------------------------------------------------------------------------------------------------------|
 | `getDataCalculationTime()`  | Returns `long` value that represents data calculation timestamp.                                                 |
 | `getDataCalculationDate()`  | Returns data calculation time in `Date` representation.                                                          |
-| `getMainInfo()`             | Returns `HourlyForecast.MainInfo` instance that contains information about temperature, pressure and humidity.   |
+| `getWeatherInfo()`          | Returns `HourlyForecast.WeatherInfo` instance that contains information about temperature, pressure and humidity.|
 | `getWeatherStates()`        | Returns list of `WeatherState` instances with the only `getDescription` useful method.                           |
 | `getClouds()`               | Returns `Clouds` instance that contains *cloudiness* percentage information.                                     |
 | `getWind()`                 | Returns `Wind` instance that contains information about speed and degree.                                        |

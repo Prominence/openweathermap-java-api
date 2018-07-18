@@ -34,7 +34,7 @@ public class OpenWeatherMapManager {
         return new WeatherRequester(authToken);
     }
 
-    public ForecastRequester getForecastRequester() {
-        return new ForecastRequester(authToken);
+    public HourlyForecastRequester getForecastRequester() {
+        return new HourlyForecastRequester(authToken);
     }
 }

@@ -32,23 +32,23 @@ import by.prominence.openweathermap.api.utils.RequestUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ForecastRequester extends BasicRequester<HourlyForecast> {
+public class HourlyForecastRequester extends BasicRequester<HourlyForecast> {
 
-    ForecastRequester(String authToken) {
+    HourlyForecastRequester(String authToken) {
         super(authToken);
     }
 
-    public ForecastRequester setLanguage(String language) {
+    public HourlyForecastRequester setLanguage(String language) {
         this.language = language;
         return this;
     }
 
-    public ForecastRequester setUnitSystem(String unitSystem) {
+    public HourlyForecastRequester setUnitSystem(String unitSystem) {
         this.unitSystem = unitSystem;
         return this;
     }
 
-    public ForecastRequester setAccuracy(String accuracy) {
+    public HourlyForecastRequester setAccuracy(String accuracy) {
         this.accuracy = accuracy;
         return this;
     }
@@ -70,7 +70,7 @@ public class ForecastRequester extends BasicRequester<HourlyForecast> {
 
             forecastResponse.getForecasts().forEach(forecastInfo -> {
                 forecastInfo.getWind().setUnit(windUnit);
-                forecastInfo.getMainInfo().setTemperatureUnit(temperatureUnit);
+                forecastInfo.getWeatherInfo().setTemperatureUnit(temperatureUnit);
             });
         } catch (IOException ex) {
             ex.printStackTrace();
