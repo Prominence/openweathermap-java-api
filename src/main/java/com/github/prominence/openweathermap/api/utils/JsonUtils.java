@@ -20,14 +20,30 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.utils;
 
-abstract class AuthenticationTokenBasedRequester {
+import com.alibaba.fastjson.JSON;
 
-    protected String authToken;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-    protected AuthenticationTokenBasedRequester(String authToken) {
-        this.authToken = authToken;
+public final class JsonUtils {
+
+    private JsonUtils() {}
+
+    public static Object parseJson(InputStream inputStream, Class clazz) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        StringBuilder result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+
+        reader.close();
+
+        return JSON.parseObject(result.toString(), clazz);
     }
-
 }

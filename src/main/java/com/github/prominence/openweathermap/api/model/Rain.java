@@ -20,65 +20,46 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Objects;
 
-public class Wind {
+public class Rain {
 
-    @JSONField(name = "speed")
-    // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
-    private float speed;
+    @JSONField(name = "3h")
+    // Rain volume for the last 3 hours
+    private byte rainVolumeLast3Hrs;
 
-    private String unit;
-
-    @JSONField(name = "deg")
-    // Wind direction, degrees (meteorological)
-    private short degrees;
-
-    public float getSpeed() {
-        return speed;
+    public byte getRainVolumeLast3Hrs() {
+        return rainVolumeLast3Hrs;
     }
 
-    public void setSpeed(float speed) {
-        this.speed = speed;
+    public void setRainVolumeLast3Hrs(byte rainVolumeLast3Hrs) {
+        this.rainVolumeLast3Hrs = rainVolumeLast3Hrs;
     }
 
     public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public short getDegrees() {
-        return degrees;
-    }
-
-    public void setDegrees(short degrees) {
-        this.degrees = degrees;
+        return "mm";
     }
 
     @Override
     public String toString() {
-        return "Wind: " + speed + ' ' + unit + ", " + degrees + " degrees";
+        return "Rain(last 3 hrs): " + rainVolumeLast3Hrs + ' ' + getUnit();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Wind wind = (Wind) o;
-        return Float.compare(wind.speed, speed) == 0 &&
-                degrees == wind.degrees;
+        Rain rain = (Rain) o;
+        return rainVolumeLast3Hrs == rain.rainVolumeLast3Hrs;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(speed, degrees);
+        return Objects.hash(rainVolumeLast3Hrs);
     }
 }

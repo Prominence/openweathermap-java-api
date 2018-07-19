@@ -20,14 +20,14 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api;
 
-import by.prominence.openweathermap.api.constants.Unit;
-import by.prominence.openweathermap.api.exception.DataNotFoundException;
-import by.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import by.prominence.openweathermap.api.model.response.HourlyForecast;
-import by.prominence.openweathermap.api.utils.JsonUtils;
-import by.prominence.openweathermap.api.utils.RequestUtils;
+import com.github.prominence.openweathermap.api.constants.Unit;
+import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
+import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
+import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
+import com.github.prominence.openweathermap.api.utils.JsonUtils;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

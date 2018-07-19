@@ -4,9 +4,42 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>openweather-api</groupId>
-    <artifactId>by.prominence.openweatermap.api</artifactId>
+    <groupId>com.github.prominence</groupId>
+    <artifactId>openweathermap-api</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Java OpenWeatherMap API</name>
+    <description>Java API for OpenWeatherMap services.</description>
+    <url>https://github.com/Prominence/openweathermap-java-api</url>
+
+    <scm>
+        <url>https://github.com/Prominence/openweathermap-java-api</url>
+        <connection>scm:git:git://github.com/Prominence/openweathermap-java-api.git</connection>
+        <developerConnection>scm:git:git@github.com:prominence/openweathermap-java-api.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/Prominence/openweathermap-java-api/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <email>prominence96@gmail.com</email>
+            <name>Alexey Zinchenko</name>
+            <url>https://github.com/prominence</url>
+            <id>Prominence</id>
+        </developer>
+    </developers>
 
     <build>
         <plugins>

@@ -20,12 +20,14 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api;
 
-public class InvalidAuthTokenException extends Exception {
+abstract class AuthenticationTokenBasedRequester {
 
-    public InvalidAuthTokenException() {
-        super("Check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
+    protected String authToken;
+
+    protected AuthenticationTokenBasedRequester(String authToken) {
+        this.authToken = authToken;
     }
 
 }

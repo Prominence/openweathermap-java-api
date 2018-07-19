@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.constants;
+package com.github.prominence.openweathermap.api.constants;
 
 public final class Language {
 

@@ -20,13 +20,12 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.constants;
 
-public interface OpenWeatherResponse {
+public final class System {
 
-    String getCityName();
-    long getCityId();
-    String getCountry();
-    Coordinates getCoordinates();
-    short getResponseCode();
+    private System() {}
+
+    public static final String OPEN_WEATHER_API_VERSION = "2.5";
+    public static final String OPEN_WEATHER_API_URL = "http://api.openweathermap.org/data/" + OPEN_WEATHER_API_VERSION + "/";
 }

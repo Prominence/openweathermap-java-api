@@ -20,30 +20,37 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.utils;
+package com.github.prominence.openweathermap.api.constants;
 
-import com.alibaba.fastjson.JSON;
+public final class Unit {
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+    private Unit() {}
 
-public final class JsonUtils {
+    public static final String METRIC_SYSTEM = "metric";
+    public static final String IMPERIAL_SYSTEM = "imperial";
+    public static final String STANDARD_SYSTEM = "standard";
 
-    private JsonUtils() {}
-
-    public static Object parseJson(InputStream inputStream, Class clazz) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
+    public static String getWindUnit(String type) {
+        switch (type) {
+            case IMPERIAL_SYSTEM:
+                return "miles/hour";
+            case STANDARD_SYSTEM:
+            case METRIC_SYSTEM:
+            default:
+                return "meter/sec";
         }
-
-        reader.close();
-
-        return JSON.parseObject(result.toString(), clazz);
     }
+
+    public static char getTemperatureUnit(String type) {
+        switch (type) {
+            case METRIC_SYSTEM:
+                return '℃';
+            case IMPERIAL_SYSTEM:
+                return '℉';
+            case STANDARD_SYSTEM:
+            default:
+                return 'K';
+        }
+    }
+
 }

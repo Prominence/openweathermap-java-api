@@ -20,10 +20,10 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.model.response;
+package com.github.prominence.openweathermap.api.model.response;
 
-import by.prominence.openweathermap.api.model.*;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.github.prominence.openweathermap.api.model.*;
 
 import java.util.Comparator;
 import java.util.Date;

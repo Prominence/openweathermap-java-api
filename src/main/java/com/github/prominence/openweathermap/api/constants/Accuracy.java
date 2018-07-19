@@ -20,12 +20,13 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.constants;
 
-public class DataNotFoundException extends Exception {
+public final class Accuracy {
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
-    }
+    private Accuracy() {}
+
+    public static final String LIKE  = "like";
+    public static final String ACCURATE = "accurate";
 
 }

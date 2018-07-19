@@ -259,5 +259,8 @@ Forecasts:
 | Unit.IMPERIAL_SYSTEM | Fahrenheit, miles/hour, hPa, mm(rain, snow).   |
 | Unit.STANDARD_SYSTEM | Kelvin, meter/sec, hPa, mm(rain, snow)         |
 
+### Dependencies
+* com.alibaba:fastjson:1.2.44
+
 ### License
 MIT

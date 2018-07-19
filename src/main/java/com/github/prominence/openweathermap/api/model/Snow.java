@@ -20,24 +20,24 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Objects;
 
-public class Rain {
+public class Snow {
 
-    @JSONField(name = "3h")
-    // Rain volume for the last 3 hours
-    private byte rainVolumeLast3Hrs;
+    @JSONField(name = "all")
+    // Snow volume for the last 3 hours
+    private byte snowVolumeLast3Hrs;
 
-    public byte getRainVolumeLast3Hrs() {
-        return rainVolumeLast3Hrs;
+    public byte getSnowVolumeLast3Hrs() {
+        return snowVolumeLast3Hrs;
     }
 
-    public void setRainVolumeLast3Hrs(byte rainVolumeLast3Hrs) {
-        this.rainVolumeLast3Hrs = rainVolumeLast3Hrs;
+    public void setSnowVolumeLast3Hrs(byte snowVolumeLast3Hrs) {
+        this.snowVolumeLast3Hrs = snowVolumeLast3Hrs;
     }
 
     public String getUnit() {
@@ -46,20 +46,20 @@ public class Rain {
 
     @Override
     public String toString() {
-        return "Rain(last 3 hrs): " + rainVolumeLast3Hrs + ' ' + getUnit();
+        return "Snow(last 3 hrs): " + snowVolumeLast3Hrs + ' ' + getUnit();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Rain rain = (Rain) o;
-        return rainVolumeLast3Hrs == rain.rainVolumeLast3Hrs;
+        Snow snow = (Snow) o;
+        return snowVolumeLast3Hrs == snow.snowVolumeLast3Hrs;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(rainVolumeLast3Hrs);
+        return Objects.hash(snowVolumeLast3Hrs);
     }
 }

@@ -20,13 +20,21 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.constants;
+package com.github.prominence.openweathermap.api;
 
-public final class Accuracy {
+public class OpenWeatherMapManager {
 
-    private Accuracy() {}
+    private String authToken;
 
-    public static final String LIKE  = "like";
-    public static final String ACCURATE = "accurate";
+    public OpenWeatherMapManager(String token) {
+        this.authToken = token;
+    }
 
+    public WeatherRequester getWeatherRequester() {
+        return new WeatherRequester(authToken);
+    }
+
+    public HourlyForecastRequester getForecastRequester() {
+        return new HourlyForecastRequester(authToken);
+    }
 }

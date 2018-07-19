@@ -20,42 +20,65 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Objects;
 
-public class Clouds {
+public class Wind {
 
-    @JSONField(name = "all")
-    // Cloudiness, %
-    private byte cloudiness;
+    @JSONField(name = "speed")
+    // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
+    private float speed;
 
-    public byte getCloudiness() {
-        return cloudiness;
+    private String unit;
+
+    @JSONField(name = "deg")
+    // Wind direction, degrees (meteorological)
+    private short degrees;
+
+    public float getSpeed() {
+        return speed;
     }
 
-    public void setCloudiness(byte cloudiness) {
-        this.cloudiness = cloudiness;
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public short getDegrees() {
+        return degrees;
+    }
+
+    public void setDegrees(short degrees) {
+        this.degrees = degrees;
     }
 
     @Override
     public String toString() {
-        return "Cloudiness: " + cloudiness + "%";
+        return "Wind: " + speed + ' ' + unit + ", " + degrees + " degrees";
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Clouds clouds = (Clouds) o;
-        return cloudiness == clouds.cloudiness;
+        Wind wind = (Wind) o;
+        return Float.compare(wind.speed, speed) == 0 &&
+                degrees == wind.degrees;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(cloudiness);
+        return Objects.hash(speed, degrees);
     }
 }

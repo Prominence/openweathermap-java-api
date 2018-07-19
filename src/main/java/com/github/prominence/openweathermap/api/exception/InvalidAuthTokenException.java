@@ -20,21 +20,12 @@
  * SOFTWARE.
  */
 
-package by.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.exception;
 
-public class OpenWeatherMapManager {
+public class InvalidAuthTokenException extends Exception {
 
-    private String authToken;
-
-    public OpenWeatherMapManager(String token) {
-        this.authToken = token;
+    public InvalidAuthTokenException() {
+        super("Check you authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
     }
 
-    public WeatherRequester getWeatherRequester() {
-        return new WeatherRequester(authToken);
-    }
-
-    public HourlyForecastRequester getForecastRequester() {
-        return new HourlyForecastRequester(authToken);
-    }
 }
