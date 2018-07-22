@@ -12,7 +12,13 @@ Java API for OpenWeatherMap services.
 
 ### Maven coordinates:
 
-_Not available yet._
+```xml
+<dependency>
+  <groupId>com.github.prominence</groupId>
+  <artifactId>openweathermap-api</artifactId>
+  <version>1.0</version>
+</dependency>
+```
 
 ### How to use:
 
