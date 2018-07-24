@@ -23,39 +23,21 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
 public class Clouds {
 
     @JSONField(name = "all")
     // Cloudiness, %
+    @Getter
+    @Setter
     private byte cloudiness;
-
-    public byte getCloudiness() {
-        return cloudiness;
-    }
-
-    public void setCloudiness(byte cloudiness) {
-        this.cloudiness = cloudiness;
-    }
 
     @Override
     public String toString() {
         return "Cloudiness: " + cloudiness + "%";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Clouds clouds = (Clouds) o;
-        return cloudiness == clouds.cloudiness;
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(cloudiness);
     }
 }

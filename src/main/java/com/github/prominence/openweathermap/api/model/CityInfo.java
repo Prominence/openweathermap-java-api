@@ -20,12 +20,39 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.model;
 
-public class InvalidAuthTokenException extends Exception {
+import com.alibaba.fastjson.annotation.JSONField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-    public InvalidAuthTokenException() {
-        super("Check your authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
+@EqualsAndHashCode
+public class CityInfo {
+
+    // City ID
+    @Getter
+    @Setter
+    private long id;
+
+    // City name
+    @Getter
+    @Setter
+    private String name;
+
+    @JSONField(name = "coord")
+    @Getter
+    @Setter
+    private Coordinates coordinates;
+
+    // Country code (GB, JP etc.)
+    @Getter
+    @Setter
+    private String country;
+
+    @Override
+    public String toString() {
+        return "City: " + name + "(" + id + "). Coordinates: " + coordinates + '\n' + "Country: " + country;
     }
 
 }

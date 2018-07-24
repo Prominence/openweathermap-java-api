@@ -23,22 +23,18 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
 public class Snow {
 
     @JSONField(name = "all")
     // Snow volume for the last 3 hours
+    @Getter
+    @Setter
     private byte snowVolumeLast3Hrs;
-
-    public byte getSnowVolumeLast3Hrs() {
-        return snowVolumeLast3Hrs;
-    }
-
-    public void setSnowVolumeLast3Hrs(byte snowVolumeLast3Hrs) {
-        this.snowVolumeLast3Hrs = snowVolumeLast3Hrs;
-    }
 
     public String getUnit() {
         return "mm";
@@ -47,19 +43,5 @@ public class Snow {
     @Override
     public String toString() {
         return "Snow(last 3 hrs): " + snowVolumeLast3Hrs + ' ' + getUnit();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Snow snow = (Snow) o;
-        return snowVolumeLast3Hrs == snow.snowVolumeLast3Hrs;
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(snowVolumeLast3Hrs);
     }
 }

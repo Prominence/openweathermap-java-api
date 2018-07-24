@@ -30,6 +30,7 @@ import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
 
@@ -86,10 +87,24 @@ abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
             urlBuilder.append(accuracy);
         }
 
+        Map<String, String> additionalParameters = getAdditionalParameters();
+        if (additionalParameters != null) {
+            additionalParameters.forEach((key, value) -> {
+                urlBuilder.append("&");
+                urlBuilder.append(key);
+                urlBuilder.append("=");
+                urlBuilder.append(value);
+            });
+        }
+
         return new URL(urlBuilder.toString());
     }
 
+    protected Map<String, String> getAdditionalParameters() {
+        return null;
+    }
+
     protected abstract String getRequestType();
-    protected abstract T executeRequest(String requestSpecificParamsString) throws InvalidAuthTokenException, DataNotFoundException;
+    protected abstract T executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException;
 
 }

@@ -23,55 +23,29 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
+@AllArgsConstructor
 public class Coordinates {
 
     @JSONField(name = "lat")
     // City geo location, latitude
+    @Getter
+    @Setter
     private float latitude;
+
     @JSONField(name = "lon")
     // City geo location, longitude
+    @Getter
+    @Setter
     private float longitude;
-
-    public Coordinates(float latitude, float longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
 
     @Override
     public String toString() {
         return "latitude=" + latitude + ", longitude=" + longitude;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Coordinates that = (Coordinates) o;
-        return Double.compare(that.latitude, latitude) == 0 &&
-                Double.compare(that.longitude, longitude) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(latitude, longitude);
     }
 }

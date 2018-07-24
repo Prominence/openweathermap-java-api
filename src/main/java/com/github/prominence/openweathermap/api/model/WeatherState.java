@@ -23,60 +23,39 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 
+@EqualsAndHashCode
 public class WeatherState {
 
     @JSONField(name = "id")
     // Weather condition id
+    @Getter
+    @Setter
     long conditionId;
 
     @JSONField(name = "main")
     // Group of weather parameters (Rain, Snow, Extreme etc.)
+    @Getter
+    @Setter
     String weatherGroup;
 
     @JSONField(name = "description")
     // Weather condition within the group
+    @Getter
+    @Setter
     String description;
 
     @JSONField(name = "icon")
     // Weather icon id
+    @Getter
+    @Setter
     String iconId;
-
-    public long getConditionId() {
-        return conditionId;
-    }
-
-    public void setConditionId(long conditionId) {
-        this.conditionId = conditionId;
-    }
-
-    public String getWeatherGroup() {
-        return weatherGroup;
-    }
-
-    public void setWeatherGroup(String weatherGroup) {
-        this.weatherGroup = weatherGroup;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIconId() {
-        return iconId;
-    }
-
-    public void setIconId(String iconId) {
-        this.iconId = iconId;
-    }
 
     public URL getWeatherIconUrl() {
         URL iconUrl = null;
@@ -91,22 +70,5 @@ public class WeatherState {
     @Override
     public String toString() {
         return "Weather: " + description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WeatherState weatherState = (WeatherState) o;
-        return conditionId == weatherState.conditionId &&
-                Objects.equals(weatherGroup, weatherState.weatherGroup) &&
-                Objects.equals(description, weatherState.description) &&
-                Objects.equals(iconId, weatherState.iconId);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(conditionId, weatherGroup, description, iconId);
     }
 }

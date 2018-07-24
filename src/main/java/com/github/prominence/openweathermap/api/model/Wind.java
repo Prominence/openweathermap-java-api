@@ -23,62 +23,31 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
 public class Wind {
 
     @JSONField(name = "speed")
     // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
+    @Getter
+    @Setter
     private float speed;
 
+    @Getter
+    @Setter
     private String unit;
 
     @JSONField(name = "deg")
     // Wind direction, degrees (meteorological)
+    @Getter
+    @Setter
     private short degrees;
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public short getDegrees() {
-        return degrees;
-    }
-
-    public void setDegrees(short degrees) {
-        this.degrees = degrees;
-    }
 
     @Override
     public String toString() {
         return "Wind: " + speed + ' ' + unit + ", " + degrees + " degrees";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Wind wind = (Wind) o;
-        return Float.compare(wind.speed, speed) == 0 &&
-                degrees == wind.degrees;
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(speed, degrees);
     }
 }

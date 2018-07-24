@@ -24,82 +24,56 @@ package com.github.prominence.openweathermap.api.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.github.prominence.openweathermap.api.model.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
+@EqualsAndHashCode
 public class HourlyForecast implements OpenWeatherResponse {
 
     @JSONField(name = "cod")
+    @Getter
+    @Setter
     private short responseCode;
 
+    @Getter
+    @Setter
     private double message;
 
     // Number of lines returned by this API call
+    @Getter
+    @Setter
     private short cnt;
 
     @JSONField(name = "list")
+    @Getter
+    @Setter
     private List<Forecast> forecasts;
 
     @JSONField(name = "city")
+    @Getter
+    @Setter
     private CityInfo cityInfo;
 
-    public short getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(short responseCode) {
-        this.responseCode = responseCode;
-    }
-
-    public double getMessage() {
-        return message;
-    }
-
-    public void setMessage(double message) {
-        this.message = message;
-    }
-
-    public short getCnt() {
-        return cnt;
-    }
-
-    public void setCnt(short cnt) {
-        this.cnt = cnt;
-    }
-
-    public List<Forecast> getForecasts() {
-        return forecasts;
-    }
-
-    public void setForecasts(List<Forecast> forecasts) {
-        this.forecasts = forecasts;
-    }
-
-    public CityInfo getCityInfo() {
-        return cityInfo;
-    }
-
-    public void setCityInfo(CityInfo cityInfo) {
-        this.cityInfo = cityInfo;
-    }
-
     public String getCityName() {
-        return cityInfo.name;
+        return cityInfo.getName();
     }
 
     public long getCityId() {
-        return cityInfo.id;
+        return cityInfo.getId();
     }
 
     public String getCountry() {
-        return cityInfo.country;
+        return cityInfo.getCountry();
     }
 
     public Coordinates getCoordinates() {
-        return cityInfo.coordinates;
+        return cityInfo.getCoordinates();
     }
 
     public float getAverageTemperature() {
@@ -144,402 +118,158 @@ public class HourlyForecast implements OpenWeatherResponse {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(cityInfo);
-        stringBuilder.append("\nForecasts: ");
+        StringBuilder builder = new StringBuilder();
+        builder.append(cityInfo);
+        builder.append("\nForecasts: ");
         forecasts.forEach(forecast -> {
-            stringBuilder.append("\n\t");
-            stringBuilder.append(forecast);
+            builder.append("\n\t");
+            builder.append(forecast);
         });
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HourlyForecast that = (HourlyForecast) o;
-        return responseCode == that.responseCode &&
-                Double.compare(that.message, message) == 0 &&
-                cnt == that.cnt &&
-                Objects.equals(forecasts, that.forecasts) &&
-                Objects.equals(cityInfo, that.cityInfo);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(responseCode, message, cnt, forecasts, cityInfo);
-    }
-
-    public static class CityInfo {
-
-        // City ID
-        private long id;
-
-        // City name
-        private String name;
-
-        @JSONField(name = "coord")
-        private Coordinates coordinates;
-
-        // Country code (GB, JP etc.)
-        private String country;
-
-        public long getId() {
-            return id;
-        }
-
-        public void setId(long id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Coordinates getCoordinates() {
-            return coordinates;
-        }
-
-        public void setCoordinates(Coordinates coordinates) {
-            this.coordinates = coordinates;
-        }
-
-        public String getCountry() {
-            return country;
-        }
-
-        public void setCountry(String country) {
-            this.country = country;
-        }
-
-        @Override
-        public String toString() {
-            return "City: " + name + "(" + id + "). Coordinates: " + coordinates + '\n' + "Country: " + country;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            CityInfo cityInfo = (CityInfo) o;
-            return id == cityInfo.id &&
-                    Objects.equals(name, cityInfo.name) &&
-                    Objects.equals(coordinates, cityInfo.coordinates) &&
-                    Objects.equals(country, cityInfo.country);
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(id, name, coordinates, country);
-        }
-
-    }
-
+    @EqualsAndHashCode
     public static class Forecast {
 
         @JSONField(name = "dt")
         // Time of data calculation, unix, UTC
+        @Getter
+        @Setter
         private long dataCalculationTime;
 
         @JSONField(name = "main")
+        @Getter
+        @Setter
         private WeatherInfo weatherInfo;
 
         @JSONField(name = "weather")
+        @Getter
+        @Setter
         private List<WeatherState> weatherStates;
 
+        @Getter
+        @Setter
         private Clouds clouds;
 
+        @Getter
+        @Setter
         private Wind wind;
 
+        @Getter
+        @Setter
         private Snow snow;
 
+        @Getter
+        @Setter
         private Rain rain;
 
         @JSONField(name = "sys")
+        @Getter
+        @Setter
         private ForecastSystemInfo systemInfo;
 
         // Data/time of calculation, UTC
+        @Getter
+        @Setter
         private String dt_txt;
-
-        public long getDataCalculationTime() {
-            return dataCalculationTime;
-        }
-
-        public void setDataCalculationTime(long dataCalculationTime) {
-            this.dataCalculationTime = dataCalculationTime;
-        }
 
         public Date getDataCalculationDate() {
             return new Date(dataCalculationTime * 1000);
         }
 
-        public WeatherInfo getWeatherInfo() {
-            return weatherInfo;
-        }
-
-        public void setWeatherInfo(WeatherInfo weatherInfo) {
-            this.weatherInfo = weatherInfo;
-        }
-
-        public List<WeatherState> getWeatherStates() {
-            return weatherStates;
-        }
-
-        public void setWeatherStates(List<WeatherState> weatherStates) {
-            this.weatherStates = weatherStates;
-        }
-
-        public Clouds getClouds() {
-            return clouds;
-        }
-
-        public void setClouds(Clouds clouds) {
-            this.clouds = clouds;
-        }
-
-        public Wind getWind() {
-            return wind;
-        }
-
-        public void setWind(Wind wind) {
-            this.wind = wind;
-        }
-
-        public Snow getSnow() {
-            return snow;
-        }
-
-        public void setSnow(Snow snow) {
-            this.snow = snow;
-        }
-
-        public Rain getRain() {
-            return rain;
-        }
-
-        public void setRain(Rain rain) {
-            this.rain = rain;
-        }
-
-        public ForecastSystemInfo getSystemInfo() {
-            return systemInfo;
-        }
-
-        public void setSystemInfo(ForecastSystemInfo systemInfo) {
-            this.systemInfo = systemInfo;
-        }
-
-        public String getDt_txt() {
-            return dt_txt;
-        }
-
-        public void setDt_txt(String dt_txt) {
-            this.dt_txt = dt_txt;
-        }
-
         @Override
         public String toString() {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Time: ");
-            stringBuilder.append(new Date(dataCalculationTime * 1000));
-            stringBuilder.append(". ");
+            StringBuilder builder = new StringBuilder();
+            builder.append("Time: ");
+            builder.append(new Date(dataCalculationTime * 1000));
+            builder.append("; ");
             if (weatherStates.size() == 1) {
-                stringBuilder.append(weatherStates.get(0));
+                builder.append(weatherStates.get(0));
             } else {
-                stringBuilder.append(weatherStates);
+                builder.append(weatherStates);
             }
-            stringBuilder.append(". ");
-            stringBuilder.append(weatherInfo);
+            builder.append("; ");
+            builder.append(weatherInfo);
             if (clouds != null) {
-                stringBuilder.append(". ");
-                stringBuilder.append(clouds);
+                builder.append("; ");
+                builder.append(clouds);
             }
             if (wind != null) {
-                stringBuilder.append(". ");
-                stringBuilder.append(wind);
+                builder.append("; ");
+                builder.append(wind);
             }
             if (snow != null) {
-                stringBuilder.append(". ");
-                stringBuilder.append(snow);
+                builder.append("; ");
+                builder.append(snow);
             }
             if (rain != null) {
-                stringBuilder.append(". ");
-                stringBuilder.append(rain);
+                builder.append("; ");
+                builder.append(rain);
             }
 
-            return stringBuilder.toString();
+            return builder.toString();
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Forecast that = (Forecast) o;
-            return dataCalculationTime == that.dataCalculationTime &&
-                    Objects.equals(weatherInfo, that.weatherInfo) &&
-                    Objects.equals(weatherStates, that.weatherStates) &&
-                    Objects.equals(clouds, that.clouds) &&
-                    Objects.equals(wind, that.wind) &&
-                    Objects.equals(snow, that.snow) &&
-                    Objects.equals(rain, that.rain) &&
-                    Objects.equals(systemInfo, that.systemInfo) &&
-                    Objects.equals(dt_txt, that.dt_txt);
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(dataCalculationTime, weatherInfo, weatherStates, clouds, wind, snow, rain, systemInfo, dt_txt);
-        }
-
+        @Data
         public static class ForecastSystemInfo {
 
             private String pod;
-
-            public String getPod() {
-                return pod;
-            }
-
-            public void setPod(String pod) {
-                this.pod = pod;
-            }
-
-            @Override
-            public String toString() {
-                return "ForecastSystemInfo{" +
-                        "pod='" + pod + '\'' +
-                        '}';
-            }
-
-            @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                ForecastSystemInfo that = (ForecastSystemInfo) o;
-                return Objects.equals(pod, that.pod);
-            }
-
-            @Override
-            public int hashCode() {
-
-                return Objects.hash(pod);
-            }
         }
 
+        @EqualsAndHashCode
         public static class WeatherInfo {
 
             @JSONField(name = "temp")
             // Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+            @Getter
+            @Setter
             private float temperature;
 
             @JSONField(name = "temp_min")
             // Minimum temperature at the moment of calculation. This is deviation from 'temp' that is possible for large cities and
             // megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+            @Getter
+            @Setter
             private float minimumTemperature;
 
             @JSONField(name = "temp_max")
             // Maximum temperature at the moment of calculation. This is deviation from 'temp' that is possible for large cities and
             // megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+            @Getter
+            @Setter
             private float maximumTemperature;
 
             // Atmospheric pressure on the sea level by default, hPa
+            @Getter
+            @Setter
             private float pressure;
 
             @JSONField(name = "sea_level")
             // Atmospheric pressure on the sea level, hPa
+            @Getter
+            @Setter
             private float seaLevelPressure;
 
             @JSONField(name = "grnd_level")
             // Atmospheric pressure on the ground level, hPa
+            @Getter
+            @Setter
             private float groundLevelPressure;
 
             // Humidity, %
+            @Getter
+            @Setter
             private byte humidity;
 
             @JSONField(name = "temp_kf")
             // Internal parameter
+            @Getter
+            @Setter
             private float temperatureCoefficient;
 
+            @Getter
+            @Setter
             private char temperatureUnit;
-
-            public float getTemperature() {
-                return temperature;
-            }
-
-            public void setTemperature(float temperature) {
-                this.temperature = temperature;
-            }
-
-            public float getMinimumTemperature() {
-                return minimumTemperature;
-            }
-
-            public void setMinimumTemperature(float minimumTemperature) {
-                this.minimumTemperature = minimumTemperature;
-            }
-
-            public float getMaximumTemperature() {
-                return maximumTemperature;
-            }
-
-            public void setMaximumTemperature(float maximumTemperature) {
-                this.maximumTemperature = maximumTemperature;
-            }
-
-            public float getPressure() {
-                return pressure;
-            }
-
-            public void setPressure(float pressure) {
-                this.pressure = pressure;
-            }
-
-            public float getSeaLevelPressure() {
-                return seaLevelPressure;
-            }
-
-            public void setSeaLevelPressure(float seaLevelPressure) {
-                this.seaLevelPressure = seaLevelPressure;
-            }
-
-            public float getGroundLevelPressure() {
-                return groundLevelPressure;
-            }
-
-            public void setGroundLevelPressure(float groundLevelPressure) {
-                this.groundLevelPressure = groundLevelPressure;
-            }
-
-            public byte getHumidity() {
-                return humidity;
-            }
-
-            public void setHumidity(byte humidity) {
-                this.humidity = humidity;
-            }
-
-            public float getTemperatureCoefficient() {
-                return temperatureCoefficient;
-            }
-
-            public void setTemperatureCoefficient(float temperatureCoefficient) {
-                this.temperatureCoefficient = temperatureCoefficient;
-            }
-
-            public char getTemperatureUnit() {
-                return temperatureUnit;
-            }
-
-            public void setTemperatureUnit(char temperatureUnit) {
-                this.temperatureUnit = temperatureUnit;
-            }
 
             public String getPressureUnit() {
                 return "hPa";
@@ -547,61 +277,40 @@ public class HourlyForecast implements OpenWeatherResponse {
 
             @Override
             public String toString() {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("Temperature: ");
-                stringBuilder.append(temperature);
-                stringBuilder.append(' ');
-                stringBuilder.append(temperatureUnit);
-                stringBuilder.append(". Minimum temperature: ");
-                stringBuilder.append(minimumTemperature);
-                stringBuilder.append(' ');
-                stringBuilder.append(temperatureUnit);
-                stringBuilder.append(". Maximum temperature: ");
-                stringBuilder.append(maximumTemperature);
-                stringBuilder.append(' ');
-                stringBuilder.append(temperatureUnit);
-                stringBuilder.append(". Pressure: ");
-                stringBuilder.append(pressure);
-                stringBuilder.append(' ');
-                stringBuilder.append(getPressureUnit());
+                StringBuilder builder = new StringBuilder();
+                builder.append("Temperature: ");
+                builder.append(temperature);
+                builder.append(' ');
+                builder.append(temperatureUnit);
+                builder.append("; Minimum temperature: ");
+                builder.append(minimumTemperature);
+                builder.append(' ');
+                builder.append(temperatureUnit);
+                builder.append("; Maximum temperature: ");
+                builder.append(maximumTemperature);
+                builder.append(' ');
+                builder.append(temperatureUnit);
+                builder.append("; Pressure: ");
+                builder.append(pressure);
+                builder.append(' ');
+                builder.append(getPressureUnit());
                 if (seaLevelPressure > 0) {
-                    stringBuilder.append(". Sea-level pressure: ");
-                    stringBuilder.append(seaLevelPressure);
-                    stringBuilder.append(' ');
-                    stringBuilder.append(getPressureUnit());
+                    builder.append("; Sea-level pressure: ");
+                    builder.append(seaLevelPressure);
+                    builder.append(' ');
+                    builder.append(getPressureUnit());
                 }
                 if (groundLevelPressure > 0) {
-                    stringBuilder.append(". Ground-level pressure: ");
-                    stringBuilder.append(groundLevelPressure);
-                    stringBuilder.append(' ');
-                    stringBuilder.append(getPressureUnit());
+                    builder.append("; Ground-level pressure: ");
+                    builder.append(groundLevelPressure);
+                    builder.append(' ');
+                    builder.append(getPressureUnit());
                 }
-                stringBuilder.append(". Humidity: ");
-                stringBuilder.append(humidity);
-                stringBuilder.append('%');
+                builder.append("; Humidity: ");
+                builder.append(humidity);
+                builder.append('%');
 
-                return stringBuilder.toString();
-            }
-
-            @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                WeatherInfo weatherInfo = (WeatherInfo) o;
-                return Float.compare(weatherInfo.temperature, temperature) == 0 &&
-                        Float.compare(weatherInfo.minimumTemperature, minimumTemperature) == 0 &&
-                        Float.compare(weatherInfo.maximumTemperature, maximumTemperature) == 0 &&
-                        Float.compare(weatherInfo.pressure, pressure) == 0 &&
-                        Float.compare(weatherInfo.seaLevelPressure, seaLevelPressure) == 0 &&
-                        Float.compare(weatherInfo.groundLevelPressure, groundLevelPressure) == 0 &&
-                        humidity == weatherInfo.humidity &&
-                        Float.compare(weatherInfo.temperatureCoefficient, temperatureCoefficient) == 0;
-            }
-
-            @Override
-            public int hashCode() {
-
-                return Objects.hash(temperature, minimumTemperature, maximumTemperature, pressure, seaLevelPressure, groundLevelPressure, humidity, temperatureCoefficient);
+                return builder.toString();
             }
         }
     }

@@ -127,7 +127,7 @@ Available requests:
 | `getCityId()`               | Returns city ID. Example: `625144` for Minsk.                                              |
 | `getCityName()`             | Returns city name. Example: `Minsk`.                                                       |
 | `getCoordinates()`          | Returns `Coordinates` instance that contains *latitude* and *longitude* information.       |
-| `getCityInfo()`             | Returns `HourlyForecast.CityInfo` instance that contains information about city.           |
+| `getCityInfo()`             | Returns `CityInfo` instance that contains information about city.                          |
 | `getResponseCode()`         | Returns OpenWeatherMap response code. Internal information.                                |
 | `getCountry()`              | An alias for `getCityInfo().getCountry()`.                                                 |
 | `getForecasts()`            | Returns `List<HourlyForecast.Forecast>` collection with all forecast information.          |

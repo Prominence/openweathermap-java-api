@@ -24,150 +24,75 @@ package com.github.prominence.openweathermap.api.model.response;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.github.prominence.openweathermap.api.model.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
+@EqualsAndHashCode
 public class Weather implements OpenWeatherResponse {
 
     @JSONField(name = "id")
+    @Getter
+    @Setter
     private long cityId;
 
     @JSONField(name = "name")
+    @Getter
+    @Setter
     private String cityName;
 
     @JSONField(name = "coord")
+    @Getter
+    @Setter
     private Coordinates coordinates;
 
     @JSONField(name = "weather")
+    @Getter
+    @Setter
     private List<WeatherState> weatherStates;
 
+    @Getter
+    @Setter
     private String base;
 
     @JSONField(name = "main")
+    @Getter
+    @Setter
     private WeatherInfo weatherInfo;
 
+    @Getter
+    @Setter
     private Wind wind;
 
+    @Getter
+    @Setter
     private Clouds clouds;
 
+    @Getter
+    @Setter
     private Rain rain;
 
+    @Getter
+    @Setter
     private Snow snow;
 
     @JSONField(name = "dt")
+    @Getter
+    @Setter
     private long dataCalculationTime;
 
     @JSONField(name = "sys")
+    @Getter
+    @Setter
     private WeatherSystemInfo weatherSystemInfo;
 
     @JSONField(name = "cod")
+    @Getter
+    @Setter
     private short responseCode;
-
-    public long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(long cityId) {
-        this.cityId = cityId;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public List<WeatherState> getWeatherStates() {
-        return weatherStates;
-    }
-
-    public void setWeatherStates(List<WeatherState> weatherStates) {
-        this.weatherStates = weatherStates;
-    }
-
-    public String getBase() {
-        return base;
-    }
-
-    public void setBase(String base) {
-        this.base = base;
-    }
-
-    public WeatherInfo getWeatherInfo() {
-        return weatherInfo;
-    }
-
-    public void setWeatherInfo(WeatherInfo weatherInfo) {
-        this.weatherInfo = weatherInfo;
-    }
-
-    public Wind getWind() {
-        return wind;
-    }
-
-    public void setWind(Wind wind) {
-        this.wind = wind;
-    }
-
-    public Clouds getClouds() {
-        return clouds;
-    }
-
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
-    }
-
-    public Rain getRain() {
-        return rain;
-    }
-
-    public void setRain(Rain rain) {
-        this.rain = rain;
-    }
-
-    public Snow getSnow() {
-        return snow;
-    }
-
-    public void setSnow(Snow snow) {
-        this.snow = snow;
-    }
-
-    public long getDataCalculationTime() {
-        return dataCalculationTime;
-    }
-
-    public void setDataCalculationTime(long dataCalculationTime) {
-        this.dataCalculationTime = dataCalculationTime;
-    }
-
-    public WeatherSystemInfo getWeatherSystemInfo() {
-        return weatherSystemInfo;
-    }
-
-    public void setWeatherSystemInfo(WeatherSystemInfo weatherSystemInfo) {
-        this.weatherSystemInfo = weatherSystemInfo;
-    }
-
-    public short getResponseCode() {
-        return responseCode;
-    }
-
-    public void setResponseCode(short responseCode) {
-        this.responseCode = responseCode;
-    }
 
     public String getCountry() {
         return weatherSystemInfo.country;
@@ -211,8 +136,7 @@ public class Weather implements OpenWeatherResponse {
         stringBuilder.append(cityName);
         stringBuilder.append('(');
         stringBuilder.append(cityId);
-        stringBuilder.append("). ");
-        stringBuilder.append("Coordinates: ");
+        stringBuilder.append("); Coordinates: ");
         stringBuilder.append(coordinates);
         stringBuilder.append('\n');
         stringBuilder.append(weatherSystemInfo);
@@ -243,102 +167,55 @@ public class Weather implements OpenWeatherResponse {
         return stringBuilder.toString();
     }
 
+    @EqualsAndHashCode
     public static class WeatherInfo {
         @JSONField(name = "temp")
         // Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+        @Getter
+        @Setter
         private float temperature;
 
         @JSONField(name = "pressure")
         // Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
+        @Getter
+        @Setter
         private short pressure;
 
         @JSONField(name = "humidity")
         // Humidity, %
+        @Getter
+        @Setter
         private byte humidity;
 
         @JSONField(name = "temp_min")
         // Minimum temperature at the moment. This is deviation from current temp that is possible for large cities
         // and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+        @Getter
+        @Setter
         private float minimumTemperature;
 
         @JSONField(name = "temp_max")
         // Maximum temperature at the moment. This is deviation from current temp that is possible for large cities
         // and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+        @Getter
+        @Setter
         private float maximumTemperature;
 
         @JSONField(name = "sea_level")
         // Atmospheric pressure on the sea level, hPa
+        @Getter
+        @Setter
         private short seaLevelPressure;
 
         @JSONField(name = "grnd_level")
         // Atmospheric pressure on the ground level, hPa
+        @Getter
+        @Setter
         private short groundLevelPressure;
 
+        @Getter
+        @Setter
         private char temperatureUnit;
-
-        public float getTemperature() {
-            return temperature;
-        }
-
-        public void setTemperature(float temperature) {
-            this.temperature = temperature;
-        }
-
-        public short getPressure() {
-            return pressure;
-        }
-
-        public void setPressure(short pressure) {
-            this.pressure = pressure;
-        }
-
-        public byte getHumidity() {
-            return humidity;
-        }
-
-        public void setHumidity(byte humidity) {
-            this.humidity = humidity;
-        }
-
-        public float getMinimumTemperature() {
-            return minimumTemperature;
-        }
-
-        public void setMinimumTemperature(float minimumTemperature) {
-            this.minimumTemperature = minimumTemperature;
-        }
-
-        public float getMaximumTemperature() {
-            return maximumTemperature;
-        }
-
-        public void setMaximumTemperature(float maximumTemperature) {
-            this.maximumTemperature = maximumTemperature;
-        }
-
-        public short getSeaLevelPressure() {
-            return seaLevelPressure;
-        }
-
-        public void setSeaLevelPressure(short seaLevelPressure) {
-            this.seaLevelPressure = seaLevelPressure;
-        }
-
-        public short getGroundLevelPressure() {
-            return groundLevelPressure;
-        }
-
-        public void setGroundLevelPressure(short groundLevelPressure) {
-            this.groundLevelPressure = groundLevelPressure;
-        }
-
-        public char getTemperatureUnit() {
-            return temperatureUnit;
-        }
-
-        public void setTemperatureUnit(char temperatureUnit) {
-            this.temperatureUnit = temperatureUnit;
-        }
 
         public String getPressureUnit() {
             return "hPa";
@@ -351,11 +228,11 @@ public class Weather implements OpenWeatherResponse {
             stringBuilder.append(temperature);
             stringBuilder.append(' ');
             stringBuilder.append(temperatureUnit);
-            stringBuilder.append(". Minimum temparature: ");
+            stringBuilder.append("; Minimum temparature: ");
             stringBuilder.append(minimumTemperature);
             stringBuilder.append(' ');
             stringBuilder.append(temperatureUnit);
-            stringBuilder.append(". Maximum temperature: ");
+            stringBuilder.append("; Maximum temperature: ");
             stringBuilder.append(maximumTemperature);
             stringBuilder.append(' ');
             stringBuilder.append(temperatureUnit);
@@ -369,13 +246,13 @@ public class Weather implements OpenWeatherResponse {
             stringBuilder.append(' ');
             stringBuilder.append(getPressureUnit());
             if (seaLevelPressure > 0) {
-                stringBuilder.append(". Sea-level pressure: ");
+                stringBuilder.append("; Sea-level pressure: ");
                 stringBuilder.append(seaLevelPressure);
                 stringBuilder.append(' ');
                 stringBuilder.append(getPressureUnit());
             }
             if (groundLevelPressure > 0) {
-                stringBuilder.append(". Ground-level pressure: ");
+                stringBuilder.append("; Ground-level pressure: ");
                 stringBuilder.append(groundLevelPressure);
                 stringBuilder.append(' ');
                 stringBuilder.append(getPressureUnit());
@@ -383,103 +260,47 @@ public class Weather implements OpenWeatherResponse {
 
             return stringBuilder.toString();
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            WeatherInfo that = (WeatherInfo) o;
-            return Float.compare(that.temperature, temperature) == 0 &&
-                    pressure == that.pressure &&
-                    humidity == that.humidity &&
-                    Float.compare(that.minimumTemperature, minimumTemperature) == 0 &&
-                    Float.compare(that.maximumTemperature, maximumTemperature) == 0 &&
-                    seaLevelPressure == that.seaLevelPressure &&
-                    groundLevelPressure == that.groundLevelPressure;
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(temperature, pressure, humidity, minimumTemperature, maximumTemperature, seaLevelPressure, groundLevelPressure);
-        }
     }
 
     public static class WeatherSystemInfo {
         @JSONField(name = "type")
         // Internal parameter
+        @Getter
+        @Setter
         private short type;
 
         @JSONField(name = "id")
         // Internal parameter
+        @Getter
+        @Setter
         private long id;
 
         @JSONField(name = "message")
         // Internal parameter
+        @Getter
+        @Setter
         private double message;
 
         @JSONField(name = "country")
         // Country code (GB, JP etc.)
+        @Getter
+        @Setter
         private String country;
 
         @JSONField(name = "sunrise")
         // Sunrise time, unix, UTC
+        @Getter
+        @Setter
         private long sunriseTimestamp;
 
         @JSONField(name = "sunset")
         // Sunset time, unix, UTC
+        @Getter
+        @Setter
         private long sunsetTimestamp;
-
-        public short getType() {
-            return type;
-        }
-
-        public void setType(short type) {
-            this.type = type;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public void setId(long id) {
-            this.id = id;
-        }
-
-        public double getMessage() {
-            return message;
-        }
-
-        public void setMessage(double message) {
-            this.message = message;
-        }
-
-        public String getCountry() {
-            return country;
-        }
-
-        public void setCountry(String country) {
-            this.country = country;
-        }
-
-        public long getSunriseTimestamp() {
-            return sunriseTimestamp;
-        }
-
-        public void setSunriseTimestamp(long sunriseTimestamp) {
-            this.sunriseTimestamp = sunriseTimestamp;
-        }
 
         public Date getSunriseDate() {
             return new Date(sunriseTimestamp * 1000);
-        }
-
-        public long getSunsetTimestamp() {
-            return sunsetTimestamp;
-        }
-
-        public void setSunsetTimestamp(long sunsetTimestamp) {
-            this.sunsetTimestamp = sunsetTimestamp;
         }
 
         public Date getSunsetDate() {
@@ -506,25 +327,6 @@ public class Weather implements OpenWeatherResponse {
             }
 
             return stringBuilder.toString();
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            WeatherSystemInfo that = (WeatherSystemInfo) o;
-            return type == that.type &&
-                    id == that.id &&
-                    Double.compare(that.message, message) == 0 &&
-                    Objects.equals(country, that.country) &&
-                    Objects.equals(sunriseTimestamp, that.sunriseTimestamp) &&
-                    Objects.equals(sunsetTimestamp, that.sunsetTimestamp);
-        }
-
-        @Override
-        public int hashCode() {
-
-            return Objects.hash(type, id, message, country, sunriseTimestamp, sunsetTimestamp);
         }
     }
 }
