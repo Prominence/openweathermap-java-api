@@ -30,5 +30,5 @@ compile('com.github.prominence:openweathermap-api:1.0')
 * [OpenWeatherMap Java API - 1.0](docs/Release_1.0.md)
 * [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
 
- License
+### License
 MIT
