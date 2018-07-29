@@ -20,30 +20,48 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.utils;
+package com.github.prominence.openweathermap.api.model.response;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.time.Instant;
+import java.util.Date;
 
-public final class JsonUtils {
+@EqualsAndHashCode
+public class UltravioletIndex {
 
-    private JsonUtils() {}
+    @JSONField(name = "lat")
+    @Getter
+    @Setter
+    float latitude;
 
-    public static Object parseJson(InputStream inputStream, Class clazz) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    @JSONField(name = "lon")
+    @Getter
+    @Setter
+    float longitude;
 
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
+    @JSONField(name = "date_iso")
+    @Getter
+    @Setter
+    String dateISO;
 
-        reader.close();
+    @JSONField(name = "date")
+    @Getter
+    @Setter
+    int dateTimestamp;
 
-        return JSON.parseObject(result.toString(), clazz);
+    @Getter
+    @Setter
+    float value;
+
+    public Date getCalculationDate() {
+        return Date.from(Instant.ofEpochSecond(dateTimestamp));
+    }
+
+    public String toString() {
+        return String.format("Date: %s, Ultraviolet value: %f", getCalculationDate(), value);
     }
 }

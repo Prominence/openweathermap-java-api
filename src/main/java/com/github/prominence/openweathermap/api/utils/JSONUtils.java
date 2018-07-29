@@ -20,29 +20,39 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.utils;
 
-public class OpenWeatherMapManager {
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 
-    private String authToken;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-    public OpenWeatherMapManager(String token) {
-        this.authToken = token;
+public final class JSONUtils {
+
+    private JSONUtils() {}
+
+    public static Object parseJSON(InputStream inputStream, Class clazz) throws IOException {
+        return JSON.parseObject(getStringFromStream(inputStream), clazz);
     }
 
-    public WeatherRequester getWeatherRequester() {
-        return new WeatherRequester(authToken);
+    public static Object parseJSON(InputStream inputStream, TypeReference typeReference) throws IOException {
+        return JSON.parseObject(getStringFromStream(inputStream), typeReference);
     }
 
-    public HourlyForecastRequester getHourlyForecastRequester() {
-        return new HourlyForecastRequester(authToken);
-    }
+    private static String getStringFromStream(InputStream inputStream) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-    public DailyForecastRequester getDailyForecastRequester() {
-        return new DailyForecastRequester(authToken);
-    }
+        StringBuilder result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
 
-    public UltravioletIndexRequester getUltravioletIndexRequester() {
-        return new UltravioletIndexRequester(authToken);
+        reader.close();
+
+        return result.toString();
     }
 }

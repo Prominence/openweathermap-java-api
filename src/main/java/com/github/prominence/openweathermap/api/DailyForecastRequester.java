@@ -26,7 +26,7 @@ import com.github.prominence.openweathermap.api.constants.Unit;
 import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.response.DailyForecast;
-import com.github.prominence.openweathermap.api.utils.JsonUtils;
+import com.github.prominence.openweathermap.api.utils.JSONUtils;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class DailyForecastRequester extends BasicRequester<DailyForecast> {
 
         try {
             InputStream requestResult = RequestUtils.executeGetRequest(buildURL(requestSpecificParameters));
-            forecastResponse = (DailyForecast)JsonUtils.parseJson(requestResult, DailyForecast.class);
+            forecastResponse = (DailyForecast)JSONUtils.parseJSON(requestResult, DailyForecast.class);
 
             char temperatureUnit = Unit.getTemperatureUnit(unitSystem);
             String windUnit = Unit.getWindUnit(unitSystem);
