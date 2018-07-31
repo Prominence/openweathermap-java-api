@@ -2,6 +2,7 @@
 * Current weather data
 * 5 day / 3 hour forecast
 * 16 day / daily forecast
+* UV Index
 
 ### Maven coordinates:
 
@@ -30,6 +31,8 @@ where `API_TOKEN` is your token([you can get it here](https://home.openweatherma
 Currently available methods:
 * `getWeatherRequester()`
 * `getHourlyForecastRequester()`
+* `getDailyForecastRequester()`
+* `getUltravioletIndexRequester()`
 
 #### Current weather data
 First step is retrieving `WeatherRequester` instance:
@@ -189,7 +192,7 @@ Forecasts:
     Time: Sat Jul 21 21:00:00 MSK 2018. Weather: scattered clouds. Temperature: 22.56 ℃. Minimum temperature: 22.56 ℃. Maximum temperature: 22.56 ℃. Pressure: 1001.72 hPa. Sea-level pressure: 1022.7 hPa. Ground-level pressure: 1001.72 hPa. Humidity: 66%. Cloudiness: 48%. Wind: 3.96 meter/sec, 312 degrees. Rain(last 3 hrs): 0 mm
 ```
 
-`Forecast`'s useful public methods(setters are not listed):
+`HourlyForecast.Forecast`'s useful public methods(setters are not listed):
 
 | Method                      | Description                                                                                                      |
 |-----------------------------|------------------------------------------------------------------------------------------------------------------|
@@ -203,8 +206,96 @@ Forecasts:
 | `getRain()`                 | Returns `Rain` instance that contains information about rain volume for the last 3 hours.                        |
 | `getSystemInfo()`           | Returns `HourlyForecast.ForecastSystemInfo` instance with internal information.                                  |
 | `getDt_txt()`               | Returns `String` value that represents data calculation time.                                                    |
-| `toString()`                | Returns pretty string for the whole available weather information.                                               |
+| `toString()`                | Returns pretty string for the whole available forecast information.                                              |
 
+#### 16 day / daily forecast
+First step is retrieving `DailyForecastRequester` instance:
+```java
+OpenWeatherMapManager openWeatherManager = new OpenWeatherMapManager(API_TOKEN);
+DailyForecastRequester forecastRequester = openWeatherManager.getDailyForecastRequester();
+```
+after you are able to set preferable options(via chain methods) and execute appropriate request:
+```
+DailyForecast forecastResponse = forecastRequester
+    .setLanguage(Language.ENGLISH)
+    .setUnitSystem(Unit.METRIC_SYSTEM)
+    .setAccuracy(Accuracy.ACCURATE)
+    .getByCityName("Pruzhany");
+```
+*Language*, *UnitSystem* and *Accuracy* settings will be described below.
+
+Available requests:
+* `getByCityId(String cityId)`
+* `getByCityName(String cityName)`
+* `getByCoordinates(double latitude, double longitude)`
+* `getByCoordinates(Coordinates coordinates)`
+* `getByZIPCode(String zipCode, String countryCode)`
+
+`DailyForecast`'s useful public methods(setters are not listed):
+
+| Method                      | Description                                                                                |
+|-----------------------------|--------------------------------------------------------------------------------------------|
+| `getCityId()`               | Returns city ID. Example: `625144` for Minsk.                                              |
+| `getCityName()`             | Returns city name. Example: `Minsk`.                                                       |
+| `getCoordinates()`          | Returns `Coordinates` instance that contains *latitude* and *longitude* information.       |
+| `getCityInfo()`             | Returns `CityInfo` instance that contains information about city.                          |
+| `getResponseCode()`         | Returns OpenWeatherMap response code. Internal information.                                |
+| `getCountry()`              | An alias for `getCityInfo().getCountry()`.                                                 |
+| `getForecasts()`            | Returns `List<HourlyForecast.Forecast>` collection with all forecast information.          |
+| `toString()`                | Returns pretty string for the whole available forecast information.                        |
+
+`DailyForecast.Forecast`'s useful public methods(setters are not listed):
+
+| Method                      | Description                                                                                                      |
+|-----------------------------|------------------------------------------------------------------------------------------------------------------|
+| `getDataCalculationTime()`  | Returns `long` value that represents data calculation timestamp.                                                 |
+| `getDataCalculationDate()`  | Returns data calculation time in `Date` representation.                                                          |
+| `getTemperature()`          | Returns `DailyForecast.Forecast.Temperature` instance that contains information about temperature(avg, min, max).|
+| `getWeatherStates()`        | Returns list of `WeatherState` instances with the only `getDescription` useful method.                           |
+| `getCloudiness()`           | Returns *cloudiness* percentage information.                                                                     |
+| `getHumidity()`             | Returns *humidity* percentage information.                                                                       |
+| `getWindSpeed()`            | Returns wind's speed.                                                                                            |
+| `getWindDegrees()`          | Returns wind's degree.                                                                                           |
+| `getWindUnit()`             | Returns wind's unit.                                                                                             |
+| `getPressure()`             | Returns pressure value.                                                                                          |
+| `getPressureUnit()`         | Returns pressure's unit.                                                                                         |
+| `toString()`                | Returns pretty string for the whole available forecast information.                                              |
+
+#### UV Index
+
+First step is retrieving `UltravioletIndexRequester` instance:
+```java
+OpenWeatherMapManager openWeatherMapManager = new OpenWeatherMapManager(API_TOKEN);
+UltravioletIndexRequester requester = openWeatherMapManager.getUltravioletIndexRequester();
+```
+after you need to set coordinates and execute appropriate request:
+```
+DailyForecast forecastResponse = forecastRequester
+    .setCoodrinates(55.33f, 24.27f)
+    .getCurrentUVIndex();
+```
+
+Available requests:
+* `getCurrentUVIndex()`
+* `getUVIndexForecast(int amountOfDays)`
+* `getUVIndexByPeriod(Date from, Date to)`
+
+`UltravioletIndex`'s useful public methods(setters are not listed):
+
+| Method                    | Description                                                   |
+|---------------------------|---------------------------------------------------------------|
+| `getLatitude()`           | Returns latitude.                                             |
+| `getLongitude()`          | Returns longitude.                                            |
+| `getDateISO()`            | Returns ISO date in String representation.                    |
+| `getDateTimestamp()`      | Returns date timestamp.                                       |
+| `getValue()`              | Returns UV value.                                             |
+| `getCalculationDate()`    | Returns date in Date representation`.                         |
+| `toString()`              | Returns pretty string for the whole available UV information. |
+
+`toString()` output example:
+```
+Date: Tue Jul 31 15:00:00 MSK 2018, Ultraviolet value: 6.230000
+```
 
 ### Constants and options
 

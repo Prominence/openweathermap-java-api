@@ -31,6 +31,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode
@@ -144,6 +146,10 @@ public class DailyForecast implements OpenWeatherResponse {
 
         public String getPressureUnit() {
             return "hPa";
+        }
+
+        public Date getDataCalculationDate() {
+            return Date.from(Instant.ofEpochSecond(dataCalculationTime));
         }
 
         @Override
