@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api;
 
-import com.github.prominence.openweathermap.api.constants.System;
 import com.github.prominence.openweathermap.api.constants.Unit;
 import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
