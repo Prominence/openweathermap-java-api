@@ -24,6 +24,9 @@ package com.github.prominence.openweathermap.api;
 
 abstract class AuthenticationTokenBasedRequester {
 
+    protected static final String OPEN_WEATHER_API_VERSION = "2.5";
+    protected static final String OPEN_WEATHER_API_URL = "http://api.openweathermap.org/data/" + OPEN_WEATHER_API_VERSION + "/";
+
     protected String authToken;
 
     protected AuthenticationTokenBasedRequester(String authToken) {

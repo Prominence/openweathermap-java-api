@@ -99,7 +99,7 @@ public class UltravioletIndexRequester extends AuthenticationTokenBasedRequester
 
     private InputStream executeRequest(String requestType, String requestSpecificParameters) throws MalformedURLException, InvalidAuthTokenException, DataNotFoundException {
 
-        StringBuilder urlBuilder = new StringBuilder(System.OPEN_WEATHER_API_URL);
+        StringBuilder urlBuilder = new StringBuilder(OPEN_WEATHER_API_URL);
         urlBuilder.append(requestType);
         urlBuilder.append('?');
         urlBuilder.append(requestSpecificParameters);

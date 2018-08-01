@@ -342,12 +342,6 @@ Date: Tue Jul 31 15:00:00 MSK 2018, Ultraviolet value: 6.230000
 | Language.CHINESE_SIMPLIFIED       | Chinese Simplified language.  |
 | Language.CHINESE_TRADITIONAL      | Chinese Traditional language. |
 
-#### System
-| Constant                      | Description           |
-|-------------------------------|-----------------------|
-|System.OPEN_WEATHER_API_URL    | Basic API url.        |
-|System.OPEN_WEATHER_API_VERSION| Current API version.  |
-
 #### Unit
 | Constant             | Description                                    |
 |----------------------|------------------------------------------------|

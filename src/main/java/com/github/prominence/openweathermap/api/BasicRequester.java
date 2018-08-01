@@ -64,7 +64,7 @@ abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
 
     protected URL buildURL(String requestSpecificParameters) throws MalformedURLException {
 
-        StringBuilder urlBuilder = new StringBuilder(System.OPEN_WEATHER_API_URL);
+        StringBuilder urlBuilder = new StringBuilder(OPEN_WEATHER_API_URL);
         urlBuilder.append(getRequestType());
         urlBuilder.append(requestSpecificParameters);
 
