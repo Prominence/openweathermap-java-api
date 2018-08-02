@@ -45,4 +45,8 @@ public class OpenWeatherMapManager {
     public UltravioletIndexRequester getUltravioletIndexRequester() {
         return new UltravioletIndexRequester(authToken);
     }
+
+    public AirPollutionRequester getAirPollutionRequester() {
+        return new AirPollutionRequester(authToken);
+    }
 }

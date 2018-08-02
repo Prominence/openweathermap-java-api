@@ -3,6 +3,7 @@
 * 5 day / 3 hour forecast
 * 16 day / daily forecast
 * UV Index
+* Air Pollution
 
 ### Maven coordinates:
 
@@ -295,6 +296,40 @@ Available requests:
 `toString()` output example:
 ```
 Date: Tue Jul 31 15:00:00 MSK 2018, Ultraviolet value: 6.230000
+```
+
+#### Air pollution
+
+First step is retrieving `AirPollutionRequester` instance:
+```java
+OpenWeatherMapManager openWeatherMapManager = new OpenWeatherMapManager(API_TOKEN);
+AirPollutionRequester requester = openWeatherMapManager.getAirPollutionRequester();
+```
+after you need to set coordinates, time frame, date and execute appropriate request:
+```
+DailyForecast forecastResponse = forecastRequester
+    .setCoordinates(0.0f, 10.0f)
+    .setTimeFrame(TimeFrame.YEAR)
+    .setDate(new Date())
+    .retrieve();
+```
+
+Available requests:
+* `retrieve()`
+
+`AirPollution`'s useful public methods(setters are not listed):
+
+| Method                    | Description                                                               |
+|---------------------------|---------------------------------------------------------------------------|
+| `getCoordinates()`        | Returns `Coordinates` instance.                                           |
+| `getLongitude()`          | Returns longitude.                                                        |
+| `airPollutionInfo()`      | Returns list of `AirPollution.AirPollutionInfo` instances.                |
+| `toString()`              | Returns pretty string for the whole available air pollution information.  |
+
+`toString()` output example:
+```
+AirPollution[Date: Tue Jul 24 01:04:40 MSK 2018; Coordinates: latitude=0.0, longitude=9.9955]
+[Value: 8.0347114E-8, Value: 9.5041536E-8, Value: 7.7667146E-8, Value: 7.251491E-8, Value: 5.899763E-8, Value: 1.9186361E-8, Value: 1.729535E-8, Value: 1.25645805E-8, Value: 3.0852514E-9]
 ```
 
 ### Constants and options

@@ -18,20 +18,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.constants;
 
-abstract class AuthenticationTokenBasedRequester {
-
-    protected static final String OPEN_WEATHER_API_VERSION = "2.5";
-    protected static final String OPEN_WEATHER_BASE_URL = "http://api.openweathermap.org/";
-    protected static final String OPEN_WEATHER_API_URL = OPEN_WEATHER_BASE_URL + "data/" + OPEN_WEATHER_API_VERSION + "/";
-
-    protected String authToken;
-
-    protected AuthenticationTokenBasedRequester(String authToken) {
-        this.authToken = authToken;
-    }
-
+public enum TimeFrame {
+    YEAR,
+    MONTH,
+    DAY,
+    HOUR,
+    MINUTE,
+    SECOND
 }
