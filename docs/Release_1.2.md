@@ -11,14 +11,14 @@
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:1.1')
+compile('com.github.prominence:openweathermap-api:1.2')
 ```
 
 ### How to use:
@@ -33,8 +33,8 @@ Currently available methods:
 * `getWeatherRequester()`
 * `getHourlyForecastRequester()`
 * `getDailyForecastRequester()`
-* `getUltravioletIndexRequester()`
-* `getAirPollutionRequester()`
+* `getUltravioletIndexRequester(...)`
+* `getAirPollutionRequester(...)`
 
 #### Current weather data
 First step is retrieving `WeatherRequester` instance:
@@ -268,14 +268,21 @@ Available requests:
 First step is retrieving `UltravioletIndexRequester` instance:
 ```java
 OpenWeatherMapManager openWeatherMapManager = new OpenWeatherMapManager(API_TOKEN);
-UltravioletIndexRequester requester = openWeatherMapManager.getUltravioletIndexRequester();
+UltravioletIndexRequester requester = openWeatherMapManager.getUltravioletIndexRequester(34.23f, -22.45f);
 ```
-after you need to set coordinates and execute appropriate request:
+or
+```java
+OpenWeatherMapManager openWeatherMapManager = new OpenWeatherMapManager(API_TOKEN);
+Coordinates coordinates = new Coordinates(34.23f, -22.45f);
+UltravioletIndexRequester requester = openWeatherMapManager.getUltravioletIndexRequester(coordinates);
 ```
-UltravioletIndex uvResponse = requester
-    .setCoodrinates(55.33f, 24.27f)
-    .getCurrentUVIndex();
+
+after you need to execute appropriate request:
 ```
+UltravioletIndex uvResponse = requester.getCurrentUVIndex();
+```
+
+You can change required coordinates via: `requester.setCoordinates(Coordinates coordinates);` or `requester.setCoordinates(float latitude, float longitude);`
 
 Available requests:
 * `getCurrentUVIndex()`
@@ -304,15 +311,19 @@ Date: Tue Jul 31 15:00:00 MSK 2018, Ultraviolet value: 6.230000
 First step is retrieving `AirPollutionRequester` instance:
 ```java
 OpenWeatherMapManager openWeatherMapManager = new OpenWeatherMapManager(API_TOKEN);
-AirPollutionRequester requester = openWeatherMapManager.getAirPollutionRequester();
+AirPollutionRequester requester = openWeatherMapManager.getAirPollutionRequester(0f, 10f, new Date(), TimeFrame.DAY);
 ```
-after you need to set coordinates, time frame, date and execute appropriate request:
+after you need to execute appropriate request:
 ```
-AirPollution airPollutionResponse = forecastRequester
-    .setCoordinates(0.0f, 10.0f)
-    .setTimeFrame(TimeFrame.YEAR)
-    .setDate(new Date())
-    .retrieve();
+AirPollution airPolutionResponse = requester.retrieve();
+```
+
+You can modify parameters anytime:
+```java
+requester.setCoordinates(Coordinates coordinates);
+requester.setCoordinates(float latitude, float longitude);
+requester.setTimeFrame(TimeFrame timeFrame);
+requester.setDate(Date date);
 ```
 
 Available requests:
@@ -388,3 +399,4 @@ AirPollution[Date: Tue Jul 24 01:04:40 MSK 2018; Coordinates: latitude=0.0, long
 ### Dependencies
 * com.alibaba:fastjson:1.2.44
 * org.projectlombok:lombok:1.18.0 (*provided*)
+* junit:junit:4.12 (*test*)
