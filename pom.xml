@@ -72,7 +72,7 @@
                 <version>3.1.0</version>
                 <configuration>
                     <excludes>
-                        <exclude>ApplicationTest.class</exclude>
+                        <exclude>**/test/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -143,6 +143,12 @@
             <version>1.18.0</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

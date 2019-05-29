@@ -24,13 +24,11 @@
 package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.constants.TimeFrame;
-import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
-import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.response.AirPollution;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.utils.TimeFrameUtils;
 import com.github.prominence.openweathermap.api.utils.JSONUtils;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
-import com.github.prominence.openweathermap.api.utils.TimeFrameUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,8 +42,11 @@ public class AirPollutionRequester extends AuthenticationTokenBasedRequester {
     private TimeFrame timeFrame;
     private Date date;
 
-    AirPollutionRequester(String authToken) {
+    AirPollutionRequester(String authToken, float latitude, float longitude, Date date, TimeFrame timeFrame) {
         super(authToken);
+        this.coordinates = new Coordinates(latitude, longitude);
+        this.date = date;
+        this.timeFrame = timeFrame;
     }
 
     public AirPollutionRequester setCoordinates(Coordinates coordinates) {
@@ -68,15 +69,16 @@ public class AirPollutionRequester extends AuthenticationTokenBasedRequester {
         return this;
     }
 
-    public AirPollution retrieve() throws InvalidAuthTokenException, DataNotFoundException {
+    public AirPollution retrieve() {
         if (coordinates == null || timeFrame == null || date == null) {
-            throw new IllegalArgumentException("You must execute 'setCoordinates', 'setTimeFrame' and 'setDate' and least once.");
+            throw new IllegalArgumentException("Coordinates, date or time frame weren't set.");
         }
 
         String requestParameters = String.format("%s,%s/%s.json", coordinates.getLatitude(), coordinates.getLongitude(), TimeFrameUtils.formatDate(date, timeFrame));
 
         AirPollution airPollution = null;
 
+        // currently only CO
         try (InputStream response = executeRequest("pollution/v1/co/", requestParameters)) {
             airPollution = (AirPollution) JSONUtils.parseJSON(response, AirPollution.class);
         } catch (IOException ex) {
@@ -86,13 +88,20 @@ public class AirPollutionRequester extends AuthenticationTokenBasedRequester {
         return airPollution;
     }
 
-    private InputStream executeRequest(String requestType, String requestSpecificParameters) throws MalformedURLException, InvalidAuthTokenException, DataNotFoundException {
+    private InputStream executeRequest(String requestType, String requestSpecificParameters) {
 
         String url = OPEN_WEATHER_BASE_URL + requestType +
                 requestSpecificParameters +
                 "?appid=" +
                 authToken;
-        return RequestUtils.executeGetRequest(new URL(url));
+        InputStream getRequest = null;
+        try {
+            getRequest = RequestUtils.executeGetRequest(new URL(url));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return getRequest;
     }
 
 }

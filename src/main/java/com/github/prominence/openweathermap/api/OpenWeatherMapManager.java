@@ -22,6 +22,11 @@
 
 package com.github.prominence.openweathermap.api;
 
+import com.github.prominence.openweathermap.api.constants.TimeFrame;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+
+import java.util.Date;
+
 public class OpenWeatherMapManager {
 
     private String authToken;
@@ -42,11 +47,19 @@ public class OpenWeatherMapManager {
         return new DailyForecastRequester(authToken);
     }
 
-    public UltravioletIndexRequester getUltravioletIndexRequester() {
-        return new UltravioletIndexRequester(authToken);
+    public UltravioletIndexRequester getUltravioletIndexRequester(float latitude, float longitude) {
+        return new UltravioletIndexRequester(authToken, latitude, longitude);
     }
 
-    public AirPollutionRequester getAirPollutionRequester() {
-        return new AirPollutionRequester(authToken);
+    public UltravioletIndexRequester getUltravioletIndexRequester(Coordinates coordinates) {
+        return new UltravioletIndexRequester(authToken, coordinates.getLatitude(), coordinates.getLongitude());
+    }
+
+    public AirPollutionRequester getAirPollutionRequester(float latitude, float longitude, Date date, TimeFrame timeFrame) {
+        return new AirPollutionRequester(authToken, latitude, longitude, date, timeFrame);
+    }
+
+    public AirPollutionRequester getAirPollutionRequester(Coordinates coordinates, Date date, TimeFrame timeFrame) {
+        return new AirPollutionRequester(authToken, coordinates.getLatitude(), coordinates.getLongitude(), date, timeFrame);
     }
 }

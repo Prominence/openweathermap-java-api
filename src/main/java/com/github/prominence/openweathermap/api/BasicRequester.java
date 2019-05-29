@@ -23,8 +23,6 @@
 package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.constants.Unit;
-import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
-import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.net.MalformedURLException;
@@ -41,27 +39,27 @@ abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
         super(authToken);
     }
 
-    public T getByCityId(String id) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCityId(String id) {
         return executeRequest("?id=" + id);
     }
 
-    public T getByCityName(String name) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCityName(String name) {
         return executeRequest("?q=" + name);
     }
 
-    public T getByCoordinates(double latitude, double longitude) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCoordinates(double latitude, double longitude) {
         return executeRequest("?lat=" + latitude + "&lon=" + longitude);
     }
 
-    public T getByCoordinates(Coordinates coordinates) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByCoordinates(Coordinates coordinates) {
         return getByCoordinates(coordinates.getLatitude(), coordinates.getLongitude());
     }
 
-    public T getByZIPCode(String zipCode, String countryCode) throws InvalidAuthTokenException, DataNotFoundException {
+    public T getByZIPCode(String zipCode, String countryCode) {
         return executeRequest("?zip=" + zipCode + "," + countryCode);
     }
 
-    protected URL buildURL(String requestSpecificParameters) throws MalformedURLException {
+    protected URL buildURL(String requestSpecificParameters) {
 
         StringBuilder urlBuilder = new StringBuilder(OPEN_WEATHER_API_URL);
         urlBuilder.append(getRequestType());
@@ -96,7 +94,14 @@ abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
             });
         }
 
-        return new URL(urlBuilder.toString());
+        URL url = null;
+        try {
+            url = new URL(urlBuilder.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
     }
 
     protected Map<String, String> getAdditionalParameters() {
@@ -104,6 +109,7 @@ abstract class BasicRequester<T> extends AuthenticationTokenBasedRequester {
     }
 
     protected abstract String getRequestType();
-    protected abstract T executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException;
+
+    protected abstract T executeRequest(String requestSpecificParameters);
 
 }

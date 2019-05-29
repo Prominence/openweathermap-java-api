@@ -33,13 +33,13 @@ import lombok.Setter;
 public class Coordinates {
 
     @JSONField(name = "lat")
-    // City geo location, latitude
+    // City geo location, latitude. Valid range: [-90, 90]
     @Getter
     @Setter
     private float latitude;
 
     @JSONField(name = "lon")
-    // City geo location, longitude
+    // City geo location, longitude. Valid range: [-180, 180]
     @Getter
     @Setter
     private float longitude;

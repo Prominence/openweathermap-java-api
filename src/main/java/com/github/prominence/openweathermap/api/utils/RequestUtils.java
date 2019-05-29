@@ -32,9 +32,10 @@ import java.net.URL;
 
 public final class RequestUtils {
 
-    private RequestUtils() {}
+    private RequestUtils() {
+    }
 
-    public static InputStream executeGetRequest(URL requestUrl) throws InvalidAuthTokenException, DataNotFoundException {
+    public static InputStream executeGetRequest(URL requestUrl) {
         InputStream resultStream = null;
 
         try {
@@ -48,9 +49,10 @@ public final class RequestUtils {
                 case HttpURLConnection.HTTP_UNAUTHORIZED:
                     throw new InvalidAuthTokenException();
                 case HttpURLConnection.HTTP_NOT_FOUND:
+                case HttpURLConnection.HTTP_BAD_REQUEST:
                     throw new DataNotFoundException();
             }
-        } catch (IOException | ClassCastException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 

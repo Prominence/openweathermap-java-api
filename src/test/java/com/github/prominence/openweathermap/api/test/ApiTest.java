@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Alexey Zinchenko
+ * Copyright (c) 2019 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,22 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.test;
 
-public class DataNotFoundException extends RuntimeException {
+import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
+import org.junit.BeforeClass;
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+public class ApiTest {
+
+    private static OpenWeatherMapManager manager;
+
+    @BeforeClass
+    public static void retrieveApiKey() {
+        String apiKey = System.getenv("OPENWEATHER_API_KEY");
+        manager = new OpenWeatherMapManager(apiKey);
     }
 
+    protected static OpenWeatherMapManager getManager() {
+        return manager;
+    }
 }

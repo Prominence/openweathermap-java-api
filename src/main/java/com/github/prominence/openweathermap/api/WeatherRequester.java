@@ -23,8 +23,6 @@
 package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.constants.Unit;
-import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
-import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.response.Weather;
 import com.github.prominence.openweathermap.api.utils.JSONUtils;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
@@ -57,13 +55,13 @@ public class WeatherRequester extends BasicRequester<Weather> {
         return "weather";
     }
 
-    protected Weather executeRequest(String requestSpecificParameters) throws InvalidAuthTokenException, DataNotFoundException {
+    protected Weather executeRequest(String requestSpecificParameters) {
 
         Weather weather = null;
 
         try {
             InputStream requestResult = RequestUtils.executeGetRequest(buildURL(requestSpecificParameters));
-            weather = (Weather)JSONUtils.parseJSON(requestResult, Weather.class);
+            weather = (Weather) JSONUtils.parseJSON(requestResult, Weather.class);
 
             weather.getWind().setUnit(Unit.getWindUnit(unitSystem));
             weather.getWeatherInfo().setTemperatureUnit(Unit.getTemperatureUnit(unitSystem));

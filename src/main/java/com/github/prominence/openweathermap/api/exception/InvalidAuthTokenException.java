@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.exception;
 
-public class InvalidAuthTokenException extends Exception {
+public class InvalidAuthTokenException extends RuntimeException {
 
     public InvalidAuthTokenException() {
         super("Check your authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");

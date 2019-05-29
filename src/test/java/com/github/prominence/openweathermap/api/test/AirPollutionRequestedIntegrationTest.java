@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Alexey Zinchenko
+ * Copyright (c) 2019 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,32 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.test;
 
-public class DataNotFoundException extends RuntimeException {
+import com.github.prominence.openweathermap.api.AirPollutionRequester;
+import com.github.prominence.openweathermap.api.constants.TimeFrame;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+import java.util.Date;
+
+public class AirPollutionRequestedIntegrationTest extends ApiTest {
+
+    private static AirPollutionRequester airPollutionRequester;
+
+    @BeforeClass
+    public static void setup() {
+        airPollutionRequester = getManager().getAirPollutionRequester(0f, 10f, new Date(116, 11, 25), TimeFrame.DAY);
     }
 
+    @Test
+    public void whenRequestAirPollutionState_thenReturnNotNull() {
+        assert airPollutionRequester.retrieve() != null;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenRequestAirPollutionStateWithoutAnyParam_thenThrowAnException() {
+        AirPollutionRequester requester = getManager().getAirPollutionRequester(0f, 10f, null, TimeFrame.DAY);
+        requester.retrieve();
+    }
 }
