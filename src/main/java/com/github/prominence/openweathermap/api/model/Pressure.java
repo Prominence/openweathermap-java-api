@@ -24,57 +24,65 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
-public class Snow {
+public class Pressure {
 
-    private double oneHourSnowLevel;
-    private double threeHourSnowLevel;
+    private double value;
 
-    public Snow() {
+    private double seaLevelValue;
+    private double groundLevelValue;
+
+    public Pressure() {
     }
 
-    public Snow(double oneHourSnowLevel, double threeHourSnowLevel) {
-        this.oneHourSnowLevel = oneHourSnowLevel;
-        this.threeHourSnowLevel = threeHourSnowLevel;
+    public Pressure(double value) {
+        this.value = value;
     }
 
-    public double getOneHourSnowLevel() {
-        return oneHourSnowLevel;
+    public double getValue() {
+        return value;
     }
 
-    public void setOneHourSnowLevel(double oneHourSnowLevel) {
-        this.oneHourSnowLevel = oneHourSnowLevel;
+    public void setValue(double value) {
+        this.value = value;
     }
 
-    public double getThreeHourSnowLevel() {
-        return threeHourSnowLevel;
+    public double getSeaLevelValue() {
+        return seaLevelValue;
     }
 
-    public void setThreeHourSnowLevel(double threeHourSnowLevel) {
-        this.threeHourSnowLevel = threeHourSnowLevel;
+    public void setSeaLevelValue(double seaLevelValue) {
+        this.seaLevelValue = seaLevelValue;
+    }
+
+    public double getGroundLevelValue() {
+        return groundLevelValue;
+    }
+
+    public void setGroundLevelValue(double groundLevelValue) {
+        this.groundLevelValue = groundLevelValue;
     }
 
     public String getUnit() {
-        return "mm";
+        return "hPa";
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
-        if (!(o instanceof Snow)) return false;
-        Snow snow = (Snow) o;
-        return Double.compare(snow.oneHourSnowLevel, oneHourSnowLevel) == 0 &&
-                Double.compare(snow.threeHourSnowLevel, threeHourSnowLevel) == 0;
+        if (!(o instanceof Pressure)) return false;
+        Pressure pressure = (Pressure) o;
+        return Double.compare(pressure.value, value) == 0 &&
+                Double.compare(pressure.seaLevelValue, seaLevelValue) == 0 &&
+                Double.compare(pressure.groundLevelValue, groundLevelValue) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oneHourSnowLevel, threeHourSnowLevel);
+        return Objects.hash(value, seaLevelValue, groundLevelValue);
     }
 
     @Override
     public String toString() {
-        return "1 last hour snow level: " + oneHourSnowLevel + ' ' + getUnit() +
-                ", 3 last hours snow level: " + threeHourSnowLevel + ' ' + getUnit();
+        return "Pressure: " + value + ' ' + getUnit();
     }
 }

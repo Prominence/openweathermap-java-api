@@ -24,57 +24,65 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
-public class Snow {
+public class Temperature {
 
-    private double oneHourSnowLevel;
-    private double threeHourSnowLevel;
+    private double value;
+    private double maxTemperature;
+    private double minTemperature;
+    private String unit;
 
-    public Snow() {
+    public double getValue() {
+        return value;
     }
 
-    public Snow(double oneHourSnowLevel, double threeHourSnowLevel) {
-        this.oneHourSnowLevel = oneHourSnowLevel;
-        this.threeHourSnowLevel = threeHourSnowLevel;
+    public void setValue(double value) {
+        this.value = value;
     }
 
-    public double getOneHourSnowLevel() {
-        return oneHourSnowLevel;
+    public double getMaxTemperature() {
+        return maxTemperature;
     }
 
-    public void setOneHourSnowLevel(double oneHourSnowLevel) {
-        this.oneHourSnowLevel = oneHourSnowLevel;
+    public void setMaxTemperature(double maxTemperature) {
+        this.maxTemperature = maxTemperature;
     }
 
-    public double getThreeHourSnowLevel() {
-        return threeHourSnowLevel;
+    public double getMinTemperature() {
+        return minTemperature;
     }
 
-    public void setThreeHourSnowLevel(double threeHourSnowLevel) {
-        this.threeHourSnowLevel = threeHourSnowLevel;
+    public void setMinTemperature(double minTemperature) {
+        this.minTemperature = minTemperature;
     }
 
     public String getUnit() {
-        return "mm";
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
-        if (!(o instanceof Snow)) return false;
-        Snow snow = (Snow) o;
-        return Double.compare(snow.oneHourSnowLevel, oneHourSnowLevel) == 0 &&
-                Double.compare(snow.threeHourSnowLevel, threeHourSnowLevel) == 0;
+        if (!(o instanceof Temperature)) return false;
+        Temperature that = (Temperature) o;
+        return Double.compare(that.value, value) == 0 &&
+                Double.compare(that.maxTemperature, maxTemperature) == 0 &&
+                Double.compare(that.minTemperature, minTemperature) == 0 &&
+                Objects.equals(unit, that.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oneHourSnowLevel, threeHourSnowLevel);
+        return Objects.hash(value, maxTemperature, minTemperature, unit);
     }
 
     @Override
     public String toString() {
-        return "1 last hour snow level: " + oneHourSnowLevel + ' ' + getUnit() +
-                ", 3 last hours snow level: " + threeHourSnowLevel + ' ' + getUnit();
+        return "Temperature: " + value + ' ' + unit +
+                ", Maximum value: " + maxTemperature + ' ' + unit +
+                ", Minimum value: " + minTemperature + ' ' + unit;
     }
 }

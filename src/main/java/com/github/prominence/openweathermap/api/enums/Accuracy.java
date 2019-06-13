@@ -20,12 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.enums;
 
-public class DataNotFoundException extends RuntimeException {
+public enum Accuracy {
+    LIKE("like"),
+    ACCURATE("accurate");
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+    private final String value;
+
+    Accuracy(String value) {
+        this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
 }

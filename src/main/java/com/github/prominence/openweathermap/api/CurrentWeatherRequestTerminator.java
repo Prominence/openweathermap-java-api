@@ -20,12 +20,11 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api;
 
-public class DataNotFoundException extends RuntimeException {
+public interface CurrentWeatherRequestTerminator<T, S> extends RequestTerminator<T, S> {
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
-    }
+    S asXML();
 
+    S asHTML();
 }

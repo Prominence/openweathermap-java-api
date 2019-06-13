@@ -20,12 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.enums;
 
-public class DataNotFoundException extends RuntimeException {
-
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
-    }
-
+public enum TimeFrame {
+    YEAR,
+    MONTH,
+    DAY,
+    HOUR,
+    MINUTE,
+    SECOND
 }

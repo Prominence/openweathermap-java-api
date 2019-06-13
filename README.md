@@ -21,10 +21,24 @@ Global changes in API and more functionality.
 </dependency>
 ```
 
+New experimental version:
+```xml
+<dependency>
+  <groupId>com.github.prominence</groupId>
+  <artifactId>openweathermap-api</artifactId>
+  <version>2.0-SNAPSHOT</version>
+</dependency>
+```
+
 ### Gradle coordinates:
 
 ```groovy
 compile('com.github.prominence:openweathermap-api:1.2')
+```
+
+New experimental version:
+```groovy
+compile('com.github.prominence:openweathermap-api:2.0-SNAPSHOT')
 ```
 
 ### Documentation

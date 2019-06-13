@@ -20,12 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api;
 
-public class DataNotFoundException extends RuntimeException {
+import com.github.prominence.openweathermap.api.enums.Accuracy;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.Unit;
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
-    }
+public interface RequestCustomizer<T extends RequestCustomizer<?>> {
 
+    T accuracy(Accuracy accuracy);
+
+    T language(Language language);
+
+    T unit(Unit unit);
 }

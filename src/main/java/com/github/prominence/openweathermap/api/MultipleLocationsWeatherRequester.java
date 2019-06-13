@@ -20,12 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api;
 
-public class DataNotFoundException extends RuntimeException {
+import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
-    }
+public interface MultipleLocationsWeatherRequester {
+
+    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
+
+    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering);
+
+    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
+
+    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount, boolean useServerClustering);
 
 }

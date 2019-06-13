@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Alexey Zinchenko
+ * Copyright (c) 2019 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,58 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Objects;
 
-@EqualsAndHashCode
 public class Rain {
 
-    @JSONField(name = "3h")
-    // Rain volume for the last 3 hours
-    @Getter
-    @Setter
-    private byte rainVolumeLast3Hrs;
+    private double oneHourRainLevel;
+    private double threeHourRainLevel;
+
+    public Rain() {
+    }
+
+    public Rain(double oneHourRainLevel, double threeHourRainLevel) {
+        this.oneHourRainLevel = oneHourRainLevel;
+        this.threeHourRainLevel = threeHourRainLevel;
+    }
+
+    public double getOneHourRainLevel() {
+        return oneHourRainLevel;
+    }
+
+    public void setOneHourRainLevel(double oneHourRainLevel) {
+        this.oneHourRainLevel = oneHourRainLevel;
+    }
+
+    public double getThreeHourRainLevel() {
+        return threeHourRainLevel;
+    }
+
+    public void setThreeHourRainLevel(double threeHourRainLevel) {
+        this.threeHourRainLevel = threeHourRainLevel;
+    }
 
     public String getUnit() {
         return "mm";
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rain)) return false;
+        Rain rain = (Rain) o;
+        return Double.compare(rain.oneHourRainLevel, oneHourRainLevel) == 0 &&
+                Double.compare(rain.threeHourRainLevel, threeHourRainLevel) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(oneHourRainLevel, threeHourRainLevel);
+    }
+
+    @Override
     public String toString() {
-        return "Rain(last 3 hrs): " + rainVolumeLast3Hrs + ' ' + getUnit();
+        return "1 last hour rain level: " + oneHourRainLevel + + ' ' + getUnit() +
+                ", 3 last hours rain level: " + threeHourRainLevel + ' ' + getUnit();
     }
 }

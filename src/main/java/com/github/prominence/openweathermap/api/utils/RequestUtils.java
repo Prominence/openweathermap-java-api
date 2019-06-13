@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Alexey Zinchenko
+ * Copyright (c) 2019 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,12 @@ package com.github.prominence.openweathermap.api.utils;
 import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public final class RequestUtils {
@@ -35,7 +38,7 @@ public final class RequestUtils {
     private RequestUtils() {
     }
 
-    public static InputStream executeGetRequest(URL requestUrl) {
+    private static InputStream executeGetRequest(URL requestUrl) {
         InputStream resultStream = null;
 
         try {
@@ -57,6 +60,34 @@ public final class RequestUtils {
         }
 
         return resultStream;
+    }
+
+    public static InputStream executeGetRequest(String requestUrl) {
+        try {
+            return executeGetRequest(new URL(requestUrl));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getRawResponse(String url) {
+        return getRawResponse(executeGetRequest(url));
+    }
+
+    private static String getRawResponse(InputStream inputStream) {
+        StringBuilder result = new StringBuilder();
+
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return result.toString();
     }
 
 }

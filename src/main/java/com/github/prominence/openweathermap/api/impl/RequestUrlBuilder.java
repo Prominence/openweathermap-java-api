@@ -20,12 +20,36 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.impl;
 
-public class DataNotFoundException extends RuntimeException {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+public class RequestUrlBuilder {
+
+    private StringBuilder builder = new StringBuilder();
+    private Map<String, Object> requestParameters = new HashMap<>();
+
+    public RequestUrlBuilder(String baseUrl) {
+        builder.append(baseUrl);
     }
 
+    void append(String value) {
+        builder.append(value);
+    }
+
+    public void addRequestParameter(String key, Object value) {
+        requestParameters.put(key, value);
+    }
+
+    String buildUrl() {
+        final String joinedParameters = requestParameters.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+        builder.append('?');
+        builder.append(joinedParameters);
+        System.out.println(builder.toString());
+        return builder.toString();
+    }
 }

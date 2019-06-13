@@ -24,57 +24,58 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
-public class Snow {
+public class CoordinateRectangle {
 
-    private double oneHourSnowLevel;
-    private double threeHourSnowLevel;
+    private double longitudeLeft;
+    private double latitudeBottom;
+    private double longitudeRight;
+    private double latitudeTop;
 
-    public Snow() {
+    public CoordinateRectangle(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
+        this.longitudeLeft = longitudeLeft;
+        this.latitudeBottom = latitudeBottom;
+        this.longitudeRight = longitudeRight;
+        this.latitudeTop = latitudeTop;
     }
 
-    public Snow(double oneHourSnowLevel, double threeHourSnowLevel) {
-        this.oneHourSnowLevel = oneHourSnowLevel;
-        this.threeHourSnowLevel = threeHourSnowLevel;
+    public double getLongitudeLeft() {
+        return longitudeLeft;
     }
 
-    public double getOneHourSnowLevel() {
-        return oneHourSnowLevel;
+    public double getLatitudeBottom() {
+        return latitudeBottom;
     }
 
-    public void setOneHourSnowLevel(double oneHourSnowLevel) {
-        this.oneHourSnowLevel = oneHourSnowLevel;
+    public double getLongitudeRight() {
+        return longitudeRight;
     }
 
-    public double getThreeHourSnowLevel() {
-        return threeHourSnowLevel;
+    public double getLatitudeTop() {
+        return latitudeTop;
     }
 
-    public void setThreeHourSnowLevel(double threeHourSnowLevel) {
-        this.threeHourSnowLevel = threeHourSnowLevel;
-    }
-
-    public String getUnit() {
-        return "mm";
+    public String getValue() {
+        return longitudeLeft + "," + latitudeBottom + "," + longitudeRight + "," + latitudeTop;
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
-        if (!(o instanceof Snow)) return false;
-        Snow snow = (Snow) o;
-        return Double.compare(snow.oneHourSnowLevel, oneHourSnowLevel) == 0 &&
-                Double.compare(snow.threeHourSnowLevel, threeHourSnowLevel) == 0;
+        if (!(o instanceof CoordinateRectangle)) return false;
+        CoordinateRectangle rectangle = (CoordinateRectangle) o;
+        return Double.compare(rectangle.longitudeLeft, longitudeLeft) == 0 &&
+                Double.compare(rectangle.latitudeBottom, latitudeBottom) == 0 &&
+                Double.compare(rectangle.longitudeRight, longitudeRight) == 0 &&
+                Double.compare(rectangle.latitudeTop, latitudeTop) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oneHourSnowLevel, threeHourSnowLevel);
+        return Objects.hash(longitudeLeft, latitudeBottom, longitudeRight, latitudeTop);
     }
 
     @Override
     public String toString() {
-        return "1 last hour snow level: " + oneHourSnowLevel + ' ' + getUnit() +
-                ", 3 last hours snow level: " + threeHourSnowLevel + ' ' + getUnit();
+        return "Rectangle: " + getValue();
     }
 }

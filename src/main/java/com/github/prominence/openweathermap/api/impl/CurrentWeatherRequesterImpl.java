@@ -20,12 +20,25 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.impl;
 
-public class DataNotFoundException extends RuntimeException {
+import com.github.prominence.openweathermap.api.CurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.MultipleLocationsWeatherRequester;
+import com.github.prominence.openweathermap.api.SingleLocationWeatherRequester;
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
+
+    private RequestUrlBuilder urlBuilder = new RequestUrlBuilder("http://api.openweathermap.org/data/2.5/");
+
+    CurrentWeatherRequesterImpl(String apiKey) {
+        urlBuilder.addRequestParameter("appid", apiKey);
     }
 
+    public SingleLocationWeatherRequester single() {
+        return new SingleLocationCurrentWeatherRequesterImpl(urlBuilder);
+    }
+
+    public MultipleLocationsWeatherRequester multiple() {
+        return new MultipleLocationsCurrentWeatherRequesterImpl(urlBuilder);
+    }
 }

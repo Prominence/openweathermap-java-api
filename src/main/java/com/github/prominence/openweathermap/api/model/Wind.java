@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Alexey Zinchenko
+ * Copyright (c) 2019 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,56 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Objects;
 
-@EqualsAndHashCode
 public class Wind {
 
-    @JSONField(name = "speed")
-    // Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
-    @Getter
-    @Setter
-    private float speed;
-
-    @Getter
-    @Setter
+    private double speed;
+    private double degrees;
     private String unit;
 
-    @JSONField(name = "deg")
-    // Wind direction, degrees (meteorological)
-    @Getter
-    @Setter
-    private short degrees;
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getDegrees() {
+        return degrees;
+    }
+
+    public void setDegrees(double degrees) {
+        this.degrees = degrees;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Wind)) return false;
+        Wind wind = (Wind) o;
+        return Double.compare(wind.speed, speed) == 0 &&
+                Double.compare(wind.degrees, degrees) == 0 &&
+                Objects.equals(unit, wind.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(speed, degrees, unit);
+    }
 
     @Override
     public String toString() {
-        return "Wind: " + speed + ' ' + unit + ", " + degrees + " degrees";
+        return "Wind speed: " + speed + " " + unit +
+                ", degrees: " + degrees;
     }
 }

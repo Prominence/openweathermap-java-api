@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Alexey Zinchenko
+ * Copyright (c) 2019 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,46 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Objects;
 
-@EqualsAndHashCode
 public class Clouds {
 
-    @JSONField(name = "all")
-    // Cloudiness, %
-    @Getter
-    @Setter
-    private byte cloudiness;
+    private byte value;
+
+    public Clouds() {
+    }
+
+    public Clouds(byte value) {
+        this.value = value;
+    }
+
+    public byte getValue() {
+        return value;
+    }
+
+    public void setValue(byte value) {
+        this.value = value;
+    }
+
+    public String getUnit() {
+        return "%";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Clouds)) return false;
+        Clouds clouds = (Clouds) o;
+        return value == clouds.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 
     @Override
     public String toString() {
-        return "Cloudiness: " + cloudiness + "%";
+        return "Clouds: " + value + getUnit();
     }
 }

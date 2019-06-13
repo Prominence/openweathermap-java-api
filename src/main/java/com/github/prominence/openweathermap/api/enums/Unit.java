@@ -20,12 +20,44 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.enums;
 
-public class DataNotFoundException extends RuntimeException {
+public enum Unit {
 
-    public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+    METRIC_SYSTEM("metric"),
+    IMPERIAL_SYSTEM("imperial"),
+    STANDARD_SYSTEM("standard");
+
+    private final String value;
+
+    Unit(String value) {
+        this.value = value;
     }
 
+    public static String getWindUnit(Unit type) {
+        switch (type) {
+            case IMPERIAL_SYSTEM:
+                return "miles/hour";
+            case STANDARD_SYSTEM:
+            case METRIC_SYSTEM:
+            default:
+                return "meter/sec";
+        }
+    }
+
+    public static String getTemperatureUnit(Unit type) {
+        switch (type) {
+            case METRIC_SYSTEM:
+                return "℃";
+            case IMPERIAL_SYSTEM:
+                return "℉";
+            case STANDARD_SYSTEM:
+            default:
+                return "K";
+        }
+    }
+
+    public String getValue() {
+        return value;
+    }
 }
