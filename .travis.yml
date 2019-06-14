@@ -1,6 +1,7 @@
 language: java
 
-script: "mvn test -Dmaven.skip.deploy=true"
+install: mvn install -DskipTests -Dgpg.skip
+script: mvn test -Dmaven.skip.deploy=true -Dgpg.skip
 
 jdk:
   - openjdk8
