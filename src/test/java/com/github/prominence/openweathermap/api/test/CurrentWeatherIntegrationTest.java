@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class CurrentWeatherIntegrationTest extends ApiTest {
 
@@ -157,7 +158,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsXml_thenReturnNotNull() {
+    public void whenGetAnySingleCurrentWeatherAsyncRequestAsXml_thenReturnNotNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<String> weatherXmlFuture = getClient()
                 .currentWeather()
                 .single()
@@ -168,11 +169,11 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .asXML();
 
         assert weatherXmlFuture != null;
-        weatherXmlFuture.thenAccept(System.out::println);
+        System.out.println(weatherXmlFuture.get());
     }
 
     @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsJava_thenReturnNotNull() {
+    public void whenGetAnySingleCurrentWeatherAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<Weather> weatherFuture = getClient()
                 .currentWeather()
                 .single()
@@ -183,7 +184,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         assert weatherFuture != null;
-        weatherFuture.thenAccept(System.out::println);
+        System.out.println(weatherFuture.get());
     }
 
     @Test
@@ -298,7 +299,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsJava_thenReturnNotNull() {
+    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<List<Weather>> weatherListFuture = getClient()
                 .currentWeather()
                 .multiple()
@@ -309,14 +310,13 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         assert weatherListFuture != null;
-        weatherListFuture.thenAccept(result -> {
-            assert result.size() > 0;
-            System.out.println(result);
-        });
+        List<Weather> weatherList = weatherListFuture.get();
+        assert weatherList.size() > 0;
+        System.out.println(weatherList);
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsXml_thenReturnNotNull() {
+    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsXml_thenReturnNotNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<String> weatherFuture = getClient()
                 .currentWeather()
                 .multiple()
@@ -327,6 +327,6 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .asXML();
 
         assert weatherFuture != null;
-        weatherFuture.thenAccept(System.out::println);
+        System.out.println(weatherFuture.get());
     }
 }

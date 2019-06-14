@@ -49,7 +49,6 @@ public class RequestUrlBuilder {
                 .collect(Collectors.joining("&"));
         builder.append('?');
         builder.append(joinedParameters);
-        System.out.println(builder.toString());
         return builder.toString();
     }
 }
