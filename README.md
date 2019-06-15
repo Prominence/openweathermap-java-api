@@ -1,4 +1,4 @@
-# OpenWeatherMap Java API
+# OpenWeatherMap Java API [![Build Status][ci-shield]][ci-link]
 Java API for OpenWeatherMap services.
 
 ### Implemented features:
