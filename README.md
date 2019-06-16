@@ -1,4 +1,4 @@
-# OpenWeatherMap Java API [![Build Status][ci-shield]][ci-link]
+# OpenWeatherMap Java API [![Build Status][ci-shield]][ci-link] [![codecov][codecov-shield]][codecov-link]
 Java API for OpenWeatherMap services.
 
 ### Implemented features:
@@ -52,3 +52,7 @@ MIT
 
 [ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=master
 [ci-link]: https://travis-ci.org/Prominence/openweathermap-java-api
+
+
+[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api

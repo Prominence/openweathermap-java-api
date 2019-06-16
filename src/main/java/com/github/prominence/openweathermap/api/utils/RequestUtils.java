@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public final class RequestUtils {
 
@@ -78,7 +79,7 @@ public final class RequestUtils {
     private static String getRawResponse(InputStream inputStream) {
         StringBuilder result = new StringBuilder();
 
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 result.append(line);
