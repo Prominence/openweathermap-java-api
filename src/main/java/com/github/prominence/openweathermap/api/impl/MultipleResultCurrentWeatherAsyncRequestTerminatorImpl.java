@@ -63,6 +63,6 @@ public class MultipleResultCurrentWeatherAsyncRequestTerminatorImpl implements M
     }
 
     private String getRawResponse() {
-        return RequestUtils.getRawResponse(urlBuilder.buildUrl());
+        return RequestUtils.getResponse(urlBuilder.buildUrl());
     }
 }

@@ -62,6 +62,6 @@ public class SingleResultCurrentWeatherAsyncRequestTerminatorImpl implements Sin
     }
 
     private String getRawResponse() {
-        return RequestUtils.getRawResponse(urlBuilder.buildUrl());
+        return RequestUtils.getResponse(urlBuilder.buildUrl());
     }
 }

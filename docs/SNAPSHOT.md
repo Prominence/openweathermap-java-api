@@ -170,4 +170,6 @@ Location: Minsk(BY), Weather: слегка облачно, 20.0 ℃, 1019.0 hPa,
 
 ### Dependencies
 * com.fasterxml.jackson.core:jackson-databind:2.9.9
+* org.slf4j:slf4j-api:1.7.26 (*compile*)
+* org.jetbrains:annotations:17.0.0 (*compile*)
 * junit:junit:4.12 (*test*)

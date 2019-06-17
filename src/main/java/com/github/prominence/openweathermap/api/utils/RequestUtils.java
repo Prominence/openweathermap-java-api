@@ -24,6 +24,9 @@ package com.github.prominence.openweathermap.api.utils;
 
 import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,13 +37,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Utility class for API calls execution.
+ */
 public final class RequestUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
     private RequestUtils() {
     }
 
-    private static InputStream executeGetRequest(URL requestUrl) {
-        InputStream resultStream = null;
+    /**
+     * Executes call to provided API url and retrieves response as an <code>InputStream</code> instance.
+     *
+     * @param requestUrl url for API call execution.
+     * @return <code>InputStream</code> instance containing http response body.
+     * @throws InvalidAuthTokenException in case if authentication token wasn't set or requested functionality is not permitted for its subscription plan.
+     * @throws DataNotFoundException     in case if there is no any data for requested location(s) or request is invalid.
+     * @throws IllegalStateException     in case of unexpected response or error.
+     */
+    @NotNull
+    private static InputStream executeRequest(@NotNull URL requestUrl) {
+        InputStream resultStream;
 
         try {
             HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
@@ -55,37 +73,57 @@ public final class RequestUtils {
                 case HttpURLConnection.HTTP_NOT_FOUND:
                 case HttpURLConnection.HTTP_BAD_REQUEST:
                     throw new DataNotFoundException();
+                default:
+                    throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IllegalStateException | IOException ex) {
+            logger.error("An error occurred during OpenWeatherMap API response parsing: ", ex);
+            throw new DataNotFoundException(ex);
         }
 
         return resultStream;
     }
 
-    public static InputStream executeGetRequest(String requestUrl) {
+    /**
+     * Executes call to provided API url and retrieves response in <code>String</code> representation.
+     *
+     * @param url the url to make API request.
+     * @return response from the request in <code>String</code> representation.
+     * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
+     */
+    @NotNull
+    public static String getResponse(@NotNull String url) {
+        URL requestUrl;
         try {
-            return executeGetRequest(new URL(requestUrl));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
+            requestUrl = new URL(url);
+        } catch (MalformedURLException ex) {
+            logger.error("Invalid URL: ", ex);
+            throw new IllegalArgumentException(ex);
         }
+        final InputStream requestInputStream = executeRequest(requestUrl);
+
+        return convertInputStreamToString(requestInputStream);
     }
 
-    public static String getRawResponse(String url) {
-        return getRawResponse(executeGetRequest(url));
-    }
-
-    private static String getRawResponse(InputStream inputStream) {
+    /**
+     * Reads the input stream line-by-line and returns its content in <code>String</code> representation.
+     *
+     * @param inputStream input stream to convert.
+     * @return converted <code>InputStream</code> content.
+     * @throws IllegalArgumentException in case if input stream is unable to be read.
+     */
+    @NotNull
+    private static String convertInputStreamToString(@NotNull InputStream inputStream) {
         StringBuilder result = new StringBuilder();
 
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 result.append(line);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            logger.error("Error during response reading: ", ex);
+            throw new IllegalArgumentException(ex);
         }
 
         return result.toString();

@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.exception;
 public class InvalidAuthTokenException extends RuntimeException {
 
     public InvalidAuthTokenException() {
-        super("Check your authentication token! You can get it here: https://home.openweathermap.org/api_keys/.");
+        super("Authentication token wasn't set or requested functionality is not permitted for your subscription plan. Please, check https://home.openweathermap.org/api_keys/ and https://openweathermap.org/price.");
     }
 
 }

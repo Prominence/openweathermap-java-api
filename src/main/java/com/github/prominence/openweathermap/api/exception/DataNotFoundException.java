@@ -25,7 +25,11 @@ package com.github.prominence.openweathermap.api.exception;
 public class DataNotFoundException extends RuntimeException {
 
     public DataNotFoundException() {
-        super("Data for provided parameters wasn't found. Please, check your request.");
+        super("Data for provided parameters wasn't found. Please, check requested location.");
+    }
+
+    public DataNotFoundException(Throwable throwable) {
+        super(throwable.getMessage(), throwable.getCause());
     }
 
 }

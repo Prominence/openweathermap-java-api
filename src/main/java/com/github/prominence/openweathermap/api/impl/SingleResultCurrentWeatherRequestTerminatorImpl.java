@@ -27,8 +27,6 @@ import com.github.prominence.openweathermap.api.enums.Unit;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-import java.io.InputStream;
-
 public class SingleResultCurrentWeatherRequestTerminatorImpl implements SingleResultCurrentWeatherRequestTerminator {
 
     private RequestUrlBuilder urlBuilder;
@@ -62,6 +60,6 @@ public class SingleResultCurrentWeatherRequestTerminatorImpl implements SingleRe
     }
 
     private String getRawResponse() {
-        return RequestUtils.getRawResponse(urlBuilder.buildUrl());
+        return RequestUtils.getResponse(urlBuilder.buildUrl());
     }
 }
