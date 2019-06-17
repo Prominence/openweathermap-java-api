@@ -5,7 +5,7 @@ jdk:
   - openjdk11
 
 install: mvn install -DskipTests -Dgpg.skip -B
-script: mvn cobertura:cobertura -Dmaven.skip.deploy=true -B
+script: mvn test -Dmaven.skip.deploy=true -B
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
