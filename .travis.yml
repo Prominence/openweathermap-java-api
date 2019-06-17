@@ -1,10 +1,11 @@
 language: java
 
-install: mvn install -DskipTests -Dgpg.skip
-script: mvn cobertura:cobertura -Dmaven.skip.deploy=true -Dgpg.skip
-
 jdk:
+  - openjdk8
   - openjdk11
+
+install: mvn install -DskipTests -Dgpg.skip
+script: mvn cobertura:cobertura -Dmaven.skip.deploy=true
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
