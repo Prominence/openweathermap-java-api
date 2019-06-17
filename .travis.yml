@@ -4,9 +4,6 @@ install: mvn install -DskipTests -Dgpg.skip
 script: mvn cobertura:cobertura -Dmaven.skip.deploy=true -Dgpg.skip
 
 jdk:
-  - openjdk8
-  - openjdk9
-  - openjdk10
   - openjdk11
 
 after_success:
