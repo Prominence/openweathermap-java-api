@@ -188,6 +188,36 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
+    public void whenGetAnySingleCurrentWeatherAsyncRequestAsJson_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherFuture = getClient()
+                .currentWeather()
+                .single()
+                .byZipCodeAndCountry("220015", "by")
+                .language(Language.RUSSIAN)
+                .unit(Unit.METRIC_SYSTEM)
+                .retrieveAsync()
+                .asJSON();
+
+        assert weatherFuture != null;
+        System.out.println(weatherFuture.get());
+    }
+
+    @Test
+    public void whenGetAnySingleCurrentWeatherAsyncRequestAsHtml_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherFuture = getClient()
+                .currentWeather()
+                .single()
+                .byZipCodeAndCountry("220015", "by")
+                .language(Language.RUSSIAN)
+                .unit(Unit.METRIC_SYSTEM)
+                .retrieveAsync()
+                .asHTML();
+
+        assert weatherFuture != null;
+        System.out.println(weatherFuture.get());
+    }
+
+    @Test
     public void whenGetMultipleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
         final List<Weather> weatherList = getClient()
                 .currentWeather()
@@ -325,6 +355,36 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .unit(Unit.IMPERIAL_SYSTEM)
                 .retrieveAsync()
                 .asXML();
+
+        assert weatherFuture != null;
+        System.out.println(weatherFuture.get());
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsJson_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherFuture = getClient()
+                .currentWeather()
+                .multiple()
+                .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
+                .language(Language.GERMAN)
+                .unit(Unit.IMPERIAL_SYSTEM)
+                .retrieveAsync()
+                .asJSON();
+
+        assert weatherFuture != null;
+        System.out.println(weatherFuture.get());
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsHtml_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherFuture = getClient()
+                .currentWeather()
+                .multiple()
+                .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
+                .language(Language.GERMAN)
+                .unit(Unit.IMPERIAL_SYSTEM)
+                .retrieveAsync()
+                .asHTML();
 
         assert weatherFuture != null;
         System.out.println(weatherFuture.get());
