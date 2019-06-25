@@ -258,9 +258,9 @@ Available requests:
 | `getHumidity()`             | Returns *humidity* percentage information.                                                                       |
 | `getWindSpeed()`            | Returns wind's speed.                                                                                            |
 | `getWindDegrees()`          | Returns wind's degree.                                                                                           |
-| `getWindUnit()`             | Returns wind's unitSystem.                                                                                             |
+| `getWindUnit()`             | Returns wind's unit.                                                                                             |
 | `getPressure()`             | Returns pressure value.                                                                                          |
-| `getPressureUnit()`         | Returns pressure's unitSystem.                                                                                         |
+| `getPressureUnit()`         | Returns pressure's unit.                                                                                         |
 | `toString()`                | Returns pretty string for the whole available forecast information.                                              |
 
 #### UV Index

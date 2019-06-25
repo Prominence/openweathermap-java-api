@@ -24,7 +24,6 @@ package com.github.prominence.openweathermap.api.utils;
 
 import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,8 +55,7 @@ public final class RequestUtils {
      * @throws DataNotFoundException     in case if there is no any data for requested location(s) or request is invalid.
      * @throws IllegalStateException     in case of unexpected response or error.
      */
-    @NotNull
-    private static InputStream executeRequest(@NotNull URL requestUrl) {
+    private static InputStream executeRequest(URL requestUrl) {
         InputStream resultStream;
 
         try {
@@ -91,8 +89,7 @@ public final class RequestUtils {
      * @return response from the request in <code>String</code> representation.
      * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
      */
-    @NotNull
-    public static String getResponse(@NotNull String url) {
+    public static String getResponse(String url) {
         URL requestUrl;
         try {
             requestUrl = new URL(url);
@@ -112,8 +109,7 @@ public final class RequestUtils {
      * @return converted <code>InputStream</code> content.
      * @throws IllegalArgumentException in case if input stream is unable to be read.
      */
-    @NotNull
-    private static String convertInputStreamToString(@NotNull InputStream inputStream) {
+    private static String convertInputStreamToString(InputStream inputStream) {
         StringBuilder result = new StringBuilder();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
