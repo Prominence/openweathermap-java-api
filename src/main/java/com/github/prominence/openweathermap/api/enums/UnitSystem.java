@@ -20,22 +20,44 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.test;
+package com.github.prominence.openweathermap.api.enums;
 
-import com.github.prominence.openweathermap.api.impl.OpenWeatherMapClient;
-import org.junit.BeforeClass;
+public enum UnitSystem {
 
-public class ApiTest {
+    METRIC_SYSTEM("metric"),
+    IMPERIAL_SYSTEM("imperial"),
+    STANDARD_SYSTEM("standard");
 
-    private static OpenWeatherMapClient manager;
+    private final String value;
 
-    @BeforeClass
-    public static void retrieveApiKey() {
-        String apiKey = System.getenv("OPENWEATHER_API_KEY");
-        manager = new OpenWeatherMapClient(apiKey);
+    UnitSystem(String value) {
+        this.value = value;
     }
 
-    protected static OpenWeatherMapClient getClient() {
-        return manager;
+    public static String getWindUnit(UnitSystem type) {
+        switch (type) {
+            case IMPERIAL_SYSTEM:
+                return "miles/hour";
+            case STANDARD_SYSTEM:
+            case METRIC_SYSTEM:
+            default:
+                return "meter/sec";
+        }
+    }
+
+    public static String getTemperatureUnit(UnitSystem type) {
+        switch (type) {
+            case METRIC_SYSTEM:
+                return "℃";
+            case IMPERIAL_SYSTEM:
+                return "℉";
+            case STANDARD_SYSTEM:
+            default:
+                return "K";
+        }
+    }
+
+    public String getValue() {
+        return value;
     }
 }

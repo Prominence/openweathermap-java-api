@@ -23,23 +23,23 @@
 package com.github.prominence.openweathermap.api.impl;
 
 import com.github.prominence.openweathermap.api.SingleResultCurrentWeatherRequestTerminator;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 public class SingleResultCurrentWeatherRequestTerminatorImpl implements SingleResultCurrentWeatherRequestTerminator {
 
     private RequestUrlBuilder urlBuilder;
-    private Unit unit;
+    private UnitSystem unitSystem;
 
-    SingleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, Unit unit) {
+    SingleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
-        this.unit = unit;
+        this.unitSystem = unitSystem;
     }
 
     @Override
     public Weather asJava() {
-        return new CurrentWeatherResponseMapper(unit).getSingle(asJSON());
+        return new CurrentWeatherResponseMapper(unitSystem).getSingle(asJSON());
     }
 
     @Override

@@ -27,7 +27,7 @@ import com.github.prominence.openweathermap.api.SingleResultCurrentWeatherReques
 import com.github.prominence.openweathermap.api.SingleResultCurrentWeatherRequestTerminator;
 import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
 public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleResultCurrentWeatherRequestCustomizer {
 
@@ -35,7 +35,7 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
 
     private Accuracy accuracy;
     private Language language;
-    private Unit unit;
+    private UnitSystem unitSystem;
 
     SingleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
@@ -44,13 +44,13 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     @Override
     public SingleResultCurrentWeatherRequestTerminator retrieve() {
         applyCustomization();
-        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unit);
+        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
     public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
         applyCustomization();
-        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unit);
+        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
@@ -66,8 +66,8 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestCustomizer unit(Unit unit) {
-        this.unit = unit;
+    public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        this.unitSystem = unitSystem;
         return this;
     }
 
@@ -78,8 +78,8 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
         if (language != null) {
             urlBuilder.addRequestParameter("lang", language.getValue());
         }
-        if (unit != null && unit != Unit.STANDARD_SYSTEM) {
-            urlBuilder.addRequestParameter("units", unit.getValue());
+        if (unitSystem != null && unitSystem != UnitSystem.STANDARD_SYSTEM) {
+            urlBuilder.addRequestParameter("units", unitSystem.getValue());
         }
     }
 }

@@ -24,27 +24,58 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * The Humidity type represents humidity value percentage.
+ * Its value can only be an integer in [0, 100] range.
+ */
 public class Humidity {
+
+    private static final String DEFAULT_UNIT = "%";
 
     private int value;
 
-    public Humidity() {
-    }
-
+    /**
+     * Instantiates a new Humidity.
+     *
+     * @param value the value representing humidity percentage.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public Humidity(byte value) {
+        if (value < 0 || value > 100)  {
+            throw new IllegalArgumentException("Humidity value must be in [0, 100] range.");
+        }
         this.value = value;
     }
 
+    /**
+     * Returns humidity percentage value.
+     *
+     * @return humidity percentage.
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * Sets humidity percentage value.
+     *
+     * @param value new humidity value.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public void setValue(int value) {
+        if (value < 0 || value > 100)  {
+            throw new IllegalArgumentException("Humidity value must be in [0, 100] range.");
+        }
         this.value = value;
     }
 
+    /**
+     * Returns humidity unitSystem. Constantly equals to '%'.
+     *
+     * @return the humidity unitSystem.
+     */
     public String getUnit() {
-        return "%";
+        return DEFAULT_UNIT;
     }
 
     @Override

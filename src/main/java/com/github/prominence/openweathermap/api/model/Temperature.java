@@ -27,9 +27,17 @@ import java.util.Objects;
 public class Temperature {
 
     private double value;
-    private double maxTemperature;
-    private double minTemperature;
+    private Double maxTemperature;
+    private Double minTemperature;
     private String unit;
+
+    public Temperature(double value, String unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit must be set.");
+        }
+        this.value = value;
+        this.unit = unit;
+    }
 
     public double getValue() {
         return value;
@@ -39,19 +47,19 @@ public class Temperature {
         this.value = value;
     }
 
-    public double getMaxTemperature() {
+    public Double getMaxTemperature() {
         return maxTemperature;
     }
 
-    public void setMaxTemperature(double maxTemperature) {
+    public void setMaxTemperature(Double maxTemperature) {
         this.maxTemperature = maxTemperature;
     }
 
-    public double getMinTemperature() {
+    public Double getMinTemperature() {
         return minTemperature;
     }
 
-    public void setMinTemperature(double minTemperature) {
+    public void setMinTemperature(Double minTemperature) {
         this.minTemperature = minTemperature;
     }
 
@@ -60,6 +68,9 @@ public class Temperature {
     }
 
     public void setUnit(String unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit must be set.");
+        }
         this.unit = unit;
     }
 
@@ -69,8 +80,8 @@ public class Temperature {
         if (!(o instanceof Temperature)) return false;
         Temperature that = (Temperature) o;
         return Double.compare(that.value, value) == 0 &&
-                Double.compare(that.maxTemperature, maxTemperature) == 0 &&
-                Double.compare(that.minTemperature, minTemperature) == 0 &&
+                Objects.equals(maxTemperature, that.maxTemperature) &&
+                Objects.equals(minTemperature, that.minTemperature) &&
                 Objects.equals(unit, that.unit);
     }
 
@@ -81,8 +92,24 @@ public class Temperature {
 
     @Override
     public String toString() {
-        return "Temperature: " + value + ' ' + unit +
-                ", Maximum value: " + maxTemperature + ' ' + unit +
-                ", Minimum value: " + minTemperature + ' ' + unit;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Temperature: ");
+        stringBuilder.append(value);
+        stringBuilder.append(' ');
+        stringBuilder.append(unit);
+        if (maxTemperature != null) {
+            stringBuilder.append(", Maximum value: ");
+            stringBuilder.append(maxTemperature);
+            stringBuilder.append(' ');
+            stringBuilder.append(unit);
+        }
+        if (minTemperature != null) {
+            stringBuilder.append(", Minimum value: ");
+            stringBuilder.append(minTemperature);
+            stringBuilder.append(' ');
+            stringBuilder.append(unit);
+        }
+
+        return stringBuilder.toString();
     }
 }

@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.impl;
 
 import com.github.prominence.openweathermap.api.SingleResultCurrentWeatherAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
@@ -32,16 +32,16 @@ import java.util.concurrent.CompletableFuture;
 public class SingleResultCurrentWeatherAsyncRequestTerminatorImpl implements SingleResultCurrentWeatherAsyncRequestTerminator {
 
     private RequestUrlBuilder urlBuilder;
-    private Unit unit;
+    private UnitSystem unitSystem;
 
-    SingleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, Unit unit) {
+    SingleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
-        this.unit = unit;
+        this.unitSystem = unitSystem;
     }
 
     @Override
     public CompletableFuture<Weather> asJava() {
-        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(unit).getSingle(getRawResponse()));
+        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(unitSystem).getSingle(getRawResponse()));
     }
 
     @Override

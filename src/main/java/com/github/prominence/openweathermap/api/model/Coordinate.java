@@ -29,6 +29,12 @@ public class Coordinate {
     private double longitude;
 
     public Coordinate(double latitude, double longitude) {
+        if (latitude < -90 || latitude > 90) {
+            throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
+        }
+        if (longitude < -180 || longitude > 180) {
+            throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
+        }
         this.latitude = latitude;
         this.longitude = longitude;
     }

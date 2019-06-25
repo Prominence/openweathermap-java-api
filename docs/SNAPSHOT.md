@@ -31,9 +31,9 @@ openWeatherClient
     .currentWeather()
     .<single|multiple location(s)>()
     .<location definition>
-    .<customize unit/language/accuracy (1)>
+    .<customize unitSystem/language/accuracy (1)>
     ...
-    .<customize unit/language/accuracy (N)>
+    .<customize unitSystem/language/accuracy (N)>
     .<request/requestAsync>()
     .as(Java|JSON|XML|HTML)();
 ```
@@ -59,7 +59,7 @@ final Weather weather = openWeatherClient
                 .byCoordinate(new Coordinate(5, 5))
                 .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
-                .unit(Unit.METRIC_SYSTEM)
+                .unitSystem(Unit.METRIC_SYSTEM)
                 .retrieve()
                 .asJava();
 
@@ -68,7 +68,7 @@ final CompletableFuture<String> weatherXmlFuture = openWeatherClient
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unit(Unit.METRIC_SYSTEM)
+                .unitSystem(Unit.METRIC_SYSTEM)
                 .retrieveAsync()
                 .asXML();
 ```
@@ -81,7 +81,7 @@ final String weatherListJson = openWeatherClient
                 .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10, true)
                 .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
-                .unit(Unit.METRIC_SYSTEM)
+                .unitSystem(Unit.METRIC_SYSTEM)
                 .retrieve()
                 .asJSON();
 
@@ -89,7 +89,7 @@ final CompletableFuture<List<Weather>> weatherListFuture = openWeatherClient
                 .currentWeather()
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
-                .unit(Unit.IMPERIAL_SYSTEM)
+                .unitSystem(Unit.IMPERIAL_SYSTEM)
                 .retrieveAsync()
                 .asJava();
 ```

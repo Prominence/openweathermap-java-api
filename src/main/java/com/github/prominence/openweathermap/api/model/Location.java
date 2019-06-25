@@ -28,9 +28,9 @@ import java.util.Objects;
 
 public class Location {
 
-    private String countryCode;
+    private int id;
     private String name;
-    private Integer id;
+    private String countryCode;
 
     private LocalDateTime sunrise;
     private LocalDateTime sunset;
@@ -38,12 +38,20 @@ public class Location {
 
     private Coordinate coordinate;
 
-    public String getCountryCode() {
-        return countryCode;
+    public Location(int id, String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name must be set.");
+        }
+        this.id = id;
+        this.name = name;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -54,12 +62,12 @@ public class Location {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public LocalDateTime getSunrise() {
@@ -99,9 +107,9 @@ public class Location {
         if (this == o) return true;
         if (!(o instanceof Location)) return false;
         Location location = (Location) o;
-        return Objects.equals(countryCode, location.countryCode) &&
+        return id == location.id &&
                 Objects.equals(name, location.name) &&
-                Objects.equals(id, location.id) &&
+                Objects.equals(countryCode, location.countryCode) &&
                 Objects.equals(sunrise, location.sunrise) &&
                 Objects.equals(sunset, location.sunset) &&
                 Objects.equals(zoneOffset, location.zoneOffset) &&
@@ -110,15 +118,25 @@ public class Location {
 
     @Override
     public int hashCode() {
-        return Objects.hash(countryCode, name, id, sunrise, sunset, zoneOffset, coordinate);
+        return Objects.hash(id, name, countryCode, sunrise, sunset, zoneOffset, coordinate);
     }
 
     @Override
     public String toString() {
-        String result = coordinate != null ? (coordinate.toString() + ", ") : "";
-        return result +
-                "Country code: '" + countryCode + '\'' +
-                ", Name: '" + name + '\'' +
-                ", ID: " + id;
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (coordinate != null) {
+            stringBuilder.append(coordinate.toString());
+            stringBuilder.append(". ");
+        }
+        stringBuilder.append("ID: ");
+        stringBuilder.append(id);
+        stringBuilder.append(", Name: ");
+        stringBuilder.append(name);
+        if (countryCode != null) {
+            stringBuilder.append('(');
+            stringBuilder.append(countryCode);
+            stringBuilder.append(')');
+        }
+        return stringBuilder.toString();
     }
 }

@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.ResponseMapper;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.*;
 
 import java.io.IOException;
@@ -40,51 +40,51 @@ import java.util.TimeZone;
  * Official API response documentation:
  * Parameters:
  * --- coord
- *      |- coord.lon City geo location, longitude
- *      |- coord.lat City geo location, latitude
+ * |- coord.lon City geo location, longitude
+ * |- coord.lat City geo location, latitude
  * --- weather (more info Weather condition codes)
- *      |- weather.id Weather condition id
- *      |- weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
- *      |- weather.description Weather condition within the group
- *      |- weather.icon Weather icon id
+ * |- weather.id Weather condition id
+ * |- weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
+ * |- weather.description Weather condition within the group
+ * |- weather.icon Weather icon id
  * --- base Internal parameter
  * --- main
- *      |- main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *      |- main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
- *      |- main.humidity Humidity, %
- *      |- main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *      |- main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *      |- main.sea_level Atmospheric pressure on the sea level, hPa
- *      |- main.grnd_level Atmospheric pressure on the ground level, hPa
+ * |- main.temp Temperature. UnitSystem Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+ * |- main.pressure Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa
+ * |- main.humidity Humidity, %
+ * |- main.temp_min Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). UnitSystem Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+ * |- main.temp_max Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). UnitSystem Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
+ * |- main.sea_level Atmospheric pressure on the sea level, hPa
+ * |- main.grnd_level Atmospheric pressure on the ground level, hPa
  * --- wind
- *      |- wind.speed Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
- *      |- wind.deg Wind direction, degrees (meteorological)
+ * |- wind.speed Wind speed. UnitSystem Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
+ * |- wind.deg Wind direction, degrees (meteorological)
  * --- clouds
- *      |- clouds.all Cloudiness, %
+ * |- clouds.all Cloudiness, %
  * --- rain
- *      |- rain.1h Rain volume for the last 1 hour, mm
- *      |- rain.3h Rain volume for the last 3 hours, mm
+ * |- rain.1h Rain volume for the last 1 hour, mm
+ * |- rain.3h Rain volume for the last 3 hours, mm
  * --- snow
- *      |- snow.1h Snow volume for the last 1 hour, mm
- *      |- snow.3h Snow volume for the last 3 hours, mm
+ * |- snow.1h Snow volume for the last 1 hour, mm
+ * |- snow.3h Snow volume for the last 3 hours, mm
  * --- dt Time of data calculation, unix, UTC
  * --- sys
- *      |- sys.type Internal parameter
- *      |- sys.id Internal parameter
- *      |- sys.message Internal parameter
- *      |- sys.country Country code (GB, JP etc.)
- *      |- sys.sunrise Sunrise time, unix, UTC
- *      |- sys.sunset Sunset time, unix, UTC
+ * |- sys.type Internal parameter
+ * |- sys.id Internal parameter
+ * |- sys.message Internal parameter
+ * |- sys.country Country code (GB, JP etc.)
+ * |- sys.sunrise Sunrise time, unix, UTC
+ * |- sys.sunset Sunset time, unix, UTC
  * --- id City ID
  * --- name City name
  * --- cod Internal parameter
  */
 public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
 
-    private Unit unit;
+    private UnitSystem unitSystem;
 
-    CurrentWeatherResponseMapper(Unit unit) {
-        this.unit = unit != null ? unit : Unit.STANDARD_SYSTEM;
+    CurrentWeatherResponseMapper(UnitSystem unitSystem) {
+        this.unitSystem = unitSystem != null ? unitSystem : UnitSystem.STANDARD_SYSTEM;
     }
 
     @Override
@@ -102,11 +102,10 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
     }
 
     private Weather getSingle(JsonNode root) {
-        final Weather weather = new Weather();
+        final Weather weather;
 
         JsonNode weatherState = root.get("weather").get(0);
-        weather.setWeatherState(weatherState.get("main").asText());
-        weather.setWeatherDescription(weatherState.get("description").asText());
+        weather = new Weather(weatherState.get("main").asText(), weatherState.get("description").asText());
         weather.setWeatherIconUrl("http://openweathermap.org/img/w/" + weatherState.get("icon").asText() + ".png");
 
         weather.setTemperature(parseTemperature(root));
@@ -142,28 +141,26 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
     }
 
     private Temperature parseTemperature(JsonNode root) {
-        Temperature temperature = new Temperature();
+        Temperature temperature;
         final JsonNode mainNode = root.get("main");
 
-        temperature.setValue(mainNode.get("temp").asDouble());
+        final double tempValue = mainNode.get("temp").asDouble();
+        temperature = new Temperature(tempValue, UnitSystem.getTemperatureUnit(unitSystem));
         final JsonNode tempMaxNode = mainNode.get("temp_max");
-        final JsonNode tempMinNode = mainNode.get("temp_min");
         if (tempMaxNode != null) {
             temperature.setMaxTemperature(tempMaxNode.asDouble());
         }
+        final JsonNode tempMinNode = mainNode.get("temp_min");
         if (tempMinNode != null) {
             temperature.setMinTemperature(tempMinNode.asDouble());
         }
-        temperature.setUnit(Unit.getTemperatureUnit(unit));
 
         return temperature;
     }
 
     private Pressure parsePressure(JsonNode root) {
-        Pressure pressure = new Pressure();
-
         final JsonNode mainNode = root.get("main");
-        pressure.setValue(mainNode.get("pressure").asDouble());
+        Pressure pressure = new Pressure(mainNode.get("pressure").asDouble());
 
         final JsonNode seaLevelNode = mainNode.get("sea_level");
         final JsonNode grndLevelNode = mainNode.get("grnd_level");
@@ -178,24 +175,20 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
     }
 
     private Humidity parseHumidity(JsonNode root) {
-        Humidity humidity = new Humidity();
-
         final JsonNode mainNode = root.get("main");
-        humidity.setValue(mainNode.get("humidity").asInt());
 
-        return humidity;
+        return new Humidity((byte) (mainNode.get("humidity").asInt()));
     }
 
     private Wind parseWind(JsonNode root) {
-        Wind wind = new Wind();
         final JsonNode windNode = root.get("wind");
+        double speed = windNode.get("speed").asDouble();
 
-        wind.setSpeed(windNode.get("speed").asDouble());
+        Wind wind = new Wind(speed, UnitSystem.getWindUnit(unitSystem));
         final JsonNode degNode = windNode.get("deg");
         if (degNode != null) {
             wind.setDegrees(degNode.asDouble());
         }
-        wind.setUnit(Unit.getWindUnit(unit));
 
         return wind;
     }
@@ -240,22 +233,19 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
     }
 
     private Clouds parseClouds(JsonNode root) {
-        Clouds clouds = new Clouds();
+        Clouds clouds = null;
 
         final JsonNode cloudsNode = root.get("clouds");
         final JsonNode allValueNode = cloudsNode.get("all");
         if (allValueNode != null) {
-            clouds.setValue((byte) allValueNode.asInt());
+            clouds = new Clouds((byte) allValueNode.asInt());
         }
 
         return clouds;
     }
 
     private Location parseLocation(JsonNode root) {
-        Location location = new Location();
-
-        location.setName(root.get("name").asText());
-        location.setId(root.get("id").asInt());
+        Location location = new Location(root.get("id").asInt(), root.get("name").asText());
 
         final JsonNode timezoneNode = root.get("timezone");
         if (timezoneNode != null) {

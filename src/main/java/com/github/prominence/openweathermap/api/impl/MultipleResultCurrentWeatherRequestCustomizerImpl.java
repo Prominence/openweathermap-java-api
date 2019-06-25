@@ -27,7 +27,7 @@ import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequ
 import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequestTerminator;
 import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
 public class MultipleResultCurrentWeatherRequestCustomizerImpl implements MultipleResultCurrentWeatherRequestCustomizer {
 
@@ -35,7 +35,7 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
 
     private Accuracy accuracy;
     private Language language;
-    private Unit unit;
+    private UnitSystem unitSystem;
 
     MultipleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
@@ -44,13 +44,13 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
     @Override
     public MultipleResultCurrentWeatherRequestTerminator retrieve() {
         applyCustomization();
-        return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unit);
+        return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
     public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
         applyCustomization();
-        return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unit);
+        return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
@@ -66,8 +66,8 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer unit(Unit unit) {
-        this.unit = unit;
+    public MultipleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        this.unitSystem = unitSystem;
         return this;
     }
 
@@ -78,8 +78,8 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
         if (language != null) {
             urlBuilder.addRequestParameter("lang", language.getValue());
         }
-        if (unit != null && unit != Unit.STANDARD_SYSTEM) {
-            urlBuilder.addRequestParameter("units", unit.getValue());
+        if (unitSystem != null && unitSystem != UnitSystem.STANDARD_SYSTEM) {
+            urlBuilder.addRequestParameter("units", unitSystem.getValue());
         }
     }
 }

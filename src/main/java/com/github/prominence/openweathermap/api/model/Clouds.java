@@ -24,27 +24,58 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * The Clouds type represents cloudiness value percentage.
+ * Its value can only be an integer in [0, 100] range.
+ */
 public class Clouds {
+
+    private static final String DEFAULT_UNIT = "%";
 
     private byte value;
 
-    public Clouds() {
-    }
-
+    /**
+     * Instantiates a new Clouds.
+     *
+     * @param value the value representing cloudiness percentage.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public Clouds(byte value) {
+        if (value < 0 || value > 100)  {
+            throw new IllegalArgumentException("Cloudiness value must be in [0, 100] range.");
+        }
         this.value = value;
     }
 
+    /**
+     * Returns cloudiness percentage value.
+     *
+     * @return cloudiness percentage.
+     */
     public byte getValue() {
         return value;
     }
 
+    /**
+     * Sets cloudiness percentage value.
+     *
+     * @param value new cloudiness value.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public void setValue(byte value) {
+        if (value < 0 || value > 100) {
+            throw new IllegalArgumentException("Cloudiness value must be in [0, 100] range.");
+        }
         this.value = value;
     }
 
+    /**
+     * Returns cloudiness unitSystem. Constantly equals to '%'.
+     *
+     * @return the cloudiness unitSystem.
+     */
     public String getUnit() {
-        return "%";
+        return DEFAULT_UNIT;
     }
 
     @Override

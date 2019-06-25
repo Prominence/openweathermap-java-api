@@ -26,45 +26,46 @@ import java.util.Objects;
 
 public class Snow {
 
-    private double oneHourSnowLevel;
-    private double threeHourSnowLevel;
+    private static final String DEFAULT_UNIT = "mm";
+
+    private Double oneHourSnowLevel;
+    private Double threeHourSnowLevel;
 
     public Snow() {
     }
 
-    public Snow(double oneHourSnowLevel, double threeHourSnowLevel) {
+    public Snow(Double oneHourSnowLevel, Double threeHourSnowLevel) {
         this.oneHourSnowLevel = oneHourSnowLevel;
         this.threeHourSnowLevel = threeHourSnowLevel;
     }
 
-    public double getOneHourSnowLevel() {
+    public Double getOneHourSnowLevel() {
         return oneHourSnowLevel;
     }
 
-    public void setOneHourSnowLevel(double oneHourSnowLevel) {
+    public void setOneHourSnowLevel(Double oneHourSnowLevel) {
         this.oneHourSnowLevel = oneHourSnowLevel;
     }
 
-    public double getThreeHourSnowLevel() {
+    public Double getThreeHourSnowLevel() {
         return threeHourSnowLevel;
     }
 
-    public void setThreeHourSnowLevel(double threeHourSnowLevel) {
+    public void setThreeHourSnowLevel(Double threeHourSnowLevel) {
         this.threeHourSnowLevel = threeHourSnowLevel;
     }
 
     public String getUnit() {
-        return "mm";
+        return DEFAULT_UNIT;
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (!(o instanceof Snow)) return false;
         Snow snow = (Snow) o;
-        return Double.compare(snow.oneHourSnowLevel, oneHourSnowLevel) == 0 &&
-                Double.compare(snow.threeHourSnowLevel, threeHourSnowLevel) == 0;
+        return Objects.equals(oneHourSnowLevel, snow.oneHourSnowLevel) &&
+                Objects.equals(threeHourSnowLevel, snow.threeHourSnowLevel);
     }
 
     @Override
@@ -74,7 +75,24 @@ public class Snow {
 
     @Override
     public String toString() {
-        return "1 last hour snow level: " + oneHourSnowLevel + ' ' + getUnit() +
-                ", 3 last hours snow level: " + threeHourSnowLevel + ' ' + getUnit();
+        StringBuilder snowString = new StringBuilder();
+        if (oneHourSnowLevel == null && threeHourSnowLevel == null) {
+            snowString.append("unknown");
+        } else {
+            if (oneHourSnowLevel != null) {
+                snowString.append("1 last hour snow level: ");
+                snowString.append(oneHourSnowLevel);
+                snowString.append(getUnit());
+            }
+            if (threeHourSnowLevel != null) {
+                if (oneHourSnowLevel != null) {
+                    snowString.append(", ");
+                }
+                snowString.append("3 last hours snow level: ");
+                snowString.append(threeHourSnowLevel);
+                snowString.append(getUnit());
+            }
+        }
+        return snowString.toString();
     }
 }

@@ -27,8 +27,8 @@ import java.util.Objects;
 
 public class Weather {
 
-    private String weatherState;
-    private String weatherDescription;
+    private String state;
+    private String description;
     private String weatherIconUrl;
     private LocalDateTime requestedOn;
 
@@ -42,20 +42,37 @@ public class Weather {
 
     private Location location;
 
-    public String getWeatherState() {
-        return weatherState;
+    public Weather(String state, String description) {
+        if (state == null) {
+            throw new IllegalArgumentException("State must be set.");
+        }
+        if (description == null) {
+            throw new IllegalArgumentException("Description must be set.");
+        }
+        this.state = state;
+        this.description = description;
     }
 
-    public void setWeatherState(String weatherState) {
-        this.weatherState = weatherState;
+    public String getState() {
+        return state;
     }
 
-    public String getWeatherDescription() {
-        return weatherDescription;
+    public void setState(String state) {
+        if (state == null) {
+            throw new IllegalArgumentException("State must be set.");
+        }
+        this.state = state;
     }
 
-    public void setWeatherDescription(String weatherDescription) {
-        this.weatherDescription = weatherDescription;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description must be set.");
+        }
+        this.description = description;
     }
 
     public String getWeatherIconUrl() {
@@ -143,8 +160,8 @@ public class Weather {
         if (this == o) return true;
         if (!(o instanceof Weather)) return false;
         Weather weather = (Weather) o;
-        return Objects.equals(weatherState, weather.weatherState) &&
-                Objects.equals(weatherDescription, weather.weatherDescription) &&
+        return Objects.equals(state, weather.state) &&
+                Objects.equals(description, weather.description) &&
                 Objects.equals(weatherIconUrl, weather.weatherIconUrl) &&
                 Objects.equals(requestedOn, weather.requestedOn) &&
                 Objects.equals(temperature, weather.temperature) &&
@@ -159,25 +176,54 @@ public class Weather {
 
     @Override
     public int hashCode() {
-        return Objects.hash(weatherState, weatherDescription, weatherIconUrl, requestedOn, temperature, pressure, humidity, wind, rain, snow, clouds, location);
+        return Objects.hash(state, description, weatherIconUrl, requestedOn, temperature, pressure, humidity, wind, rain, snow, clouds, location);
     }
 
     @Override
     public String toString() {
-        final String countryCode = location.getCountryCode();
-        String resultString = "Location: " +
-                location.getName() + (countryCode != null ? ('(' + countryCode + ")") : "") +
-                ", Weather: " + weatherDescription +
-                ", " + temperature.getValue() + ' ' + temperature.getUnit() +
-                ", " + pressure.getValue() + ' ' + pressure.getUnit() +
-                ", " + clouds.toString();
-        if (rain != null) {
-            resultString += (", Rain: " + rain.getOneHourRainLevel() + ' ' + rain.getUnit());
+        final StringBuilder stringBuilder = new StringBuilder();
+        if (location != null) {
+            stringBuilder.append("Location: ");
+            stringBuilder.append(location.getName());
+
+            final String countryCode = location.getCountryCode();
+            if (countryCode != null) {
+                stringBuilder.append('(');
+                stringBuilder.append(countryCode);
+                stringBuilder.append(')');
+            }
         }
-        if (snow != null) {
-            resultString += (", Snow: " + snow.getOneHourSnowLevel() + ' ' + snow.getUnit());
+        stringBuilder.append(", Weather: ");
+        stringBuilder.append(description);
+        if (temperature != null) {
+            stringBuilder.append(", ");
+            stringBuilder.append(temperature.getValue());
+            stringBuilder.append(' ');
+            stringBuilder.append(temperature.getUnit());
         }
-        return resultString;
+        if (pressure != null) {
+            stringBuilder.append(", ");
+            stringBuilder.append(pressure.getValue());
+            stringBuilder.append(' ');
+            stringBuilder.append(pressure.getUnit());
+        }
+        if (clouds != null) {
+            stringBuilder.append(", ");
+            stringBuilder.append(clouds.toString());
+        }
+        if (rain != null && rain.getOneHourRainLevel() != null) {
+            stringBuilder.append(", Rain: ");
+            stringBuilder.append(rain.getOneHourRainLevel());
+            stringBuilder.append(' ');
+            stringBuilder.append(rain.getUnit());
+        }
+        if (snow != null && snow.getOneHourSnowLevel() != null) {
+            stringBuilder.append(", Snow: ");
+            stringBuilder.append(snow.getOneHourSnowLevel());
+            stringBuilder.append(' ');
+            stringBuilder.append(snow.getUnit());
+        }
+        return stringBuilder.toString();
 
     }
 }

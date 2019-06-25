@@ -26,35 +26,37 @@ import java.util.Objects;
 
 public class Rain {
 
-    private double oneHourRainLevel;
-    private double threeHourRainLevel;
+    private static final String DEFAULT_UNIT = "mm";
+
+    private Double oneHourRainLevel;
+    private Double threeHourRainLevel;
 
     public Rain() {
     }
 
-    public Rain(double oneHourRainLevel, double threeHourRainLevel) {
+    public Rain(Double oneHourRainLevel, Double threeHourRainLevel) {
         this.oneHourRainLevel = oneHourRainLevel;
         this.threeHourRainLevel = threeHourRainLevel;
     }
 
-    public double getOneHourRainLevel() {
+    public Double getOneHourRainLevel() {
         return oneHourRainLevel;
     }
 
-    public void setOneHourRainLevel(double oneHourRainLevel) {
+    public void setOneHourRainLevel(Double oneHourRainLevel) {
         this.oneHourRainLevel = oneHourRainLevel;
     }
 
-    public double getThreeHourRainLevel() {
+    public Double getThreeHourRainLevel() {
         return threeHourRainLevel;
     }
 
-    public void setThreeHourRainLevel(double threeHourRainLevel) {
+    public void setThreeHourRainLevel(Double threeHourRainLevel) {
         this.threeHourRainLevel = threeHourRainLevel;
     }
 
     public String getUnit() {
-        return "mm";
+        return DEFAULT_UNIT;
     }
 
     @Override
@@ -62,8 +64,8 @@ public class Rain {
         if (this == o) return true;
         if (!(o instanceof Rain)) return false;
         Rain rain = (Rain) o;
-        return Double.compare(rain.oneHourRainLevel, oneHourRainLevel) == 0 &&
-                Double.compare(rain.threeHourRainLevel, threeHourRainLevel) == 0;
+        return Objects.equals(oneHourRainLevel, rain.oneHourRainLevel) &&
+                Objects.equals(threeHourRainLevel, rain.threeHourRainLevel);
     }
 
     @Override
@@ -73,7 +75,24 @@ public class Rain {
 
     @Override
     public String toString() {
-        return "1 last hour rain level: " + oneHourRainLevel + + ' ' + getUnit() +
-                ", 3 last hours rain level: " + threeHourRainLevel + ' ' + getUnit();
+        StringBuilder snowString = new StringBuilder();
+        if (oneHourRainLevel == null && threeHourRainLevel == null) {
+            snowString.append("unknown");
+        } else {
+            if (oneHourRainLevel != null) {
+                snowString.append("1 last hour rain level: ");
+                snowString.append(oneHourRainLevel);
+                snowString.append(getUnit());
+            }
+            if (threeHourRainLevel != null) {
+                if (oneHourRainLevel != null) {
+                    snowString.append(", ");
+                }
+                snowString.append("3 last hours rain level: ");
+                snowString.append(threeHourRainLevel);
+                snowString.append(getUnit());
+            }
+        }
+        return snowString.toString();
     }
 }

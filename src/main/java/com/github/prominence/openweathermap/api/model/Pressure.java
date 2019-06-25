@@ -24,46 +24,105 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * The Pressure type represents pressure value percentage.
+ * Its value can only be a double in [0, +∞) range.
+ */
 public class Pressure {
+
+    private static final String DEFAULT_UNIT = "hPa";
 
     private double value;
 
-    private double seaLevelValue;
-    private double groundLevelValue;
+    private Double seaLevelValue;
+    private Double groundLevelValue;
 
-    public Pressure() {
-    }
-
+    /**
+     * Instantiates a new Pressure.
+     *
+     * @param value the value representing pressure value.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public Pressure(double value) {
+        if (value < 0)  {
+            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+        }
         this.value = value;
     }
 
+    /**
+     * Returns pressure value.
+     *
+     * @return pressure value.
+     */
     public double getValue() {
         return value;
     }
 
+    /**
+     * Sets pressure value.
+     *
+     * @param value new pressure value.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public void setValue(double value) {
+        if (value < 0)  {
+            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+        }
         this.value = value;
     }
 
-    public double getSeaLevelValue() {
+    /**
+     * Gets sea level value.
+     *
+     * @return the sea level value.
+     */
+    public Double getSeaLevelValue() {
         return seaLevelValue;
     }
 
+    /**
+     * Sets sea level value.
+     *
+     * @param seaLevelValue the sea level value.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public void setSeaLevelValue(double seaLevelValue) {
+        if (seaLevelValue < 0)  {
+            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+        }
         this.seaLevelValue = seaLevelValue;
     }
 
-    public double getGroundLevelValue() {
+    /**
+     * Gets ground level value.
+     *
+     * @return the ground level value.
+     */
+    public Double getGroundLevelValue() {
         return groundLevelValue;
     }
 
+    /**
+     * Sets ground level value.
+     *
+     * @param groundLevelValue the ground level value.
+     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     */
     public void setGroundLevelValue(double groundLevelValue) {
+        if (groundLevelValue < 0)  {
+            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+        }
         this.groundLevelValue = groundLevelValue;
     }
 
+    /**
+     * Returns pressure unitSystem. Constantly equals to 'hPa'.
+     *
+     * @return the pressure unitSystem.
+     */
     public String getUnit() {
-        return "hPa";
+        return DEFAULT_UNIT;
     }
 
     @Override
@@ -72,8 +131,8 @@ public class Pressure {
         if (!(o instanceof Pressure)) return false;
         Pressure pressure = (Pressure) o;
         return Double.compare(pressure.value, value) == 0 &&
-                Double.compare(pressure.seaLevelValue, seaLevelValue) == 0 &&
-                Double.compare(pressure.groundLevelValue, groundLevelValue) == 0;
+                Objects.equals(seaLevelValue, pressure.seaLevelValue) &&
+                Objects.equals(groundLevelValue, pressure.groundLevelValue);
     }
 
     @Override

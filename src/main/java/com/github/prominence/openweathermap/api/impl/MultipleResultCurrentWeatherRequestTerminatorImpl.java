@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.impl;
 
 import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequestTerminator;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
@@ -32,16 +32,16 @@ import java.util.List;
 public class MultipleResultCurrentWeatherRequestTerminatorImpl implements MultipleResultCurrentWeatherRequestTerminator {
 
     private RequestUrlBuilder urlBuilder;
-    private Unit unit;
+    private UnitSystem unitSystem;
 
-    MultipleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, Unit unit) {
+    MultipleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
-        this.unit = unit;
+        this.unitSystem = unitSystem;
     }
 
     @Override
     public List<Weather> asJava() {
-        return new CurrentWeatherResponseMapper(unit).getList(getRawResponse());
+        return new CurrentWeatherResponseMapper(unitSystem).getList(getRawResponse());
     }
 
     @Override

@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.Unit;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
 public interface RequestCustomizer<T extends RequestCustomizer<?>> {
 
@@ -32,5 +32,5 @@ public interface RequestCustomizer<T extends RequestCustomizer<?>> {
 
     T language(Language language);
 
-    T unit(Unit unit);
+    T unitSystem(UnitSystem unitSystem);
 }

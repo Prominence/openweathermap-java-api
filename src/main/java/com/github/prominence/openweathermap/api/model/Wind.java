@@ -24,33 +24,92 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * The type Wind.
+ */
 public class Wind {
 
     private double speed;
-    private double degrees;
+    private Double degrees;
     private String unit;
 
+    /**
+     * Instantiates a new Wind.
+     *
+     * @param speed the speed
+     * @param unit  the unitSystem
+     */
+    public Wind(double speed, String unit) {
+        if (speed < 0) {
+            throw new IllegalArgumentException("Wind speed value must be in positive or zero.");
+        }
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit must be set.");
+        }
+        this.speed = speed;
+        this.unit = unit;
+    }
+
+    /**
+     * Gets speed.
+     *
+     * @return the speed
+     */
     public double getSpeed() {
         return speed;
     }
 
+    /**
+     * Sets speed.
+     *
+     * @param speed the speed
+     */
     public void setSpeed(double speed) {
+        if (speed < 0) {
+            throw new IllegalArgumentException("Wind speed value must be in positive or zero.");
+        }
         this.speed = speed;
     }
 
-    public double getDegrees() {
+    /**
+     * Gets degrees.
+     *
+     * @return the degrees
+     */
+    public Double getDegrees() {
         return degrees;
     }
 
+    /**
+     * Sets degrees.
+     *
+     * @param degrees the degrees
+     */
     public void setDegrees(double degrees) {
+        if (degrees < 0 || degrees > 360)  {
+            throw new IllegalArgumentException("Wind direction value must be in [0, 360] range.");
+        }
         this.degrees = degrees;
     }
 
+    /**
+     * Gets unitSystem.
+     *
+     * @return the unitSystem
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     * Sets unitSystem.
+     *
+     * @param unit the unitSystem
+     */
     public void setUnit(String unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit must be set.");
+        }
         this.unit = unit;
     }
 
@@ -60,7 +119,7 @@ public class Wind {
         if (!(o instanceof Wind)) return false;
         Wind wind = (Wind) o;
         return Double.compare(wind.speed, speed) == 0 &&
-                Double.compare(wind.degrees, degrees) == 0 &&
+                Objects.equals(degrees, wind.degrees) &&
                 Objects.equals(unit, wind.unit);
     }
 
