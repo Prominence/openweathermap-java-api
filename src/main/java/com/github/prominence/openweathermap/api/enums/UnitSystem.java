@@ -24,9 +24,9 @@ package com.github.prominence.openweathermap.api.enums;
 
 public enum UnitSystem {
 
-    METRIC_SYSTEM("metric"),
-    IMPERIAL_SYSTEM("imperial"),
-    STANDARD_SYSTEM("standard");
+    METRIC("metric"),
+    IMPERIAL("imperial"),
+    STANDARD("standard");
 
     private final String value;
 
@@ -36,10 +36,10 @@ public enum UnitSystem {
 
     public static String getWindUnit(UnitSystem type) {
         switch (type) {
-            case IMPERIAL_SYSTEM:
+            case IMPERIAL:
                 return "miles/hour";
-            case STANDARD_SYSTEM:
-            case METRIC_SYSTEM:
+            case STANDARD:
+            case METRIC:
             default:
                 return "meter/sec";
         }
@@ -47,11 +47,11 @@ public enum UnitSystem {
 
     public static String getTemperatureUnit(UnitSystem type) {
         switch (type) {
-            case METRIC_SYSTEM:
+            case METRIC:
                 return "℃";
-            case IMPERIAL_SYSTEM:
+            case IMPERIAL:
                 return "℉";
-            case STANDARD_SYSTEM:
+            case STANDARD:
             default:
                 return "K";
         }

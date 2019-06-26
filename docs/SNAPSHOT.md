@@ -59,7 +59,7 @@ final Weather weather = openWeatherClient
                 .byCoordinate(new Coordinate(5, 5))
                 .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
-                .unitSystem(Unit.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -68,7 +68,7 @@ final CompletableFuture<String> weatherXmlFuture = openWeatherClient
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(Unit.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asXML();
 ```
@@ -81,7 +81,7 @@ final String weatherListJson = openWeatherClient
                 .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10, true)
                 .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
-                .unitSystem(Unit.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJSON();
 
@@ -89,7 +89,7 @@ final CompletableFuture<List<Weather>> weatherListFuture = openWeatherClient
                 .currentWeather()
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
-                .unitSystem(Unit.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
                 .asJava();
 ```
@@ -164,9 +164,9 @@ Location: Minsk(BY), Weather: слегка облачно, 20.0 ℃, 1019.0 hPa,
 #### Unit
 | Constant             | Description                                    |
 |----------------------|------------------------------------------------|
-| Unit.METRIC_SYSTEM   | Celsius, meter/sec, hPa, mm(rain, snow).       |
-| Unit.IMPERIAL_SYSTEM | Fahrenheit, miles/hour, hPa, mm(rain, snow).   |
-| Unit.STANDARD_SYSTEM | Kelvin, meter/sec, hPa, mm(rain, snow)         |
+| UnitSystem.METRIC    | Celsius, meter/sec, hPa, mm(rain, snow).       |
+| UnitSystem.IMPERIAL  | Fahrenheit, miles/hour, hPa, mm(rain, snow).   |
+| UnitSystem.STANDARD  | Kelvin, meter/sec, hPa, mm(rain, snow)         |
 
 ### Dependencies
 * com.fasterxml.jackson.core:jackson-databind:2.9.9

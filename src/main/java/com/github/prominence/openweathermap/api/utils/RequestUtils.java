@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.utils;
 
-import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
+import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +52,8 @@ public final class RequestUtils {
      * @param requestUrl url for API call execution.
      * @return <code>InputStream</code> instance containing http response body.
      * @throws InvalidAuthTokenException in case if authentication token wasn't set or requested functionality is not permitted for its subscription plan.
-     * @throws DataNotFoundException     in case if there is no any data for requested location(s) or request is invalid.
-     * @throws IllegalStateException     in case of unexpected response or error.
+     * @throws NoDataFoundException in case if there is no any data for requested location(s) or request is invalid.
+     * @throws IllegalStateException in case of unexpected response or error.
      */
     private static InputStream executeRequest(URL requestUrl) {
         InputStream resultStream;
@@ -70,13 +70,13 @@ public final class RequestUtils {
                     throw new InvalidAuthTokenException();
                 case HttpURLConnection.HTTP_NOT_FOUND:
                 case HttpURLConnection.HTTP_BAD_REQUEST:
-                    throw new DataNotFoundException();
+                    throw new NoDataFoundException();
                 default:
                     throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
             }
         } catch (IllegalStateException | IOException ex) {
             logger.error("An error occurred during OpenWeatherMap API response parsing: ", ex);
-            throw new DataNotFoundException(ex);
+            throw new NoDataFoundException(ex);
         }
 
         return resultStream;

@@ -84,7 +84,7 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
     private UnitSystem unitSystem;
 
     CurrentWeatherResponseMapper(UnitSystem unitSystem) {
-        this.unitSystem = unitSystem != null ? unitSystem : UnitSystem.STANDARD_SYSTEM;
+        this.unitSystem = unitSystem != null ? unitSystem : UnitSystem.STANDARD;
     }
 
     @Override

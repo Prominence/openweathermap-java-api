@@ -1,6 +1,6 @@
 package com.github.prominence.openweathermap.api.utils;
 
-import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
+import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import org.junit.Test;
 
 public class RequestUtilsUnitTest {
@@ -10,7 +10,7 @@ public class RequestUtilsUnitTest {
         RequestUtils.getResponse("wrongUrl");
     }
 
-    @Test(expected = DataNotFoundException.class)
+    @Test(expected = NoDataFoundException.class)
     public void whenPassUrlToNonExistingPage_thenThrowAnException() {
         RequestUtils.getResponse("https://openweathermap.org/somePage");
     }

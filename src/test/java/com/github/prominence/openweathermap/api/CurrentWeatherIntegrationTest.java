@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api;
 import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.exception.DataNotFoundException;
+import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.impl.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.model.Coordinate;
@@ -46,7 +46,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byCoordinate(new Coordinate(5, 5))
                 .accuracy(Accuracy.ACCURATE)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -75,7 +75,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byCityName("Minsk")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -90,7 +90,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byCityName("Moscow", "ru")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -105,7 +105,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -120,7 +120,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJSON();
 
@@ -135,7 +135,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asXML();
 
@@ -150,7 +150,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asHTML();
 
@@ -165,7 +165,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asXML();
 
@@ -180,7 +180,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asJava();
 
@@ -195,7 +195,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asJSON();
 
@@ -210,7 +210,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .single()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asHTML();
 
@@ -226,7 +226,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10)
                 .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -243,7 +243,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10, true)
                 .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
-                .unitSystem(UnitSystem.METRIC_SYSTEM)
+                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -259,7 +259,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieve()
                 .asJava();
 
@@ -275,7 +275,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieve()
                 .asJava();
 
@@ -291,7 +291,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieve()
                 .asJSON();
 
@@ -306,7 +306,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieve()
                 .asXML();
 
@@ -321,7 +321,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieve()
                 .asHTML();
 
@@ -336,7 +336,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
                 .asJava();
 
@@ -353,7 +353,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
                 .asXML();
 
@@ -368,7 +368,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
                 .asJSON();
 
@@ -383,7 +383,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .multiple()
                 .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
                 .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL_SYSTEM)
+                .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
                 .asHTML();
 
@@ -402,7 +402,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .asJSON();
     }
 
-    @Test(expected = DataNotFoundException.class)
+    @Test(expected = NoDataFoundException.class)
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
         getClient()
                 .currentWeather()

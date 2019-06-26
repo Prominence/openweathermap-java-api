@@ -78,7 +78,7 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
         if (language != null) {
             urlBuilder.addRequestParameter("lang", language.getValue());
         }
-        if (unitSystem != null && unitSystem != UnitSystem.STANDARD_SYSTEM) {
+        if (unitSystem != null && unitSystem != UnitSystem.STANDARD) {
             urlBuilder.addRequestParameter("units", unitSystem.getValue());
         }
     }
