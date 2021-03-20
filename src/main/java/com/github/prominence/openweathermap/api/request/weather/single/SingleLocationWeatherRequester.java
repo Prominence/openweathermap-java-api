@@ -20,11 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.model.Coordinate;
 
-import java.util.concurrent.CompletableFuture;
+public interface SingleLocationWeatherRequester {
 
-public interface SingleResultCurrentWeatherAsyncRequestTerminator extends CurrentWeatherRequestTerminator<CompletableFuture<Weather>, CompletableFuture<String>> {
+    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName);
+
+    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
+
+    SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
+
+    SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
+
+    SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
 }

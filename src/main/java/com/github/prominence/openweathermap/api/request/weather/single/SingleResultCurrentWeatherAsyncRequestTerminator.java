@@ -20,19 +20,12 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
+import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequestTerminator;
 
-public interface MultipleLocationsWeatherRequester {
+import java.util.concurrent.CompletableFuture;
 
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
-
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering);
-
-    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
-
-    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount, boolean useServerClustering);
-
+public interface SingleResultCurrentWeatherAsyncRequestTerminator extends CurrentWeatherRequestTerminator<CompletableFuture<Weather>, CompletableFuture<String>> {
 }

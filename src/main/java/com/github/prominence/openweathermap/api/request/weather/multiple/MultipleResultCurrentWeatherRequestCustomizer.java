@@ -20,9 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
-public interface SingleResultCurrentWeatherRequestTerminator extends CurrentWeatherRequestTerminator<Weather, String> {
+public interface MultipleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<MultipleResultCurrentWeatherRequestCustomizer> {
+
+    MultipleResultCurrentWeatherRequestTerminator retrieve();
+
+    MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
 }

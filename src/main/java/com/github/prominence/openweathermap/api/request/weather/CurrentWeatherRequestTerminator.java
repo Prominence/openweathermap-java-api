@@ -20,17 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.enums.Accuracy;
-import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
-public interface RequestCustomizer<T extends RequestCustomizer<?>> {
+public interface CurrentWeatherRequestTerminator<T, S> extends RequestTerminator<T, S> {
 
-    T accuracy(Accuracy accuracy);
+    S asXML();
 
-    T language(Language language);
-
-    T unitSystem(UnitSystem unitSystem);
+    S asHTML();
 }

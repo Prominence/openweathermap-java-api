@@ -20,16 +20,16 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.SingleLocationWeatherRequester;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 
 public class SingleLocationCurrentWeatherRequesterImpl implements SingleLocationWeatherRequester {
 
-    private RequestUrlBuilder urlBuilder;
+    private final RequestUrlBuilder urlBuilder;
 
-    SingleLocationCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
+    public SingleLocationCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
         urlBuilder.append("weather");
     }

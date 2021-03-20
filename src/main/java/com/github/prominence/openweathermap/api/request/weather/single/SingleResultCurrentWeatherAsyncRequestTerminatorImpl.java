@@ -20,29 +20,29 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class MultipleResultCurrentWeatherAsyncRequestTerminatorImpl implements MultipleResultCurrentWeatherAsyncRequestTerminator {
+public class SingleResultCurrentWeatherAsyncRequestTerminatorImpl implements SingleResultCurrentWeatherAsyncRequestTerminator {
 
-    private RequestUrlBuilder urlBuilder;
-    private UnitSystem unitSystem;
+    private final RequestUrlBuilder urlBuilder;
+    private final UnitSystem unitSystem;
 
-    MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+    SingleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;
     }
 
     @Override
-    public CompletableFuture<List<Weather>> asJava() {
-        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(unitSystem).getList(getRawResponse()));
+    public CompletableFuture<Weather> asJava() {
+        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(unitSystem).getSingle(getRawResponse()));
     }
 
     @Override

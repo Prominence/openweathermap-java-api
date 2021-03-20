@@ -20,11 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequestTerminator;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-public interface MultipleResultCurrentWeatherRequestTerminator extends CurrentWeatherRequestTerminator<List<Weather>, String> {
+public interface MultipleResultCurrentWeatherAsyncRequestTerminator extends CurrentWeatherRequestTerminator<CompletableFuture<List<Weather>>, CompletableFuture<String>> {
 }

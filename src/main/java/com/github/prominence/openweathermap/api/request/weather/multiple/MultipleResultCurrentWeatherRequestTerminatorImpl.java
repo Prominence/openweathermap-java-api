@@ -20,45 +20,46 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.SingleResultCurrentWeatherAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
 
-public class SingleResultCurrentWeatherAsyncRequestTerminatorImpl implements SingleResultCurrentWeatherAsyncRequestTerminator {
+public class MultipleResultCurrentWeatherRequestTerminatorImpl implements MultipleResultCurrentWeatherRequestTerminator {
 
-    private RequestUrlBuilder urlBuilder;
-    private UnitSystem unitSystem;
+    private final RequestUrlBuilder urlBuilder;
+    private final UnitSystem unitSystem;
 
-    SingleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+    MultipleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;
     }
 
     @Override
-    public CompletableFuture<Weather> asJava() {
-        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(unitSystem).getSingle(getRawResponse()));
+    public List<Weather> asJava() {
+        return new CurrentWeatherResponseMapper(unitSystem).getList(getRawResponse());
     }
 
     @Override
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
+    public String asJSON() {
+        return getRawResponse();
     }
 
     @Override
-    public CompletableFuture<String> asXML() {
+    public String asXML() {
         urlBuilder.addRequestParameter("mode", "xml");
-        return CompletableFuture.supplyAsync(this::getRawResponse);
+        return getRawResponse();
     }
 
     @Override
-    public CompletableFuture<String> asHTML() {
+    public String asHTML() {
         urlBuilder.addRequestParameter("mode", "html");
-        return CompletableFuture.supplyAsync(this::getRawResponse);
+        return getRawResponse();
     }
 
     private String getRawResponse() {

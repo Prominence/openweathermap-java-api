@@ -20,11 +20,14 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather;
 
-public interface CurrentWeatherRequestTerminator<T, S> extends RequestTerminator<T, S> {
+import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsWeatherRequester;
+import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationWeatherRequester;
 
-    S asXML();
+public interface CurrentWeatherRequester {
 
-    S asHTML();
+    SingleLocationWeatherRequester single();
+
+    MultipleLocationsWeatherRequester multiple();
 }

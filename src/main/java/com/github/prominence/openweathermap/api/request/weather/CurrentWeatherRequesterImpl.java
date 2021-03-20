@@ -20,18 +20,20 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.CurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.MultipleLocationsWeatherRequester;
-import com.github.prominence.openweathermap.api.SingleLocationWeatherRequester;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequesterImpl;
+import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsWeatherRequester;
+import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
+import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationWeatherRequester;
 
 public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
 
-    private RequestUrlBuilder urlBuilder = new RequestUrlBuilder("http://api.openweathermap.org/data/2.5/");
+    private final RequestUrlBuilder urlBuilder;
 
-    CurrentWeatherRequesterImpl(String apiKey) {
-        urlBuilder.addRequestParameter("appid", apiKey);
+    public CurrentWeatherRequesterImpl(String apiKey) {
+        urlBuilder =  new RequestUrlBuilder(apiKey);
     }
 
     public SingleLocationWeatherRequester single() {

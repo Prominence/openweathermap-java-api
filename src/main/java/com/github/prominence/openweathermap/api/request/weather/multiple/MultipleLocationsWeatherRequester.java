@@ -20,11 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-public interface RequestTerminator<T, S> {
+import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 
-    T asJava();
+public interface MultipleLocationsWeatherRequester {
 
-    S asJSON();
+    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
+
+    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering);
+
+    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
+
+    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount, boolean useServerClustering);
+
 }

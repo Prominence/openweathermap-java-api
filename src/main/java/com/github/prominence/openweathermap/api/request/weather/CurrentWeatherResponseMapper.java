@@ -20,11 +20,11 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.prominence.openweathermap.api.ResponseMapper;
+import com.github.prominence.openweathermap.api.request.ResponseMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.*;
 
@@ -81,9 +81,9 @@ import java.util.TimeZone;
  */
 public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
 
-    private UnitSystem unitSystem;
+    private final UnitSystem unitSystem;
 
-    CurrentWeatherResponseMapper(UnitSystem unitSystem) {
+    public CurrentWeatherResponseMapper(UnitSystem unitSystem) {
         this.unitSystem = unitSystem != null ? unitSystem : UnitSystem.STANDARD;
     }
 

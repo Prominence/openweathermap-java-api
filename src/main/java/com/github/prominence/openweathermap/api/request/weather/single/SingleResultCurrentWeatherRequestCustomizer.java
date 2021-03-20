@@ -20,13 +20,14 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import java.util.List;
+import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
-public interface ResponseMapper<T> {
+public interface SingleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<SingleResultCurrentWeatherRequestCustomizer> {
 
-    T getSingle(String json);
+    SingleResultCurrentWeatherRequestTerminator retrieve();
 
-    List<T> getList(String json);
+    SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
+
 }

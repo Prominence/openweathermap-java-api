@@ -20,53 +20,51 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequestCustomizer;
-import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
-public class MultipleResultCurrentWeatherRequestCustomizerImpl implements MultipleResultCurrentWeatherRequestCustomizer {
+public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleResultCurrentWeatherRequestCustomizer {
 
-    private RequestUrlBuilder urlBuilder;
+    private final RequestUrlBuilder urlBuilder;
 
     private Accuracy accuracy;
     private Language language;
     private UnitSystem unitSystem;
 
-    MultipleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
+    SingleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestTerminator retrieve() {
+    public SingleResultCurrentWeatherRequestTerminator retrieve() {
         applyCustomization();
-        return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
-    public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+    public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
         applyCustomization();
-        return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
+        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer accuracy(Accuracy accuracy) {
+    public SingleResultCurrentWeatherRequestCustomizer accuracy(Accuracy accuracy) {
         this.accuracy = accuracy;
         return this;
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer language(Language language) {
+    public SingleResultCurrentWeatherRequestCustomizer language(Language language) {
         this.language = language;
         return this;
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+    public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
     }

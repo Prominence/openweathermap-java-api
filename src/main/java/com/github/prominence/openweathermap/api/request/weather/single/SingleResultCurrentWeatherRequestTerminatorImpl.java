@@ -20,28 +20,27 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-import java.util.List;
+public class SingleResultCurrentWeatherRequestTerminatorImpl implements SingleResultCurrentWeatherRequestTerminator {
 
-public class MultipleResultCurrentWeatherRequestTerminatorImpl implements MultipleResultCurrentWeatherRequestTerminator {
+    private final RequestUrlBuilder urlBuilder;
+    private final UnitSystem unitSystem;
 
-    private RequestUrlBuilder urlBuilder;
-    private UnitSystem unitSystem;
-
-    MultipleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+    SingleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;
     }
 
     @Override
-    public List<Weather> asJava() {
-        return new CurrentWeatherResponseMapper(unitSystem).getList(getRawResponse());
+    public Weather asJava() {
+        return new CurrentWeatherResponseMapper(unitSystem).getSingle(asJSON());
     }
 
     @Override

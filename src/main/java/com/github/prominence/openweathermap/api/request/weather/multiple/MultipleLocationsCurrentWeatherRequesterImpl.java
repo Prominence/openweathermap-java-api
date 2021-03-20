@@ -20,18 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.impl;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.MultipleLocationsWeatherRequester;
-import com.github.prominence.openweathermap.api.MultipleResultCurrentWeatherRequestCustomizer;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 
 public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLocationsWeatherRequester {
 
-    private RequestUrlBuilder urlBuilder;
+    private final RequestUrlBuilder urlBuilder;
 
-    MultipleLocationsCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
+    public MultipleLocationsCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }
 

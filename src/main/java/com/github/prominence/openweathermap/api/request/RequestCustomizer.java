@@ -20,19 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.enums.Accuracy;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
-public interface SingleLocationWeatherRequester {
+public interface RequestCustomizer<T extends RequestCustomizer<?>> {
 
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName);
+    T accuracy(Accuracy accuracy);
 
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
+    T language(Language language);
 
-    SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
-
-    SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
-
-    SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
+    T unitSystem(UnitSystem unitSystem);
 }

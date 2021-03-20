@@ -20,11 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api;
+package com.github.prominence.openweathermap.api.request;
 
-public interface CurrentWeatherRequester {
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequesterImpl;
 
-    SingleLocationWeatherRequester single();
+public class OpenWeatherMapClient {
 
-    MultipleLocationsWeatherRequester multiple();
+    private final String apiKey;
+
+    public OpenWeatherMapClient(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public CurrentWeatherRequesterImpl currentWeather() {
+        return new CurrentWeatherRequesterImpl(apiKey);
+    }
 }
