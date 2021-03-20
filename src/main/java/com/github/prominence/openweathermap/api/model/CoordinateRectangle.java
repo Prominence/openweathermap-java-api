@@ -60,7 +60,7 @@ public class CoordinateRectangle {
         return latitudeTop;
     }
 
-    public String getFormattedString() {
+    public String getFormattedRequestString() {
         return longitudeLeft + "," + latitudeBottom + "," + longitudeRight + "," + latitudeTop;
     }
 
@@ -82,6 +82,6 @@ public class CoordinateRectangle {
 
     @Override
     public String toString() {
-        return "Rectangle: " + getFormattedString();
+        return "Rectangle: " + getFormattedRequestString();
     }
 }

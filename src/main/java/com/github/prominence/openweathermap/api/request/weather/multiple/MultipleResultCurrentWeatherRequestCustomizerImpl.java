@@ -41,13 +41,13 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
 
     @Override
     public MultipleResultCurrentWeatherRequestTerminator retrieve() {
-        applyCustomization();
+        urlBuilder.applyCustomization(accuracy, language, unitSystem);
         return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
     public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        applyCustomization();
+        urlBuilder.applyCustomization(accuracy, language, unitSystem);
         return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
@@ -67,17 +67,5 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
     public MultipleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
-    }
-
-    private void applyCustomization() {
-        if (accuracy != null) {
-            urlBuilder.addRequestParameter("type", accuracy.getValue());
-        }
-        if (language != null) {
-            urlBuilder.addRequestParameter("lang", language.getValue());
-        }
-        if (unitSystem != null && unitSystem != UnitSystem.STANDARD) {
-            urlBuilder.addRequestParameter("units", unitSystem.getValue());
-        }
     }
 }

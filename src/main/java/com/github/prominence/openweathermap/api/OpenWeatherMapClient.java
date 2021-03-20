@@ -20,8 +20,9 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request;
+package com.github.prominence.openweathermap.api;
 
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequesterImpl;
 
 public class OpenWeatherMapClient {
@@ -32,7 +33,12 @@ public class OpenWeatherMapClient {
         this.apiKey = apiKey;
     }
 
-    public CurrentWeatherRequesterImpl currentWeather() {
+    public CurrentWeatherRequester currentWeather() {
         return new CurrentWeatherRequesterImpl(apiKey);
     }
+
+    // TODO:
+    // * Forecast: hourly, daily
+    // * Air Pollution
+    // * Ultraviolet index
 }

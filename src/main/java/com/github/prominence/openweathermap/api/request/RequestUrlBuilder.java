@@ -22,6 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request;
 
+import com.github.prominence.openweathermap.api.enums.Accuracy;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,8 +49,16 @@ public class RequestUrlBuilder {
         requestParameters.put(key, value);
     }
 
-    public void setAPIKey(String key) {
-        requestParameters.put(API_KEY_PARAM_NAME, key);
+    public void applyCustomization(Accuracy accuracy, Language language, UnitSystem unitSystem) {
+        if (accuracy != null) {
+            addRequestParameter("type", accuracy.getValue());
+        }
+        if (language != null) {
+            addRequestParameter("lang", language.getValue());
+        }
+        if (unitSystem != null && unitSystem != UnitSystem.STANDARD) {
+            addRequestParameter("units", unitSystem.getValue());
+        }
     }
 
     public String buildUrl() {

@@ -41,13 +41,13 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
 
     @Override
     public SingleResultCurrentWeatherRequestTerminator retrieve() {
-        applyCustomization();
+        urlBuilder.applyCustomization(accuracy, language, unitSystem);
         return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
     public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        applyCustomization();
+        urlBuilder.applyCustomization(accuracy, language, unitSystem);
         return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
@@ -67,17 +67,5 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
-    }
-
-    private void applyCustomization() {
-        if (accuracy != null) {
-            urlBuilder.addRequestParameter("type", accuracy.getValue());
-        }
-        if (language != null) {
-            urlBuilder.addRequestParameter("lang", language.getValue());
-        }
-        if (unitSystem != null && unitSystem != UnitSystem.STANDARD) {
-            urlBuilder.addRequestParameter("units", unitSystem.getValue());
-        }
     }
 }

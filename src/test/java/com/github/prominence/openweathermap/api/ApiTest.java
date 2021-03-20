@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api;
 
-import com.github.prominence.openweathermap.api.request.OpenWeatherMapClient;
 import org.junit.BeforeClass;
 
 public class ApiTest {

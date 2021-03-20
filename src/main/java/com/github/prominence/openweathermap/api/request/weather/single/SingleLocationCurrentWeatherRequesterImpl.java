@@ -34,28 +34,28 @@ public class SingleLocationCurrentWeatherRequesterImpl implements SingleLocation
         urlBuilder.append("weather");
     }
 
-    public SingleResultCurrentWeatherRequestCustomizerImpl byCityName(String cityName) {
+    public SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName) {
         urlBuilder.addRequestParameter("q", cityName);
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 
-    public SingleResultCurrentWeatherRequestCustomizerImpl byCityName(String cityName, String countryCode) {
+    public SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode) {
         urlBuilder.addRequestParameter("q", cityName + "," + countryCode);
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 
-    public SingleResultCurrentWeatherRequestCustomizerImpl byCityId(long cityId) {
+    public SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId) {
         urlBuilder.addRequestParameter("id", cityId);
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 
-    public SingleResultCurrentWeatherRequestCustomizerImpl byCoordinate(Coordinate coordinate) {
+    public SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
         urlBuilder.addRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
         urlBuilder.addRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 
-    public SingleResultCurrentWeatherRequestCustomizerImpl byZipCodeAndCountry(String zipCode, String countryCode) {
+    public SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
         urlBuilder.addRequestParameter("zip", zipCode + "," + countryCode);
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }

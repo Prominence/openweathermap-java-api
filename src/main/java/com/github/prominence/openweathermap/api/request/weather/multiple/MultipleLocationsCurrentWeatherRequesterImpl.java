@@ -36,7 +36,7 @@ public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLoc
 
     @Override
     public MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom) {
-        String coordinates = rectangle.getFormattedString() + "," + zoom;
+        String coordinates = rectangle.getFormattedRequestString() + "," + zoom;
         urlBuilder.append("box/city");
         urlBuilder.addRequestParameter("bbox", coordinates);
 
@@ -45,7 +45,7 @@ public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLoc
 
     @Override
     public MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering) {
-        String coordinates = rectangle.getFormattedString() + "," + zoom;
+        String coordinates = rectangle.getFormattedRequestString() + "," + zoom;
         urlBuilder.append("box/city");
         urlBuilder.addRequestParameter("bbox", coordinates);
         urlBuilder.addRequestParameter("cluster", useServerClustering ? "yes" : "no");
