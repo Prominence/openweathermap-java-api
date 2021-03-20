@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
 package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.ApiTest;
-import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
@@ -36,7 +35,7 @@ import org.junit.Test;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class CurrentWeatherIntegrationTest extends ApiTest {
+public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
@@ -44,7 +43,6 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .currentWeather()
                 .single()
                 .byCoordinate(new Coordinate(5, 5))
-                .accuracy(Accuracy.ACCURATE)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();

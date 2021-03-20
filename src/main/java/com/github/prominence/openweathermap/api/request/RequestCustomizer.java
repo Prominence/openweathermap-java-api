@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request;
 
-import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
 public interface RequestCustomizer<T extends RequestCustomizer<?>> {
-
-    T accuracy(Accuracy accuracy);
 
     T language(Language language);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,27 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.single;
+package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import org.junit.Test;
 
-public interface SingleLocationWeatherRequester {
+public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName);
+    @Test
+    public void whenGetTest_thenReturnNotNull() {
+        final String weatherJSON = getClient()
+                .forecast5Day3HourStep()
+                .byCityName("Minsk")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .count(15)
+                .retrieve()
+                .asJSON();
 
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
-
-    SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
-
-    SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
-
-    SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
+        assert weatherJSON != null;
+        System.out.println(weatherJSON);
+    }
 }

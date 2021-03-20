@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.enums;
+package com.github.prominence.openweathermap.api.annotation;
 
-public enum Accuracy {
-    LIKE("like"),
-    ACCURATE("accurate");
+import com.github.prominence.openweathermap.api.enums.SubscriptionPlan;
 
-    private final String value;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    Accuracy(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
+public @interface SubscriptionAvailability {
+    SubscriptionPlan[] plans();
 }

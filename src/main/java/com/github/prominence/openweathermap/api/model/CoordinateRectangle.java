@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ import java.util.Objects;
 
 public class CoordinateRectangle {
 
-    private double longitudeLeft;
-    private double latitudeBottom;
-    private double longitudeRight;
-    private double latitudeTop;
+    private final double longitudeLeft;
+    private final double latitudeBottom;
+    private final double longitudeRight;
+    private final double latitudeTop;
 
     public CoordinateRectangle(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
         if (latitudeBottom < -90 || latitudeTop < -90 || latitudeBottom > 90 || latitudeTop > 90) {

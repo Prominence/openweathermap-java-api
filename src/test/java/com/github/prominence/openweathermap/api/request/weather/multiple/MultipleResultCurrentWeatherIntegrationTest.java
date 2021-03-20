@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,204 +20,24 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.ApiTest;
-import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class CurrentWeatherIntegrationTest extends ApiTest {
-
-    @Test
-    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
-                .currentWeather()
-                .single()
-                .byCoordinate(new Coordinate(5, 5))
-                .accuracy(Accuracy.ACCURATE)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJava();
-
-        assert weather != null;
-        System.out.println(weather);
-    }
-
-    @Test
-    public void whenGetSingleCurrentWeatherByCityIdRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
-                .currentWeather()
-                .single()
-                .byCityId(350001514)
-                .language(Language.GERMAN)
-                .retrieve()
-                .asJava();
-
-        assert weather != null;
-        System.out.println(weather);
-    }
-
-    @Test
-    public void whenGetSingleCurrentWeatherByCityNameRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
-                .currentWeather()
-                .single()
-                .byCityName("Minsk")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJava();
-
-        assert weather != null;
-        System.out.println(weather);
-    }
-
-    @Test
-    public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
-                .currentWeather()
-                .single()
-                .byCityName("Moscow", "ru")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJava();
-
-        assert weather != null;
-        System.out.println(weather);
-    }
-
-    @Test
-    public void whenGetSingleCurrentWeatherByZipCodeAndCountryRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJava();
-
-        assert weather != null;
-        System.out.println(weather);
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentRequestWeatherAsJson_thenReturnNotNull() {
-        final String weatherJson = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJSON();
-
-        assert weatherJson != null;
-        System.out.println(weatherJson);
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentRequestWeatherAsXml_thenReturnNotNull() {
-        final String weatherXml = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asXML();
-
-        assert weatherXml != null;
-        System.out.println(weatherXml);
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentWeatherRequestAsHtml_thenReturnNotNull() {
-        final String weatherHtml = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asHTML();
-
-        assert weatherHtml != null;
-        System.out.println(weatherHtml);
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsXml_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> weatherXmlFuture = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieveAsync()
-                .asXML();
-
-        assert weatherXmlFuture != null;
-        System.out.println(weatherXmlFuture.get());
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Weather> weatherFuture = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieveAsync()
-                .asJava();
-
-        assert weatherFuture != null;
-        System.out.println(weatherFuture.get());
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsJson_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> weatherFuture = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieveAsync()
-                .asJSON();
-
-        assert weatherFuture != null;
-        System.out.println(weatherFuture.get());
-    }
-
-    @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsHtml_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> weatherFuture = getClient()
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieveAsync()
-                .asHTML();
-
-        assert weatherFuture != null;
-        System.out.println(weatherFuture.get());
-    }
+public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetMultipleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
@@ -225,7 +45,6 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .currentWeather()
                 .multiple()
                 .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10)
-                .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -242,7 +61,6 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .currentWeather()
                 .multiple()
                 .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10, true)
-                .accuracy(Accuracy.ACCURATE)
                 .language(Language.ROMANIAN)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()

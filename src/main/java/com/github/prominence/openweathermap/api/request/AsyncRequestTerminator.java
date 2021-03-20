@@ -20,14 +20,9 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.single;
+package com.github.prominence.openweathermap.api.request;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import java.util.concurrent.CompletableFuture;
 
-public interface SingleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<SingleResultCurrentWeatherRequestCustomizer> {
-
-    SingleResultCurrentWeatherRequestTerminator retrieve();
-
-    SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
-
+public interface AsyncRequestTerminator<T, S> extends RequestTerminator<CompletableFuture<T>, CompletableFuture<S>> {
 }

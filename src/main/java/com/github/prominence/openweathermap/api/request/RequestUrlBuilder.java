@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api.request;
 
-import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
@@ -49,10 +48,7 @@ public class RequestUrlBuilder {
         requestParameters.put(key, value);
     }
 
-    public void applyCustomization(Accuracy accuracy, Language language, UnitSystem unitSystem) {
-        if (accuracy != null) {
-            addRequestParameter("type", accuracy.getValue());
-        }
+    public void applyCustomization(Language language, UnitSystem unitSystem) {
         if (language != null) {
             addRequestParameter("lang", language.getValue());
         }

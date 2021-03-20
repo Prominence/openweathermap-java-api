@@ -20,27 +20,16 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
 
-public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
-    private final RequestUrlBuilder urlBuilder;
 
-    public CurrentWeatherRequesterImpl(String apiKey) {
-        urlBuilder =  new RequestUrlBuilder(apiKey);
-    }
+public interface FiveDayThreeHourStepForecastAsyncRequestTerminator extends AsyncRequestTerminator<List<Weather>, String> {
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequesterImpl(urlBuilder);
-    }
-
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequesterImpl(urlBuilder);
-    }
+    CompletableFuture<String> asXML();
 }

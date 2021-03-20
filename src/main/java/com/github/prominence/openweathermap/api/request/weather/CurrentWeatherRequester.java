@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationWeatherRequester;
+import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
 
 public interface CurrentWeatherRequester {
 
-    SingleLocationWeatherRequester single();
+    SingleLocationCurrentWeatherRequester single();
 
-    MultipleLocationsWeatherRequester multiple();
+    MultipleLocationsCurrentWeatherRequester multiple();
 }

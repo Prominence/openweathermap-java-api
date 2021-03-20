@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 
-public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLocationsWeatherRequester {
+public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLocationsCurrentWeatherRequester {
 
     private final RequestUrlBuilder urlBuilder;
 

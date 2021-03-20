@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
 package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.enums.Accuracy;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
@@ -31,7 +30,6 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
 
     private final RequestUrlBuilder urlBuilder;
 
-    private Accuracy accuracy;
     private Language language;
     private UnitSystem unitSystem;
 
@@ -41,20 +39,14 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
 
     @Override
     public SingleResultCurrentWeatherRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(accuracy, language, unitSystem);
+        urlBuilder.applyCustomization(language, unitSystem);
         return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
     public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        urlBuilder.applyCustomization(accuracy, language, unitSystem);
+        urlBuilder.applyCustomization(language, unitSystem);
         return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
-    public SingleResultCurrentWeatherRequestCustomizer accuracy(Accuracy accuracy) {
-        this.accuracy = accuracy;
-        return this;
     }
 
     @Override

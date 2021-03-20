@@ -20,27 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.model.Coordinate;
 
-public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
+public interface SingleLocationCurrentWeatherRequester {
 
-    private final RequestUrlBuilder urlBuilder;
+    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName);
 
-    public CurrentWeatherRequesterImpl(String apiKey) {
-        urlBuilder =  new RequestUrlBuilder(apiKey);
-    }
+    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequesterImpl(urlBuilder);
-    }
+    SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
 
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequesterImpl(urlBuilder);
-    }
+    SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
+
+    SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
 }

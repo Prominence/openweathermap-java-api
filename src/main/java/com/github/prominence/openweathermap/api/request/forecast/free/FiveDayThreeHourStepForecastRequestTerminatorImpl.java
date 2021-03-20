@@ -20,27 +20,42 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.forecast.free;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.Weather;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
+import java.util.List;
+
+public class FiveDayThreeHourStepForecastRequestTerminatorImpl implements FiveDayThreeHourStepForecastRequestTerminator {
 
     private final RequestUrlBuilder urlBuilder;
+    private final UnitSystem unitSystem;
 
-    public CurrentWeatherRequesterImpl(String apiKey) {
-        urlBuilder =  new RequestUrlBuilder(apiKey);
+    FiveDayThreeHourStepForecastRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+        this.urlBuilder = urlBuilder;
+        this.unitSystem = unitSystem;
     }
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequesterImpl(urlBuilder);
+    @Override
+    public List<Weather> asJava() {
+        return new FiveDayThreeHourStepForecastResponseMapper(unitSystem).getTest();
     }
 
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequesterImpl(urlBuilder);
+    @Override
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    @Override
+    public String asXML() {
+        urlBuilder.addRequestParameter("mode", "xml");
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(urlBuilder.buildUrl());
     }
 }

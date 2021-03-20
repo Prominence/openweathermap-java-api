@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,19 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.multiple;
+package com.github.prominence.openweathermap.api.enums;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
-
-public interface MultipleLocationsWeatherRequester {
-
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
-
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering);
-
-    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
-
-    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount, boolean useServerClustering);
-
+public enum SubscriptionPlan {
+    FREE,
+    STARTUP,
+    DEVELOPER,
+    PROFESSIONAL,
+    ENTERPRISE,
+    ALL,
 }

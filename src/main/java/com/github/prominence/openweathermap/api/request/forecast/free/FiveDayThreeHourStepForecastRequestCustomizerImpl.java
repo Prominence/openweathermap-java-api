@@ -20,44 +20,53 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.multiple;
+package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
-public class MultipleResultCurrentWeatherRequestCustomizerImpl implements MultipleResultCurrentWeatherRequestCustomizer {
+public class FiveDayThreeHourStepForecastRequestCustomizerImpl implements FiveDayThreeHourStepForecastRequestCustomizer {
 
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
     private UnitSystem unitSystem;
+    private int count = -1;
 
-    MultipleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
+    FiveDayThreeHourStepForecastRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
-    public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
-    public MultipleResultCurrentWeatherRequestCustomizer language(Language language) {
+    public FiveDayThreeHourStepForecastRequestCustomizer language(Language language) {
         this.language = language;
         return this;
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+    public FiveDayThreeHourStepForecastRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
+    }
+
+    @Override
+    public FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps) {
+        count = numberOfTimestamps;
+        return this;
+    }
+
+    @Override
+    public FiveDayThreeHourStepForecastRequestTerminator retrieve() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        urlBuilder.addRequestParameter("cnt", count);
+        return new FiveDayThreeHourStepForecastRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        urlBuilder.addRequestParameter("cnt", count);
+        return new FiveDayThreeHourStepForecastAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 }
