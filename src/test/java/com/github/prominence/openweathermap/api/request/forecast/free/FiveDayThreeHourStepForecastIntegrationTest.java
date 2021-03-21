@@ -25,22 +25,23 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import org.junit.Test;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetTest_thenReturnNotNull() {
-        final String weatherJSON = getClient()
+        final Forecast forecast = getClient()
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
-                .language(Language.RUSSIAN)
+                .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
-                .asJSON();
+                .asJava();
 
-        assert weatherJSON != null;
-        System.out.println(weatherJSON);
+        assert forecast != null;
+        System.out.println(forecast);
     }
 }

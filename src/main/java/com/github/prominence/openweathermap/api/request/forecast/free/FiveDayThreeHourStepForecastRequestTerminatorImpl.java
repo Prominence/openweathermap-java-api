@@ -23,11 +23,9 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
-
-import java.util.List;
 
 public class FiveDayThreeHourStepForecastRequestTerminatorImpl implements FiveDayThreeHourStepForecastRequestTerminator {
 
@@ -40,8 +38,8 @@ public class FiveDayThreeHourStepForecastRequestTerminatorImpl implements FiveDa
     }
 
     @Override
-    public List<Weather> asJava() {
-        return new FiveDayThreeHourStepForecastResponseMapper(unitSystem).getTest();
+    public Forecast asJava() {
+        return new FiveDayThreeHourStepForecastResponseMapper(unitSystem).mapToForecast(getRawResponse());
     }
 
     @Override

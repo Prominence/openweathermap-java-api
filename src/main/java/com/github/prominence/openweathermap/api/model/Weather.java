@@ -224,6 +224,5 @@ public class Weather {
             stringBuilder.append(snow.getUnit());
         }
         return stringBuilder.toString();
-
     }
 }

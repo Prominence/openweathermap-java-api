@@ -20,15 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.forecast.free;
+package com.github.prominence.openweathermap.api.model;
 
-import com.github.prominence.openweathermap.api.model.forecast.Forecast;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+public enum DayTime {
+    DAY("d"),
+    NIGHT("n");
 
-import java.util.concurrent.CompletableFuture;
+    private final String value;
 
+    DayTime(String value) {
+        this.value = value;
+    }
 
-public interface FiveDayThreeHourStepForecastAsyncRequestTerminator extends AsyncRequestTerminator<Forecast, String> {
-
-    CompletableFuture<String> asXML();
+    public String getValue() {
+        return value;
+    }
 }

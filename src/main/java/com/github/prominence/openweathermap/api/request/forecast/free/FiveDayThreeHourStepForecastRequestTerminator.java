@@ -22,13 +22,11 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
-import java.util.List;
 
-
-public interface FiveDayThreeHourStepForecastRequestTerminator extends RequestTerminator<List<Weather>, String> {
+public interface FiveDayThreeHourStepForecastRequestTerminator extends RequestTerminator<Forecast, String> {
 
     String asXML();
 }

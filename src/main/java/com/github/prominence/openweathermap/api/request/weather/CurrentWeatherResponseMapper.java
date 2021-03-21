@@ -102,7 +102,7 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
     }
 
     private Weather getSingle(JsonNode root) {
-        final Weather weather;
+        Weather weather;
 
         JsonNode weatherState = root.get("weather").get(0);
         weather = new Weather(weatherState.get("main").asText(), weatherState.get("description").asText());
