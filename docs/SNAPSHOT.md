@@ -103,7 +103,7 @@ final CompletableFuture<List<Weather>> weatherListFuture = openWeatherClient
 | `getWeatherIconUrl()`     | Returns weather icon url.                                                                                                           |
 | `getRequestedOn()`        | Returns `LocalDateTime` instance which represents date when request was made.                                                       |
 | `getTemperature()`        | Returns `Temperature` instance with temperature and max/min values.                                                                 |
-| `getPressure()`           | Returns `Pressure` instance that contains information about pressure and(not always) pressure on ground/sea level.                  |
+| `getPressure()`           | Returns `Pressure` instance that contains information about atmosphericPressure and(not always) atmosphericPressure on ground/sea level.                  |
 | `getHumidity()`           | Returns `Humidity` instance that contains information about humidity.                                                               |
 | `getWind()`               | Returns `Wind` instance that contains *humidity* percentage information.                                                            |
 | `getRain()`               | Returns `Rain` instance that contains information about rain level for the last 1 and 3 hours.                                      |

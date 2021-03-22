@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.forecast;
 
+import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Pressure;
 import com.github.prominence.openweathermap.api.model.DayTime;
 
 import java.time.LocalDateTime;
@@ -33,7 +33,7 @@ import java.util.Objects;
 public class WeatherForecast {
     private LocalDateTime forecastTime;
     private Temperature temperature;
-    private Pressure pressure;
+    private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
 
     private String state;
@@ -64,12 +64,12 @@ public class WeatherForecast {
         this.temperature = temperature;
     }
 
-    public Pressure getPressure() {
-        return pressure;
+    public AtmosphericPressure getAtmosphericPressure() {
+        return atmosphericPressure;
     }
 
-    public void setPressure(Pressure pressure) {
-        this.pressure = pressure;
+    public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
+        this.atmosphericPressure = atmosphericPressure;
     }
 
     public Humidity getHumidity() {
@@ -159,7 +159,7 @@ public class WeatherForecast {
         WeatherForecast that = (WeatherForecast) o;
         return Objects.equals(forecastTime, that.forecastTime) &&
                 Objects.equals(temperature, that.temperature) &&
-                Objects.equals(pressure, that.pressure) &&
+                Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
                 Objects.equals(humidity, that.humidity) &&
                 Objects.equals(state, that.state) &&
                 Objects.equals(description, that.description) &&
@@ -174,7 +174,7 @@ public class WeatherForecast {
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, temperature, pressure, humidity, state, description, weatherIconUrl, clouds, wind, snow, rain, forecastTimeISO, dayTime);
+        return Objects.hash(forecastTime, temperature, atmosphericPressure, humidity, state, description, weatherIconUrl, clouds, wind, snow, rain, forecastTimeISO, dayTime);
     }
 
     @Override
@@ -190,11 +190,11 @@ public class WeatherForecast {
             stringBuilder.append(' ');
             stringBuilder.append(temperature.getUnit());
         }
-        if (pressure != null) {
+        if (atmosphericPressure != null) {
             stringBuilder.append(", ");
-            stringBuilder.append(pressure.getValue());
+            stringBuilder.append(atmosphericPressure.getValue());
             stringBuilder.append(' ');
-            stringBuilder.append(pressure.getUnit());
+            stringBuilder.append(atmosphericPressure.getUnit());
         }
         if (clouds != null) {
             stringBuilder.append(", ");

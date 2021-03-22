@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+// TODO: builder?
 public class CoordinateRectangle {
 
     private final double longitudeLeft;
@@ -31,17 +32,21 @@ public class CoordinateRectangle {
     private final double longitudeRight;
     private final double latitudeTop;
 
-    public CoordinateRectangle(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
+    private CoordinateRectangle(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
+        this.longitudeLeft = longitudeLeft;
+        this.latitudeBottom = latitudeBottom;
+        this.longitudeRight = longitudeRight;
+        this.latitudeTop = latitudeTop;
+    }
+
+    public static CoordinateRectangle forValues(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
         if (latitudeBottom < -90 || latitudeTop < -90 || latitudeBottom > 90 || latitudeTop > 90) {
             throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
         }
         if (longitudeLeft < -180 || longitudeRight < -180 || longitudeLeft > 180 || longitudeRight > 180) {
             throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
         }
-        this.longitudeLeft = longitudeLeft;
-        this.latitudeBottom = latitudeBottom;
-        this.longitudeRight = longitudeRight;
-        this.latitudeTop = latitudeTop;
+        return new CoordinateRectangle(longitudeLeft, latitudeBottom, longitudeRight, latitudeTop);
     }
 
     public double getLongitudeLeft() {

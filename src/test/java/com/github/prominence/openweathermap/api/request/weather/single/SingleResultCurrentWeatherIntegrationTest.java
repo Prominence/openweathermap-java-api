@@ -30,6 +30,7 @@ import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.CompletableFuture;
@@ -42,12 +43,12 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final Weather weather = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(new Coordinate(5, 5))
+                .byCoordinate(Coordinate.forValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
-        assert weather != null;
+        Assert.assertNotNull(weather);
         System.out.println(weather);
     }
 
@@ -61,7 +62,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        assert weather != null;
+        Assert.assertNotNull(weather);
         System.out.println(weather);
     }
 
@@ -76,7 +77,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        assert weather != null;
+        Assert.assertNotNull(weather);
         System.out.println(weather);
     }
 
@@ -91,7 +92,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        assert weather != null;
+        Assert.assertNotNull(weather);
         System.out.println(weather);
     }
 
@@ -106,7 +107,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        assert weather != null;
+        Assert.assertNotNull(weather);
         System.out.println(weather);
     }
 
@@ -121,7 +122,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        assert weatherJson != null;
+        Assert.assertNotNull(weatherJson);
         System.out.println(weatherJson);
     }
 
@@ -136,7 +137,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        assert weatherXml != null;
+        Assert.assertNotNull(weatherXml);
         System.out.println(weatherXml);
     }
 
@@ -151,7 +152,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asHTML();
 
-        assert weatherHtml != null;
+        Assert.assertNotNull(weatherHtml);
         System.out.println(weatherHtml);
     }
 
@@ -166,7 +167,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asXML();
 
-        assert weatherXmlFuture != null;
+        Assert.assertNotNull(weatherXmlFuture);
         System.out.println(weatherXmlFuture.get());
     }
 
@@ -181,7 +182,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJava();
 
-        assert weatherFuture != null;
+        Assert.assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
     }
 
@@ -196,7 +197,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJSON();
 
-        assert weatherFuture != null;
+        Assert.assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
     }
 
@@ -211,7 +212,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asHTML();
 
-        assert weatherFuture != null;
+        Assert.assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
     }
 
@@ -221,7 +222,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         client
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(new Coordinate(34.53, 66.74), 10)
+                .byCitiesInCycle(Coordinate.forValues(34.53, 66.74), 10)
                 .retrieve()
                 .asJSON();
     }
@@ -231,7 +232,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(new Coordinate(90.00, 66.74), 10)
+                .byCitiesInCycle(Coordinate.forValues(90.00, 66.74), 10)
                 .retrieve()
                 .asJava();
     }

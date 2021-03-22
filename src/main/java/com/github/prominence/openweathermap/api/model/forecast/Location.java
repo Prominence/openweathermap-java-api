@@ -42,12 +42,16 @@ public class Location {
 
     private Long population;
 
-    public Location(int id, String name) {
+    private Location(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static Location forValue(int id, String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name must be set.");
         }
-        this.id = id;
-        this.name = name;
+        return new Location(id, name);
     }
 
     public int getId() {

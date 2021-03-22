@@ -22,159 +22,158 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import com.github.prominence.openweathermap.api.model.forecast.Wind;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class WindUnitTest {
     @Test
     public void whenCreateWindWithValidArgs_thenValueIsSet() {
-        assert new Wind(44, "ms").getSpeed() == 44.0;
+        Assert.assertEquals(44.0, Wind.forValue(44, "ms").getSpeed(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateWindWithInvalidSpeedArg_thenThrowAnException() {
-        new Wind(-21, "a");
+        Wind.forValue(-21, "a");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateWindWithInvalidUnitArg_thenThrowAnException() {
-        new Wind(342, null);
+        Wind.forValue(342, null);
     }
 
     @Test
     public void whenSetValidSpeed_thenValueIsSet() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
 
-        assert wind.getSpeed() == 33;
+        Assert.assertEquals(33, wind.getSpeed(), 0.00001);
 
         wind.setSpeed(0);
 
-        assert wind.getSpeed() == 0;
+        Assert.assertEquals(0, wind.getSpeed(), 0.00001);
 
         wind.setSpeed(3656);
 
-        assert wind.getSpeed() == 3656;
+        Assert.assertEquals(3656, wind.getSpeed(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidSpeedBelow0_thenThrowAnException() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
 
-        assert wind.getSpeed() == 33;
+        Assert.assertEquals(33, wind.getSpeed(), 0.00001);
 
         wind.setSpeed(-22);
-
-        assert false;
     }
 
     @Test
     public void whenSetValidDegrees_thenValueIsSet() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
 
-        assert wind.getDegrees() == null;
+        Assert.assertNull(wind.getDegrees());
 
         wind.setDegrees(22);
 
-        assert wind.getDegrees() == 22;
+        Assert.assertEquals(22, wind.getDegrees(), 0.00001);
 
         wind.setDegrees(0);
 
-        assert wind.getDegrees() == 0;
+        Assert.assertEquals(0, wind.getDegrees(), 0.00001);
 
         wind.setDegrees(360);
 
-        assert wind.getDegrees() == 360;
+        Assert.assertEquals(360, wind.getDegrees(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidDegreesBelow0_thenThrowAnException() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
         wind.setDegrees(-32);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidDegreesAbove360_thenThrowAnException() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
         wind.setDegrees(378);
     }
 
     @Test
     public void whenSetNonNullUnit_thenValueIsSet() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
 
-        assert "as".equals(wind.getUnit());
+        Assert.assertEquals(wind.getUnit(), "as");
 
         wind.setUnit("myUnit");
 
-        assert "myUnit".equals(wind.getUnit());
+        Assert.assertEquals(wind.getUnit(), "myUnit");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetNullUnit_thenThrowAnException() {
-        final Wind wind = new Wind(33, "as");
+        final Wind wind = Wind.forValue(33, "as");
 
         wind.setUnit(null);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Wind wind = new Wind(302, "a");
+        final Wind wind = Wind.forValue(302, "a");
 
-        assert wind.toString() != null;
+        Assert.assertNotNull(wind.toString());
 
         wind.setDegrees(22);
 
-        assert wind.toString() != null && !"".equals(wind.toString());
+        Assert.assertNotNull(wind.toString());
+        Assert.assertNotEquals("", wind.toString());
     }
 
     @Test
-    public void RainwhenCallHashCode_thenAllIsFine() {
-        final Wind first = new Wind(22, "a");
-        final Wind second = new Wind(22, "b");
+    public void whenCallHashCode_thenAllIsFine() {
+        final Wind first = Wind.forValue(22, "a");
+        final Wind second = Wind.forValue(22, "b");
 
-        assert first.hashCode() != second.hashCode();
+        Assert.assertNotEquals(first.hashCode(), second.hashCode());
 
         second.setUnit("a");
 
-        assert first.hashCode() == second.hashCode();
+        Assert.assertEquals(first.hashCode(), second.hashCode());
 
         second.setSpeed(33);
 
-        assert first.hashCode() != second.hashCode();
+        Assert.assertNotEquals(first.hashCode(), second.hashCode());
 
         first.setSpeed(333);
 
-        assert first.hashCode() != second.hashCode();
+        Assert.assertNotEquals(first.hashCode(), second.hashCode());
 
         first.setSpeed(33);
 
-        assert first.hashCode() == second.hashCode();
+        Assert.assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Wind first = new Wind(11, "a");
-        final Wind second = new Wind(11, "a");
+        final Wind first = Wind.forValue(11, "a");
+        final Wind second = Wind.forValue(11, "a");
 
-        assert first.equals(second);
-        assert first.equals(first);
-        assert !first.equals(new Object());
+        Assert.assertTrue(first.equals(second));
+        Assert.assertTrue(first.equals(first));
+        Assert.assertFalse(first.equals(new Object()));
 
         first.setDegrees(34);
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
 
         second.setDegrees(34);
 
-        assert first.equals(second);
+        Assert.assertTrue(first.equals(second));
 
         second.setUnit("v");
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
 
         first.setUnit("v");
         first.setSpeed(second.getSpeed() + 4);
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
     }
 }

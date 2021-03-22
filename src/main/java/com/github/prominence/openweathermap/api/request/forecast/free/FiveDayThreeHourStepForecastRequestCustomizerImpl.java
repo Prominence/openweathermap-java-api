@@ -31,7 +31,7 @@ public class FiveDayThreeHourStepForecastRequestCustomizerImpl implements FiveDa
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
-    private UnitSystem unitSystem;
+    private UnitSystem unitSystem = UnitSystem.STANDARD;
     private int count = -1;
 
     FiveDayThreeHourStepForecastRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {

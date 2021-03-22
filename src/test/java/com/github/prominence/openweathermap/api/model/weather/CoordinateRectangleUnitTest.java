@@ -23,108 +23,109 @@
 package com.github.prominence.openweathermap.api.model.weather;
 
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CoordinateRectangleUnitTest {
 
     @Test
     public void whenCreateObjectWithValidArgs_thenObjectIsCreated() {
-        new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
+        CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLatitudeBottomBelowMinus90_thenThrowAnException() {
-        new CoordinateRectangle(44.5, -91.2, 54.4, 22.2);
+        CoordinateRectangle.forValues(44.5, -91.2, 54.4, 22.2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLatitudeBottomAbove90_thenThrowAnException() {
-        new CoordinateRectangle(44.5, 91.2, 54.4, 22.2);
+        CoordinateRectangle.forValues(44.5, 91.2, 54.4, 22.2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLatitudeTopBelowMinus90_thenThrowAnException() {
-        new CoordinateRectangle(44.5, 22.4, 54.4, -92.3);
+        CoordinateRectangle.forValues(44.5, 22.4, 54.4, -92.3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLatitudeTopAbove90_thenThrowAnException() {
-        new CoordinateRectangle(44.5, 22.5, 54.4, 94.887);
+        CoordinateRectangle.forValues(44.5, 22.5, 54.4, 94.887);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLongitudeLeftBelowMinus180_thenThrowAnException() {
-        new CoordinateRectangle(-944.5, 22.4, 54.4, 22.2);
+        CoordinateRectangle.forValues(-944.5, 22.4, 54.4, 22.2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLongitudeLeftAbove180_thenThrowAnException() {
-        new CoordinateRectangle(544.5, 22.4, 54.4, 22.2);
+        CoordinateRectangle.forValues(544.5, 22.4, 54.4, 22.2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLongitudeRightBelowMinus180_thenThrowAnException() {
-        new CoordinateRectangle(44.5, 22.4, -254.4, 22.2);
+        CoordinateRectangle.forValues(44.5, 22.4, -254.4, 22.2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithLongitudeRightAbove180_thenThrowAnException() {
-        new CoordinateRectangle(44.5, 22.4, 354.4, 22.2);
+        CoordinateRectangle.forValues(44.5, 22.4, 354.4, 22.2);
     }
 
     @Test
     public void whenGetAllParameters_thenAllIsFine() {
-        final CoordinateRectangle rectangle = new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
-        assert rectangle.getLongitudeLeft() == 44.5;
-        assert rectangle.getLatitudeBottom() == 22.4;
-        assert rectangle.getLongitudeRight() == 54.4;
-        assert rectangle.getLatitudeTop() == 22.2;
+        final CoordinateRectangle rectangle = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
+        Assert.assertEquals(44.5, rectangle.getLongitudeLeft(), 0.00001);
+        Assert.assertEquals(22.4, rectangle.getLatitudeBottom(), 0.00001);
+        Assert.assertEquals(54.4, rectangle.getLongitudeRight(), 0.00001);
+        Assert.assertEquals(22.2, rectangle.getLatitudeTop(), 0.00001);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final CoordinateRectangle rectangle = new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
+        final CoordinateRectangle rectangle = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
 
-        assert rectangle.toString() != null;
-        assert !"".equals(rectangle.toString());
+        Assert.assertNotNull(rectangle.toString());
+        Assert.assertNotEquals("", rectangle.toString());
     }
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final CoordinateRectangle first = new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
-        final CoordinateRectangle second = new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
+        final CoordinateRectangle first = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
+        final CoordinateRectangle second = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
 
-        assert first.hashCode() == second.hashCode();
+        Assert.assertEquals(first.hashCode(), second.hashCode());
 
-        final CoordinateRectangle third = new CoordinateRectangle(44.5, 22.4, 54.4, 23.566);
+        final CoordinateRectangle third = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 23.566);
 
-        assert first.hashCode() != third.hashCode();
-        assert second.hashCode() != third.hashCode();
+        Assert.assertNotEquals(first.hashCode(), third.hashCode());
+        Assert.assertNotEquals(second.hashCode(), third.hashCode());
     }
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        CoordinateRectangle first = new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
-        CoordinateRectangle second = new CoordinateRectangle(44.5, 22.4, 54.4, 22.2);
+        CoordinateRectangle first = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
+        CoordinateRectangle second = CoordinateRectangle.forValues(44.5, 22.4, 54.4, 22.2);
 
-        assert first.equals(second);
-        assert first.equals(first);
-        assert !first.equals(new Object());
+        Assert.assertTrue(first.equals(second));
+        Assert.assertTrue(first.equals(first));
+        Assert.assertFalse(first.equals(new Object()));
 
-        first = new CoordinateRectangle(49.5, 22.4, 54.4, 22.2);
+        first = CoordinateRectangle.forValues(49.5, 22.4, 54.4, 22.2);
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
 
-        first = new CoordinateRectangle(44.5, 29.4, 54.4, 22.2);
+        first = CoordinateRectangle.forValues(44.5, 29.4, 54.4, 22.2);
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
 
-        first = new CoordinateRectangle(44.5, 22.4, 24.4, 22.2);
+        first = CoordinateRectangle.forValues(44.5, 22.4, 24.4, 22.2);
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
 
-        first = new CoordinateRectangle(44.5, 22.4, 54.4, -2.2);
+        first = CoordinateRectangle.forValues(44.5, 22.4, 54.4, -2.2);
 
-        assert !first.equals(second);
+        Assert.assertFalse(first.equals(second));
     }
 }

@@ -134,7 +134,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
 
         JsonNode mainNode = rootNode.get("main");
         weatherForecast.setTemperature(parseTemperature(mainNode));
-        weatherForecast.setPressure(parsePressure(mainNode));
+        weatherForecast.setAtmosphericPressure(parsePressure(mainNode));
         weatherForecast.setHumidity(parseHumidity(mainNode));
         weatherForecast.setClouds(parseClouds(rootNode));
         weatherForecast.setWind(parseWind(rootNode));
@@ -151,7 +151,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
 
     private Temperature parseTemperature(JsonNode rootNode) {
         final double tempValue = rootNode.get("temp").asDouble();
-        Temperature temperature = new Temperature(tempValue, UnitSystem.getTemperatureUnit(unitSystem));
+        Temperature temperature = Temperature.forValue(tempValue, UnitSystem.getTemperatureUnit(unitSystem));
 
         final JsonNode tempMaxNode = rootNode.get("temp_max");
         if (tempMaxNode != null) {
@@ -169,30 +169,30 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         return temperature;
     }
 
-    private Pressure parsePressure(JsonNode rootNode) {
-        Pressure pressure = new Pressure(rootNode.get("pressure").asDouble());
+    private AtmosphericPressure parsePressure(JsonNode rootNode) {
+        AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(rootNode.get("pressure").asDouble());
 
         final JsonNode seaLevelNode = rootNode.get("sea_level");
         final JsonNode groundLevelNode = rootNode.get("grnd_level");
         if (seaLevelNode != null) {
-            pressure.setSeaLevelValue(seaLevelNode.asDouble());
+            atmosphericPressure.setSeaLevelValue(seaLevelNode.asDouble());
         }
         if (groundLevelNode != null) {
-            pressure.setGroundLevelValue(groundLevelNode.asDouble());
+            atmosphericPressure.setGroundLevelValue(groundLevelNode.asDouble());
         }
 
-        return pressure;
+        return atmosphericPressure;
     }
 
     private Humidity parseHumidity(JsonNode rootNode) {
-        return new Humidity((byte) (rootNode.get("humidity").asInt()));
+        return Humidity.forValue((byte) (rootNode.get("humidity").asInt()));
     }
 
     private Wind parseWind(JsonNode root) {
         final JsonNode windNode = root.get("wind");
         double speed = windNode.get("speed").asDouble();
 
-        Wind wind = new Wind(speed, UnitSystem.getWindUnit(unitSystem));
+        Wind wind = Wind.forValue(speed, UnitSystem.getWindUnit(unitSystem));
         final JsonNode degNode = windNode.get("deg");
         if (degNode != null) {
             wind.setDegrees(degNode.asDouble());
@@ -238,14 +238,14 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         final JsonNode cloudsNode = rootNode.get("clouds");
         final JsonNode allValueNode = cloudsNode.get("all");
         if (allValueNode != null) {
-            clouds = new Clouds((byte) allValueNode.asInt());
+            clouds = Clouds.forValue((byte) allValueNode.asInt());
         }
 
         return clouds;
     }
 
     private Location parseLocation(JsonNode rootNode) {
-        Location location = new Location(rootNode.get("id").asInt(), rootNode.get("name").asText());
+        Location location = Location.forValue(rootNode.get("id").asInt(), rootNode.get("name").asText());
 
         final JsonNode timezoneNode = rootNode.get("timezone");
         if (timezoneNode != null) {
@@ -283,7 +283,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         JsonNode latitudeNode = rootNode.get("lat");
         JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
-            return new Coordinate(latitudeNode.asDouble(), longitudeNode.asDouble());
+            return Coordinate.forValues(latitudeNode.asDouble(), longitudeNode.asDouble());
         }
         return null;
     }

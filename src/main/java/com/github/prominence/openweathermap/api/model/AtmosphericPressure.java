@@ -25,10 +25,10 @@ package com.github.prominence.openweathermap.api.model;
 import java.util.Objects;
 
 /**
- * The Pressure type represents pressure value percentage.
+ * The AtmosphericPressure type represents atmospheric pressure value.
  * Its value can only be a double in [0, +∞) range.
  */
-public class Pressure {
+public class AtmosphericPressure {
 
     private static final String DEFAULT_UNIT = "hPa";
 
@@ -43,11 +43,15 @@ public class Pressure {
      * @param value the value representing pressure value.
      * @throws IllegalArgumentException in case if provided value isn't in allowed range.
      */
-    public Pressure(double value) {
-        if (value < 0)  {
-            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
-        }
+    private AtmosphericPressure(double value) {
         this.value = value;
+    }
+
+    public static AtmosphericPressure forValue(double value) {
+        if (value < 0)  {
+            throw new IllegalArgumentException("Atmospheric pressure value must be in [0, +∞) range.");
+        }
+        return new AtmosphericPressure(value);
     }
 
     /**
@@ -67,7 +71,7 @@ public class Pressure {
      */
     public void setValue(double value) {
         if (value < 0)  {
-            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+            throw new IllegalArgumentException("Atmospheric pressure value must be in [0, +∞) range.");
         }
         this.value = value;
     }
@@ -89,7 +93,7 @@ public class Pressure {
      */
     public void setSeaLevelValue(double seaLevelValue) {
         if (seaLevelValue < 0)  {
-            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+            throw new IllegalArgumentException("Atmospheric pressure value must be in [0, +∞) range.");
         }
         this.seaLevelValue = seaLevelValue;
     }
@@ -111,7 +115,7 @@ public class Pressure {
      */
     public void setGroundLevelValue(double groundLevelValue) {
         if (groundLevelValue < 0)  {
-            throw new IllegalArgumentException("Pressure value must be in [0, +∞) range.");
+            throw new IllegalArgumentException("Atmospheric pressure value must be in [0, +∞) range.");
         }
         this.groundLevelValue = groundLevelValue;
     }
@@ -128,11 +132,11 @@ public class Pressure {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Pressure)) return false;
-        Pressure pressure = (Pressure) o;
-        return Double.compare(pressure.value, value) == 0 &&
-                Objects.equals(seaLevelValue, pressure.seaLevelValue) &&
-                Objects.equals(groundLevelValue, pressure.groundLevelValue);
+        if (!(o instanceof AtmosphericPressure)) return false;
+        AtmosphericPressure atmosphericPressure = (AtmosphericPressure) o;
+        return Double.compare(atmosphericPressure.value, value) == 0 &&
+                Objects.equals(seaLevelValue, atmosphericPressure.seaLevelValue) &&
+                Objects.equals(groundLevelValue, atmosphericPressure.groundLevelValue);
     }
 
     @Override

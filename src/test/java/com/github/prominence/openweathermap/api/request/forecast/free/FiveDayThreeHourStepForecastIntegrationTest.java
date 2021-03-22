@@ -26,12 +26,13 @@ import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.Forecast;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
-    public void whenGetTest_thenReturnNotNull() {
+    public void whenGetJavaObject_thenReturnNotNull() {
         final Forecast forecast = getClient()
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
@@ -41,7 +42,20 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        assert forecast != null;
+        Assert.assertNotNull(forecast);
+        System.out.println(forecast);
+    }
+
+    @Test
+    public void whenGetJavaObject_thenFieldsAreFilled() {
+        final Forecast forecast = getClient()
+                .forecast5Day3HourStep()
+                .byCityName("London")
+                .language(Language.ENGLISH)
+                .retrieve()
+                .asJava();
+
+        Assert.assertNotNull(forecast);
         System.out.println(forecast);
     }
 }

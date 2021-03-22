@@ -40,11 +40,15 @@ public class Clouds {
      * @param value the value representing cloudiness percentage.
      * @throws IllegalArgumentException in case if provided value isn't in allowed range.
      */
-    public Clouds(byte value) {
+    private Clouds(byte value) {
+        this.value = value;
+    }
+
+    public static Clouds forValue(byte value) {
         if (value < 0 || value > 100)  {
             throw new IllegalArgumentException("Cloudiness value must be in [0, 100] range.");
         }
-        this.value = value;
+        return new Clouds(value);
     }
 
     /**

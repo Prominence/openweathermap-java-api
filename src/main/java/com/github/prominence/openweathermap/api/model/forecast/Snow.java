@@ -33,7 +33,7 @@ public class Snow {
     public Snow() {
     }
 
-    public Snow(Double oneHourSnowLevel, Double threeHourSnowLevel) {
+    public Snow(Double threeHourSnowLevel) {
         this.threeHourSnowLevel = threeHourSnowLevel;
     }
     public Double getThreeHourSnowLevel() {

@@ -61,15 +61,19 @@ public class Wind {
      * @param speed the speed
      * @param unit  the unitSystem
      */
-    public Wind(double speed, String unit) {
+    private Wind(double speed, String unit) {
+        this.speed = speed;
+        this.unit = unit;
+    }
+
+    public static Wind forValue(double speed, String unit) {
         if (speed < 0) {
             throw new IllegalArgumentException("Wind speed value must be in positive or zero.");
         }
         if (unit == null) {
             throw new IllegalArgumentException("Unit must be set.");
         }
-        this.speed = speed;
-        this.unit = unit;
+        return new Wind(speed, unit);
     }
 
     /**

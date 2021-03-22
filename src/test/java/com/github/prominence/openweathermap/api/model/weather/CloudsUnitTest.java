@@ -23,75 +23,79 @@
 package com.github.prominence.openweathermap.api.model.weather;
 
 import com.github.prominence.openweathermap.api.model.Clouds;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CloudsUnitTest {
 
     @Test
     public void whenCreateCloudsWithValidArgs_thenValueIsSet() {
-        Clouds clouds = new Clouds((byte) 100);
-        assert clouds.getValue() == 100;
+        Clouds clouds = Clouds.forValue((byte) 100);
+        Assert.assertEquals(100, clouds.getValue());
 
-        assert new Clouds((byte) 0).getValue() == 0;
-        assert new Clouds((byte) 100).getValue() == 100;
-        assert new Clouds((byte) 55).getValue() == 55;
+        Assert.assertEquals(0, Clouds.forValue((byte) 0).getValue());
+        Assert.assertEquals(100, Clouds.forValue((byte) 100).getValue());
+        Assert.assertEquals(55, Clouds.forValue((byte) 55).getValue());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsByConstructorWithInvalidDataAboveHundred_thenThrowAnException() {
-        new Clouds((byte) 110);
+        Clouds.forValue((byte) 110);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        new Clouds((byte) -33);
+        Clouds.forValue((byte) -33);
     }
 
     @Test
     public void whenSetValidValues_thenAllIsFine() {
-        Clouds clouds = new Clouds((byte) 14);
+        Clouds clouds = Clouds.forValue((byte) 14);
         clouds.setValue((byte) 0);
+        Assert.assertEquals(0, clouds.getValue());
         clouds.setValue((byte) 15);
+        Assert.assertEquals(15, clouds.getValue());
         clouds.setValue((byte) 100);
+        Assert.assertEquals(100, clouds.getValue());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsAndSetInvalidDataAboveHundred_thenThrowAnException() {
-        Clouds clouds = new Clouds((byte) 12);
+        Clouds clouds = Clouds.forValue((byte) 12);
         clouds.setValue((byte) 112);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsAndSetInvalidDataNegative_thenThrowAnException() {
-        Clouds clouds = new Clouds((byte) 88);
+        Clouds clouds = Clouds.forValue((byte) 88);
         clouds.setValue((byte) -89);
     }
 
     @Test
     public void whenCreateTwoIdenticalInstances_thenWheyAreEquals() {
-        Clouds one = new Clouds((byte) 22);
-        Clouds two = new Clouds((byte) 22);
+        Clouds one = Clouds.forValue((byte) 22);
+        Clouds two = Clouds.forValue((byte) 22);
 
-        assert one.equals(two);
-        assert one.equals(one);
-        assert one.hashCode() == two.hashCode();
+        Assert.assertTrue(one.equals(two));
+        Assert.assertTrue(one.equals(one));
+        Assert.assertEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
     public void whenCreateTwoDifferentInstances_thenWheyAreNotEquals() {
-        Clouds one = new Clouds((byte) 5);
-        Clouds two = new Clouds((byte) 88);
+        Clouds one = Clouds.forValue((byte) 5);
+        Clouds two = Clouds.forValue((byte) 88);
 
-        assert !one.equals(two);
-        assert !two.equals(one);
-        assert !one.equals(new Object());
-        assert one.hashCode() != two.hashCode();
+        Assert.assertFalse(one.equals(two));
+        Assert.assertFalse(two.equals(one));
+        Assert.assertFalse(one.equals(new Object()));
+        Assert.assertNotEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final String cloudsString = new Clouds((byte) 44).toString();
-        assert cloudsString != null;
-        assert !"".equals(cloudsString);
+        final String cloudsString = Clouds.forValue((byte) 44).toString();
+        Assert.assertNotNull(cloudsString);
+        Assert.assertNotEquals("", cloudsString);
     }
 }

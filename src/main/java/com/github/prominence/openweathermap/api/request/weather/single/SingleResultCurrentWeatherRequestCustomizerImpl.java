@@ -31,7 +31,7 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
-    private UnitSystem unitSystem;
+    private UnitSystem unitSystem = UnitSystem.STANDARD;
 
     SingleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;

@@ -40,11 +40,15 @@ public class Humidity {
      * @param value the value representing humidity percentage.
      * @throws IllegalArgumentException in case if provided value isn't in allowed range.
      */
-    public Humidity(byte value) {
+    private Humidity(byte value) {
+        this.value = value;
+    }
+
+    public static Humidity forValue(byte value) {
         if (value < 0 || value > 100)  {
             throw new IllegalArgumentException("Humidity value must be in [0, 100] range.");
         }
-        this.value = value;
+        return new Humidity(value);
     }
 
     /**

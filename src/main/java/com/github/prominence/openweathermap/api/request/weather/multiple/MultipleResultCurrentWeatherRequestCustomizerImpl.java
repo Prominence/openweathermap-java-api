@@ -31,7 +31,7 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
-    private UnitSystem unitSystem;
+    private UnitSystem unitSystem = UnitSystem.STANDARD;
 
     MultipleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;

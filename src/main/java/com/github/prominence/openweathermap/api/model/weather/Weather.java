@@ -58,7 +58,7 @@ public class Weather {
     private LocalDateTime requestedOn;
 
     private Temperature temperature;
-    private Pressure pressure;
+    private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
     private Wind wind;
     private Rain rain;
@@ -67,15 +67,19 @@ public class Weather {
 
     private Location location;
 
-    public Weather(String state, String description) {
+    private Weather(String state, String description) {
+        this.state = state;
+        this.description = description;
+    }
+
+    public static Weather forValue(String state, String description) {
         if (state == null) {
             throw new IllegalArgumentException("State must be set.");
         }
         if (description == null) {
             throw new IllegalArgumentException("Description must be set.");
         }
-        this.state = state;
-        this.description = description;
+        return new Weather(state, description);
     }
 
     public String getState() {
@@ -124,12 +128,12 @@ public class Weather {
         this.temperature = temperature;
     }
 
-    public Pressure getPressure() {
-        return pressure;
+    public AtmosphericPressure getAtmosphericPressure() {
+        return atmosphericPressure;
     }
 
-    public void setPressure(Pressure pressure) {
-        this.pressure = pressure;
+    public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
+        this.atmosphericPressure = atmosphericPressure;
     }
 
     public Humidity getHumidity() {
@@ -190,7 +194,7 @@ public class Weather {
                 Objects.equals(weatherIconUrl, weather.weatherIconUrl) &&
                 Objects.equals(requestedOn, weather.requestedOn) &&
                 Objects.equals(temperature, weather.temperature) &&
-                Objects.equals(pressure, weather.pressure) &&
+                Objects.equals(atmosphericPressure, weather.atmosphericPressure) &&
                 Objects.equals(humidity, weather.humidity) &&
                 Objects.equals(wind, weather.wind) &&
                 Objects.equals(rain, weather.rain) &&
@@ -201,7 +205,7 @@ public class Weather {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, description, weatherIconUrl, requestedOn, temperature, pressure, humidity, wind, rain, snow, clouds, location);
+        return Objects.hash(state, description, weatherIconUrl, requestedOn, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
     }
 
     @Override
@@ -226,11 +230,11 @@ public class Weather {
             stringBuilder.append(' ');
             stringBuilder.append(temperature.getUnit());
         }
-        if (pressure != null) {
+        if (atmosphericPressure != null) {
             stringBuilder.append(", ");
-            stringBuilder.append(pressure.getValue());
+            stringBuilder.append(atmosphericPressure.getValue());
             stringBuilder.append(' ');
-            stringBuilder.append(pressure.getUnit());
+            stringBuilder.append(atmosphericPressure.getUnit());
         }
         if (clouds != null) {
             stringBuilder.append(", ");

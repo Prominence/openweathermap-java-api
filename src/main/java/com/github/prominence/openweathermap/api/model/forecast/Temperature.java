@@ -32,12 +32,20 @@ public class Temperature {
     private Double feelsLike;
     private String unit;
 
-    public Temperature(double value, String unit) {
+    private Temperature(double value, String unit) {
         if (unit == null) {
             throw new IllegalArgumentException("Unit must be set.");
         }
         this.value = value;
         this.unit = unit;
+    }
+
+    public static Temperature forValue(double value, String unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit must be set.");
+        }
+
+        return new Temperature(value, unit);
     }
 
     public double getValue() {
