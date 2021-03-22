@@ -49,7 +49,7 @@ public class OpenWeatherMapClient {
     }
 
     // TODO:
-    // * Forecast: hourly, daily
+    // * Forecast: hourly, daily. Probably better to cover all free-plan functionality?
     // * Air Pollution
     // * Ultraviolet index
     // DOCS

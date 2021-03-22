@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.weather;
 
 import java.util.Objects;
 
@@ -29,6 +29,7 @@ public class Temperature {
     private double value;
     private Double maxTemperature;
     private Double minTemperature;
+    private Double feelsLike;
     private String unit;
 
     public Temperature(double value, String unit) {
@@ -63,6 +64,14 @@ public class Temperature {
         this.minTemperature = minTemperature;
     }
 
+    public Double getFeelsLike() {
+        return feelsLike;
+    }
+
+    public void setFeelsLike(Double feelsLike) {
+        this.feelsLike = feelsLike;
+    }
+
     public String getUnit() {
         return unit;
     }
@@ -82,12 +91,13 @@ public class Temperature {
         return Double.compare(that.value, value) == 0 &&
                 Objects.equals(maxTemperature, that.maxTemperature) &&
                 Objects.equals(minTemperature, that.minTemperature) &&
+                Objects.equals(feelsLike, that.feelsLike) &&
                 Objects.equals(unit, that.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, maxTemperature, minTemperature, unit);
+        return Objects.hash(value, maxTemperature, minTemperature, feelsLike, unit);
     }
 
     @Override
@@ -106,6 +116,12 @@ public class Temperature {
         if (minTemperature != null) {
             stringBuilder.append(", Minimum value: ");
             stringBuilder.append(minTemperature);
+            stringBuilder.append(' ');
+            stringBuilder.append(unit);
+        }
+        if (feelsLike != null) {
+            stringBuilder.append(", Feels like: ");
+            stringBuilder.append(feelsLike);
             stringBuilder.append(' ');
             stringBuilder.append(unit);
         }

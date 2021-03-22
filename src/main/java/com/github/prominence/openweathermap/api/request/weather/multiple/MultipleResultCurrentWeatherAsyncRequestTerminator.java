@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequestTerminator;
 
 import java.util.List;

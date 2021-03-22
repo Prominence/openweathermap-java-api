@@ -25,7 +25,6 @@ package com.github.prominence.openweathermap.api.model.forecast;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.Pressure;
-import com.github.prominence.openweathermap.api.model.Wind;
 import com.github.prominence.openweathermap.api.model.DayTime;
 
 import java.time.LocalDateTime;

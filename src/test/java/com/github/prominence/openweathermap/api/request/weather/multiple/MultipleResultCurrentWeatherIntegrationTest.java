@@ -29,7 +29,7 @@ import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenExcept
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
-import com.github.prominence.openweathermap.api.model.Weather;
+import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import org.junit.Test;
 

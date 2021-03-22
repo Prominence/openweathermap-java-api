@@ -41,8 +41,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 /**
- * Official API response documentation:
- * Parameters:
+ * Official API response documentation.
+ * Parameters(but the real response can differ):
  * --- cod Internal parameter
  * --- message Internal parameter
  * --- cnt A number of timestamps returned in the API response

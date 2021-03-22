@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.weather;
 
 import java.util.Objects;
 
@@ -31,6 +31,7 @@ public class Wind {
 
     private double speed;
     private Double degrees;
+    private Double gust;
     private String unit;
 
     /**
@@ -69,6 +70,14 @@ public class Wind {
             throw new IllegalArgumentException("Wind speed value must be in positive or zero.");
         }
         this.speed = speed;
+    }
+
+    public Double getGust() {
+        return gust;
+    }
+
+    public void setGust(double gust) {
+        this.gust = gust;
     }
 
     /**
@@ -130,7 +139,11 @@ public class Wind {
 
     @Override
     public String toString() {
-        return "Wind speed: " + speed + " " + unit +
+        String output = "Wind speed: " + speed + " " + unit +
                 ", degrees: " + degrees;
+        if (gust != null) {
+            output += ", Gust: " + gust + " " + unit;
+        }
+        return output;
     }
 }
