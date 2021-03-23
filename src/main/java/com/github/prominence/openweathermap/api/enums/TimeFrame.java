@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.enums;
 
+@Deprecated
 public enum TimeFrame {
     YEAR,
     MONTH,

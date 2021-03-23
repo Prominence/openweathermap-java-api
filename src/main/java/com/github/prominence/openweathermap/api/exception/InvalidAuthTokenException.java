@@ -22,10 +22,13 @@
 
 package com.github.prominence.openweathermap.api.exception;
 
+/**
+ * An exception that could be thrown in case of your API key is invalid or your subscription plan does not cover requested functionality.
+ * Subscription plans information you can find <a href="https://openweathermap.org/price">here</a>.
+ * API Keys could be checked in <a href="https://home.openweathermap.org/api_keys/">your profile</a>.
+ */
 public class InvalidAuthTokenException extends RuntimeException {
-
     public InvalidAuthTokenException() {
         super("Authentication token wasn't set or requested functionality is not permitted for your subscription plan. Please, check https://home.openweathermap.org/api_keys/ and https://openweathermap.org/price.");
     }
-
 }

@@ -53,7 +53,6 @@ public final class RequestUtils {
      * @return <code>InputStream</code> instance containing http response body.
      * @throws InvalidAuthTokenException in case if authentication token wasn't set or requested functionality is not permitted for its subscription plan.
      * @throws NoDataFoundException in case if there is no any data for requested location(s) or request is invalid.
-     * @throws IllegalStateException in case of unexpected response or error.
      */
     private static InputStream executeRequest(URL requestUrl) {
         InputStream resultStream;

@@ -22,8 +22,10 @@
 
 package com.github.prominence.openweathermap.api.enums;
 
+/**
+ * An enumeration for supported unit systems with helper methods.
+ */
 public enum UnitSystem {
-
     METRIC("metric"),
     IMPERIAL("imperial"),
     STANDARD("standard");
@@ -34,8 +36,8 @@ public enum UnitSystem {
         this.value = value;
     }
 
-    public static String getWindUnit(UnitSystem type) {
-        switch (type) {
+    public String getWindUnit() {
+        switch (this) {
             case IMPERIAL:
                 return "miles/hour";
             case STANDARD:
@@ -45,8 +47,8 @@ public enum UnitSystem {
         }
     }
 
-    public static String getTemperatureUnit(UnitSystem type) {
-        switch (type) {
+    public String getTemperatureUnit() {
+        switch (this) {
             case METRIC:
                 return "℃";
             case IMPERIAL:

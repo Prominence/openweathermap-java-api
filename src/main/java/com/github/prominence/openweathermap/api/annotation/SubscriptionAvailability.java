@@ -29,6 +29,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Marker-type annotation to specify what type of license it needs to have to use API method.
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
 public @interface SubscriptionAvailability {

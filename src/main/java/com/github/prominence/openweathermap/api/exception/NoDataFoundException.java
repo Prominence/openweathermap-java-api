@@ -22,8 +22,15 @@
 
 package com.github.prominence.openweathermap.api.exception;
 
+/**
+ * An exception that could be thrown in several cases:
+ * <ul>
+ *     <li>There is no data found for your query(wrong coordinates somewhere in the sea, some distant place, etc.);</li>
+ *     <li>Request is malformed. An occasion to report an <a href="https://github.com/Prominence/openweathermap-java-api/issues">issue</a>;</li>
+ *     <li>Any other unpredictable problems.</li>
+ * </ul>
+ */
 public class NoDataFoundException extends RuntimeException {
-
     public NoDataFoundException() {
         super("Data for provided parameters wasn't found. Please, check requested location.");
     }
@@ -31,5 +38,4 @@ public class NoDataFoundException extends RuntimeException {
     public NoDataFoundException(Throwable throwable) {
         super(throwable.getMessage(), throwable.getCause());
     }
-
 }

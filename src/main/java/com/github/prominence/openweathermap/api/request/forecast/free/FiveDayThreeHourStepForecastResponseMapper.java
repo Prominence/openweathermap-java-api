@@ -151,7 +151,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
 
     private Temperature parseTemperature(JsonNode rootNode) {
         final double tempValue = rootNode.get("temp").asDouble();
-        Temperature temperature = Temperature.forValue(tempValue, UnitSystem.getTemperatureUnit(unitSystem));
+        Temperature temperature = Temperature.forValue(tempValue, unitSystem.getTemperatureUnit());
 
         final JsonNode tempMaxNode = rootNode.get("temp_max");
         if (tempMaxNode != null) {
@@ -192,7 +192,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         final JsonNode windNode = root.get("wind");
         double speed = windNode.get("speed").asDouble();
 
-        Wind wind = Wind.forValue(speed, UnitSystem.getWindUnit(unitSystem));
+        Wind wind = Wind.forValue(speed, unitSystem.getWindUnit());
         final JsonNode degNode = windNode.get("deg");
         if (degNode != null) {
             wind.setDegrees(degNode.asDouble());

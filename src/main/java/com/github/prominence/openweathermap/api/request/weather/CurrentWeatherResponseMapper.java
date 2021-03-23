@@ -147,7 +147,7 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
         final JsonNode mainNode = rootNode.get("main");
 
         final double tempValue = mainNode.get("temp").asDouble();
-        temperature = Temperature.forValue(tempValue, UnitSystem.getTemperatureUnit(unitSystem));
+        temperature = Temperature.forValue(tempValue, unitSystem.getTemperatureUnit());
 
         final JsonNode feelsLikeNode = mainNode.get("feels_like");
         if (feelsLikeNode != null) {
@@ -191,7 +191,7 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
         final JsonNode windNode = rootNode.get("wind");
         double speed = windNode.get("speed").asDouble();
 
-        Wind wind = Wind.forValue(speed, UnitSystem.getWindUnit(unitSystem));
+        Wind wind = Wind.forValue(speed, unitSystem.getWindUnit());
 
         final JsonNode degNode = windNode.get("deg");
         if (degNode != null) {

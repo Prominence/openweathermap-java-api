@@ -22,8 +22,11 @@
 
 package com.github.prominence.openweathermap.api.enums;
 
+/**
+ * An enumeration which lists all available languages for API usage.
+ * Usually it could be specified to get response with some fields translated into desired language.
+ */
 public enum Language {
-
     ARABIC("ar"),
     BULGARIAN("bg"),
     CATALAN("ca"),
