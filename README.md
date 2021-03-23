@@ -3,25 +3,24 @@ Java API for OpenWeatherMap services.
 
 ### Implemented features:
 * Current weather data
-* 5 day / 3 hour forecast
-* 16 day / daily forecast
-* UV Index
-* Air pollution(beta)
+* 5 day / 3-hour forecast
 
 ### Will be implemented later:
-Global changes in API and more functionality.
+
+Free:
+* One Call API
+* Air pollution
+* Geocoding API
+* Weather Stations
+* Weather Triggers
+  
+Paid:
+* Daily Forecast 16 days
+* Hourly Forecast 4 days
+* probably others...
 
 ### Maven coordinates:
 
-```xml
-<dependency>
-  <groupId>com.github.prominence</groupId>
-  <artifactId>openweathermap-api</artifactId>
-  <version>1.2</version>
-</dependency>
-```
-
-New experimental version:
 ```xml
 <dependency>
   <groupId>com.github.prominence</groupId>
@@ -32,11 +31,6 @@ New experimental version:
 
 ### Gradle coordinates:
 
-```groovy
-compile('com.github.prominence:openweathermap-api:1.2')
-```
-
-New experimental version:
 ```groovy
 compile('com.github.prominence:openweathermap-api:2.0-SNAPSHOT')
 ```
