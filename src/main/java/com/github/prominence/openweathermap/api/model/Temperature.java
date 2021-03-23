@@ -20,12 +20,11 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast;
+package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
 public class Temperature {
-
     private double value;
     private Double maxTemperature;
     private Double minTemperature;
@@ -33,9 +32,6 @@ public class Temperature {
     private String unit;
 
     private Temperature(double value, String unit) {
-        if (unit == null) {
-            throw new IllegalArgumentException("Unit must be set.");
-        }
         this.value = value;
         this.unit = unit;
     }
@@ -44,7 +40,6 @@ public class Temperature {
         if (unit == null) {
             throw new IllegalArgumentException("Unit must be set.");
         }
-
         return new Temperature(value, unit);
     }
 

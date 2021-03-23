@@ -25,13 +25,13 @@ package com.github.prominence.openweathermap.api.model.weather;
 import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.Temperature;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
 
 public class WeatherUnitTest {
-
     @Test
     public void whenCreateObjectWithValidArgs_thenObjectIsCreated() {
         Weather.forValue("state", "desc");

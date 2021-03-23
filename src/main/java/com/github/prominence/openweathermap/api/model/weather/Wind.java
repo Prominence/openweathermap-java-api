@@ -76,11 +76,22 @@ public class Wind {
         this.speed = speed;
     }
 
+    /**
+     * Gets gust value.
+     * @return the gust
+     */
     public Double getGust() {
         return gust;
     }
 
+    /**
+     * Sets gust value.
+     * @param gust the gust.
+     */
     public void setGust(double gust) {
+        if (gust < 0) {
+            throw new IllegalArgumentException("Gust value must be positive or zero.");
+        }
         this.gust = gust;
     }
 
@@ -133,12 +144,13 @@ public class Wind {
         Wind wind = (Wind) o;
         return Double.compare(wind.speed, speed) == 0 &&
                 Objects.equals(degrees, wind.degrees) &&
+                Objects.equals(gust, wind.gust) &&
                 Objects.equals(unit, wind.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(speed, degrees, unit);
+        return Objects.hash(speed, degrees, gust, unit);
     }
 
     @Override

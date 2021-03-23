@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.weather;
+package com.github.prominence.openweathermap.api.model.forecast;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import org.junit.Assert;
@@ -101,6 +101,14 @@ public class LocationUnitTest {
     }
 
     @Test
+    public void whenSetPopulation_thenValueIsSet() {
+        final Location location = Location.forValue(33, "test");
+        location.setPopulation(3444L);
+
+        Assert.assertEquals(3444L, location.getPopulation().longValue());
+    }
+
+    @Test
     public void whenCallToString_thenAllIsFine() {
         final Location location = Location.forValue(44, "test");
 
@@ -112,6 +120,10 @@ public class LocationUnitTest {
 
         location.setCountryCode("TN");
 
+        Assert.assertNotEquals("", location.toString());
+        Assert.assertNotNull(location.toString());
+
+        location.setPopulation(34343L);
         Assert.assertNotEquals("", location.toString());
         Assert.assertNotNull(location.toString());
     }
@@ -195,6 +207,14 @@ public class LocationUnitTest {
         Assert.assertFalse(one.equals(two));
 
         two.setCoordinate(coordinate);
+
+        Assert.assertTrue(one.equals(two));
+
+        one.setPopulation(20000L);
+
+        Assert.assertFalse(one.equals(two));
+
+        two.setPopulation(20000L);
 
         Assert.assertTrue(one.equals(two));
     }

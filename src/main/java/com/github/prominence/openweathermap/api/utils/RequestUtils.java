@@ -47,6 +47,26 @@ public final class RequestUtils {
     }
 
     /**
+     * Executes call to provided API url and retrieves response in <code>String</code> representation.
+     *
+     * @param url the url to make API request.
+     * @return response from the request in <code>String</code> representation.
+     * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
+     */
+    public static String getResponse(String url) {
+        URL requestUrl;
+        try {
+            requestUrl = new URL(url);
+        } catch (MalformedURLException ex) {
+            logger.error("Invalid URL: ", ex);
+            throw new IllegalArgumentException(ex);
+        }
+        final InputStream requestInputStream = executeRequest(requestUrl);
+
+        return convertInputStreamToString(requestInputStream);
+    }
+
+    /**
      * Executes call to provided API url and retrieves response as an <code>InputStream</code> instance.
      *
      * @param requestUrl url for API call execution.
@@ -79,26 +99,6 @@ public final class RequestUtils {
         }
 
         return resultStream;
-    }
-
-    /**
-     * Executes call to provided API url and retrieves response in <code>String</code> representation.
-     *
-     * @param url the url to make API request.
-     * @return response from the request in <code>String</code> representation.
-     * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
-     */
-    public static String getResponse(String url) {
-        URL requestUrl;
-        try {
-            requestUrl = new URL(url);
-        } catch (MalformedURLException ex) {
-            logger.error("Invalid URL: ", ex);
-            throw new IllegalArgumentException(ex);
-        }
-        final InputStream requestInputStream = executeRequest(requestUrl);
-
-        return convertInputStreamToString(requestInputStream);
     }
 
     /**

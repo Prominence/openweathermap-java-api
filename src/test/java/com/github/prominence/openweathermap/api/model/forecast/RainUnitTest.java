@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.weather;
+package com.github.prominence.openweathermap.api.model.forecast;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,21 +28,15 @@ import org.junit.Test;
 public class RainUnitTest {
     @Test
     public void whenCreateRainWithValidArgs_thenObjectIsCreated() {
-        new Rain(2222.3, 324234.3);
-        new Rain(null, -213123.4);
-        new Rain(-123123.123, null);
-        new Rain(null, null);
+        new Rain(2222.3);
+        new Rain(null);
     }
 
     @Test
     public void whenSetValues_thenTheyAreSet() {
-        final Rain rain = new Rain(null, null);
+        final Rain rain = new Rain(null);
 
-        Assert.assertNull(rain.getOneHourRainLevel());
         Assert.assertNull(rain.getThreeHourRainLevel());
-
-        rain.setOneHourRainLevel(33.3);
-        Assert.assertEquals(33.3, rain.getOneHourRainLevel(), 0.00001);
 
         rain.setThreeHourRainLevel(55.5);
         Assert.assertEquals(55.5, rain.getThreeHourRainLevel(), 0.00001);
@@ -60,15 +54,10 @@ public class RainUnitTest {
         Assert.assertNotNull(rain.toString());
         Assert.assertNotEquals("unknown", rain.toString());
 
-        rain.setOneHourRainLevel(22.2);
-
-        Assert.assertNotNull(rain.toString());
-        Assert.assertNotEquals("unknown", rain.toString());
-
         rain.setThreeHourRainLevel(null);
 
         Assert.assertNotNull(rain.toString());
-        Assert.assertNotEquals("unknown", rain.toString());
+        Assert.assertEquals("unknown", rain.toString());
     }
 
     @Test
@@ -85,14 +74,6 @@ public class RainUnitTest {
         first.setThreeHourRainLevel(11.0);
 
         Assert.assertEquals(first.hashCode(), second.hashCode());
-
-        first.setOneHourRainLevel(333.2);
-
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
-
-        second.setOneHourRainLevel(333.2);
-
-        Assert.assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
@@ -103,14 +84,6 @@ public class RainUnitTest {
         Assert.assertTrue(first.equals(second));
         Assert.assertTrue(first.equals(first));
         Assert.assertFalse(first.equals(new Object()));
-
-        first.setOneHourRainLevel(0.34);
-
-        Assert.assertFalse(first.equals(second));
-
-        second.setOneHourRainLevel(0.34);
-
-        Assert.assertTrue(first.equals(second));
 
         second.setThreeHourRainLevel(66.7);
 

@@ -44,16 +44,6 @@ public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLoc
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering) {
-        String coordinates = rectangle.getFormattedRequestString() + "," + zoom;
-        urlBuilder.append("box/city");
-        urlBuilder.addRequestParameter("bbox", coordinates);
-        urlBuilder.addRequestParameter("cluster", useServerClustering ? "yes" : "no");
-
-        return new MultipleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
-    }
-
-    @Override
     public MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount) {
         urlBuilder.append("find");
         urlBuilder.addRequestParameter("lat", Double.toString(point.getLatitude()));
@@ -64,12 +54,11 @@ public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLoc
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount, boolean useServerClustering) {
+    public MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point) {
         urlBuilder.append("find");
         urlBuilder.addRequestParameter("lat", Double.toString(point.getLatitude()));
         urlBuilder.addRequestParameter("lon", Double.toString(point.getLongitude()));
-        urlBuilder.addRequestParameter("cnt", Integer.toString(citiesCount));
-        urlBuilder.addRequestParameter("cluster", useServerClustering ? "yes" : "no");
+
         return new MultipleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 }

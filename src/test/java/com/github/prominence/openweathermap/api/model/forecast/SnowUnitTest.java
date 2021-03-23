@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.weather;
+package com.github.prominence.openweathermap.api.model.forecast;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,21 +28,15 @@ import org.junit.Test;
 public class SnowUnitTest {
     @Test
     public void whenCreateSnowWithValidArgs_ObjectIsCreated() {
-        new Snow(2222.3, 324234.3);
-        new Snow(null, -213123.4);
-        new Snow(-123123.123, null);
-        new Snow(null, null);
+        new Snow(2222.3);
+        new Snow(null);
     }
 
     @Test
     public void whenSetValues_thenTheyAreSet() {
-        final Snow snow = new Snow(null, null);
+        final Snow snow = new Snow(null);
 
-        Assert.assertNull(snow.getOneHourSnowLevel());
         Assert.assertNull(snow.getThreeHourSnowLevel());
-
-        snow.setOneHourSnowLevel(33.3);
-        Assert.assertEquals(33.3, snow.getOneHourSnowLevel(), 0.00001);
 
         snow.setThreeHourSnowLevel(55.5);
         Assert.assertEquals(55.5, snow.getThreeHourSnowLevel(), 0.00001);
@@ -60,15 +54,10 @@ public class SnowUnitTest {
         Assert.assertNotNull(snow.toString());
         Assert.assertNotEquals("unknown", snow.toString());
 
-        snow.setOneHourSnowLevel(22.2);
-
-        Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("unknown", snow.toString());
-
         snow.setThreeHourSnowLevel(null);
 
         Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("unknown", snow.toString());
+        Assert.assertEquals("unknown", snow.toString());
     }
 
     @Test
@@ -85,14 +74,6 @@ public class SnowUnitTest {
         first.setThreeHourSnowLevel(11.0);
 
         Assert.assertEquals(first.hashCode(), second.hashCode());
-
-        first.setOneHourSnowLevel(333.2);
-
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
-
-        second.setOneHourSnowLevel(333.2);
-
-        Assert.assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
@@ -103,14 +84,6 @@ public class SnowUnitTest {
         Assert.assertTrue(first.equals(second));
         Assert.assertTrue(first.equals(first));
         Assert.assertFalse(first.equals(new Object()));
-
-        first.setOneHourSnowLevel(0.34);
-
-        Assert.assertFalse(first.equals(second));
-
-        second.setOneHourSnowLevel(0.34);
-
-        Assert.assertTrue(first.equals(second));
 
         second.setThreeHourSnowLevel(66.7);
 

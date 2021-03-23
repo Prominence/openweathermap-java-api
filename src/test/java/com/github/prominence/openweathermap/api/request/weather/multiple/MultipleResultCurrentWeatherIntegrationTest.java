@@ -61,7 +61,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
         final List<Weather> weatherList = getClient()
                 .currentWeather()
                 .multiple()
-                .byRectangle(CoordinateRectangle.forValues(12, 32, 15, 37), 10, true)
+                .byRectangle(CoordinateRectangle.forValues(12, 32, 15, 37), 10)
                 .language(Language.ROMANIAN)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -73,7 +73,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsJava_thenReturnNotNull() {
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleAndCountRequestAsJava_thenReturnNotNull() {
         final List<Weather> weatherList = getClient()
                 .currentWeather()
                 .multiple()
@@ -89,11 +89,11 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCitiesInCycleAndServerClusteringRequestAsJava_thenReturnNotNull() {
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsJava_thenReturnNotNull() {
         final List<Weather> weatherList = getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10, true)
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5))
                 .language(Language.GERMAN)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .retrieve()
@@ -154,7 +154,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
         final CompletableFuture<List<Weather>> weatherListFuture = getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10, true)
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
                 .language(Language.GERMAN)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
@@ -171,7 +171,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
         final CompletableFuture<String> weatherFuture = getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10, true)
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
                 .language(Language.GERMAN)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
@@ -186,7 +186,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
         final CompletableFuture<String> weatherFuture = getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10, true)
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
                 .language(Language.GERMAN)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
@@ -201,7 +201,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
         final CompletableFuture<String> weatherFuture = getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10, true)
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
                 .language(Language.GERMAN)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()

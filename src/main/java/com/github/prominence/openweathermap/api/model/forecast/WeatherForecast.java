@@ -22,10 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.forecast;
 
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.DayTime;
+import com.github.prominence.openweathermap.api.model.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -47,6 +44,21 @@ public class WeatherForecast {
 
     private String forecastTimeISO;
     private DayTime dayTime;
+
+    private WeatherForecast(String state, String description) {
+        this.state = state;
+        this.description = description;
+    }
+
+    public static WeatherForecast forValue(String state, String description) {
+        if (state == null) {
+            throw new IllegalArgumentException("State must be set.");
+        }
+        if (description == null) {
+            throw new IllegalArgumentException("Description must be set.");
+        }
+        return new WeatherForecast(state, description);
+    }
 
     public LocalDateTime getForecastTime() {
         return forecastTime;
@@ -85,6 +97,9 @@ public class WeatherForecast {
     }
 
     public void setState(String state) {
+        if (state == null) {
+            throw new IllegalArgumentException("State must be not null.");
+        }
         this.state = state;
     }
 
@@ -93,6 +108,9 @@ public class WeatherForecast {
     }
 
     public void setDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description must be not null.");
+        }
         this.description = description;
     }
 

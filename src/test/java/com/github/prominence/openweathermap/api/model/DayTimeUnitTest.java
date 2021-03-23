@@ -20,17 +20,15 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.multiple;
+package com.github.prominence.openweathermap.api.model;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
+import org.junit.Assert;
+import org.junit.Test;
 
-public interface MultipleLocationsCurrentWeatherRequester {
-
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
-
-    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point);
-
-    MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
-
+public class DayTimeUnitTest {
+    @Test
+    public void whenGetValue_thenValueIsPresentAndValid() {
+        Assert.assertEquals("d", DayTime.DAY.getValue());
+        Assert.assertEquals("n", DayTime.NIGHT.getValue());
+    }
 }

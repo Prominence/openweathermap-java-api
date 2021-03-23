@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.weather;
+package com.github.prominence.openweathermap.api.model.forecast;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -114,22 +114,6 @@ public class WindUnitTest {
         wind.setUnit(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenSetInvalidGustValue_thenThrowAnException() {
-        final Wind wind = Wind.forValue(33, "as");
-
-        wind.setGust(-50);
-    }
-
-    @Test
-    public void whenSetValidGustValue_thenAllIsFine() {
-        final Wind wind = Wind.forValue(33, "as");
-
-        wind.setGust(30);
-
-        Assert.assertEquals(30, wind.getGust(), 0.00001);
-    }
-
     @Test
     public void whenCallToString_thenAllIsFine() {
         final Wind wind = Wind.forValue(302, "a");
@@ -138,10 +122,6 @@ public class WindUnitTest {
 
         wind.setDegrees(22);
 
-        Assert.assertNotNull(wind.toString());
-        Assert.assertNotEquals("", wind.toString());
-
-        wind.setGust(20);
         Assert.assertNotNull(wind.toString());
         Assert.assertNotEquals("", wind.toString());
     }
@@ -192,15 +172,8 @@ public class WindUnitTest {
         Assert.assertFalse(first.equals(second));
 
         first.setUnit("v");
-
-        Assert.assertTrue(first.equals(second));
-
-        first.setGust(4);
+        first.setSpeed(second.getSpeed() + 4);
 
         Assert.assertFalse(first.equals(second));
-
-        second.setGust(4);
-
-        Assert.assertTrue(first.equals(second));
     }
 }

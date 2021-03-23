@@ -20,13 +20,34 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.weather;
+/*
+ * Copyright (c) 2021 Alexey Zinchenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package com.github.prominence.openweathermap.api.model;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 public class TemperatureUnitTest {
-
     @Test
     public void whenCreateObjectWithValidArgs_thenObjectIsCreated() {
         Temperature.forValue(22.2, "K");
@@ -70,6 +91,18 @@ public class TemperatureUnitTest {
     }
 
     @Test
+    public void whenSetFeelsLikeTemperature_thenAllIsOk() {
+        final Temperature temperature = Temperature.forValue(22.2, "K");
+        temperature.setFeelsLike(22.3);
+
+        Assert.assertEquals(22.3, temperature.getFeelsLike(), 0.00001);
+
+        temperature.setFeelsLike(null);
+
+        Assert.assertNull(temperature.getFeelsLike());
+    }
+
+    @Test
     public void whenSetNonNullUnit_thenAllIsOk() {
         final Temperature temperature = Temperature.forValue(22.2, "K");
         temperature.setUnit("test");
@@ -88,14 +121,22 @@ public class TemperatureUnitTest {
     public void whenCallToString_thenAllIsFine() {
         final Temperature temperature = Temperature.forValue(22.2, "K");
 
+        Assert.assertNotNull(temperature.toString());
         Assert.assertNotEquals("", temperature.toString());
 
         temperature.setMinTemperature(11.2);
 
+        Assert.assertNotNull(temperature.toString());
         Assert.assertNotEquals("", temperature.toString());
 
         temperature.setMaxTemperature(44.3);
 
+        Assert.assertNotNull(temperature.toString());
+        Assert.assertNotEquals("", temperature.toString());
+
+        temperature.setFeelsLike(22.4);
+
+        Assert.assertNotNull(temperature.toString());
         Assert.assertNotEquals("", temperature.toString());
     }
 
@@ -139,5 +180,17 @@ public class TemperatureUnitTest {
         two.setUnit("U");
 
         Assert.assertFalse(one.equals(two));
+
+        one.setUnit("U");
+
+        Assert.assertTrue(one.equals(two));
+
+        one.setFeelsLike(22.3);
+
+        Assert.assertFalse(one.equals(two));
+
+        two.setFeelsLike(22.3);
+
+        Assert.assertTrue(one.equals(two));
     }
 }

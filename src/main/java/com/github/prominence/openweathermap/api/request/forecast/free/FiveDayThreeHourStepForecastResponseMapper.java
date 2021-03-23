@@ -30,7 +30,7 @@ import com.github.prominence.openweathermap.api.model.forecast.*;
 import com.github.prominence.openweathermap.api.model.forecast.Location;
 import com.github.prominence.openweathermap.api.model.forecast.Rain;
 import com.github.prominence.openweathermap.api.model.forecast.Snow;
-import com.github.prominence.openweathermap.api.model.forecast.Temperature;
+import com.github.prominence.openweathermap.api.model.Temperature;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -122,14 +122,11 @@ public class FiveDayThreeHourStepForecastResponseMapper {
     }
 
     private WeatherForecast parseWeatherForecast(JsonNode rootNode) {
-        WeatherForecast weatherForecast = new WeatherForecast();
-
-        weatherForecast.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(rootNode.get("dt").asLong()), TimeZone.getDefault().toZoneId()));
-        weatherForecast.setForecastTimeISO(rootNode.get("dt_txt").asText());
-
         JsonNode weatherNode = rootNode.get("weather").get(0);
-        weatherForecast.setState(weatherNode.get("main").asText());
-        weatherForecast.setDescription(weatherNode.get("description").asText());
+        WeatherForecast weatherForecast = WeatherForecast.forValue(
+                weatherNode.get("main").asText(),
+                weatherNode.get("description").asText()
+        );
         weatherForecast.setWeatherIconUrl("https://openweathermap.org/img/w/" + weatherNode.get("icon").asText() + ".png");
 
         JsonNode mainNode = rootNode.get("main");
@@ -145,6 +142,9 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         if (sysNode != null) {
             weatherForecast.setDayTime("d".equals(sysNode.get("pod").asText()) ? DayTime.DAY : DayTime.NIGHT);
         }
+
+        weatherForecast.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(rootNode.get("dt").asLong()), TimeZone.getDefault().toZoneId()));
+        weatherForecast.setForecastTimeISO(rootNode.get("dt_txt").asText());
 
         return weatherForecast;
     }
