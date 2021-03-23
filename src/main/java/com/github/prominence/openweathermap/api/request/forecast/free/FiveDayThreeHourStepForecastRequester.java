@@ -24,6 +24,9 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
 
+/**
+ * An interface for <a href="https://openweathermap.org/forecast5">API</a> methods.
+ */
 public interface FiveDayThreeHourStepForecastRequester {
 
     FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName);
@@ -37,4 +40,6 @@ public interface FiveDayThreeHourStepForecastRequester {
     FiveDayThreeHourStepForecastRequestCustomizer byCoordinate(Coordinate coordinate);
 
     FiveDayThreeHourStepForecastRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
+
+    FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode);
 }

@@ -70,4 +70,10 @@ public class FiveDayThreeHourStepForecastRequesterImpl implements FiveDayThreeHo
         urlBuilder.addRequestParameter("zip", zipCode + "," + countryCode);
         return new FiveDayThreeHourStepForecastRequestCustomizerImpl(urlBuilder);
     }
+
+    @Override
+    public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode) {
+        urlBuilder.addRequestParameter("zip", zipCode);
+        return new FiveDayThreeHourStepForecastRequestCustomizerImpl(urlBuilder);
+    }
 }

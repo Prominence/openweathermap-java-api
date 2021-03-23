@@ -31,7 +31,6 @@ import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRe
 import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
 
 public class OpenWeatherMapClient {
-
     private final String apiKey;
 
     public OpenWeatherMapClient(String apiKey) {
@@ -47,10 +46,4 @@ public class OpenWeatherMapClient {
     public FiveDayThreeHourStepForecastRequester forecast5Day3HourStep() {
         return new FiveDayThreeHourStepForecastRequesterImpl(apiKey);
     }
-
-    // TODO:
-    // * Forecast: hourly, daily. Probably better to cover all free-plan functionality?
-    // * Air Pollution
-    // * Ultraviolet index
-    // DOCS
 }

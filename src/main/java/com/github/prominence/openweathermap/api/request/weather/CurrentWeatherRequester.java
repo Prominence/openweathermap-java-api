@@ -25,6 +25,9 @@ package com.github.prominence.openweathermap.api.request.weather;
 import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
 
+/**
+ * An interface for <a href="https://openweathermap.org/current">API</a> methods.
+ */
 public interface CurrentWeatherRequester {
 
     SingleLocationCurrentWeatherRequester single();
