@@ -59,17 +59,17 @@ public class SnowUnitTest {
         snow.setThreeHourSnowLevel(33.5);
 
         Assert.assertNotNull(snow.toString());
-        Assert.assertEquals("unknown", snow.toString());
+        Assert.assertNotEquals("unknown", snow.toString());
 
         snow.setOneHourSnowLevel(22.2);
 
         Assert.assertNotNull(snow.toString());
-        Assert.assertEquals("unknown", snow.toString());
+        Assert.assertNotEquals("unknown", snow.toString());
 
         snow.setThreeHourSnowLevel(null);
 
         Assert.assertNotNull(snow.toString());
-        Assert.assertEquals("unknown", snow.toString());
+        Assert.assertNotEquals("unknown", snow.toString());
     }
 
     @Test

@@ -215,7 +215,7 @@ public class WeatherUnitTest {
 
         two.setDescription("112");
 
-        Assert.assertEquals(one.hashCode(), two.hashCode());
+        Assert.assertNotEquals(one.hashCode(), two.hashCode());
     }
 
     @Test

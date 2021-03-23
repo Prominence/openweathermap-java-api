@@ -59,17 +59,17 @@ public class RainUnitTest {
         rain.setThreeHourRainLevel(33.5);
 
         Assert.assertNotNull(rain.toString());
-        Assert.assertEquals("unknown", rain.toString());
+        Assert.assertNotEquals("unknown", rain.toString());
 
         rain.setOneHourRainLevel(22.2);
 
         Assert.assertNotNull(rain.toString());
-        Assert.assertEquals("unknown", rain.toString());
+        Assert.assertNotEquals("unknown", rain.toString());
 
         rain.setThreeHourRainLevel(null);
 
         Assert.assertNotNull(rain.toString());
-        Assert.assertEquals("unknown", rain.toString());
+        Assert.assertNotEquals("unknown", rain.toString());
     }
 
     @Test
