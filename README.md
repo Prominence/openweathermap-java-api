@@ -50,9 +50,9 @@ compile('com.github.prominence:openweathermap-api:2.0-SNAPSHOT')
 ### License
 MIT
 
-[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=master
+[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=dev
 [ci-link]: https://travis-ci.org/Prominence/openweathermap-java-api
 
 
-[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/master/graph/badge.svg
+[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/dev/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api
