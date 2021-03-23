@@ -20,13 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
-public interface CurrentWeatherRequestTerminator<T, S> extends RequestTerminator<T, S> {
+public interface MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer extends RequestCustomizer<MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer> {
 
-    S asXML();
+    MultipleResultCitiesInCircleCurrentWeatherRequestTerminator retrieve();
 
-    S asHTML();
+    MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator retrieveAsync();
 }

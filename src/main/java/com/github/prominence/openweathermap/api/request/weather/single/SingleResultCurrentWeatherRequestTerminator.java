@@ -23,7 +23,10 @@
 package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
-public interface SingleResultCurrentWeatherRequestTerminator extends CurrentWeatherRequestTerminator<Weather, String> {
+public interface SingleResultCurrentWeatherRequestTerminator extends RequestTerminator<Weather, String> {
+    String asXML();
+
+    String asHTML();
 }

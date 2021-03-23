@@ -22,15 +22,11 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
+import com.github.prominence.openweathermap.api.model.weather.Weather;
+import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
-public interface MultipleLocationsCurrentWeatherRequester {
+import java.util.List;
 
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
-
-    MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point);
-
-    MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
-
+public interface MultipleResultCitiesInCircleCurrentWeatherRequestTerminator extends RequestTerminator<List<Weather>, String> {
+    String asXML();
 }

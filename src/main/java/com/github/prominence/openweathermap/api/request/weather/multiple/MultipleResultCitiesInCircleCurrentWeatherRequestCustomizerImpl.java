@@ -22,36 +22,42 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-public class MultipleResultCurrentWeatherAsyncRequestTerminatorImpl implements MultipleResultCurrentWeatherAsyncRequestTerminator {
+public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl implements MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer {
 
     private final RequestUrlBuilder urlBuilder;
-    private final UnitSystem unitSystem;
 
-    MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+    private Language language;
+    private UnitSystem unitSystem = UnitSystem.STANDARD;
+
+    MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
+    }
+
+    @Override
+    public MultipleResultCitiesInCircleCurrentWeatherRequestTerminator retrieve() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer language(Language language) {
+        this.language = language;
+        return this;
+    }
+
+    @Override
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
-    }
-
-    @Override
-    public CompletableFuture<List<Weather>> asJava() {
-        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(unitSystem).getList(getRawResponse()));
-    }
-
-    @Override
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return RequestUtils.getResponse(urlBuilder.buildUrl());
+        return this;
     }
 }

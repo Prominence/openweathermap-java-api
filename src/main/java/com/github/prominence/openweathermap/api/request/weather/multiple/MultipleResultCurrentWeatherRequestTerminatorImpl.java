@@ -50,18 +50,6 @@ public class MultipleResultCurrentWeatherRequestTerminatorImpl implements Multip
         return getRawResponse();
     }
 
-    @Override
-    public String asXML() {
-        urlBuilder.addRequestParameter("mode", "xml");
-        return getRawResponse();
-    }
-
-    @Override
-    public String asHTML() {
-        urlBuilder.addRequestParameter("mode", "html");
-        return getRawResponse();
-    }
-
     private String getRawResponse() {
         return RequestUtils.getResponse(urlBuilder.buildUrl());
     }

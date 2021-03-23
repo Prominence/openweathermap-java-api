@@ -44,6 +44,12 @@ public class SingleLocationCurrentWeatherRequesterImpl implements SingleLocation
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 
+    @Override
+    public SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String stateCode, String countryCode) {
+        urlBuilder.addRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
+        return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
+    }
+
     public SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId) {
         urlBuilder.addRequestParameter("id", cityId);
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
@@ -57,6 +63,12 @@ public class SingleLocationCurrentWeatherRequesterImpl implements SingleLocation
 
     public SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
         urlBuilder.addRequestParameter("zip", zipCode + "," + countryCode);
+        return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
+    }
+
+    @Override
+    public SingleResultCurrentWeatherRequestCustomizer byZipCodeInUSA(String zipCode) {
+        urlBuilder.addRequestParameter("zip", zipCode);
         return new SingleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 }

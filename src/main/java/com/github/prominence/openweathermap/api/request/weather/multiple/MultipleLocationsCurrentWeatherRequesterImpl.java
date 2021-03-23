@@ -44,21 +44,21 @@ public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLoc
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount) {
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount) {
         urlBuilder.append("find");
         urlBuilder.addRequestParameter("lat", Double.toString(point.getLatitude()));
         urlBuilder.addRequestParameter("lon", Double.toString(point.getLongitude()));
         urlBuilder.addRequestParameter("cnt", Integer.toString(citiesCount));
 
-        return new MultipleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point) {
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point) {
         urlBuilder.append("find");
         urlBuilder.addRequestParameter("lat", Double.toString(point.getLatitude()));
         urlBuilder.addRequestParameter("lon", Double.toString(point.getLongitude()));
 
-        return new MultipleResultCurrentWeatherRequestCustomizerImpl(urlBuilder);
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 }

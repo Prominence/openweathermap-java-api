@@ -22,21 +22,21 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class MultipleResultCurrentWeatherAsyncRequestTerminatorImpl implements MultipleResultCurrentWeatherAsyncRequestTerminator {
+public class MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminatorImpl implements MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator {
 
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
-    MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+    MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;
     }
@@ -48,6 +48,12 @@ public class MultipleResultCurrentWeatherAsyncRequestTerminatorImpl implements M
 
     @Override
     public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    @Override
+    public CompletableFuture<String> asXML() {
+        urlBuilder.addRequestParameter("mode", "xml");
         return CompletableFuture.supplyAsync(this::getRawResponse);
     }
 

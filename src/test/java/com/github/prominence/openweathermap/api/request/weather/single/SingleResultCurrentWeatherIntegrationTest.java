@@ -37,19 +37,199 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
-
     @Test
-    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
+    public void whenGetSingleCurrentWeatherByCityNameRequestAsJava_thenReturnNotNull() {
         final Weather weather = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.forValues(5, 5))
+                .byCityName("Minsk")
+                .language(Language.RUSSIAN)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
         Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
         System.out.println(weather);
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.IMPERIAL)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.STANDARD)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherXml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameRequestAsHTML_thenReturnNotNull() {
+        final String weatherHtml = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asHTML();
+
+        Assert.assertTrue(weatherHtml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsJava_thenReturnNotNull() {
+        final Weather weather = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk", "BY")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava();
+
+        Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
+        System.out.println(weather);
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk", "by")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk", "by")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherXml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsHTML_thenReturnNotNull() {
+        final String weatherHtml = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("Minsk", "by")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.STANDARD)
+                .retrieve()
+                .asHTML();
+
+        Assert.assertTrue(weatherHtml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndStateCodeAndCountryCodeRequestAsJava_thenReturnNotNull() {
+        final Weather weather = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("New York", "ny", "us")
+                .language(Language.SLOVAK)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava();
+
+        Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
+        System.out.println(weather);
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndStateCodeAndCountryCodeRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("New York", "ny", "us")
+                .language(Language.HUNGARIAN)
+                .unitSystem(UnitSystem.IMPERIAL)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndStateCodeAndCountryCodeRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("New York", "ny", "us")
+                .language(Language.ROMANIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherXml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityNameAndStateCodeAndCountryCodeRequestAsHTML_thenReturnNotNull() {
+        final String weatherHtml = getClient()
+                .currentWeather()
+                .single()
+                .byCityName("New York", "ny", "us")
+                .language(Language.ARABIC)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asHTML();
+
+        Assert.assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -63,37 +243,115 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
     @Test
-    public void whenGetSingleCurrentWeatherByCityNameRequestAsJava_thenReturnNotNull() {
+    public void whenGetSingleCurrentWeatherByCityIdRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
+                .currentWeather()
+                .single()
+                .byCityId(350001514)
+                .language(Language.GERMAN)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityIdRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .single()
+                .byCityId(350001514)
+                .language(Language.GERMAN)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherXml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCityIdRequestAsHTML_thenReturnNotNull() {
+        final String weatherHtml = getClient()
+                .currentWeather()
+                .single()
+                .byCityId(350001514)
+                .language(Language.GERMAN)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherHtml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
         final Weather weather = getClient()
                 .currentWeather()
                 .single()
-                .byCityName("Minsk")
-                .language(Language.RUSSIAN)
+                .byCoordinate(Coordinate.forValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
         Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
     @Test
-    public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
                 .currentWeather()
                 .single()
-                .byCityName("Moscow", "ru")
-                .language(Language.RUSSIAN)
+                .byCoordinate(Coordinate.forValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asJava();
+                .asJSON();
 
-        Assert.assertNotNull(weather);
-        System.out.println(weather);
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCoordinateRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .single()
+                .byCoordinate(Coordinate.forValues(5, 5))
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherXml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByCoordinateRequestAsHTML_thenReturnNotNull() {
+        final String weatherHtml = getClient()
+                .currentWeather()
+                .single()
+                .byCoordinate(Coordinate.forValues(5, 5))
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asHTML();
+
+        Assert.assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -102,73 +360,128 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .currentWeather()
                 .single()
                 .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
+                .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
         Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
     @Test
-    public void whenGetAnySingleCurrentRequestWeatherAsJson_thenReturnNotNull() {
+    public void whenGetSingleCurrentWeatherByZipCodeAndCountryRequestAsJSON_thenReturnNotNull() {
         final String weatherJson = getClient()
                 .currentWeather()
                 .single()
                 .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
+                .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJSON();
 
-        Assert.assertNotNull(weatherJson);
-        System.out.println(weatherJson);
+        Assert.assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
-    public void whenGetAnySingleCurrentRequestWeatherAsXml_thenReturnNotNull() {
+    public void whenGetSingleCurrentWeatherByZipCodeAndCountryRequestAsXML_thenReturnNotNull() {
         final String weatherXml = getClient()
                 .currentWeather()
                 .single()
                 .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
+                .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asXML();
 
-        Assert.assertNotNull(weatherXml);
-        System.out.println(weatherXml);
+        Assert.assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
-    public void whenGetAnySingleCurrentWeatherRequestAsHtml_thenReturnNotNull() {
+    public void whenGetSingleCurrentWeatherByZipCodeAndCountryRequestAsHTML_thenReturnNotNull() {
         final String weatherHtml = getClient()
                 .currentWeather()
                 .single()
                 .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
+                .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asHTML();
 
-        Assert.assertNotNull(weatherHtml);
-        System.out.println(weatherHtml);
+        Assert.assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
-    public void whenGetAnySingleCurrentWeatherAsyncRequestAsXml_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> weatherXmlFuture = getClient()
+    public void whenGetSingleCurrentWeatherByZipCodeInUSARequestAsJava_thenReturnNotNull() {
+        final Weather weather = getClient()
                 .currentWeather()
                 .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
+                .byZipCodeInUSA("10006")
+                .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
-                .retrieveAsync()
+                .retrieve()
+                .asJava();
+
+        Assert.assertNotNull(weather);
+        Assert.assertNotNull(weather.getState());
+        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getRequestedOn());
+        Assert.assertNotNull(weather.getTemperature());
+        Assert.assertNotNull(weather.getLocation());
+        Assert.assertNotNull(weather.getAtmosphericPressure());
+        Assert.assertNotNull(weather.getHumidity());
+        Assert.assertNotNull(weather.getWind());
+        System.out.println(weather);
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByZipCodeInUSARequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
+                .currentWeather()
+                .single()
+                .byZipCodeInUSA("10006")
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByZipCodeInUSARequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .single()
+                .byZipCodeInUSA("10006")
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
                 .asXML();
 
-        Assert.assertNotNull(weatherXmlFuture);
-        System.out.println(weatherXmlFuture.get());
+        Assert.assertTrue(weatherXml.startsWith("<"));
+    }
+
+    @Test
+    public void whenGetSingleCurrentWeatherByZipCodeInUSARequestAsHTML_thenReturnNotNull() {
+        final String weatherHtml = getClient()
+                .currentWeather()
+                .single()
+                .byZipCodeInUSA("10006")
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asHTML();
+
+        Assert.assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -199,6 +512,21 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
 
         Assert.assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
+    }
+
+    @Test
+    public void whenGetAnySingleCurrentWeatherAsyncRequestAsXml_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherXmlFuture = getClient()
+                .currentWeather()
+                .single()
+                .byZipCodeAndCountry("220015", "by")
+                .language(Language.RUSSIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asXML();
+
+        Assert.assertNotNull(weatherXmlFuture);
+        System.out.println(weatherXmlFuture.get());
     }
 
     @Test

@@ -23,9 +23,12 @@
 package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequestTerminator;
+import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
 
 import java.util.concurrent.CompletableFuture;
 
-public interface SingleResultCurrentWeatherAsyncRequestTerminator extends CurrentWeatherRequestTerminator<CompletableFuture<Weather>, CompletableFuture<String>> {
+public interface SingleResultCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<Weather, String> {
+    CompletableFuture<String> asXML();
+
+    CompletableFuture<String> asHTML();
 }

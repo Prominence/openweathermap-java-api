@@ -39,9 +39,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
-
     @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
+    public void whenGetMultipleCurrentWeatherByCoordinateRectangleRequestAsJava_thenReturnNotNull() {
         final List<Weather> weatherList = getClient()
                 .currentWeather()
                 .multiple()
@@ -52,40 +51,31 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weatherList);
-        Assert.assertTrue(weatherList.size() > 0);
-        System.out.println(weatherList);
+        for (Weather weather : weatherList) {
+            Assert.assertNotNull(weather);
+            Assert.assertNotNull(weather.getState());
+            Assert.assertNotNull(weather.getDescription());
+            Assert.assertNotNull(weather.getRequestedOn());
+            Assert.assertNotNull(weather.getTemperature());
+            Assert.assertNotNull(weather.getLocation());
+            Assert.assertNotNull(weather.getAtmosphericPressure());
+            Assert.assertNotNull(weather.getHumidity());
+            Assert.assertNotNull(weather.getWind());
+        }
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringRequestAsJava_thenReturnNotNull() {
-        final List<Weather> weatherList = getClient()
+    public void whenGetMultipleCurrentWeatherByCoordinateRectangleRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
                 .currentWeather()
                 .multiple()
                 .byRectangle(CoordinateRectangle.forValues(12, 32, 15, 37), 10)
                 .language(Language.ROMANIAN)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asJava();
+                .asJSON();
 
-        Assert.assertNotNull(weatherList);
-        Assert.assertTrue(weatherList.size() > 0);
-        System.out.println(weatherList);
-    }
-
-    @Test
-    public void whenGetMultipleCurrentWeatherByCitiesInCycleAndCountRequestAsJava_thenReturnNotNull() {
-        final List<Weather> weatherList = getClient()
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
-                .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .retrieve()
-                .asJava();
-
-        Assert.assertNotNull(weatherList);
-        Assert.assertTrue(weatherList.size() > 0);
-        System.out.println(weatherList);
+        Assert.assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -100,13 +90,78 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weatherList);
-        Assert.assertTrue(weatherList.size() > 0);
-        System.out.println(weatherList);
+        for (Weather weather : weatherList) {
+            System.out.println(weather);
+            Assert.assertNotNull(weather);
+            Assert.assertNotNull(weather.getState());
+            Assert.assertNotNull(weather.getDescription());
+            Assert.assertNotNull(weather.getRequestedOn());
+            Assert.assertNotNull(weather.getTemperature());
+            Assert.assertNotNull(weather.getLocation());
+            Assert.assertNotNull(weather.getAtmosphericPressure());
+            Assert.assertNotNull(weather.getHumidity());
+            Assert.assertNotNull(weather.getWind());
+        }
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsJson_thenReturnNotNull() {
-        final String weather = getClient()
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
+                .currentWeather()
+                .multiple()
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5))
+                .language(Language.GERMAN)
+                .unitSystem(UnitSystem.IMPERIAL)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertTrue(weatherJson.startsWith("{"));
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
+                .currentWeather()
+                .multiple()
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5))
+                .language(Language.GERMAN)
+                .unitSystem(UnitSystem.IMPERIAL)
+                .retrieve()
+                .asXML();
+
+        Assert.assertTrue(weatherXml.startsWith("<"));
+        System.out.println(weatherXml);
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleAndCountRequestAsJava_thenReturnNotNull() {
+        final List<Weather> weatherList = getClient()
+                .currentWeather()
+                .multiple()
+                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
+                .language(Language.GERMAN)
+                .unitSystem(UnitSystem.IMPERIAL)
+                .retrieve()
+                .asJava();
+
+        Assert.assertNotNull(weatherList);
+        for (Weather weather : weatherList) {
+            System.out.println(weather);
+            Assert.assertNotNull(weather);
+            Assert.assertNotNull(weather.getState());
+            Assert.assertNotNull(weather.getDescription());
+            Assert.assertNotNull(weather.getRequestedOn());
+            Assert.assertNotNull(weather.getTemperature());
+            Assert.assertNotNull(weather.getLocation());
+            Assert.assertNotNull(weather.getAtmosphericPressure());
+            Assert.assertNotNull(weather.getHumidity());
+            Assert.assertNotNull(weather.getWind());
+        }
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleAndCountRequestAsJSON_thenReturnNotNull() {
+        final String weatherJson = getClient()
                 .currentWeather()
                 .multiple()
                 .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
@@ -115,13 +170,12 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertNotNull(weather);
-        System.out.println(weather);
+        Assert.assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsXml_thenReturnNotNull() {
-        final String weather = getClient()
+    public void whenGetMultipleCurrentWeatherByCitiesInCycleAndCountRequestAsXML_thenReturnNotNull() {
+        final String weatherXml = getClient()
                 .currentWeather()
                 .multiple()
                 .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
@@ -130,27 +184,11 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertNotNull(weather);
-        System.out.println(weather);
+        Assert.assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsHtml_thenReturnNotNull() {
-        final String weather = getClient()
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
-                .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .retrieve()
-                .asHTML();
-
-        Assert.assertNotNull(weather);
-        System.out.println(weather);
-    }
-
-    @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
+    public void whenGetMultipleCurrentWeatherByCoordinateAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<List<Weather>> weatherListFuture = getClient()
                 .currentWeather()
                 .multiple()
@@ -167,22 +205,7 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsXml_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> weatherFuture = getClient()
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
-                .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .retrieveAsync()
-                .asXML();
-
-        Assert.assertNotNull(weatherFuture);
-        System.out.println(weatherFuture.get());
-    }
-
-    @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsJson_thenReturnNotNull() throws ExecutionException, InterruptedException {
+    public void whenGetMultipleCurrentWeatherByCoordinateAsyncRequestAsJson_thenReturnNotNull() throws ExecutionException, InterruptedException {
         final CompletableFuture<String> weatherFuture = getClient()
                 .currentWeather()
                 .multiple()
@@ -191,21 +214,6 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .unitSystem(UnitSystem.IMPERIAL)
                 .retrieveAsync()
                 .asJSON();
-
-        Assert.assertNotNull(weatherFuture);
-        System.out.println(weatherFuture.get());
-    }
-
-    @Test
-    public void whenGetMultipleCurrentWeatherByCoordinateAndServerClusteringAsyncRequestAsHtml_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> weatherFuture = getClient()
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.forValues(55.5, 37.5), 10)
-                .language(Language.GERMAN)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .retrieveAsync()
-                .asHTML();
 
         Assert.assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());

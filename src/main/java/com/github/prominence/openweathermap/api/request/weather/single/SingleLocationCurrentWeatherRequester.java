@@ -30,9 +30,13 @@ public interface SingleLocationCurrentWeatherRequester {
 
     SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
 
+    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String stateCode, String countryCode);
+
     SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
 
     SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
 
     SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
+
+    SingleResultCurrentWeatherRequestCustomizer byZipCodeInUSA(String zipCode);
 }

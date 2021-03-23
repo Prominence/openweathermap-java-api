@@ -22,10 +22,41 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
 
-public interface MultipleResultCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<List<Weather>, String> {
+public class MultipleResultCitiesInCircleCurrentWeatherRequestTerminatorImpl implements MultipleResultCitiesInCircleCurrentWeatherRequestTerminator {
+
+    private final RequestUrlBuilder urlBuilder;
+    private final UnitSystem unitSystem;
+
+    MultipleResultCitiesInCircleCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+        this.urlBuilder = urlBuilder;
+        this.unitSystem = unitSystem;
+    }
+
+    @Override
+    public List<Weather> asJava() {
+        return new CurrentWeatherResponseMapper(unitSystem).getList(getRawResponse());
+    }
+
+    @Override
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    @Override
+    public String asXML() {
+        urlBuilder.addRequestParameter("mode", "xml");
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(urlBuilder.buildUrl());
+    }
 }

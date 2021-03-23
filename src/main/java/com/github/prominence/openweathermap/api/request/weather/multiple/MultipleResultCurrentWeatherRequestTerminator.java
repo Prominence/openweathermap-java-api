@@ -23,9 +23,9 @@
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
 import java.util.List;
 
-public interface MultipleResultCurrentWeatherRequestTerminator extends CurrentWeatherRequestTerminator<List<Weather>, String> {
+public interface MultipleResultCurrentWeatherRequestTerminator extends RequestTerminator<List<Weather>, String> {
 }
