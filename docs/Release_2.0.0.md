@@ -182,7 +182,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 A forecast for Minsk with 15 timestamps.
 ```
 
-`WeatherForecast`'s useful public methods(setters are not listed):
+`com.github.prominence.openweathermap.api.model.forecast.WeatherForecast`'s useful public methods(setters are not listed):
 
 | Method                        | Description                                                                                                                                                               |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
