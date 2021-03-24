@@ -50,16 +50,16 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Weather {
-
     private String state;
     private String description;
     private String weatherIconUrl;
 
-    private LocalDateTime requestedOn;
+    private LocalDateTime calculatedOn;
 
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
+
     private Wind wind;
     private Rain rain;
     private Snow snow;
@@ -112,12 +112,12 @@ public class Weather {
         this.weatherIconUrl = weatherIconUrl;
     }
 
-    public LocalDateTime getRequestedOn() {
-        return requestedOn;
+    public LocalDateTime getCalculatedOn() {
+        return calculatedOn;
     }
 
-    public void setRequestedOn(LocalDateTime requestedOn) {
-        this.requestedOn = requestedOn;
+    public void setCalculatedOn(LocalDateTime calculatedOn) {
+        this.calculatedOn = calculatedOn;
     }
 
     public Temperature getTemperature() {
@@ -192,7 +192,7 @@ public class Weather {
         return Objects.equals(state, weather.state) &&
                 Objects.equals(description, weather.description) &&
                 Objects.equals(weatherIconUrl, weather.weatherIconUrl) &&
-                Objects.equals(requestedOn, weather.requestedOn) &&
+                Objects.equals(calculatedOn, weather.calculatedOn) &&
                 Objects.equals(temperature, weather.temperature) &&
                 Objects.equals(atmosphericPressure, weather.atmosphericPressure) &&
                 Objects.equals(humidity, weather.humidity) &&
@@ -205,7 +205,7 @@ public class Weather {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, description, weatherIconUrl, requestedOn, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
+        return Objects.hash(state, description, weatherIconUrl, calculatedOn, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
     }
 
     @Override

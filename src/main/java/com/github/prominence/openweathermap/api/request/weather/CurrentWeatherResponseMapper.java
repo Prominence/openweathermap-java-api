@@ -121,7 +121,7 @@ public class CurrentWeatherResponseMapper implements ResponseMapper<Weather> {
 
         final JsonNode dtNode = rootNode.get("dt");
         if (dtNode != null) {
-            weather.setRequestedOn(LocalDateTime.ofInstant(Instant.ofEpochSecond(dtNode.asInt()), TimeZone.getDefault().toZoneId()));
+            weather.setCalculatedOn(LocalDateTime.ofInstant(Instant.ofEpochSecond(dtNode.asInt()), TimeZone.getDefault().toZoneId()));
         }
 
         return weather;

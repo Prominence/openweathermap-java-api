@@ -28,19 +28,20 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class WeatherForecast {
-    private LocalDateTime forecastTime;
-    private Temperature temperature;
-    private AtmosphericPressure atmosphericPressure;
-    private Humidity humidity;
-
     private String state;
     private String description;
     private String weatherIconUrl;
 
-    private Clouds clouds;
+    private LocalDateTime forecastTime;
+
+    private Temperature temperature;
+    private AtmosphericPressure atmosphericPressure;
+    private Humidity humidity;
+
     private Wind wind;
-    private Snow snow;
     private Rain rain;
+    private Snow snow;
+    private Clouds clouds;
 
     private String forecastTimeISO;
     private DayTime dayTime;
@@ -58,6 +59,36 @@ public class WeatherForecast {
             throw new IllegalArgumentException("Description must be set.");
         }
         return new WeatherForecast(state, description);
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        if (state == null) {
+            throw new IllegalArgumentException("State must be not null.");
+        }
+        this.state = state;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("Description must be not null.");
+        }
+        this.description = description;
+    }
+
+    public String getWeatherIconUrl() {
+        return weatherIconUrl;
+    }
+
+    public void setWeatherIconUrl(String weatherIconUrl) {
+        this.weatherIconUrl = weatherIconUrl;
     }
 
     public LocalDateTime getForecastTime() {
@@ -92,50 +123,20 @@ public class WeatherForecast {
         this.humidity = humidity;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        if (state == null) {
-            throw new IllegalArgumentException("State must be not null.");
-        }
-        this.state = state;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        if (description == null) {
-            throw new IllegalArgumentException("Description must be not null.");
-        }
-        this.description = description;
-    }
-
-    public String getWeatherIconUrl() {
-        return weatherIconUrl;
-    }
-
-    public void setWeatherIconUrl(String weatherIconUrl) {
-        this.weatherIconUrl = weatherIconUrl;
-    }
-
-    public Clouds getClouds() {
-        return clouds;
-    }
-
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
-    }
-
     public Wind getWind() {
         return wind;
     }
 
     public void setWind(Wind wind) {
         this.wind = wind;
+    }
+
+    public Rain getRain() {
+        return rain;
+    }
+
+    public void setRain(Rain rain) {
+        this.rain = rain;
     }
 
     public Snow getSnow() {
@@ -146,12 +147,12 @@ public class WeatherForecast {
         this.snow = snow;
     }
 
-    public Rain getRain() {
-        return rain;
+    public Clouds getClouds() {
+        return clouds;
     }
 
-    public void setRain(Rain rain) {
-        this.rain = rain;
+    public void setClouds(Clouds clouds) {
+        this.clouds = clouds;
     }
 
     public String getForecastTimeISO() {
@@ -175,24 +176,24 @@ public class WeatherForecast {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WeatherForecast that = (WeatherForecast) o;
-        return Objects.equals(forecastTime, that.forecastTime) &&
+        return Objects.equals(state, that.state) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(weatherIconUrl, that.weatherIconUrl) &&
+                Objects.equals(forecastTime, that.forecastTime) &&
                 Objects.equals(temperature, that.temperature) &&
                 Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
                 Objects.equals(humidity, that.humidity) &&
-                Objects.equals(state, that.state) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(weatherIconUrl, that.weatherIconUrl) &&
-                Objects.equals(clouds, that.clouds) &&
                 Objects.equals(wind, that.wind) &&
-                Objects.equals(snow, that.snow) &&
                 Objects.equals(rain, that.rain) &&
+                Objects.equals(snow, that.snow) &&
+                Objects.equals(clouds, that.clouds) &&
                 Objects.equals(forecastTimeISO, that.forecastTimeISO) &&
                 dayTime == that.dayTime;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, temperature, atmosphericPressure, humidity, state, description, weatherIconUrl, clouds, wind, snow, rain, forecastTimeISO, dayTime);
+        return Objects.hash(state, description, weatherIconUrl, forecastTime, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, dayTime);
     }
 
     @Override

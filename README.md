@@ -2,6 +2,7 @@
 Java API for OpenWeatherMap services.
 
 ### Implemented features:
+Free: 
 * Current weather data
 * 5 day / 3-hour forecast
 
@@ -39,6 +40,7 @@ compile('com.github.prominence:openweathermap-api:2.0-SNAPSHOT')
 * [OpenWeatherMap Java API - 1.0](docs/Release_1.0.md)
 * [OpenWeatherMap Java API - 1.1](docs/Release_1.1.md)
 * [OpenWeatherMap Java API - 1.2](docs/Release_1.2.md)
+* [OpenWeatherMap Java API - 2.0.0](docs/Release_2.0.0.md)
 * [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
 
 ### License

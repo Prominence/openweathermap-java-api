@@ -87,9 +87,9 @@ public class WeatherUnitTest {
     public void whenSetRequestedOn_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
         final LocalDateTime now = LocalDateTime.now();
-        weather.setRequestedOn(now);
+        weather.setCalculatedOn(now);
 
-        Assert.assertEquals(now, weather.getRequestedOn());
+        Assert.assertEquals(now, weather.getCalculatedOn());
     }
 
     @Test
@@ -244,11 +244,11 @@ public class WeatherUnitTest {
         Assert.assertTrue(one.equals(two));
 
         final LocalDateTime now = LocalDateTime.now();
-        one.setRequestedOn(now);
+        one.setCalculatedOn(now);
 
         Assert.assertFalse(one.equals(two));
 
-        two.setRequestedOn(now);
+        two.setCalculatedOn(now);
 
         Assert.assertTrue(one.equals(two));
 
