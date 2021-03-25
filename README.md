@@ -26,14 +26,14 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.0.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.0.0')
 ```
 
 ### Documentation
