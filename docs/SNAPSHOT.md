@@ -1,128 +1,207 @@
 ### Implemented features:
 * Current weather data
+* 5 day / 3-hour forecast
+
 ### Maven coordinates:
 
 ```xml
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.0.0-SNAPSHOT')
 ```
 
 ### How to use:
 
-Firstly, you need to create the instance of `OpenWeatherMapManager` class:
+Firstly, you need to create the instance of `OpenWeatherMapClient` class:
 ```java
 OpenWeatherMapClient openWeatherClient = new OpenWeatherMapClient(API_TOKEN);
 ```
 where `API_TOKEN` is your token([you can get it here](https://home.openweathermap.org/api_keys)) as `String`.
 
-#### Current weather data
-Current weather request chain structure:
+Currently, available APIs are:
+* `currentWeather()`
+* `forecast5Day3HourStep()`
+
+Default(more or less) customization points:
 ```java
-openWeatherClient
-    .currentWeather()
-    .<single|multiple location(s)>()
-    .<location definition>
-    .<customize unitSystem/language/accuracy (1)>
-    ...
-    .<customize unitSystem/language/accuracy (N)>
-    .<request/requestAsync>()
-    .as(Java|JSON|XML|HTML)();
+...
+// response language
+.language(Language.RUSSIAN)
+...
+// response units of measure
+.unitSystem(UnitSystem.IMPERIAL)
+...
 ```
 
-Available methods for location selection for **single** result request:
-* `byCityName(String cityName)`
-* `byCityName(String cityName, String countryCode)`
-* `byCityId(long cityId)`
-* `byCoordinate(Coordinate coordinate)`
-* `byZipCodeAndCountry(String zipCode, String countryCode)`
+Available output forms:
+* `asJava()`
+* `asJSON()`
 
-Available methods for location selection for **multiple** result request:
-* `byRectangle(CoordinateRectangle rectangle, int zoom)`
-* `byRectangle(CoordinateRectangle rectangle, int zoom, boolean useServerClustering)`
-* `byCitiesInCycle(Coordinate point, int citiesCount)`
-* `byCitiesInCycle(Coordinate point, int citiesCount, boolean useServerClustering)`
+Additional output forms, available for several APIs:
+* `asXML()`
+* `asHTML()`
 
-Single location request examples:
+_All response forms can be in **sync** and **async** variants._
+
+#### Current weather data
+Examples:
+```java
+final String weatherJson = openWeatherClient
+        .currentWeather()
+        .single()
+        .byCityName("Minsk")
+        .language(Language.RUSSIAN)
+        .unitSystem(UnitSystem.IMPERIAL)
+        .retrieve()
+        .asJSON();
+```
+
 ```java
 final Weather weather = openWeatherClient
-                .currentWeather()
-                .single()
-                .byCoordinate(new Coordinate(5, 5))
-                .accuracy(Accuracy.ACCURATE)
-                .language(Language.ROMANIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJava();
-
-final CompletableFuture<String> weatherXmlFuture = openWeatherClient
-                .currentWeather()
-                .single()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.RUSSIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieveAsync()
-                .asXML();
+        .currentWeather()
+        .single()
+        .byCityName("Minsk")
+        .language(Language.RUSSIAN)
+        .unitSystem(UnitSystem.METRIC)
+        .retrieve()
+        .asJava();
 ```
 
-Multiple locations request examples:
 ```java
-final String weatherListJson = openWeatherClient
-                .currentWeather()
-                .multiple()
-                .byRectangle(new CoordinateRectangle(12, 32, 15, 37), 10, true)
-                .accuracy(Accuracy.ACCURATE)
-                .language(Language.ROMANIAN)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJSON();
-
-final CompletableFuture<List<Weather>> weatherListFuture = openWeatherClient
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(new Coordinate(55.5, 37.5), 10, true)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .retrieveAsync()
-                .asJava();
+final List<Weather> weatherList = openWeatherClient
+        .currentWeather()
+        .multiple()
+        .byCitiesInCycle(Coordinate.withValues(55.5, 37.5))
+        .language(Language.GERMAN)
+        .unitSystem(UnitSystem.IMPERIAL)
+        .retrieve()
+        .asJava();
 ```
 
-`Weather`'s useful public methods(setters are not listed):
+```java
+final CompletableFuture<String> weatherXmlFuture = openWeatherClient
+        .currentWeather()
+        .single()
+        .byZipCodeAndCountry("220015", "by")
+        .language(Language.RUSSIAN)
+        .unitSystem(UnitSystem.METRIC)
+        .retrieveAsync()
+        .asXML();
+```
 
-| Method                    | Description                                                                                                                         |
-|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `getWeatherState()`       | Returns weather identifier. Example: `Clouds`, `Clear`.                                                                             |
-| `getWeatherDescription()` | Returns weather description. Example: `clear sky`.                                                                                  |
-| `getWeatherIconUrl()`     | Returns weather icon url.                                                                                                           |
-| `getRequestedOn()`        | Returns `LocalDateTime` instance which represents date when request was made.                                                       |
-| `getTemperature()`        | Returns `Temperature` instance with temperature and max/min values.                                                                 |
-| `getPressure()`           | Returns `Pressure` instance that contains information about atmosphericPressure and(not always) atmosphericPressure on ground/sea level.                  |
-| `getHumidity()`           | Returns `Humidity` instance that contains information about humidity.                                                               |
-| `getWind()`               | Returns `Wind` instance that contains *humidity* percentage information.                                                            |
-| `getRain()`               | Returns `Rain` instance that contains information about rain level for the last 1 and 3 hours.                                      |
-| `getSnow()`               | Returns `Snow` instance that contains information about snow level for the last 1 and 3 hours.                                      |
-| `getClouds()`             | Returns `Clouds` instance that contains *cloudiness* percentage information.                                                        |
-| `getLocation()`           | Returns `Location` instance that contains location information: coordinate, name and etc.                                           |
+You are able to set preferable options(via chain methods) and execute appropriate request.
+
+`com.github.prominence.openweathermap.api.model.weather.Weather`'s useful public methods(setters are not listed):
+
+| Method                    | Description                                                                                                                                                               |
+|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `getState()`              | Returns short weather description. Example: `Clear`.                                                                                                                      |
+| `getDescription()`        | Returns weather description. Example: `clear sky`.                                                                                                                        |
+| `getWeatherIconUrl()`     | Returns a link to weather icon hosted on https://openweathermap.org website.                                                                                              |
+| `getCalculatedOn()`       | Returns `LocalDateTime` object with data calculation time.                                                                                                                |
+| `getTemperature()`        | Returns `Temperature` instance that contains information about temperature. Available fields: `value`, `maxTemperature`, `minTemperature`, `feelsLike` and `unit`.        |
+| `getAtmosphericPressure()`| Returns `AtmosphericPressure` instance that contains information about atmospheric pressure. Available fields: `value`, `seaLevelValue`, `groundLevelValue` and `unit`.   |
+| `getHumidity()`           | Returns `Humidity` instance that contains humidity percentage information.                                                                                                |
+| `getWind()`               | Returns `Wind` instance that contains wind information: `speed`, `degrees`, `gust` and `unit`.                                                                            |
+| `getRain()`               | Returns `Rain` instance that contains information about rain volume for the last one hour and/or the last 3 hours. Can be absent in case of no data.                      |
+| `getSnow()`               | Returns `Snow` instance that contains information about snow volume for the last one hour and/or the last 3 hours. Can be absent in case of no data.                      |
+| `getClouds()`             | Returns `Clouds` instance that contains information about cloudiness percentage.                                                                                          |
+| `getLocation()`           | Returns `Location` object. Available fields: `id`, `name`, `countryCode`, `sunrise` and `sunset` time, `zoneOffset` and `coordinate`.                                     |
+| `toString()`              | Returns informative string for the whole available weather information.                                                                                                   |
 
 `toString()` output example:
 ```
-Location: Minsk(BY), Weather: слегка облачно, 20.0 ℃, 1019.0 hPa, Clouds: 40%
+Location: Minsk(BY), Weather: clear sky, -4.22 ℃, 1020.0 hPa, Clouds: 0%
 ```
 
-### Constants and options
+#### 5 day / 3-hour forecast
+Examples:
+```java
+final Forecast forecast = openWeatherClient
+        .forecast5Day3HourStep()
+        .byCityName("Minsk")
+        .language(Language.ENGLISH)
+        .unitSystem(UnitSystem.METRIC)
+        .count(15)
+        .retrieve()
+        .asJava();
+```
 
-#### Accuracy
-| Constant           | Description      |
-|--------------------|------------------|
-| Accuracy.LIKE      | Close result.    |
-| Accuracy.ACCURATE  | Accurate result. |
+```java
+final String forecastJson = getClient()
+        .forecast5Day3HourStep()
+        .byCityName("New York", "NY", "US")
+        .language(Language.SPANISH)
+        .unitSystem(UnitSystem.IMPERIAL)
+        .count(15)
+        .retrieve()
+        .asJSON();
+```
+
+```java
+CompletableFuture<String> forecastFuture = getClient()
+        .forecast5Day3HourStep()
+        .byCityId(350001514)
+        .language(Language.ENGLISH)
+        .unitSystem(UnitSystem.METRIC)
+        .count(15)
+        .retrieveAsync()
+        .asXML();
+```
+
+```java
+final String forecastXml = getClient()
+        .forecast5Day3HourStep()
+        .byZipCodeInUSA("10005")
+        .language(Language.ENGLISH)
+        .unitSystem(UnitSystem.METRIC)
+        .retrieve()
+        .asXML();
+```
+
+You are able to set preferable options(via chain methods) and execute appropriate request.
+
+`com.github.prominence.openweathermap.api.request.forecast.free.Forecast`'s useful public methods(setters are not listed):
+
+| Method                        | Description                                                                                                                                           |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `getLocation()`               | Returns `Location` object. Available fields: `id`, `name`, `countryCode`, `sunrise` and `sunset` time, `zoneOffset`, `coordinate` and `population`.   |
+| `getWeatherForecasts()`       | Returns list of `WeatherForecast` objects with forecast information.                                                                                  |
+| `toString()`                  | Returns informative string for the whole available forecast information.                                                                              |
+
+`toString()` output example:
+```
+A forecast for Minsk with 15 timestamps.
+```
+
+`com.github.prominence.openweathermap.api.model.forecast.WeatherForecast`'s useful public methods(setters are not listed):
+
+| Method                        | Description                                                                                                                                                               |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `getState()`                  | Returns short weather description. Example: `Clear`.                                                                                                                      |
+| `getDescription()`            | Returns weather description. Example: `clear sky`.                                                                                                                        |
+| `getWeatherIconUrl()`         | Returns a link to weather icon hosted on https://openweathermap.org website.                                                                                              |
+| `getForecastTime()`           | Returns `LocalDateTime` object with weather forecast time.                                                                                                                |
+| `getTemperature()`            | Returns `Temperature` instance that contains information about temperature. Available fields: `value`, `maxTemperature`, `minTemperature`, `feelsLike` and `unit`.        |
+| `getAtmosphericPressure()`    | Returns `AtmosphericPressure` instance that contains information about atmospheric pressure. Available fields: `value`, `seaLevelValue`, `groundLevelValue` and `unit`.   |
+| `getHumidity()`               | Returns `Humidity` instance that contains humidity percentage information.                                                                                                |
+| `getWind()`                   | Returns `Wind` instance that contains wind information: `speed`, `degrees` and `unit`.                                                                                    |
+| `getRain()`                   | Returns `Rain` instance that contains information about rain volume for the last 3 hours. Can be absent in case of no data.                                               |
+| `getSnow()`                   | Returns `Snow` instance that contains information about snow volume for the last 3 hours. Can be absent in case of no data.                                               |
+| `getClouds()`                 | Returns `Clouds` instance that contains information about cloudiness percentage.                                                                                          |
+| `getForecastTimeISO()`        | Returns String with time of data forecasted, ISO, UTC.                                                                                                                    |
+| `getDayTime()`                | Returns enumerations representing the part of day(day, night).                                                                                                            |
+| `toString()`                  | Returns informative string for the forecast of particular timestamp.                                                                                                      |
+
+### Constants and options
 
 #### Language
 | Constant                          | Description                   |
@@ -164,11 +243,11 @@ Location: Minsk(BY), Weather: слегка облачно, 20.0 ℃, 1019.0 hPa,
 #### Unit
 | Constant             | Description                                    |
 |----------------------|------------------------------------------------|
-| UnitSystem.METRIC    | Celsius, meter/sec, hPa, mm(rain, snow).       |
-| UnitSystem.IMPERIAL  | Fahrenheit, miles/hour, hPa, mm(rain, snow).   |
-| UnitSystem.STANDARD  | Kelvin, meter/sec, hPa, mm(rain, snow)         |
+| Unit.METRIC_SYSTEM   | Celsius, meter/sec, hPa, mm(rain, snow).       |
+| Unit.IMPERIAL_SYSTEM | Fahrenheit, miles/hour, hPa, mm(rain, snow).   |
+| Unit.STANDARD_SYSTEM | Kelvin, meter/sec, hPa, mm(rain, snow).        |
 
 ### Dependencies
-* com.fasterxml.jackson.core:jackson-databind:2.9.9
-* org.slf4j:slf4j-api:1.7.26 (*compile*)
-* junit:junit:4.12 (*test*)
+* com.fasterxml.jackson.core:jackson-databind:2.12.2
+* org.slf4j:slf4j-api:1.7.30 (*compile*)
+* junit:junit:4.13.1 (*test*)

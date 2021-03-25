@@ -33,7 +33,7 @@ Paid:
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.0.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.0.0')
 ```
 
 ### Documentation
