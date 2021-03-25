@@ -61,6 +61,7 @@ public final class RequestUtils {
             logger.error("Invalid URL: ", ex);
             throw new IllegalArgumentException(ex);
         }
+        logger.debug("Executing OpenWeatherMap API request: " + url);
         final InputStream requestInputStream = executeRequest(requestUrl);
 
         return convertInputStreamToString(requestInputStream);
