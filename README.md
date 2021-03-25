@@ -2,14 +2,23 @@
 Java API for OpenWeatherMap services.
 
 ### Implemented features:
+Free: 
 * Current weather data
-* 5 day / 3 hour forecast
-* 16 day / daily forecast
-* UV Index
-* Air pollution(beta)
+* 5 day / 3-hour forecast
 
 ### Will be implemented later:
-Global changes in API and more functionality.
+
+Free:
+* One Call API
+* Air pollution
+* Geocoding API
+* Weather Stations
+* Weather Triggers
+  
+Paid:
+* Daily Forecast 16 days
+* Hourly Forecast 4 days
+* probably others...
 
 ### Maven coordinates:
 
@@ -17,42 +26,29 @@ Global changes in API and more functionality.
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>1.2</version>
-</dependency>
-```
-
-New experimental version:
-```xml
-<dependency>
-  <groupId>com.github.prominence</groupId>
-  <artifactId>openweathermap-api</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:1.2')
-```
-
-New experimental version:
-```groovy
-compile('com.github.prominence:openweathermap-api:2.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.0.0-SNAPSHOT')
 ```
 
 ### Documentation
 * [OpenWeatherMap Java API - 1.0](docs/Release_1.0.md)
 * [OpenWeatherMap Java API - 1.1](docs/Release_1.1.md)
 * [OpenWeatherMap Java API - 1.2](docs/Release_1.2.md)
+* [OpenWeatherMap Java API - 2.0.0](docs/Release_2.0.0.md)
 * [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
 
 ### License
 MIT
 
-[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=master
+[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=dev
 [ci-link]: https://travis-ci.org/Prominence/openweathermap-java-api
 
 
-[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/master/graph/badge.svg
+[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/dev/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api

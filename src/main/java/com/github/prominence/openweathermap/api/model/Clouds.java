@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ import java.util.Objects;
  * Its value can only be an integer in [0, 100] range.
  */
 public class Clouds {
-
     private static final String DEFAULT_UNIT = "%";
 
     private byte value;
@@ -40,11 +39,20 @@ public class Clouds {
      * @param value the value representing cloudiness percentage.
      * @throws IllegalArgumentException in case if provided value isn't in allowed range.
      */
-    public Clouds(byte value) {
+    private Clouds(byte value) {
+        this.value = value;
+    }
+
+    /**
+     * Static method for {@link Clouds} creation with value checking.
+     * @param value clouds percentage value.
+     * @return instantiated {@link Clouds} object.
+     */
+    public static Clouds withValue(byte value) {
         if (value < 0 || value > 100)  {
             throw new IllegalArgumentException("Cloudiness value must be in [0, 100] range.");
         }
-        this.value = value;
+        return new Clouds(value);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,43 +24,77 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * Represents coordinate rectangle by its bottom-left and top-right coordinates.
+ */
 public class CoordinateRectangle {
+    private final double longitudeLeft;
+    private final double latitudeBottom;
+    private final double longitudeRight;
+    private final double latitudeTop;
 
-    private double longitudeLeft;
-    private double latitudeBottom;
-    private double longitudeRight;
-    private double latitudeTop;
-
-    public CoordinateRectangle(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
-        if (latitudeBottom < -90 || latitudeTop < -90 || latitudeBottom > 90 || latitudeTop > 90) {
-            throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
-        }
-        if (longitudeLeft < -180 || longitudeRight < -180 || longitudeLeft > 180 || longitudeRight > 180) {
-            throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
-        }
+    private CoordinateRectangle(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
         this.longitudeLeft = longitudeLeft;
         this.latitudeBottom = latitudeBottom;
         this.longitudeRight = longitudeRight;
         this.latitudeTop = latitudeTop;
     }
 
+    /**
+     * Method for {@link CoordinateRectangle} creation with correctness check.
+     * @param longitudeLeft left longitude
+     * @param latitudeBottom bottom latitude
+     * @param longitudeRight right longitude
+     * @param latitudeTop tip latitude
+     * @return coordinate rectangle object.
+     */
+    public static CoordinateRectangle withValues(double longitudeLeft, double latitudeBottom, double longitudeRight, double latitudeTop) {
+        if (latitudeBottom < -90 || latitudeTop < -90 || latitudeBottom > 90 || latitudeTop > 90) {
+            throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
+        }
+        if (longitudeLeft < -180 || longitudeRight < -180 || longitudeLeft > 180 || longitudeRight > 180) {
+            throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
+        }
+        return new CoordinateRectangle(longitudeLeft, latitudeBottom, longitudeRight, latitudeTop);
+    }
+
+    /**
+     * Returns left longitude value.
+     * @return left longitude
+     */
     public double getLongitudeLeft() {
         return longitudeLeft;
     }
 
+    /**
+     * Returns bottom latitude value.
+     * @return bottom latitude
+     */
     public double getLatitudeBottom() {
         return latitudeBottom;
     }
 
+    /**
+     * Returns right longitude value.
+     * @return right longitude
+     */
     public double getLongitudeRight() {
         return longitudeRight;
     }
 
+    /**
+     * Returns top latitude value.
+     * @return top latitude
+     */
     public double getLatitudeTop() {
         return latitudeTop;
     }
 
-    public String getFormattedString() {
+    /**
+     * Formatted coordinate rectangle string.
+     * @return formatted string
+     */
+    public String getFormattedRequestString() {
         return longitudeLeft + "," + latitudeBottom + "," + longitudeRight + "," + latitudeTop;
     }
 
@@ -82,6 +116,85 @@ public class CoordinateRectangle {
 
     @Override
     public String toString() {
-        return "Rectangle: " + getFormattedString();
+        return "Rectangle: " + getFormattedRequestString();
+    }
+
+    /**
+     * Builder for CoordinateRectangle class.
+     */
+    public static class Builder {
+        private Double longitudeLeft;
+        private Double latitudeBottom;
+        private Double longitudeRight;
+        private Double latitudeTop;
+
+        /**
+         * Creates Builder object.
+         */
+        public Builder() {
+        }
+
+        /**
+         * Sets left longitude with correctness check.
+         * @param longitudeLeft left longitude
+         * @return builder object
+         */
+        public Builder setLongitudeLeft(double longitudeLeft) {
+            if (longitudeLeft < -180 || longitudeLeft > 180) {
+                throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
+            }
+            this.longitudeLeft = longitudeLeft;
+            return this;
+        }
+
+        /**
+         * Sets bottom latitude with correctness check.
+         * @param latitudeBottom bottom latitude
+         * @return builder object
+         */
+        public Builder setLatitudeBottom(double latitudeBottom) {
+            if (latitudeBottom < -90 || latitudeBottom > 90) {
+                throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
+            }
+            this.latitudeBottom = latitudeBottom;
+            return this;
+        }
+
+        /**
+         * Sets right longitude with correctness check.
+         * @param longitudeRight right longitude
+         * @return builder object
+         */
+        public Builder setLongitudeRight(double longitudeRight) {
+            if (longitudeRight < -180 || longitudeRight > 180) {
+                throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
+            }
+            this.longitudeRight = longitudeRight;
+            return this;
+        }
+
+        /**
+         * Sets top latitude with correctness check.
+         * @param latitudeTop top latitude
+         * @return builder object
+         */
+        public Builder setLatitudeTop(double latitudeTop) {
+            if (latitudeTop < -90 || latitudeTop > 90) {
+                throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
+            }
+            this.latitudeTop = latitudeTop;
+            return this;
+        }
+
+        /**
+         * Builds {@link CoordinateRectangle} object with correctness check.
+         * @return {@link CoordinateRectangle} built object.
+         */
+        public CoordinateRectangle build() {
+            if (longitudeLeft == null || latitudeBottom == null || longitudeRight == null || latitudeTop == null) {
+                throw new IllegalStateException("Not all fields were set.");
+            }
+            return new CoordinateRectangle(longitudeLeft, latitudeBottom, longitudeRight, latitudeTop);
+        }
     }
 }

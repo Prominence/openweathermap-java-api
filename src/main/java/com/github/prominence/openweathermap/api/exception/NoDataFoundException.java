@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,27 @@
 
 package com.github.prominence.openweathermap.api.exception;
 
+/**
+ * An exception that could be thrown in several cases:
+ * <ul>
+ *     <li>There is no data found for your query(wrong coordinates somewhere in the sea, some distant place, etc.);</li>
+ *     <li>Request is malformed. An occasion to report an <a href="https://github.com/Prominence/openweathermap-java-api/issues">issue</a>;</li>
+ *     <li>Any other unpredictable problems.</li>
+ * </ul>
+ */
 public class NoDataFoundException extends RuntimeException {
-
+    /**
+     * Creates {@link NoDataFoundException} with default message.
+     */
     public NoDataFoundException() {
         super("Data for provided parameters wasn't found. Please, check requested location.");
     }
 
+    /**
+     * Creates {@link NoDataFoundException} with message from another throwable.
+     * @param throwable source throwable.
+     */
     public NoDataFoundException(Throwable throwable) {
         super(throwable.getMessage(), throwable.getCause());
     }
-
 }

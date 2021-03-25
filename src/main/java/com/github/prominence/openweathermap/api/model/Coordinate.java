@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,38 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * Represents some location by its latitude and longitude.
+ */
 public class Coordinate {
     private double latitude;
     private double longitude;
 
-    public Coordinate(double latitude, double longitude) {
+    private Coordinate(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    /**
+     * Method for {@link Coordinate} creation with correctness check.
+     * @param latitude latitude
+     * @param longitude longitude
+     * @return coordinate object.
+     */
+    public static Coordinate withValues(double latitude, double longitude) {
         if (latitude < -90 || latitude > 90) {
             throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
         }
         if (longitude < -180 || longitude > 180) {
             throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
         }
-        this.latitude = latitude;
-        this.longitude = longitude;
+        return new Coordinate(latitude, longitude);
     }
 
+    /**
+     * Sets latitude with checks.
+     * @param latitude latitude value
+     */
     public void setLatitude(double latitude) {
         if (latitude < -90 || latitude > 90) {
             throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
@@ -46,6 +63,10 @@ public class Coordinate {
         this.latitude = latitude;
     }
 
+    /**
+     * Sets longitude with checks.
+     * @param longitude longitude value
+     */
     public void setLongitude(double longitude) {
         if (longitude < -180 || longitude > 180) {
             throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
@@ -53,10 +74,18 @@ public class Coordinate {
         this.longitude = longitude;
     }
 
+    /**
+     * Returns latitude.
+     * @return latitude
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Returns longitude.
+     * @return longitude
+     */
     public double getLongitude() {
         return longitude;
     }

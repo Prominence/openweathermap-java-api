@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -47,13 +47,33 @@ public final class RequestUtils {
     }
 
     /**
+     * Executes call to provided API url and retrieves response in <code>String</code> representation.
+     *
+     * @param url the url to make API request.
+     * @return response from the request in <code>String</code> representation.
+     * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
+     */
+    public static String getResponse(String url) {
+        URL requestUrl;
+        try {
+            requestUrl = new URL(url);
+        } catch (MalformedURLException ex) {
+            logger.error("Invalid URL: ", ex);
+            throw new IllegalArgumentException(ex);
+        }
+        logger.debug("Executing OpenWeatherMap API request: " + url);
+        final InputStream requestInputStream = executeRequest(requestUrl);
+
+        return convertInputStreamToString(requestInputStream);
+    }
+
+    /**
      * Executes call to provided API url and retrieves response as an <code>InputStream</code> instance.
      *
      * @param requestUrl url for API call execution.
      * @return <code>InputStream</code> instance containing http response body.
      * @throws InvalidAuthTokenException in case if authentication token wasn't set or requested functionality is not permitted for its subscription plan.
      * @throws NoDataFoundException in case if there is no any data for requested location(s) or request is invalid.
-     * @throws IllegalStateException in case of unexpected response or error.
      */
     private static InputStream executeRequest(URL requestUrl) {
         InputStream resultStream;
@@ -83,26 +103,6 @@ public final class RequestUtils {
     }
 
     /**
-     * Executes call to provided API url and retrieves response in <code>String</code> representation.
-     *
-     * @param url the url to make API request.
-     * @return response from the request in <code>String</code> representation.
-     * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
-     */
-    public static String getResponse(String url) {
-        URL requestUrl;
-        try {
-            requestUrl = new URL(url);
-        } catch (MalformedURLException ex) {
-            logger.error("Invalid URL: ", ex);
-            throw new IllegalArgumentException(ex);
-        }
-        final InputStream requestInputStream = executeRequest(requestUrl);
-
-        return convertInputStreamToString(requestInputStream);
-    }
-
-    /**
      * Reads the input stream line-by-line and returns its content in <code>String</code> representation.
      *
      * @param inputStream input stream to convert.
@@ -124,5 +124,4 @@ public final class RequestUtils {
 
         return result.toString();
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,16 @@
 
 package com.github.prominence.openweathermap.api.exception;
 
+/**
+ * An exception that could be thrown in case of your API key is invalid or your subscription plan does not cover requested functionality.
+ * Subscription plans information you can find <a href="https://openweathermap.org/price">here</a>.
+ * API Keys could be checked in <a href="https://home.openweathermap.org/api_keys/">your profile</a>.
+ */
 public class InvalidAuthTokenException extends RuntimeException {
-
+    /**
+     * Creates {@link InvalidAuthTokenException} exception with default message.
+     */
     public InvalidAuthTokenException() {
         super("Authentication token wasn't set or requested functionality is not permitted for your subscription plan. Please, check https://home.openweathermap.org/api_keys/ and https://openweathermap.org/price.");
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Alexey Zinchenko
+ * Copyright (c) 2021 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api;
 
-import com.github.prominence.openweathermap.api.impl.OpenWeatherMapClient;
 import org.junit.BeforeClass;
 
 public class ApiTest {
