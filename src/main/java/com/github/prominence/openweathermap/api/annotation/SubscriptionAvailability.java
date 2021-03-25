@@ -35,5 +35,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
 public @interface SubscriptionAvailability {
+    /**
+     * Marks method with subscription plan it needs to have to use the method.
+     * @return subscription plan.
+     */
     SubscriptionPlan[] plans();
 }

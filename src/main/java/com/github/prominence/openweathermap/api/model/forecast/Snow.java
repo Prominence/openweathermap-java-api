@@ -24,26 +24,53 @@ package com.github.prominence.openweathermap.api.model.forecast;
 
 import java.util.Objects;
 
+/**
+ * Represents snow information.
+ */
 public class Snow {
-
     private static final String DEFAULT_UNIT = "mm";
 
-    private Double threeHourSnowLevel;
+    private double threeHourSnowLevel;
 
-    public Snow() {
-    }
-
-    public Snow(Double threeHourSnowLevel) {
+    private Snow(double threeHourSnowLevel) {
         this.threeHourSnowLevel = threeHourSnowLevel;
     }
-    public Double getThreeHourSnowLevel() {
+
+    /**
+     * Creates {@link Snow} object with correctness check.
+     * @param threeHourSnowLevel 3-hour snow level value
+     * @return snow object.
+     */
+    public static Snow withThreeHourLevelValue(double threeHourSnowLevel) {
+        if (threeHourSnowLevel < 0) {
+            throw new IllegalArgumentException("Snow level value cannot be negative.");
+        }
+        return new Snow(threeHourSnowLevel);
+    }
+
+    /**
+     * Returns 3-hour snow level value.
+     * @return 3-hour snow level value
+     */
+    public double getThreeHourSnowLevel() {
         return threeHourSnowLevel;
     }
 
-    public void setThreeHourSnowLevel(Double threeHourSnowLevel) {
+    /**
+     * Sets 3-hour snow level value with correctness check.
+     * @param threeHourSnowLevel 3-hour snow level value
+     */
+    public void setThreeHourSnowLevel(double threeHourSnowLevel) {
+        if (threeHourSnowLevel < 0) {
+            throw new IllegalArgumentException("Snow level value cannot be negative.");
+        }
         this.threeHourSnowLevel = threeHourSnowLevel;
     }
 
+    /**
+     * Returns snow level unit of measure. Currently is constant.
+     * @return snow level unit of measure
+     */
     public String getUnit() {
         return DEFAULT_UNIT;
     }
@@ -51,9 +78,9 @@ public class Snow {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Snow)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Snow snow = (Snow) o;
-        return Objects.equals(threeHourSnowLevel, snow.threeHourSnowLevel);
+        return Double.compare(snow.threeHourSnowLevel, threeHourSnowLevel) == 0;
     }
 
     @Override
@@ -63,14 +90,8 @@ public class Snow {
 
     @Override
     public String toString() {
-        StringBuilder snowString = new StringBuilder();
-        if (threeHourSnowLevel == null) {
-            snowString.append("unknown");
-        } else {
-            snowString.append("3 last hours snow level: ");
-            snowString.append(threeHourSnowLevel);
-            snowString.append(getUnit());
-        }
-        return snowString.toString();
+        return "3-hour snow level: " +
+                threeHourSnowLevel + ' ' +
+                getUnit();
     }
 }

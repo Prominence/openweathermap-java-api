@@ -245,7 +245,7 @@ A forecast for Minsk with 15 timestamps.
 |----------------------|------------------------------------------------|
 | Unit.METRIC_SYSTEM   | Celsius, meter/sec, hPa, mm(rain, snow).       |
 | Unit.IMPERIAL_SYSTEM | Fahrenheit, miles/hour, hPa, mm(rain, snow).   |
-| Unit.STANDARD_SYSTEM | Kelvin, meter/sec, hPa, mm(rain, snow)         |
+| Unit.STANDARD_SYSTEM | Kelvin, meter/sec, hPa, mm(rain, snow).        |
 
 ### Dependencies
 * com.fasterxml.jackson.core:jackson-databind:2.12.2

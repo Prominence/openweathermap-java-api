@@ -24,5 +24,11 @@ package com.github.prominence.openweathermap.api.request;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The interface Async request terminator.
+ *
+ * @param <T> the type parameter
+ * @param <S> the type parameter
+ */
 public interface AsyncRequestTerminator<T, S> extends RequestTerminator<CompletableFuture<T>, CompletableFuture<S>> {
 }

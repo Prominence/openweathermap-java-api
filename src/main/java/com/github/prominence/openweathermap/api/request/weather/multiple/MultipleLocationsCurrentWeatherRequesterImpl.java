@@ -26,10 +26,18 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 
+/**
+ * The type Multiple locations current weather requester.
+ */
 public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLocationsCurrentWeatherRequester {
 
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new Multiple locations current weather requester.
+     *
+     * @param urlBuilder the url builder
+     */
     public MultipleLocationsCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }

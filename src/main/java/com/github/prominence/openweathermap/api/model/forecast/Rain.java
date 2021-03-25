@@ -24,27 +24,53 @@ package com.github.prominence.openweathermap.api.model.forecast;
 
 import java.util.Objects;
 
+/**
+ * Represents rain information.
+ */
 public class Rain {
-
     private static final String DEFAULT_UNIT = "mm";
 
-    private Double threeHourRainLevel;
+    private double threeHourRainLevel;
 
-    public Rain() {
-    }
-
-    public Rain(Double threeHourRainLevel) {
+    private Rain(double threeHourRainLevel) {
         this.threeHourRainLevel = threeHourRainLevel;
     }
 
-    public Double getThreeHourRainLevel() {
+    /**
+     * Creates {@link Rain} object with correctness check.
+     * @param threeHourRainLevel 3-hour rain level value
+     * @return rain object.
+     */
+    public static Rain withThreeHourLevelValue(double threeHourRainLevel) {
+        if (threeHourRainLevel < 0) {
+            throw new IllegalArgumentException("Rain level value cannot be negative.");
+        }
+        return new Rain(threeHourRainLevel);
+    }
+
+    /**
+     * Returns 3-hour rain level value.
+     * @return 3-hour rain level value
+     */
+    public double getThreeHourRainLevel() {
         return threeHourRainLevel;
     }
 
-    public void setThreeHourRainLevel(Double threeHourRainLevel) {
+    /**
+     * Sets 3-hour rain level value with correctness check.
+     * @param threeHourRainLevel 3-hour rain level value
+     */
+    public void setThreeHourRainLevel(double threeHourRainLevel) {
+        if (threeHourRainLevel < 0) {
+            throw new IllegalArgumentException("Rain level value cannot be negative.");
+        }
         this.threeHourRainLevel = threeHourRainLevel;
     }
 
+    /**
+     * Returns rain level unit of measure. Currently is constant.
+     * @return rain level unit of measure
+     */
     public String getUnit() {
         return DEFAULT_UNIT;
     }
@@ -52,9 +78,9 @@ public class Rain {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Rain)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Rain rain = (Rain) o;
-        return Objects.equals(threeHourRainLevel, rain.threeHourRainLevel);
+        return Double.compare(rain.threeHourRainLevel, threeHourRainLevel) == 0;
     }
 
     @Override
@@ -64,14 +90,8 @@ public class Rain {
 
     @Override
     public String toString() {
-        StringBuilder snowString = new StringBuilder();
-        if (threeHourRainLevel == null) {
-            snowString.append("unknown");
-        } else {
-            snowString.append("3 last hours rain level: ");
-            snowString.append(threeHourRainLevel);
-            snowString.append(getUnit());
-        }
-        return snowString.toString();
+        return "3-hour rain level: " +
+                threeHourRainLevel + ' ' +
+                getUnit();
     }
 }

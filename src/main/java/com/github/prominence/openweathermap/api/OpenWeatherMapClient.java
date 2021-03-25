@@ -30,18 +30,34 @@ import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRe
 
 import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
 
+/**
+ * The main public API client to communicate with OpenWeatherMap services.
+ * Requires API key for usage. More info on the website <a href="https://openweathermap.org/api">https://openweathermap.org/api</a>.
+ */
 public class OpenWeatherMapClient {
     private final String apiKey;
 
+    /**
+     * Created OpenWeatherMap client object.
+     * @param apiKey API key obtained on <a href="https://home.openweathermap.org/api_keys">OpwnWeatherMap site</a>.
+     */
     public OpenWeatherMapClient(String apiKey) {
         this.apiKey = apiKey;
     }
 
+    /**
+     * Current Weather <a href="https://openweathermap.org/current">API</a>.
+     * @return requester for retrieving current weather information.
+     */
     @SubscriptionAvailability(plans = ALL)
     public CurrentWeatherRequester currentWeather() {
         return new CurrentWeatherRequesterImpl(apiKey);
     }
 
+    /**
+     * 5 Day / 3 Hour Forecast <a href="https://openweathermap.org/forecast5">API</a>.
+     * @return requester for retrieving 5 day/3-hour weather forecast information.
+     */
     @SubscriptionAvailability(plans = ALL)
     public FiveDayThreeHourStepForecastRequester forecast5Day3HourStep() {
         return new FiveDayThreeHourStepForecastRequesterImpl(apiKey);

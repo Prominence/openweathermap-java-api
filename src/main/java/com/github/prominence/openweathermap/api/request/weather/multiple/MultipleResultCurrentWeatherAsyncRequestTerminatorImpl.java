@@ -31,11 +31,20 @@ import com.github.prominence.openweathermap.api.utils.RequestUtils;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The type Multiple result current weather async request terminator.
+ */
 public class MultipleResultCurrentWeatherAsyncRequestTerminatorImpl implements MultipleResultCurrentWeatherAsyncRequestTerminator {
 
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
+    /**
+     * Instantiates a new Multiple result current weather async request terminator.
+     *
+     * @param urlBuilder the url builder
+     * @param unitSystem the unit system
+     */
     MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;

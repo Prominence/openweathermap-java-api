@@ -24,10 +24,23 @@ package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
+/**
+ * The current weather request customizer interface.
+ */
 public interface SingleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<SingleResultCurrentWeatherRequestCustomizer> {
 
+    /**
+     * Retrieve current weather request terminator.
+     *
+     * @return the single result current weather request terminator
+     */
     SingleResultCurrentWeatherRequestTerminator retrieve();
 
+    /**
+     * Retrieve current weather async request terminator.
+     *
+     * @return the single result current weather async request terminator
+     */
     SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
 
 }

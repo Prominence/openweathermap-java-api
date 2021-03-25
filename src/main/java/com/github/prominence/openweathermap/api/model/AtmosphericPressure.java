@@ -29,7 +29,6 @@ import java.util.Objects;
  * Its value can only be a double in [0, +∞) range.
  */
 public class AtmosphericPressure {
-
     private static final String DEFAULT_UNIT = "hPa";
 
     private double value;
@@ -47,7 +46,12 @@ public class AtmosphericPressure {
         this.value = value;
     }
 
-    public static AtmosphericPressure forValue(double value) {
+    /**
+     * Static method for {@link AtmosphericPressure} creation with value checking.
+     * @param value atmospheric pressure value.
+     * @return instantiated {@link AtmosphericPressure} object.
+     */
+    public static AtmosphericPressure withValue(double value) {
         if (value < 0)  {
             throw new IllegalArgumentException("Atmospheric pressure value must be in [0, +∞) range.");
         }

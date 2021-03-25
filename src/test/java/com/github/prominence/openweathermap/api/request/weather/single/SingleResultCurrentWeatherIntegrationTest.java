@@ -298,7 +298,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final Weather weather = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.forValues(5, 5))
+                .byCoordinate(Coordinate.withValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
@@ -320,7 +320,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final String weatherJson = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.forValues(5, 5))
+                .byCoordinate(Coordinate.withValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJSON();
@@ -333,7 +333,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final String weatherXml = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.forValues(5, 5))
+                .byCoordinate(Coordinate.withValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asXML();
@@ -346,7 +346,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final String weatherHtml = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.forValues(5, 5))
+                .byCoordinate(Coordinate.withValues(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asHTML();
@@ -550,7 +550,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         client
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(34.53, 66.74), 10)
+                .byCitiesInCycle(Coordinate.withValues(34.53, 66.74), 10)
                 .retrieve()
                 .asJSON();
     }
@@ -560,7 +560,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         getClient()
                 .currentWeather()
                 .multiple()
-                .byCitiesInCycle(Coordinate.forValues(90.00, 66.74), 10)
+                .byCitiesInCycle(Coordinate.withValues(90.00, 66.74), 10)
                 .retrieve()
                 .asJava();
     }

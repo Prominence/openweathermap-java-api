@@ -27,11 +27,20 @@ import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
+/**
+ * The forecast request terminator.
+ */
 public class FiveDayThreeHourStepForecastRequestTerminatorImpl implements FiveDayThreeHourStepForecastRequestTerminator {
 
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
+    /**
+     * Instantiates a new forecast request terminator.
+     *
+     * @param urlBuilder the url builder
+     * @param unitSystem the unit system
+     */
     FiveDayThreeHourStepForecastRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;

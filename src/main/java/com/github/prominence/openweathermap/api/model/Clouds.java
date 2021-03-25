@@ -29,7 +29,6 @@ import java.util.Objects;
  * Its value can only be an integer in [0, 100] range.
  */
 public class Clouds {
-
     private static final String DEFAULT_UNIT = "%";
 
     private byte value;
@@ -44,7 +43,12 @@ public class Clouds {
         this.value = value;
     }
 
-    public static Clouds forValue(byte value) {
+    /**
+     * Static method for {@link Clouds} creation with value checking.
+     * @param value clouds percentage value.
+     * @return instantiated {@link Clouds} object.
+     */
+    public static Clouds withValue(byte value) {
         if (value < 0 || value > 100)  {
             throw new IllegalArgumentException("Cloudiness value must be in [0, 100] range.");
         }

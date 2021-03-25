@@ -29,7 +29,6 @@ import java.util.Objects;
  * Its value can only be an integer in [0, 100] range.
  */
 public class Humidity {
-
     private static final String DEFAULT_UNIT = "%";
 
     private int value;
@@ -44,7 +43,12 @@ public class Humidity {
         this.value = value;
     }
 
-    public static Humidity forValue(byte value) {
+    /**
+     * Creates {@link Humidity} object with correctness check.
+     * @param value humidity
+     * @return created {@link Humidity} object
+     */
+    public static Humidity withValue(byte value) {
         if (value < 0 || value > 100)  {
             throw new IllegalArgumentException("Humidity value must be in [0, 100] range.");
         }

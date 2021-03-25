@@ -26,7 +26,15 @@ import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
 
+/**
+ * The forecast request terminator interface.
+ */
 public interface FiveDayThreeHourStepForecastRequestTerminator extends RequestTerminator<Forecast, String> {
 
+    /**
+     * XML response format.
+     *
+     * @return the XML string
+     */
     String asXML();
 }

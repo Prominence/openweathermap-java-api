@@ -24,19 +24,68 @@ package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
 
+/**
+ * The interface Single location current weather requester.
+ */
 public interface SingleLocationCurrentWeatherRequester {
 
+    /**
+     * By city name current weather request customizer.
+     *
+     * @param cityName the city name
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName);
 
+    /**
+     * By city name current weather request customizer.
+     *
+     * @param cityName    the city name
+     * @param countryCode the country code
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
 
+    /**
+     * By city name current weather request customizer.
+     *
+     * @param cityName    the city name
+     * @param stateCode   the state code
+     * @param countryCode the country code
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String stateCode, String countryCode);
 
+    /**
+     * By city id current weather request customizer.
+     *
+     * @param cityId the city id
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
 
+    /**
+     * By coordinate current weather request customizer.
+     *
+     * @param coordinate the coordinate
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
 
+    /**
+     * By zip code and country current weather request customizer.
+     *
+     * @param zipCode     the zip code
+     * @param countryCode the country code
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
 
+    /**
+     * By zip code in usa current weather request customizer.
+     *
+     * @param zipCode the zip code
+     * @return the single result current weather request customizer
+     */
     SingleResultCurrentWeatherRequestCustomizer byZipCodeInUSA(String zipCode);
 }

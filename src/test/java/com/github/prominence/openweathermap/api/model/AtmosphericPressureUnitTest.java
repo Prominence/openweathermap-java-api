@@ -50,18 +50,18 @@ import org.junit.Test;
 public class AtmosphericPressureUnitTest {
     @Test
     public void whenCreatePressureWithArgs_thenValueIsSet() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(100);
+        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(100);
         Assert.assertEquals(100, atmosphericPressure.getValue(), 0.00001);
 
-        Assert.assertEquals(0, AtmosphericPressure.forValue(0).getValue(), 0.00001);
-        Assert.assertEquals(100, AtmosphericPressure.forValue(100).getValue(), 0.00001);
-        Assert.assertEquals(55, AtmosphericPressure.forValue(55).getValue(), 0.00001);
+        Assert.assertEquals(0, AtmosphericPressure.withValue(0).getValue(), 0.00001);
+        Assert.assertEquals(100, AtmosphericPressure.withValue(100).getValue(), 0.00001);
+        Assert.assertEquals(55, AtmosphericPressure.withValue(55).getValue(), 0.00001);
     }
 
     @Test
     public void whenCreateTwoIdenticalInstances_thenWheyAreEquals() {
-        AtmosphericPressure one = AtmosphericPressure.forValue(22);
-        AtmosphericPressure two = AtmosphericPressure.forValue(22);
+        AtmosphericPressure one = AtmosphericPressure.withValue(22);
+        AtmosphericPressure two = AtmosphericPressure.withValue(22);
 
         Assert.assertTrue(one.equals(two));
         Assert.assertTrue(one.equals(one));
@@ -80,17 +80,17 @@ public class AtmosphericPressureUnitTest {
 
     @Test
     public void whenCreateTwoDifferentInstances_thenWheyAreNotEquals() {
-        AtmosphericPressure one = AtmosphericPressure.forValue(5);
-        AtmosphericPressure two = AtmosphericPressure.forValue(88);
+        AtmosphericPressure one = AtmosphericPressure.withValue(5);
+        AtmosphericPressure two = AtmosphericPressure.withValue(88);
 
         Assert.assertFalse(one.equals(two));
         Assert.assertFalse(two.equals(one));
         Assert.assertFalse(one.equals(new Object()));
         Assert.assertNotEquals(one.hashCode(), two.hashCode());
 
-        one = AtmosphericPressure.forValue(44);
+        one = AtmosphericPressure.withValue(44);
         one.setSeaLevelValue(44);
-        two = AtmosphericPressure.forValue(44);
+        two = AtmosphericPressure.withValue(44);
         two.setGroundLevelValue(22);
 
         Assert.assertFalse(one.equals(two));
@@ -104,7 +104,7 @@ public class AtmosphericPressureUnitTest {
 
     @Test
     public void whenSetValidValues_thenAllIsFine() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(14);
+        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(14);
         atmosphericPressure.setValue(0);
         atmosphericPressure.setValue(15);
         atmosphericPressure.setValue(100);
@@ -118,31 +118,31 @@ public class AtmosphericPressureUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final String pressureString = AtmosphericPressure.forValue(44).toString();
+        final String pressureString = AtmosphericPressure.withValue(44).toString();
         Assert.assertNotNull(pressureString);
         Assert.assertNotEquals("", pressureString);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreatePressureByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        AtmosphericPressure.forValue(-33);
+        AtmosphericPressure.withValue(-33);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreatePressureAndSetInvalidDataNegative_thenThrowAnException() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(88);
+        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
         atmosphericPressure.setValue(-89);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidSeaLevelPressure_thenThrowAnException() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(88);
+        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
         atmosphericPressure.setSeaLevelValue(-89);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidGroundLevelPressure_thenThrowAnException() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(88);
+        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
         atmosphericPressure.setGroundLevelValue(-223);
     }
 }

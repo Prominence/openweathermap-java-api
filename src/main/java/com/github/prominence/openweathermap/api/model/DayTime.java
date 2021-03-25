@@ -22,8 +22,18 @@
 
 package com.github.prominence.openweathermap.api.model;
 
+/**
+ * Enumeration for time of a day representation.
+ */
 public enum DayTime {
+    /**
+     * Day value.
+     */
     DAY("d"),
+
+    /**
+     * Night value.
+     */
     NIGHT("n");
 
     private final String value;
@@ -32,6 +42,10 @@ public enum DayTime {
         this.value = value;
     }
 
+    /**
+     * Returns time of a day value.
+     * @return string value
+     */
     public String getValue() {
         return value;
     }

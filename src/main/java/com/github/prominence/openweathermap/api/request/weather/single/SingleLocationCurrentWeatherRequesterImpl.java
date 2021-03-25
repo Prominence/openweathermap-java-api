@@ -25,10 +25,18 @@ package com.github.prominence.openweathermap.api.request.weather.single;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 
+/**
+ * The type Single location current weather requester.
+ */
 public class SingleLocationCurrentWeatherRequesterImpl implements SingleLocationCurrentWeatherRequester {
 
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new Single location current weather requester.
+     *
+     * @param urlBuilder the url builder
+     */
     public SingleLocationCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
         urlBuilder.append("weather");

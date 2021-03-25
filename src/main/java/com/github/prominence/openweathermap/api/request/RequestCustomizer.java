@@ -25,9 +25,26 @@ package com.github.prominence.openweathermap.api.request;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
+/**
+ * The interface Request customizer.
+ *
+ * @param <T> the type parameter
+ */
 public interface RequestCustomizer<T extends RequestCustomizer<?>> {
 
+    /**
+     * Customize language.
+     *
+     * @param language the language
+     * @return the request customizer
+     */
     T language(Language language);
 
+    /**
+     * Customize unit system.
+     *
+     * @param unitSystem the unit system
+     * @return the request customizer
+     */
     T unitSystem(UnitSystem unitSystem);
 }

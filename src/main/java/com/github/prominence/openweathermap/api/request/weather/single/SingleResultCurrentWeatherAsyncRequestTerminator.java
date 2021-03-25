@@ -27,8 +27,21 @@ import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The current weather async request terminator interface.
+ */
 public interface SingleResultCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<Weather, String> {
+    /**
+     * XML response format.
+     *
+     * @return the completable future
+     */
     CompletableFuture<String> asXML();
 
+    /**
+     * HTML response format.
+     *
+     * @return the completable future
+     */
     CompletableFuture<String> asHTML();
 }

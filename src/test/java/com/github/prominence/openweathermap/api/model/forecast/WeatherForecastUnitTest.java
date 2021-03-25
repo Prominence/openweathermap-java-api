@@ -20,28 +20,6 @@
  * SOFTWARE.
  */
 
-/*
- * Copyright (c) 2021 Alexey Zinchenko
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 package com.github.prominence.openweathermap.api.model.forecast;
 
 import com.github.prominence.openweathermap.api.model.*;
@@ -114,7 +92,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetTemperature_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Temperature temperature = Temperature.forValue(22.3, "a");
+        final Temperature temperature = Temperature.withValue(22.3, "a");
         weatherForecast.setTemperature(temperature);
 
         Assert.assertEquals(temperature, weatherForecast.getTemperature());
@@ -123,7 +101,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetPressure_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(33.2);
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.2);
         weatherForecast.setAtmosphericPressure(atmosphericPressure);
 
         Assert.assertEquals(atmosphericPressure, weatherForecast.getAtmosphericPressure());
@@ -132,7 +110,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetHumidity_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Humidity humidity = Humidity.forValue((byte) 44);
+        final Humidity humidity = Humidity.withValue((byte) 44);
         weatherForecast.setHumidity(humidity);
 
         Assert.assertEquals(humidity, weatherForecast.getHumidity());
@@ -141,7 +119,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetWind_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Wind wind = Wind.forValue(22.2, "a");
+        final Wind wind = Wind.withValue(22.2, "a");
         weatherForecast.setWind(wind);
 
         Assert.assertEquals(wind, weatherForecast.getWind());
@@ -150,7 +128,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetRain_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Rain rain = new Rain();
+        final Rain rain = Rain.withThreeHourLevelValue(0);
         weatherForecast.setRain(rain);
 
         Assert.assertEquals(rain, weatherForecast.getRain());
@@ -159,7 +137,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetSnow_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Snow snow = new Snow();
+        final Snow snow = Snow.withThreeHourLevelValue(0);
         weatherForecast.setSnow(snow);
 
         Assert.assertEquals(snow, weatherForecast.getSnow());
@@ -168,7 +146,7 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenSetClouds_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Clouds clouds = Clouds.forValue((byte) 33);
+        final Clouds clouds = Clouds.withValue((byte) 33);
         weatherForecast.setClouds(clouds);
 
         Assert.assertEquals(clouds, weatherForecast.getClouds());
@@ -199,12 +177,12 @@ public class WeatherForecastUnitTest {
     @Test
     public void whenCallToString_thenAllIsFine() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        final Location location = Location.forValue(12312, "asd");
-        final Temperature temperature = Temperature.forValue(33.2, "asd");
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(44.4);
-        final Clouds clouds = Clouds.forValue((byte) 55);
-        final Rain rain = new Rain(33.2);
-        final Snow snow = new Snow(33.1);
+        final Location location = Location.withValues(12312, "asd");
+        final Temperature temperature = Temperature.withValue(33.2, "asd");
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(44.4);
+        final Clouds clouds = Clouds.withValue((byte) 55);
+        final Rain rain = Rain.withThreeHourLevelValue(33.2);
+        final Snow snow = Snow.withThreeHourLevelValue(33.1);
 
         Assert.assertNotEquals("", weatherForecast.toString());
         Assert.assertNotNull(weatherForecast.toString());
@@ -241,11 +219,11 @@ public class WeatherForecastUnitTest {
         Assert.assertNotEquals("", weatherForecast.toString());
         Assert.assertNotNull(weatherForecast.toString());
 
-        weatherForecast.setRain(new Rain(null));
+        weatherForecast.setRain(Rain.withThreeHourLevelValue(0));
         Assert.assertNotEquals("", weatherForecast.toString());
         Assert.assertNotNull(weatherForecast.toString());
 
-        weatherForecast.setSnow(new Snow(null));
+        weatherForecast.setSnow(Snow.withThreeHourLevelValue(0));
         Assert.assertNotEquals("", weatherForecast.toString());
         Assert.assertNotNull(weatherForecast.toString());
     }
@@ -297,7 +275,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Temperature temperature = Temperature.forValue(33.2, "as");
+        final Temperature temperature = Temperature.withValue(33.2, "as");
         one.setTemperature(temperature);
 
         Assert.assertFalse(one.equals(two));
@@ -306,7 +284,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(33.33);
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.33);
         one.setAtmosphericPressure(atmosphericPressure);
 
         Assert.assertFalse(one.equals(two));
@@ -315,7 +293,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Humidity humidity = Humidity.forValue((byte) 33);
+        final Humidity humidity = Humidity.withValue((byte) 33);
         one.setHumidity(humidity);
 
         Assert.assertFalse(one.equals(two));
@@ -324,7 +302,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Wind wind = Wind.forValue(33.6, "asd");
+        final Wind wind = Wind.withValue(33.6, "asd");
         one.setWind(wind);
 
         Assert.assertFalse(one.equals(two));
@@ -333,7 +311,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Rain rain = new Rain();
+        final Rain rain = Rain.withThreeHourLevelValue(0);
         one.setRain(rain);
 
         Assert.assertFalse(one.equals(two));
@@ -342,7 +320,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Snow snow = new Snow();
+        final Snow snow = Snow.withThreeHourLevelValue(0);
         one.setSnow(snow);
 
         Assert.assertFalse(one.equals(two));
@@ -351,7 +329,7 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Clouds clouds = Clouds.forValue((byte) 33);
+        final Clouds clouds = Clouds.withValue((byte) 33);
         one.setClouds(clouds);
 
         Assert.assertFalse(one.equals(two));

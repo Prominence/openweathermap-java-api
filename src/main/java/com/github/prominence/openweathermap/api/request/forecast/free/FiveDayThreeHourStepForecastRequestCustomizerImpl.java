@@ -26,6 +26,9 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
+/**
+ * The forecast request customizer.
+ */
 public class FiveDayThreeHourStepForecastRequestCustomizerImpl implements FiveDayThreeHourStepForecastRequestCustomizer {
 
     private final RequestUrlBuilder urlBuilder;
@@ -34,6 +37,11 @@ public class FiveDayThreeHourStepForecastRequestCustomizerImpl implements FiveDa
     private UnitSystem unitSystem = UnitSystem.STANDARD;
     private int count = -1;
 
+    /**
+     * Instantiates a new forecast request customizer.
+     *
+     * @param urlBuilder the url builder
+     */
     FiveDayThreeHourStepForecastRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }

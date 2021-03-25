@@ -24,11 +24,30 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
+/**
+ * The forecast request customizer interface.
+ */
 public interface FiveDayThreeHourStepForecastRequestCustomizer extends RequestCustomizer<FiveDayThreeHourStepForecastRequestCustomizer> {
 
+    /**
+     * Count customizer.
+     *
+     * @param numberOfTimestamps the number of timestamps
+     * @return forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps);
 
+    /**
+     * Retrieve forecast request terminator.
+     *
+     * @return forecast request terminator
+     */
     FiveDayThreeHourStepForecastRequestTerminator retrieve();
 
+    /**
+     * Retrieve forecast async request terminator.
+     *
+     * @return forecast async request terminator
+     */
     FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync();
 }

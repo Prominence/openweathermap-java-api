@@ -28,7 +28,6 @@ import java.util.Objects;
  * The type Wind.
  */
 public class Wind {
-
     private double speed;
     private Double degrees;
     private Double gust;
@@ -45,7 +44,13 @@ public class Wind {
         this.unit = unit;
     }
 
-    public static Wind forValue(double speed, String unit) {
+    /**
+     * Creates {@link Wind} object with correctness check.
+     * @param speed the speed
+     * @param unit the unitSystem
+     * @return wind object
+     */
+    public static Wind withValue(double speed, String unit) {
         if (speed < 0) {
             throw new IllegalArgumentException("Wind speed value must be in positive or zero.");
         }

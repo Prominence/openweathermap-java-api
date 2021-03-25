@@ -50,27 +50,27 @@ import org.junit.Test;
 public class CloudsUnitTest {
     @Test
     public void whenCreateCloudsWithValidArgs_thenValueIsSet() {
-        Clouds clouds = Clouds.forValue((byte) 100);
+        Clouds clouds = Clouds.withValue((byte) 100);
         Assert.assertEquals(100, clouds.getValue());
 
-        Assert.assertEquals(0, Clouds.forValue((byte) 0).getValue());
-        Assert.assertEquals(100, Clouds.forValue((byte) 100).getValue());
-        Assert.assertEquals(55, Clouds.forValue((byte) 55).getValue());
+        Assert.assertEquals(0, Clouds.withValue((byte) 0).getValue());
+        Assert.assertEquals(100, Clouds.withValue((byte) 100).getValue());
+        Assert.assertEquals(55, Clouds.withValue((byte) 55).getValue());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsByConstructorWithInvalidDataAboveHundred_thenThrowAnException() {
-        Clouds.forValue((byte) 110);
+        Clouds.withValue((byte) 110);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        Clouds.forValue((byte) -33);
+        Clouds.withValue((byte) -33);
     }
 
     @Test
     public void whenSetValidValues_thenAllIsFine() {
-        Clouds clouds = Clouds.forValue((byte) 14);
+        Clouds clouds = Clouds.withValue((byte) 14);
         clouds.setValue((byte) 0);
         Assert.assertEquals(0, clouds.getValue());
         clouds.setValue((byte) 15);
@@ -81,20 +81,20 @@ public class CloudsUnitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsAndSetInvalidDataAboveHundred_thenThrowAnException() {
-        Clouds clouds = Clouds.forValue((byte) 12);
+        Clouds clouds = Clouds.withValue((byte) 12);
         clouds.setValue((byte) 112);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCloudsAndSetInvalidDataNegative_thenThrowAnException() {
-        Clouds clouds = Clouds.forValue((byte) 88);
+        Clouds clouds = Clouds.withValue((byte) 88);
         clouds.setValue((byte) -89);
     }
 
     @Test
     public void whenCreateTwoIdenticalInstances_thenWheyAreEquals() {
-        Clouds one = Clouds.forValue((byte) 22);
-        Clouds two = Clouds.forValue((byte) 22);
+        Clouds one = Clouds.withValue((byte) 22);
+        Clouds two = Clouds.withValue((byte) 22);
 
         Assert.assertTrue(one.equals(two));
         Assert.assertTrue(one.equals(one));
@@ -103,8 +103,8 @@ public class CloudsUnitTest {
 
     @Test
     public void whenCreateTwoDifferentInstances_thenWheyAreNotEquals() {
-        Clouds one = Clouds.forValue((byte) 5);
-        Clouds two = Clouds.forValue((byte) 88);
+        Clouds one = Clouds.withValue((byte) 5);
+        Clouds two = Clouds.withValue((byte) 88);
 
         Assert.assertFalse(one.equals(two));
         Assert.assertFalse(two.equals(one));
@@ -114,7 +114,7 @@ public class CloudsUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final String cloudsString = Clouds.forValue((byte) 44).toString();
+        final String cloudsString = Clouds.withValue((byte) 44).toString();
         Assert.assertNotNull(cloudsString);
         Assert.assertNotEquals("", cloudsString);
     }

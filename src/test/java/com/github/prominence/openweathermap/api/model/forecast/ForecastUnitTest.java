@@ -31,7 +31,7 @@ public class ForecastUnitTest {
     @Test
     public void whenLocationIsSet_thenAllIsOk() {
         final Forecast forecast = new Forecast();
-        forecast.setLocation(Location.forValue(2, "asd"));
+        forecast.setLocation(Location.withValues(2, "asd"));
 
         Assert.assertNotNull(forecast.getLocation());
     }
@@ -51,7 +51,7 @@ public class ForecastUnitTest {
 
         Assert.assertEquals(one.hashCode(), two.hashCode());
 
-        one.setLocation(Location.forValue(22, "444"));
+        one.setLocation(Location.withValues(22, "444"));
 
         Assert.assertNotEquals(one.hashCode(), two.hashCode());
     }
@@ -66,7 +66,7 @@ public class ForecastUnitTest {
         Assert.assertTrue(one.equals(two));
         Assert.assertFalse(one.equals(new Object()));
 
-        one.setLocation(Location.forValue(22, "234"));
+        one.setLocation(Location.withValues(22, "234"));
 
         Assert.assertFalse(one.equals(two));
 

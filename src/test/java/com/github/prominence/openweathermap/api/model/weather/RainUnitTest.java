@@ -28,18 +28,14 @@ import org.junit.Test;
 public class RainUnitTest {
     @Test
     public void whenCreateRainWithValidArgs_thenObjectIsCreated() {
-        new Rain(2222.3, 324234.3);
-        new Rain(null, -213123.4);
-        new Rain(-123123.123, null);
-        new Rain(null, null);
+        Rain.withValues(2222.3, 324234.3);
+        Rain.withThreeHourLevelValue(213123.4);
+        Rain.withOneHourLevelValue(123123.123);
     }
 
     @Test
     public void whenSetValues_thenTheyAreSet() {
-        final Rain rain = new Rain(null, null);
-
-        Assert.assertNull(rain.getOneHourRainLevel());
-        Assert.assertNull(rain.getThreeHourRainLevel());
+        final Rain rain = Rain.withValues(0, 0);
 
         rain.setOneHourRainLevel(33.3);
         Assert.assertEquals(33.3, rain.getOneHourRainLevel(), 0.00001);
@@ -50,31 +46,33 @@ public class RainUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Rain rain = new Rain();
+        Rain rain = Rain.withThreeHourLevelValue(33.5);
 
         Assert.assertNotNull(rain.toString());
-        Assert.assertEquals("unknown", rain.toString());
-
-        rain.setThreeHourRainLevel(33.5);
-
-        Assert.assertNotNull(rain.toString());
-        Assert.assertNotEquals("unknown", rain.toString());
+        Assert.assertNotEquals("", rain.toString());
 
         rain.setOneHourRainLevel(22.2);
 
         Assert.assertNotNull(rain.toString());
-        Assert.assertNotEquals("unknown", rain.toString());
+        Assert.assertNotEquals("", rain.toString());
+    }
 
-        rain.setThreeHourRainLevel(null);
+    @Test(expected = IllegalArgumentException.class)
+    public void whenSetInvalidOneHourLevelValue_thenFail() {
+        final Rain rain = Rain.withValues(0, 0);
+        rain.setOneHourRainLevel(-20);
+    }
 
-        Assert.assertNotNull(rain.toString());
-        Assert.assertNotEquals("unknown", rain.toString());
+    @Test(expected = IllegalArgumentException.class)
+    public void whenSetInvalidThreeHourLevelValue_thenFail() {
+        final Rain rain = Rain.withValues(0, 0);
+        rain.setThreeHourRainLevel(-20);
     }
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Rain first = new Rain();
-        final Rain second = new Rain();
+        final Rain first = Rain.withValues(0, 0);
+        final Rain second = Rain.withValues(0, 0);
 
         Assert.assertEquals(first.hashCode(), second.hashCode());
 
@@ -97,8 +95,8 @@ public class RainUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Rain first = new Rain();
-        final Rain second = new Rain();
+        final Rain first = Rain.withValues(0, 0);
+        final Rain second = Rain.withValues(0, 0);
 
         Assert.assertTrue(first.equals(second));
         Assert.assertTrue(first.equals(first));

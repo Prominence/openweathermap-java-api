@@ -24,9 +24,22 @@ package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
+/**
+ * The interface Multiple result current weather request customizer.
+ */
 public interface MultipleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<MultipleResultCurrentWeatherRequestCustomizer> {
 
+    /**
+     * Retrieve multiple result current weather request terminator.
+     *
+     * @return the multiple result current weather request terminator
+     */
     MultipleResultCurrentWeatherRequestTerminator retrieve();
 
+    /**
+     * Retrieve async multiple result current weather async request terminator.
+     *
+     * @return the multiple result current weather async request terminator
+     */
     MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
 }

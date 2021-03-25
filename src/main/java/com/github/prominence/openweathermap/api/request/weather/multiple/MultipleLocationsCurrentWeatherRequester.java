@@ -25,12 +25,35 @@ package com.github.prominence.openweathermap.api.request.weather.multiple;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 
+/**
+ * The interface Multiple locations current weather requester.
+ */
 public interface MultipleLocationsCurrentWeatherRequester {
 
+    /**
+     * By rectangle multiple result current weather request customizer.
+     *
+     * @param rectangle the rectangle
+     * @param zoom      the zoom
+     * @return the multiple result current weather request customizer
+     */
     MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
 
+    /**
+     * By cities in cycle multiple result current weather request customizer.
+     *
+     * @param point the point
+     * @return the multiple result cities in circle current weather request customizer
+     */
     MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point);
 
+    /**
+     * By cities in cycle multiple result current weather request customizer.
+     *
+     * @param point       the point
+     * @param citiesCount the cities count
+     * @return the multiple result cities in circle current weather request customizer
+     */
     MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
 
 }

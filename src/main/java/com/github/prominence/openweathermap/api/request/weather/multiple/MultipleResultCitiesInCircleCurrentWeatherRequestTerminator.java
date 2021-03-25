@@ -27,6 +27,14 @@ import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
 import java.util.List;
 
+/**
+ * The interface Multiple result current weather request terminator.
+ */
 public interface MultipleResultCitiesInCircleCurrentWeatherRequestTerminator extends RequestTerminator<List<Weather>, String> {
+    /**
+     * XML response format.
+     *
+     * @return the XML string
+     */
     String asXML();
 }

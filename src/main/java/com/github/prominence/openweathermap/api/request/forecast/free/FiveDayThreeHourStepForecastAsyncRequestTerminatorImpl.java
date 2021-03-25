@@ -29,11 +29,20 @@ import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Async request terminator.
+ */
 public class FiveDayThreeHourStepForecastAsyncRequestTerminatorImpl implements FiveDayThreeHourStepForecastAsyncRequestTerminator {
 
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
+    /**
+     * Instantiates a new async request terminator.
+     *
+     * @param urlBuilder the url builder
+     * @param unitSystem the unit system
+     */
     FiveDayThreeHourStepForecastAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;

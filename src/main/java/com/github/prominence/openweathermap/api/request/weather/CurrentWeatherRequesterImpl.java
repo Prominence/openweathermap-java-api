@@ -28,10 +28,18 @@ import com.github.prominence.openweathermap.api.request.weather.multiple.Multipl
 import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
 import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
 
+/**
+ * The type Current weather requester.
+ */
 public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
 
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new Current weather requester.
+     *
+     * @param apiKey the api key
+     */
     public CurrentWeatherRequesterImpl(String apiKey) {
         urlBuilder =  new RequestUrlBuilder(apiKey);
     }

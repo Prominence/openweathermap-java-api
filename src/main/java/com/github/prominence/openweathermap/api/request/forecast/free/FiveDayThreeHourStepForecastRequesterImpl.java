@@ -25,10 +25,18 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
+/**
+ * The forecast requester.
+ */
 public class FiveDayThreeHourStepForecastRequesterImpl implements FiveDayThreeHourStepForecastRequester {
 
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new forecast requester.
+     *
+     * @param apiKey the api key
+     */
     public FiveDayThreeHourStepForecastRequesterImpl(String apiKey) {
         urlBuilder =  new RequestUrlBuilder(apiKey);
         urlBuilder.append("forecast");

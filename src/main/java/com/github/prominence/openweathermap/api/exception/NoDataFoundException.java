@@ -31,10 +31,17 @@ package com.github.prominence.openweathermap.api.exception;
  * </ul>
  */
 public class NoDataFoundException extends RuntimeException {
+    /**
+     * Creates {@link NoDataFoundException} with default message.
+     */
     public NoDataFoundException() {
         super("Data for provided parameters wasn't found. Please, check requested location.");
     }
 
+    /**
+     * Creates {@link NoDataFoundException} with message from another throwable.
+     * @param throwable source throwable.
+     */
     public NoDataFoundException(Throwable throwable) {
         super(throwable.getMessage(), throwable.getCause());
     }

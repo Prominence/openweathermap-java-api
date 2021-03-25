@@ -28,7 +28,15 @@ import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
 import java.util.concurrent.CompletableFuture;
 
 
+/**
+ * The forecast async request terminator interface.
+ */
 public interface FiveDayThreeHourStepForecastAsyncRequestTerminator extends AsyncRequestTerminator<Forecast, String> {
 
+    /**
+     * XML response format.
+     *
+     * @return the completable future
+     */
     CompletableFuture<String> asXML();
 }

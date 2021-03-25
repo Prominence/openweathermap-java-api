@@ -95,7 +95,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetTemperature_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Temperature temperature = Temperature.forValue(22.3, "a");
+        final Temperature temperature = Temperature.withValue(22.3, "a");
         weather.setTemperature(temperature);
 
         Assert.assertEquals(temperature, weather.getTemperature());
@@ -104,7 +104,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetPressure_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(33.2);
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.2);
         weather.setAtmosphericPressure(atmosphericPressure);
 
         Assert.assertEquals(atmosphericPressure, weather.getAtmosphericPressure());
@@ -113,7 +113,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetHumidity_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Humidity humidity = Humidity.forValue((byte) 44);
+        final Humidity humidity = Humidity.withValue((byte) 44);
         weather.setHumidity(humidity);
 
         Assert.assertEquals(humidity, weather.getHumidity());
@@ -122,7 +122,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetWind_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Wind wind = Wind.forValue(22.2, "a");
+        final Wind wind = Wind.withValue(22.2, "a");
         weather.setWind(wind);
 
         Assert.assertEquals(wind, weather.getWind());
@@ -131,7 +131,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetRain_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Rain rain = new Rain();
+        final Rain rain = Rain.withValues(0, 0);
         weather.setRain(rain);
 
         Assert.assertEquals(rain, weather.getRain());
@@ -140,7 +140,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetSnow_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Snow snow = new Snow();
+        final Snow snow = Snow.withValues(0, 0);
         weather.setSnow(snow);
 
         Assert.assertEquals(snow, weather.getSnow());
@@ -149,7 +149,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetClouds_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Clouds clouds = Clouds.forValue((byte) 33);
+        final Clouds clouds = Clouds.withValue((byte) 33);
         weather.setClouds(clouds);
 
         Assert.assertEquals(clouds, weather.getClouds());
@@ -158,7 +158,7 @@ public class WeatherUnitTest {
     @Test
     public void whenSetLocation_thenValueIsSet() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Location location = Location.forValue(22, "asd");
+        final Location location = Location.withValues(22, "asd");
         weather.setLocation(location);
 
         Assert.assertEquals(location, weather.getLocation());
@@ -167,12 +167,12 @@ public class WeatherUnitTest {
     @Test
     public void whenCallToString_thenAllIsFine() {
         final Weather weather = Weather.forValue("state", "desc");
-        final Location location = Location.forValue(12312, "asd");
-        final Temperature temperature = Temperature.forValue(33.2, "asd");
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(44.4);
-        final Clouds clouds = Clouds.forValue((byte) 55);
-        final Rain rain = new Rain(33.2, null);
-        final Snow snow = new Snow(33.1, null);
+        final Location location = Location.withValues(12312, "asd");
+        final Temperature temperature = Temperature.withValue(33.2, "asd");
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(44.4);
+        final Clouds clouds = Clouds.withValue((byte) 55);
+        final Rain rain = Rain.withOneHourLevelValue(33.2);
+        final Snow snow = Snow.withOneHourLevelValue(33.1);
 
         Assert.assertNotEquals("", weather.toString());
         Assert.assertNotNull(weather.toString());
@@ -252,7 +252,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Temperature temperature = Temperature.forValue(33.2, "as");
+        final Temperature temperature = Temperature.withValue(33.2, "as");
         one.setTemperature(temperature);
 
         Assert.assertFalse(one.equals(two));
@@ -261,7 +261,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.forValue(33.33);
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.33);
         one.setAtmosphericPressure(atmosphericPressure);
 
         Assert.assertFalse(one.equals(two));
@@ -270,7 +270,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Humidity humidity = Humidity.forValue((byte) 33);
+        final Humidity humidity = Humidity.withValue((byte) 33);
         one.setHumidity(humidity);
 
         Assert.assertFalse(one.equals(two));
@@ -279,7 +279,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Wind wind = Wind.forValue(33.6, "asd");
+        final Wind wind = Wind.withValue(33.6, "asd");
         one.setWind(wind);
 
         Assert.assertFalse(one.equals(two));
@@ -288,7 +288,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Rain rain = new Rain();
+        final Rain rain = Rain.withValues(0, 0);
         one.setRain(rain);
 
         Assert.assertFalse(one.equals(two));
@@ -297,7 +297,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Snow snow = new Snow();
+        final Snow snow = Snow.withValues(0, 0);
         one.setSnow(snow);
 
         Assert.assertFalse(one.equals(two));
@@ -306,7 +306,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Clouds clouds = Clouds.forValue((byte) 33);
+        final Clouds clouds = Clouds.withValue((byte) 33);
         one.setClouds(clouds);
 
         Assert.assertFalse(one.equals(two));
@@ -315,7 +315,7 @@ public class WeatherUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Location location = Location.forValue(231, "asda");
+        final Location location = Location.withValues(231, "asda");
         one.setLocation(location);
 
         Assert.assertFalse(one.equals(two));

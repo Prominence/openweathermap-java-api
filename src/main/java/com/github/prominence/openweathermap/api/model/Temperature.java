@@ -24,6 +24,9 @@ package com.github.prominence.openweathermap.api.model;
 
 import java.util.Objects;
 
+/**
+ * Represents temperature values and unit.
+ */
 public class Temperature {
     private double value;
     private Double maxTemperature;
@@ -36,49 +39,95 @@ public class Temperature {
         this.unit = unit;
     }
 
-    public static Temperature forValue(double value, String unit) {
+    /**
+     * Creates {@link Temperature} object with correctness check.
+     * @param value temperature value
+     * @param unit temperature unit
+     * @return temperature object
+     */
+    public static Temperature withValue(double value, String unit) {
         if (unit == null) {
             throw new IllegalArgumentException("Unit must be set.");
         }
         return new Temperature(value, unit);
     }
 
+    /**
+     * Returns temperature value.
+     * @return value
+     */
     public double getValue() {
         return value;
     }
 
+    /**
+     * Sets temperature value.
+     * @param value temperature
+     */
     public void setValue(double value) {
         this.value = value;
     }
 
+    /**
+     * Returns maximal temperature value.
+     * @return maximal temperature value
+     */
     public Double getMaxTemperature() {
         return maxTemperature;
     }
 
+    /**
+     * Sets maximal temperature value.
+     * @param maxTemperature maximal temperature
+     */
     public void setMaxTemperature(Double maxTemperature) {
         this.maxTemperature = maxTemperature;
     }
 
+    /**
+     * Returns minimal temperature value.
+     * @return minimal temperature value
+     */
     public Double getMinTemperature() {
         return minTemperature;
     }
 
+    /**
+     * Sets minimal temperature value.
+     * @param minTemperature minimal temperature
+     */
     public void setMinTemperature(Double minTemperature) {
         this.minTemperature = minTemperature;
     }
 
+    /**
+     * Returns 'feels like' temperature value.
+     * @return 'feels like' temperature value
+     */
     public Double getFeelsLike() {
         return feelsLike;
     }
 
+    /**
+     * Sets 'feels like' temperature value.
+     * @param feelsLike 'feels like' temperature
+     */
     public void setFeelsLike(Double feelsLike) {
         this.feelsLike = feelsLike;
     }
 
+    /**
+     * Returns temperature unit.
+     * @return unit
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     * Sets temperature unit with correctness check.
+     * @param unit temperature unit
+     */
     public void setUnit(String unit) {
         if (unit == null) {
             throw new IllegalArgumentException("Unit must be set.");

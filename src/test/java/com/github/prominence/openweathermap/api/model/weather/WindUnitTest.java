@@ -28,22 +28,22 @@ import org.junit.Test;
 public class WindUnitTest {
     @Test
     public void whenCreateWindWithValidArgs_thenValueIsSet() {
-        Assert.assertEquals(44.0, Wind.forValue(44, "ms").getSpeed(), 0.00001);
+        Assert.assertEquals(44.0, Wind.withValue(44, "ms").getSpeed(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateWindWithInvalidSpeedArg_thenThrowAnException() {
-        Wind.forValue(-21, "a");
+        Wind.withValue(-21, "a");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateWindWithInvalidUnitArg_thenThrowAnException() {
-        Wind.forValue(342, null);
+        Wind.withValue(342, null);
     }
 
     @Test
     public void whenSetValidSpeed_thenValueIsSet() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         Assert.assertEquals(33, wind.getSpeed(), 0.00001);
 
@@ -58,7 +58,7 @@ public class WindUnitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidSpeedBelow0_thenThrowAnException() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         Assert.assertEquals(33, wind.getSpeed(), 0.00001);
 
@@ -67,7 +67,7 @@ public class WindUnitTest {
 
     @Test
     public void whenSetValidDegrees_thenValueIsSet() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         Assert.assertNull(wind.getDegrees());
 
@@ -86,19 +86,19 @@ public class WindUnitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidDegreesBelow0_thenThrowAnException() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
         wind.setDegrees(-32);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidDegreesAbove360_thenThrowAnException() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
         wind.setDegrees(378);
     }
 
     @Test
     public void whenSetNonNullUnit_thenValueIsSet() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         Assert.assertEquals(wind.getUnit(), "as");
 
@@ -109,21 +109,21 @@ public class WindUnitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetNullUnit_thenThrowAnException() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         wind.setUnit(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidGustValue_thenThrowAnException() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         wind.setGust(-50);
     }
 
     @Test
     public void whenSetValidGustValue_thenAllIsFine() {
-        final Wind wind = Wind.forValue(33, "as");
+        final Wind wind = Wind.withValue(33, "as");
 
         wind.setGust(30);
 
@@ -132,7 +132,7 @@ public class WindUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Wind wind = Wind.forValue(302, "a");
+        final Wind wind = Wind.withValue(302, "a");
 
         Assert.assertNotNull(wind.toString());
 
@@ -148,8 +148,8 @@ public class WindUnitTest {
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Wind first = Wind.forValue(22, "a");
-        final Wind second = Wind.forValue(22, "b");
+        final Wind first = Wind.withValue(22, "a");
+        final Wind second = Wind.withValue(22, "b");
 
         Assert.assertNotEquals(first.hashCode(), second.hashCode());
 
@@ -172,8 +172,8 @@ public class WindUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Wind first = Wind.forValue(11, "a");
-        final Wind second = Wind.forValue(11, "a");
+        final Wind first = Wind.withValue(11, "a");
+        final Wind second = Wind.withValue(11, "a");
 
         Assert.assertTrue(first.equals(second));
         Assert.assertTrue(first.equals(first));

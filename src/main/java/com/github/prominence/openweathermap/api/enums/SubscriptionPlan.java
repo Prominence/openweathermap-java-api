@@ -27,10 +27,33 @@ package com.github.prominence.openweathermap.api.enums;
  * More information <a href="https://openweathermap.org/price">at official website</a>.
  */
 public enum SubscriptionPlan {
+    /**
+     * Free subscription plan.
+     */
     FREE,
+
+    /**
+     * Startup subscription plan.
+     */
     STARTUP,
+
+    /**
+     * Developer subscription plan.
+     */
     DEVELOPER,
+
+    /**
+     * Professional subscription plan.
+     */
     PROFESSIONAL,
+
+    /**
+     * Enterprise subscription plan.
+     */
     ENTERPRISE,
+
+    /**
+     * All existing subscription plans.
+     */
     ALL,
 }

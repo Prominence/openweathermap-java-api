@@ -26,6 +26,9 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
+/**
+ * The type Multiple result current weather request customizer.
+ */
 public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl implements MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer {
 
     private final RequestUrlBuilder urlBuilder;
@@ -33,6 +36,11 @@ public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl imp
     private Language language;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
 
+    /**
+     * Instantiates a new Multiple result current weather request customizer.
+     *
+     * @param urlBuilder the url builder
+     */
     MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }

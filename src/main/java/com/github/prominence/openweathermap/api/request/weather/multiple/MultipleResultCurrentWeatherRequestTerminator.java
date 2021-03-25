@@ -27,5 +27,8 @@ import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
 import java.util.List;
 
+/**
+ * The interface Multiple result current weather request terminator.
+ */
 public interface MultipleResultCurrentWeatherRequestTerminator extends RequestTerminator<List<Weather>, String> {
 }

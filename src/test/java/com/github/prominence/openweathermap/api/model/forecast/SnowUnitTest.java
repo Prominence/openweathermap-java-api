@@ -28,42 +28,43 @@ import org.junit.Test;
 public class SnowUnitTest {
     @Test
     public void whenCreateSnowWithValidArgs_ObjectIsCreated() {
-        new Snow(2222.3);
-        new Snow(null);
+        Snow.withThreeHourLevelValue(2222.3);
+        Snow.withThreeHourLevelValue(0);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void whenCreateWithInvalidData_thenFail() {
+        Snow.withThreeHourLevelValue(-20);
     }
 
     @Test
     public void whenSetValues_thenTheyAreSet() {
-        final Snow snow = new Snow(null);
+        final Snow snow = Snow.withThreeHourLevelValue(0);
 
-        Assert.assertNull(snow.getThreeHourSnowLevel());
+        Assert.assertEquals(0, snow.getThreeHourSnowLevel(), 0.00001);
 
         snow.setThreeHourSnowLevel(55.5);
         Assert.assertEquals(55.5, snow.getThreeHourSnowLevel(), 0.00001);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void whenSetInvalidValue_thenFail() {
+        final Snow snow = Snow.withThreeHourLevelValue(0);
+
+        snow.setThreeHourSnowLevel(-20);
+    }
+
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Snow snow = new Snow();
+        final Snow snow = Snow.withThreeHourLevelValue(33.5);
 
         Assert.assertNotNull(snow.toString());
-        Assert.assertEquals("unknown", snow.toString());
-
-        snow.setThreeHourSnowLevel(33.5);
-
-        Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("unknown", snow.toString());
-
-        snow.setThreeHourSnowLevel(null);
-
-        Assert.assertNotNull(snow.toString());
-        Assert.assertEquals("unknown", snow.toString());
+        Assert.assertNotEquals("", snow.toString());
     }
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Snow first = new Snow();
-        final Snow second = new Snow();
+        final Snow first = Snow.withThreeHourLevelValue(0);
+        final Snow second = Snow.withThreeHourLevelValue(0);
 
         Assert.assertEquals(first.hashCode(), second.hashCode());
 
@@ -78,8 +79,8 @@ public class SnowUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Snow first = new Snow();
-        final Snow second = new Snow();
+        final Snow first = Snow.withThreeHourLevelValue(0);
+        final Snow second = Snow.withThreeHourLevelValue(0);
 
         Assert.assertTrue(first.equals(second));
         Assert.assertTrue(first.equals(first));

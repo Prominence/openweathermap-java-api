@@ -32,17 +32,17 @@ import java.time.ZoneOffset;
 public class LocationUnitTest {
     @Test
     public void whenCreateObjectWithValidArgs_thenObjectIsCreated() {
-        Location.forValue(33, "test");
+        Location.withValues(33, "test");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectWithoutName_thenThrowAnException() {
-        Location.forValue(33, null);
+        Location.withValues(33, null);
     }
 
     @Test
     public void whenSetId_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         location.setId(55);
 
         Assert.assertEquals(55, location.getId());
@@ -50,7 +50,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetName_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         location.setName("city");
 
         Assert.assertEquals("city", location.getName());
@@ -58,7 +58,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetCountryCode_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         location.setCountryCode("by");
 
         Assert.assertEquals("by", location.getCountryCode());
@@ -66,7 +66,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetSunrise_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         final LocalDateTime now = LocalDateTime.now();
         location.setSunrise(now);
 
@@ -75,7 +75,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetSunset_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         final LocalDateTime now = LocalDateTime.now();
         location.setSunset(now);
 
@@ -84,7 +84,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetZoneOffset_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         final ZoneOffset offset = ZoneOffset.UTC;
         location.setZoneOffset(offset);
 
@@ -93,8 +93,8 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetCoordinate_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
-        final Coordinate coordinate = Coordinate.forValues(33.2, 64.2);
+        final Location location = Location.withValues(33, "test");
+        final Coordinate coordinate = Coordinate.withValues(33.2, 64.2);
         location.setCoordinate(coordinate);
 
         Assert.assertEquals(coordinate, location.getCoordinate());
@@ -102,7 +102,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSetPopulation_thenValueIsSet() {
-        final Location location = Location.forValue(33, "test");
+        final Location location = Location.withValues(33, "test");
         location.setPopulation(3444L);
 
         Assert.assertEquals(3444L, location.getPopulation().longValue());
@@ -110,11 +110,11 @@ public class LocationUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Location location = Location.forValue(44, "test");
+        final Location location = Location.withValues(44, "test");
 
         Assert.assertNotEquals("", location.toString());
 
-        location.setCoordinate(Coordinate.forValues(33.2, 56.3));
+        location.setCoordinate(Coordinate.withValues(33.2, 56.3));
 
         Assert.assertNotEquals("", location.toString());
 
@@ -130,8 +130,8 @@ public class LocationUnitTest {
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Location one = Location.forValue(44, "test");
-        final Location two = Location.forValue(44, "test");
+        final Location one = Location.withValues(44, "test");
+        final Location two = Location.withValues(44, "test");
 
         Assert.assertEquals(one.hashCode(), two.hashCode());
 
@@ -142,8 +142,8 @@ public class LocationUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Location one = Location.forValue(44, "test");
-        final Location two = Location.forValue(44, "test");
+        final Location one = Location.withValues(44, "test");
+        final Location two = Location.withValues(44, "test");
 
         Assert.assertTrue(one.equals(one));
         Assert.assertFalse(one.equals(new Object()));
@@ -200,7 +200,7 @@ public class LocationUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Coordinate coordinate = Coordinate.forValues(33.5, -22.4);
+        final Coordinate coordinate = Coordinate.withValues(33.5, -22.4);
 
         one.setCoordinate(coordinate);
 

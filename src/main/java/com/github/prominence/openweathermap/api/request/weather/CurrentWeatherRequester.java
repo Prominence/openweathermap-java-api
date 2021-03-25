@@ -30,7 +30,17 @@ import com.github.prominence.openweathermap.api.request.weather.single.SingleLoc
  */
 public interface CurrentWeatherRequester {
 
+    /**
+     * Single location current weather requester.
+     *
+     * @return the single location current weather requester
+     */
     SingleLocationCurrentWeatherRequester single();
 
+    /**
+     * Multiple locations current weather requester.
+     *
+     * @return the multiple locations current weather requester
+     */
     MultipleLocationsCurrentWeatherRequester multiple();
 }

@@ -29,6 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The type Request url builder.
+ */
 public class RequestUrlBuilder {
 
     private static final String API_KEY_PARAM_NAME = "appid";
@@ -36,18 +39,40 @@ public class RequestUrlBuilder {
     private final StringBuilder builder = new StringBuilder("http://api.openweathermap.org/data/2.5/");
     private final Map<String, Object> requestParameters = new HashMap<>();
 
+    /**
+     * Instantiates a new Request url builder.
+     *
+     * @param key the API key
+     */
     public RequestUrlBuilder(String key) {
         requestParameters.put(API_KEY_PARAM_NAME, key);
     }
 
+    /**
+     * Appends value.
+     *
+     * @param value the value
+     */
     public void append(String value) {
         builder.append(value);
     }
 
+    /**
+     * Adds request parameter.
+     *
+     * @param key   the key
+     * @param value the value
+     */
     public void addRequestParameter(String key, Object value) {
         requestParameters.put(key, value);
     }
 
+    /**
+     * Applies customization.
+     *
+     * @param language   the language
+     * @param unitSystem the unit system
+     */
     public void applyCustomization(Language language, UnitSystem unitSystem) {
         if (language != null) {
             addRequestParameter("lang", language.getValue());
@@ -57,6 +82,11 @@ public class RequestUrlBuilder {
         }
     }
 
+    /**
+     * Builds url string.
+     *
+     * @return the string
+     */
     public String buildUrl() {
         final String joinedParameters = requestParameters.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())

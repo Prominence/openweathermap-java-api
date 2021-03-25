@@ -26,6 +26,9 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
+/**
+ * The type Single result current weather request customizer.
+ */
 public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleResultCurrentWeatherRequestCustomizer {
 
     private final RequestUrlBuilder urlBuilder;
@@ -33,6 +36,11 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     private Language language;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
 
+    /**
+     * Instantiates a new Single result current weather request customizer.
+     *
+     * @param urlBuilder the url builder
+     */
     SingleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }

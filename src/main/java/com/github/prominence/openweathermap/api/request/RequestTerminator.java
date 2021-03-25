@@ -22,9 +22,25 @@
 
 package com.github.prominence.openweathermap.api.request;
 
+/**
+ * The interface Request terminator.
+ *
+ * @param <T> the type parameter
+ * @param <S> the type parameter
+ */
 public interface RequestTerminator<T, S> {
 
+    /**
+     * Java object response format.
+     *
+     * @return the java object
+     */
     T asJava();
 
+    /**
+     * JSON response format.
+     *
+     * @return the JSON string
+     */
     S asJSON();
 }

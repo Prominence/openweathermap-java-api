@@ -29,17 +29,63 @@ import com.github.prominence.openweathermap.api.model.Coordinate;
  */
 public interface FiveDayThreeHourStepForecastRequester {
 
+    /**
+     * By city name forecast request customizer.
+     *
+     * @param cityName the city name
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName);
 
+    /**
+     * By city name forecast request customizer.
+     *
+     * @param cityName  the city name
+     * @param stateCode the state code
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode);
 
+    /**
+     * By city name forecast request customizer.
+     *
+     * @param cityName    the city name
+     * @param stateCode   the state code
+     * @param countryCode the country code
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode, String countryCode);
 
+    /**
+     * By city id forecast request customizer.
+     *
+     * @param cityId the city id
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byCityId(long cityId);
 
+    /**
+     * By coordinate forecast request customizer.
+     *
+     * @param coordinate the coordinate
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byCoordinate(Coordinate coordinate);
 
+    /**
+     * By zip code and country forecast request customizer.
+     *
+     * @param zipCode     the zip code
+     * @param countryCode the country code
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
 
+    /**
+     * By zip code in USA forecast request customizer.
+     *
+     * @param zipCode the zip code
+     * @return the forecast request customizer
+     */
     FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode);
 }

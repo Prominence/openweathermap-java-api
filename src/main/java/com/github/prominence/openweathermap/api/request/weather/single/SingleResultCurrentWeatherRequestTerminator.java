@@ -25,8 +25,21 @@ package com.github.prominence.openweathermap.api.request.weather.single;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
+/**
+ * The current weather request terminator interface.
+ */
 public interface SingleResultCurrentWeatherRequestTerminator extends RequestTerminator<Weather, String> {
+    /**
+     * XML response format.
+     *
+     * @return the XML string
+     */
     String asXML();
 
+    /**
+     * HTML response format.
+     *
+     * @return the HTML string
+     */
     String asHTML();
 }

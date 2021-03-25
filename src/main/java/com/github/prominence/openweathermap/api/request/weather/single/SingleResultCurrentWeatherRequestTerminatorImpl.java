@@ -28,11 +28,20 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
+/**
+ * The type Single result current weather request terminator.
+ */
 public class SingleResultCurrentWeatherRequestTerminatorImpl implements SingleResultCurrentWeatherRequestTerminator {
 
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
+    /**
+     * Instantiates a new Single result current weather request terminator.
+     *
+     * @param urlBuilder the url builder
+     * @param unitSystem the unit system
+     */
     SingleResultCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;
