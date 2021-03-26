@@ -117,7 +117,7 @@ public class CurrentWeatherResponseMapper {
     private Weather getSingle(JsonNode rootNode) {
         JsonNode weatherState = rootNode.get("weather").get(0);
         Weather weather = Weather.forValue(weatherState.get("main").asText(), weatherState.get("description").asText());
-        weather.setWeatherIconUrl("http://openweathermap.org/img/w/" + weatherState.get("icon").asText() + ".png");
+        weather.setWeatherIconId(weatherState.get("icon").asText());
 
         weather.setTemperature(parseTemperature(rootNode));
         weather.setAtmosphericPressure(parsePressure(rootNode));

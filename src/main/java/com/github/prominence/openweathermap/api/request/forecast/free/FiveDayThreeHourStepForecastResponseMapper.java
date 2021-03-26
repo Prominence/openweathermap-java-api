@@ -138,7 +138,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
                 weatherNode.get("main").asText(),
                 weatherNode.get("description").asText()
         );
-        weatherForecast.setWeatherIconUrl("https://openweathermap.org/img/w/" + weatherNode.get("icon").asText() + ".png");
+        weatherForecast.setWeatherIconId(weatherNode.get("icon").asText());
 
         JsonNode mainNode = rootNode.get("main");
         weatherForecast.setTemperature(parseTemperature(mainNode));
