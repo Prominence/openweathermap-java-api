@@ -73,11 +73,15 @@ public class WeatherForecastUnitTest {
     }
 
     @Test
-    public void whenSetIconUrl_thenValueIsSet() {
+    public void whenSetIconId_thenValueIsSet() {
         final WeatherForecast weatherForecast = WeatherForecast.forValue("state", "desc");
-        weatherForecast.setWeatherIconUrl("test");
+        Assert.assertNull(weatherForecast.getWeatherIconId());
+        Assert.assertNull(weatherForecast.getWeatherIconUrl());
 
-        Assert.assertEquals("test", weatherForecast.getWeatherIconUrl());
+        weatherForecast.setWeatherIconId("02n");
+
+        Assert.assertEquals("02n", weatherForecast.getWeatherIconId());
+        Assert.assertNotNull(weatherForecast.getWeatherIconUrl());
     }
 
     @Test
@@ -258,11 +262,11 @@ public class WeatherForecastUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        one.setWeatherIconUrl("1");
+        one.setWeatherIconId("1");
 
         Assert.assertFalse(one.equals(two));
 
-        two.setWeatherIconUrl("1");
+        two.setWeatherIconId("1");
 
         Assert.assertTrue(one.equals(two));
 

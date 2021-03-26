@@ -33,7 +33,7 @@ import java.util.Objects;
 public class WeatherForecast {
     private String state;
     private String description;
-    private String weatherIconUrl;
+    private String weatherIconId;
 
     private LocalDateTime forecastTime;
 
@@ -114,21 +114,33 @@ public class WeatherForecast {
     }
 
     /**
+     * Gets weather icon ID.
+     *
+     * @return the weather icon ID
+     */
+    public String getWeatherIconId() {
+        return weatherIconId;
+    }
+
+    /**
+     * Sets weather icon ID.
+     *
+     * @param weatherIconId the weather icon ID
+     */
+    public void setWeatherIconId(String weatherIconId) {
+        this.weatherIconId = weatherIconId;
+    }
+
+    /**
      * Gets weather icon url.
      *
      * @return the weather icon url
      */
     public String getWeatherIconUrl() {
-        return weatherIconUrl;
-    }
-
-    /**
-     * Sets weather icon url.
-     *
-     * @param weatherIconUrl the weather icon url
-     */
-    public void setWeatherIconUrl(String weatherIconUrl) {
-        this.weatherIconUrl = weatherIconUrl;
+        if (weatherIconId != null) {
+            return "https://openweathermap.org/img/w/" + weatherIconId + ".png";
+        }
+        return null;
     }
 
     /**
@@ -318,7 +330,7 @@ public class WeatherForecast {
         WeatherForecast that = (WeatherForecast) o;
         return Objects.equals(state, that.state) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(weatherIconUrl, that.weatherIconUrl) &&
+                Objects.equals(weatherIconId, that.weatherIconId) &&
                 Objects.equals(forecastTime, that.forecastTime) &&
                 Objects.equals(temperature, that.temperature) &&
                 Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
@@ -333,7 +345,7 @@ public class WeatherForecast {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, description, weatherIconUrl, forecastTime, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, dayTime);
+        return Objects.hash(state, description, weatherIconId, forecastTime, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, dayTime);
     }
 
     @Override

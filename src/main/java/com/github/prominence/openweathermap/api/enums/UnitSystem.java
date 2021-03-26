@@ -69,9 +69,9 @@ public enum UnitSystem {
     public String getTemperatureUnit() {
         switch (this) {
             case METRIC:
-                return "℃";
+                return "°C";
             case IMPERIAL:
-                return "℉";
+                return "°F";
             case STANDARD:
             default:
                 return "K";
