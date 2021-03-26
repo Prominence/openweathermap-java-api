@@ -26,14 +26,14 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.0.0')
+compile('com.github.prominence:openweathermap-api:2.0.1-SNAPSHOT')
 ```
 
 ### Documentation
@@ -41,6 +41,7 @@ compile('com.github.prominence:openweathermap-api:2.0.0')
 * [OpenWeatherMap Java API - 1.1](docs/Release_1.1.md)
 * [OpenWeatherMap Java API - 1.2](docs/Release_1.2.md)
 * [OpenWeatherMap Java API - 2.0.0](docs/Release_2.0.0.md)
+* [OpenWeatherMap Java API - 2.0.1](docs/Release_2.0.1.md)
 * [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
 
 ### License

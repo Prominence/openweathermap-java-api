@@ -8,14 +8,14 @@
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.0.1-SNAPSHOT</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.0.1-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.0.1')
 ```
 
 ### How to use:
@@ -105,7 +105,6 @@ You are able to set preferable options(via chain methods) and execute appropriat
 |---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `getState()`              | Returns short weather description. Example: `Clear`.                                                                                                                      |
 | `getDescription()`        | Returns weather description. Example: `clear sky`.                                                                                                                        |
-| `getWeatherIconId()`      | Returns a weather state ID. Examples: `01d`, `01n`, `11n`, etc.                                                                                                           |
 | `getWeatherIconUrl()`     | Returns a link to weather icon hosted on https://openweathermap.org website.                                                                                              |
 | `getCalculatedOn()`       | Returns `LocalDateTime` object with data calculation time.                                                                                                                |
 | `getTemperature()`        | Returns `Temperature` instance that contains information about temperature. Available fields: `value`, `maxTemperature`, `minTemperature`, `feelsLike` and `unit`.        |
@@ -189,7 +188,6 @@ A forecast for Minsk with 15 timestamps.
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `getState()`                  | Returns short weather description. Example: `Clear`.                                                                                                                      |
 | `getDescription()`            | Returns weather description. Example: `clear sky`.                                                                                                                        |
-| `getWeatherIconId()`          | Returns a weather state ID. Examples: `01d`, `01n`, `11n`, etc.                                                                                                           |
 | `getWeatherIconUrl()`         | Returns a link to weather icon hosted on https://openweathermap.org website.                                                                                              |
 | `getForecastTime()`           | Returns `LocalDateTime` object with weather forecast time.                                                                                                                |
 | `getTemperature()`            | Returns `Temperature` instance that contains information about temperature. Available fields: `value`, `maxTemperature`, `minTemperature`, `feelsLike` and `unit`.        |
