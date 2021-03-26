@@ -20,33 +20,13 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.forecast.free;
+package com.github.prominence.openweathermap.api.request.onecall;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequester;
 
-/**
- * The forecast request customizer interface.
- */
-public interface FiveDayThreeHourStepForecastRequestCustomizer extends RequestCustomizer<FiveDayThreeHourStepForecastRequestCustomizer> {
-    /**
-     * Count customizer.
-     *
-     * @param numberOfTimestamps the number of timestamps
-     * @return forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps);
+public interface OneCallWeatherRequester {
+    OneCallCurrentWeatherRequester current();
 
-    /**
-     * Retrieve forecast request terminator.
-     *
-     * @return forecast request terminator
-     */
-    FiveDayThreeHourStepForecastRequestTerminator retrieve();
-
-    /**
-     * Retrieve forecast async request terminator.
-     *
-     * @return forecast async request terminator
-     */
-    FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync();
+    OneCallHistoricalWeatherRequester historical();
 }

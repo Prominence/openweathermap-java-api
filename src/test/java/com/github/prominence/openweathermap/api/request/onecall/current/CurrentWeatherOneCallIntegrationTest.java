@@ -20,33 +20,31 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.forecast.free;
+package com.github.prominence.openweathermap.api.request.onecall.current;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.onecall.OneCallCurrentData;
+import org.junit.Ignore;
+import org.junit.Test;
 
-/**
- * The forecast request customizer interface.
- */
-public interface FiveDayThreeHourStepForecastRequestCustomizer extends RequestCustomizer<FiveDayThreeHourStepForecastRequestCustomizer> {
-    /**
-     * Count customizer.
-     *
-     * @param numberOfTimestamps the number of timestamps
-     * @return forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps);
+public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
+    @Test
+    @Ignore
+    public void test() {
+        OneCallCurrentData oneCallCurrentData = getClient()
+                .oneCall()
+                .current()
+                .byCoordinate(Coordinate.withValues(0, 0))
+                .exclude(OneCallResultOptions.CURRENT, OneCallResultOptions.ALERTS)
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava();
 
-    /**
-     * Retrieve forecast request terminator.
-     *
-     * @return forecast request terminator
-     */
-    FiveDayThreeHourStepForecastRequestTerminator retrieve();
-
-    /**
-     * Retrieve forecast async request terminator.
-     *
-     * @return forecast async request terminator
-     */
-    FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync();
+        System.out.println(oneCallCurrentData);
+    }
 }

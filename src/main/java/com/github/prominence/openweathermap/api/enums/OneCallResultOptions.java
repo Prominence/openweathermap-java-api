@@ -20,33 +20,22 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.forecast.free;
+package com.github.prominence.openweathermap.api.enums;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+public enum OneCallResultOptions {
+    CURRENT("current"),
+    MINUTELY("minutely"),
+    HOURLY("hourly"),
+    DAILY("daily"),
+    ALERTS("alerts");
 
-/**
- * The forecast request customizer interface.
- */
-public interface FiveDayThreeHourStepForecastRequestCustomizer extends RequestCustomizer<FiveDayThreeHourStepForecastRequestCustomizer> {
-    /**
-     * Count customizer.
-     *
-     * @param numberOfTimestamps the number of timestamps
-     * @return forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps);
+    private final String value;
 
-    /**
-     * Retrieve forecast request terminator.
-     *
-     * @return forecast request terminator
-     */
-    FiveDayThreeHourStepForecastRequestTerminator retrieve();
+    OneCallResultOptions(String value) {
+        this.value = value;
+    }
 
-    /**
-     * Retrieve forecast async request terminator.
-     *
-     * @return forecast async request terminator
-     */
-    FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync();
+    public String getValue() {
+        return value;
+    }
 }
