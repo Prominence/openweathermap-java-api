@@ -34,7 +34,6 @@ import java.util.List;
  * The type Multiple result current weather request terminator.
  */
 public class MultipleResultCurrentWeatherRequestTerminatorImpl implements MultipleResultCurrentWeatherRequestTerminator {
-
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 

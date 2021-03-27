@@ -20,34 +20,36 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.onecall.historical;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-/**
- * The type Current weather requester.
- */
-public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
+import java.util.concurrent.CompletableFuture;
+
+public class OneCallHistoricalWeatherAsyncRequestTerminatorImpl implements OneCallHistoricalWeatherAsyncRequestTerminator {
     private final RequestUrlBuilder urlBuilder;
+    private final UnitSystem unitSystem;
 
-    /**
-     * Instantiates a new Current weather requester.
-     *
-     * @param apiKey the api key
-     */
-    public CurrentWeatherRequesterImpl(String apiKey) {
-        urlBuilder =  new RequestUrlBuilder(apiKey);
+    public OneCallHistoricalWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
+        this.urlBuilder = urlBuilder;
+        this.unitSystem = unitSystem;
     }
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequesterImpl(urlBuilder);
+    @Override
+    public CompletableFuture<HistoricalWeatherData> asJava() {
+        return CompletableFuture.supplyAsync(() -> new OneCallWeatherResponseMapper(unitSystem).mapToHistorical(getRawResponse()));
     }
 
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequesterImpl(urlBuilder);
+    @Override
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(urlBuilder.buildUrl());
     }
 }

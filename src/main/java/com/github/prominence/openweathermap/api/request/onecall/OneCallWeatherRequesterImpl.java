@@ -20,7 +20,28 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.onecall;
+package com.github.prominence.openweathermap.api.request.onecall;
 
-public class OneCallCurrentData {
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequester;
+import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequesterImpl;
+import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequester;
+import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequesterImpl;
+
+public class OneCallWeatherRequesterImpl implements OneCallWeatherRequester {
+    private final RequestUrlBuilder urlBuilder;
+
+    public OneCallWeatherRequesterImpl(String apiKey) {
+        urlBuilder =  new RequestUrlBuilder(apiKey);
+    }
+
+    @Override
+    public OneCallCurrentWeatherRequester current() {
+        return new OneCallCurrentWeatherRequesterImpl(urlBuilder);
+    }
+
+    @Override
+    public OneCallHistoricalWeatherRequester historical() {
+        return new OneCallHistoricalWeatherRequesterImpl(urlBuilder);
+    }
 }

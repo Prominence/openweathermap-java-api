@@ -20,51 +20,43 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.single;
+package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
-/**
- * The type Single result current weather request customizer.
- */
-public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleResultCurrentWeatherRequestCustomizer {
+public class OneCallHistoricalWeatherRequestCustomizerImpl implements OneCallHistoricalWeatherRequestCustomizer {
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
 
-    /**
-     * Instantiates a new Single result current weather request customizer.
-     *
-     * @param urlBuilder the url builder
-     */
-    SingleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
+    public OneCallHistoricalWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestCustomizer language(Language language) {
+    public OneCallHistoricalWeatherRequestCustomizer language(Language language) {
         this.language = language;
         return this;
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+    public OneCallHistoricalWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestTerminator retrieve() {
+    public OneCallHistoricalWeatherRequestTerminator retrieve() {
         urlBuilder.applyCustomization(language, unitSystem);
-        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+        return new OneCallHistoricalWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
-    public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+    public OneCallHistoricalWeatherAsyncRequestTerminator retrieveAsync() {
         urlBuilder.applyCustomization(language, unitSystem);
-        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
+        return new OneCallHistoricalWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 }

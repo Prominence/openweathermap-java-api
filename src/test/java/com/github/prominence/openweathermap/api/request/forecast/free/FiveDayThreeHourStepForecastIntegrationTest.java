@@ -252,7 +252,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJava_thenReturnNotNull() {
         final Forecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -277,7 +277,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJSON_thenReturnNotNull() {
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .language(Language.SPANISH)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
@@ -291,7 +291,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsXML_thenReturnNotNull() {
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()

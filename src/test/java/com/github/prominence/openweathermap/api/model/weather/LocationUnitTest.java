@@ -94,7 +94,7 @@ public class LocationUnitTest {
     @Test
     public void whenSetCoordinate_thenValueIsSet() {
         final Location location = Location.withValues(33, "test");
-        final Coordinate coordinate = Coordinate.withValues(33.2, 64.2);
+        final Coordinate coordinate = Coordinate.of(33.2, 64.2);
         location.setCoordinate(coordinate);
 
         Assert.assertEquals(coordinate, location.getCoordinate());
@@ -106,7 +106,7 @@ public class LocationUnitTest {
 
         Assert.assertNotEquals("", location.toString());
 
-        location.setCoordinate(Coordinate.withValues(33.2, 56.3));
+        location.setCoordinate(Coordinate.of(33.2, 56.3));
 
         Assert.assertNotEquals("", location.toString());
 
@@ -188,7 +188,7 @@ public class LocationUnitTest {
 
         Assert.assertTrue(one.equals(two));
 
-        final Coordinate coordinate = Coordinate.withValues(33.5, -22.4);
+        final Coordinate coordinate = Coordinate.of(33.5, -22.4);
 
         one.setCoordinate(coordinate);
 

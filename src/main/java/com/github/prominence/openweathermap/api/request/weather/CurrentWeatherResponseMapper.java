@@ -83,7 +83,6 @@ import java.util.TimeZone;
  * --- cod Internal parameter
  */
 public class CurrentWeatherResponseMapper {
-
     private final UnitSystem unitSystem;
 
     /**
@@ -300,7 +299,7 @@ public class CurrentWeatherResponseMapper {
         JsonNode latitudeNode = rootNode.get("lat");
         JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
-            return Coordinate.withValues(latitudeNode.asDouble(), longitudeNode.asDouble());
+            return Coordinate.of(latitudeNode.asDouble(), longitudeNode.asDouble());
         }
         return null;
     }

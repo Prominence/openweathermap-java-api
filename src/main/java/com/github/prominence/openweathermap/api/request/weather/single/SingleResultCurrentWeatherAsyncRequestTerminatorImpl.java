@@ -34,7 +34,6 @@ import java.util.concurrent.CompletableFuture;
  * The type Single result current weather async request terminator.
  */
 public class SingleResultCurrentWeatherAsyncRequestTerminatorImpl implements SingleResultCurrentWeatherAsyncRequestTerminator {
-
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 

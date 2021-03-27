@@ -27,24 +27,90 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.onecall.OneCallCurrentData;
-import org.junit.Ignore;
+import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
     @Test
-    @Ignore
-    public void test() {
-        OneCallCurrentData oneCallCurrentData = getClient()
+    public void whenRetrieveCurrentOneCallResponseAsJava_thenOk() {
+        final CurrentWeatherData currentWeatherData = getClient()
                 .oneCall()
                 .current()
-                .byCoordinate(Coordinate.withValues(0, 0))
-                .exclude(OneCallResultOptions.CURRENT, OneCallResultOptions.ALERTS)
+                .byCoordinate(Coordinate.of(53.54, 27.34))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
-        System.out.println(oneCallCurrentData);
+        Assert.assertNotNull(currentWeatherData);
+    }
+
+    @Test
+    public void whenRetrieveCurrentOneCallResponseAsJSON_thenOk() {
+        final String responseJson = getClient()
+                .oneCall()
+                .current()
+                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertNotNull(responseJson);
+        Assert.assertNotNull("", responseJson);
+        System.out.println(responseJson);
+    }
+
+    @Test
+    public void whenRetrieveCurrentOneCallResponseWithExclusionAsJava_thenOk() {
+        final CurrentWeatherData currentWeatherData = getClient()
+                .oneCall()
+                .current()
+                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .exclude(OneCallResultOptions.CURRENT, OneCallResultOptions.MINUTELY)
+                .retrieve()
+                .asJava();
+
+        Assert.assertNotNull(currentWeatherData);
+        Assert.assertNull(currentWeatherData.getCurrent());
+        Assert.assertNull(currentWeatherData.getMinutelyList());
+    }
+
+    @Test
+    public void whenRetrieveCurrentOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        final CompletableFuture<CurrentWeatherData> currentWeatherDataFuture = getClient()
+                .oneCall()
+                .current()
+                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asJava();
+
+        Assert.assertNotNull(currentWeatherDataFuture);
+        Assert.assertNotNull(currentWeatherDataFuture.get());
+    }
+
+    @Test
+    public void whenRetrieveCurrentOneCallAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> responseJsonFuture = getClient()
+                .oneCall()
+                .current()
+                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asJSON();
+
+        Assert.assertNotNull(responseJsonFuture);
+        final String responseJson = responseJsonFuture.get();
+        Assert.assertNotNull(responseJson);
+        System.out.println(responseJson);
     }
 }

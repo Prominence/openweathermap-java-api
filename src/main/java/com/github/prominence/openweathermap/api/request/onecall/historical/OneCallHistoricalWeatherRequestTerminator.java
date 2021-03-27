@@ -22,8 +22,8 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.onecall.OneCallHistoricalData;
+import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
-public interface OneCallHistoricalWeatherRequestTerminator extends RequestTerminator<OneCallHistoricalData, String> {
+public interface OneCallHistoricalWeatherRequestTerminator extends RequestTerminator<HistoricalWeatherData, String> {
 }

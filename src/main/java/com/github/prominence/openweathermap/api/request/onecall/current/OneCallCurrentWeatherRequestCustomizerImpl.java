@@ -20,51 +20,61 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather.single;
+package com.github.prominence.openweathermap.api.request.onecall.current;
 
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
-/**
- * The type Single result current weather request customizer.
- */
-public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleResultCurrentWeatherRequestCustomizer {
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class OneCallCurrentWeatherRequestCustomizerImpl implements OneCallCurrentWeatherRequestCustomizer {
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
+    private OneCallResultOptions[] excludeOptions;
 
-    /**
-     * Instantiates a new Single result current weather request customizer.
-     *
-     * @param urlBuilder the url builder
-     */
-    SingleResultCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
+    OneCallCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestCustomizer language(Language language) {
+    public OneCallCurrentWeatherRequestCustomizer language(Language language) {
         this.language = language;
         return this;
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+    public OneCallCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+    public OneCallCurrentWeatherRequestCustomizer exclude(OneCallResultOptions... excludeOptions) {
+        this.excludeOptions = excludeOptions;
+        return this;
     }
 
     @Override
-    public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+    public OneCallCurrentWeatherRequestTerminator retrieve() {
+        applyCustomization();
+        return new OneCallCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public OneCallCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        applyCustomization();
+        return new OneCallCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    private void applyCustomization() {
         urlBuilder.applyCustomization(language, unitSystem);
-        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
+        if (excludeOptions != null) {
+            urlBuilder.addRequestParameter("exclude", Stream.of(excludeOptions).map(OneCallResultOptions::getValue).collect(Collectors.joining(",")));
+        }
     }
 }

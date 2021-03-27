@@ -20,7 +20,24 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.onecall;
+package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-public class OneCallHistoricalData {
+import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+
+public class OneCallHistoricalWeatherRequesterImpl implements OneCallHistoricalWeatherRequester {
+    private final RequestUrlBuilder urlBuilder;
+
+    public OneCallHistoricalWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
+        this.urlBuilder = urlBuilder;
+        urlBuilder.append("onecall/timemachine");
+    }
+
+    @Override
+    public OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinate coordinate, long unixTime) {
+        urlBuilder.addRequestParameter("lat", coordinate.getLatitude());
+        urlBuilder.addRequestParameter("lon", coordinate.getLongitude());
+        urlBuilder.addRequestParameter("dt", unixTime);
+        return new OneCallHistoricalWeatherRequestCustomizerImpl(urlBuilder);
+    }
 }

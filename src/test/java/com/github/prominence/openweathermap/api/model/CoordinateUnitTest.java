@@ -28,32 +28,32 @@ import org.junit.Test;
 public class CoordinateUnitTest {
     @Test
     public void whenCreateCoordinateWithValidValues_thenObjectCreated() {
-        Coordinate.withValues(44, 53);
+        Coordinate.of(44, 53);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCoordinateWithInvalidLatitudeBelowMinus90_thenThrowAnException() {
-        Coordinate.withValues(-333, 44);
+        Coordinate.of(-333, 44);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCoordinateWithInvalidLatitudeAbove90_thenThrowAnException() {
-        Coordinate.withValues(223, 44);
+        Coordinate.of(223, 44);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCoordinateWithInvalidLongitudeBelowMinus180_thenThrowAnException() {
-        Coordinate.withValues(33, -999);
+        Coordinate.of(33, -999);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenCreateCoordinateWithInvalidLongitudeAbove180_thenThrowAnException() {
-        Coordinate.withValues(33, 999);
+        Coordinate.of(33, 999);
     }
 
     @Test
     public void whenSetValidCoordinates_thenAllIsFine() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
 
         coordinate.setLatitude(-90);
         Assert.assertEquals(-90, coordinate.getLatitude(), 0.00001);
@@ -72,31 +72,31 @@ public class CoordinateUnitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidLatitudeBelowMinus90_thenThrowAnException() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         coordinate.setLatitude(-91);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidLatitudeAbove90_thenThrowAnException() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         coordinate.setLatitude(92);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidLongitudeBelowMinus180_thenThrowAnException() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         coordinate.setLongitude(-194);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidLongitudeAbove180_thenThrowAnException() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         coordinate.setLongitude(444);
     }
 
     @Test
     public void whenGetLatitude_thenAllIsFine() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         Assert.assertEquals(0, coordinate.getLatitude(), 0.00001);
 
         coordinate.setLatitude(45);
@@ -106,7 +106,7 @@ public class CoordinateUnitTest {
 
     @Test
     public void whenGetLongitude_thenAllIsFine() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         Assert.assertEquals(0, coordinate.getLongitude(), 0.00001);
 
         coordinate.setLongitude(33);
@@ -116,15 +116,15 @@ public class CoordinateUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Coordinate coordinate = Coordinate.withValues(0, 0);
+        final Coordinate coordinate = Coordinate.of(0, 0);
         Assert.assertNotNull(coordinate.toString());
         Assert.assertNotEquals("", coordinate.toString());
     }
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Coordinate first = Coordinate.withValues(22, 66);
-        final Coordinate second = Coordinate.withValues(22, 44);
+        final Coordinate first = Coordinate.of(22, 66);
+        final Coordinate second = Coordinate.of(22, 44);
 
         Assert.assertNotEquals(first.hashCode(), second.hashCode());
 
@@ -143,8 +143,8 @@ public class CoordinateUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Coordinate first = Coordinate.withValues(11, 99);
-        final Coordinate second = Coordinate.withValues(11, 99);
+        final Coordinate first = Coordinate.of(11, 99);
+        final Coordinate second = Coordinate.of(11, 99);
 
         Assert.assertTrue(first.equals(second));
         Assert.assertTrue(first.equals(first));

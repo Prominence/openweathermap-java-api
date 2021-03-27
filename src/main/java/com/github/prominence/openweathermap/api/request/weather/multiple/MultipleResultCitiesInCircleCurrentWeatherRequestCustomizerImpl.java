@@ -30,7 +30,6 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
  * The type Multiple result current weather request customizer.
  */
 public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl implements MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer {
-
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
@@ -46,18 +45,6 @@ public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl imp
     }
 
     @Override
-    public MultipleResultCitiesInCircleCurrentWeatherRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new MultipleResultCitiesInCircleCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
-    public MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
     public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer language(Language language) {
         this.language = language;
         return this;
@@ -67,5 +54,17 @@ public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizerImpl imp
     public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
+    }
+
+    @Override
+    public MultipleResultCitiesInCircleCurrentWeatherRequestTerminator retrieve() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 }

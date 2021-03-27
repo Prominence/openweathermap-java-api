@@ -5,11 +5,11 @@ Java API for OpenWeatherMap services.
 Free: 
 * Current weather data
 * 5 day / 3-hour forecast
+* One Call API
 
 ### Will be implemented later:
 
 Free:
-* One Call API
 * Air pollution
 * Geocoding API
 * Weather Stations

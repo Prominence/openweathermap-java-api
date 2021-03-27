@@ -30,7 +30,6 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
  * The forecast request customizer.
  */
 public class FiveDayThreeHourStepForecastRequestCustomizerImpl implements FiveDayThreeHourStepForecastRequestCustomizer {
-
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
@@ -66,15 +65,20 @@ public class FiveDayThreeHourStepForecastRequestCustomizerImpl implements FiveDa
 
     @Override
     public FiveDayThreeHourStepForecastRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        urlBuilder.addRequestParameter("cnt", count);
+        applyCustomization();
         return new FiveDayThreeHourStepForecastRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 
     @Override
     public FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        urlBuilder.addRequestParameter("cnt", count);
+        applyCustomization();
         return new FiveDayThreeHourStepForecastAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    private void applyCustomization() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        if (count >= 0) {
+            urlBuilder.addRequestParameter("cnt", count);
+        }
     }
 }

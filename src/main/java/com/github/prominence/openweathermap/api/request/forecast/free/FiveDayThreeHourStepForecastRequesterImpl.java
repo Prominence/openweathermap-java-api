@@ -29,7 +29,6 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
  * The forecast requester.
  */
 public class FiveDayThreeHourStepForecastRequesterImpl implements FiveDayThreeHourStepForecastRequester {
-
     private final RequestUrlBuilder urlBuilder;
 
     /**

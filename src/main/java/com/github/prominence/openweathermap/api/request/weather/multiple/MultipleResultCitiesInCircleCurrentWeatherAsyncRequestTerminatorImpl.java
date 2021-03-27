@@ -35,7 +35,6 @@ import java.util.concurrent.CompletableFuture;
  * The type Multiple result current weather async request terminator.
  */
 public class MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminatorImpl implements MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator {
-
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 

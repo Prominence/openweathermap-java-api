@@ -20,34 +20,23 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.request.onecall.current;
 
+import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequesterImpl;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
 
-/**
- * The type Current weather requester.
- */
-public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
+public class OneCallCurrentWeatherRequesterImpl implements OneCallCurrentWeatherRequester {
     private final RequestUrlBuilder urlBuilder;
 
-    /**
-     * Instantiates a new Current weather requester.
-     *
-     * @param apiKey the api key
-     */
-    public CurrentWeatherRequesterImpl(String apiKey) {
-        urlBuilder =  new RequestUrlBuilder(apiKey);
+    public OneCallCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
+        this.urlBuilder = urlBuilder;
+        urlBuilder.append("onecall");
     }
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequesterImpl(urlBuilder);
-    }
-
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequesterImpl(urlBuilder);
+    @Override
+    public OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
+        urlBuilder.addRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
+        urlBuilder.addRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+        return new OneCallCurrentWeatherRequestCustomizerImpl(urlBuilder);
     }
 }

@@ -87,7 +87,6 @@ import java.util.TimeZone;
  *      |- city.timezone Shift in seconds from UTC
  */
 public class FiveDayThreeHourStepForecastResponseMapper {
-
     private final UnitSystem unitSystem;
 
     /**
@@ -285,7 +284,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         JsonNode latitudeNode = rootNode.get("lat");
         JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
-            return Coordinate.withValues(latitudeNode.asDouble(), longitudeNode.asDouble());
+            return Coordinate.of(latitudeNode.asDouble(), longitudeNode.asDouble());
         }
         return null;
     }

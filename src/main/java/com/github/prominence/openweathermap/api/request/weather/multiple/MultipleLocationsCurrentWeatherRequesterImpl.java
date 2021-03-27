@@ -30,7 +30,6 @@ import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
  * The type Multiple locations current weather requester.
  */
 public class MultipleLocationsCurrentWeatherRequesterImpl implements MultipleLocationsCurrentWeatherRequester {
-
     private final RequestUrlBuilder urlBuilder;
 
     /**

@@ -24,27 +24,77 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.onecall.OneCallCurrentData;
-import com.github.prominence.openweathermap.api.model.onecall.OneCallHistoricalData;
-import org.junit.Ignore;
+import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     @Test
-    @Ignore
-    public void test() {
-        OneCallHistoricalData oneCallHistoricalData = getClient()
+    public void whenRetrieveHistoricalOneCallResponseAsJava_thenOk() {
+        final HistoricalWeatherData historicalWeatherData = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinate.withValues(0, 0), 1586468027)
+                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
-        System.out.println(oneCallHistoricalData);
+        Assert.assertNotNull(historicalWeatherData);
+    }
+
+    @Test
+    public void whenRetrieveHistoricalOneCallResponseAsJSON_thenOk() {
+        final String responseJson = getClient()
+                .oneCall()
+                .historical()
+                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJSON();
+
+        Assert.assertNotNull(responseJson);
+        Assert.assertNotEquals("", responseJson);
+        System.out.println(responseJson);
+    }
+
+    @Test
+    public void whenRetrieveHistoricalOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        final CompletableFuture<HistoricalWeatherData> historicalWeatherDataFuture = getClient()
+                .oneCall()
+                .historical()
+                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asJava();
+
+        Assert.assertNotNull(historicalWeatherDataFuture);
+        Assert.assertNotNull(historicalWeatherDataFuture.get());
+    }
+
+    @Test
+    public void whenRetrieveHistoricalOneCallAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> responseJsonFuture = getClient()
+                .oneCall()
+                .historical()
+                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asJSON();
+
+        Assert.assertNotNull(responseJsonFuture);
+        final String responseJson = responseJsonFuture.get();
+        Assert.assertNotEquals("", responseJson);
+        System.out.println(responseJson);
     }
 }

@@ -33,7 +33,6 @@ import java.util.concurrent.CompletableFuture;
  * Async request terminator.
  */
 public class FiveDayThreeHourStepForecastAsyncRequestTerminatorImpl implements FiveDayThreeHourStepForecastAsyncRequestTerminator {
-
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 

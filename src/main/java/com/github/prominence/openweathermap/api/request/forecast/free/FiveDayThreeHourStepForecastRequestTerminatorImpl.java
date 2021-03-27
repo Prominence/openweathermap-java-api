@@ -31,7 +31,6 @@ import com.github.prominence.openweathermap.api.utils.RequestUtils;
  * The forecast request terminator.
  */
 public class FiveDayThreeHourStepForecastRequestTerminatorImpl implements FiveDayThreeHourStepForecastRequestTerminator {
-
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 

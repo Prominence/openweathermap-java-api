@@ -26,15 +26,15 @@ import org.junit.BeforeClass;
 
 public class ApiTest {
 
-    private static OpenWeatherMapClient manager;
+    private static OpenWeatherMapClient client;
 
     @BeforeClass
     public static void retrieveApiKey() {
         String apiKey = System.getenv("OPENWEATHER_API_KEY");
-        manager = new OpenWeatherMapClient(apiKey);
+        client = new OpenWeatherMapClient(apiKey);
     }
 
     protected static OpenWeatherMapClient getClient() {
-        return manager;
+        return client;
     }
 }
