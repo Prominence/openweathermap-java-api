@@ -209,39 +209,52 @@ A forecast for Minsk with 15 timestamps.
 #### Language
 | Constant                          | Description                   |
 |-----------------------------------|-------------------------------|
+| Language.AFRIKAANS                | Afrikaans language.           |
+| Language.ALBANIAN                 | ALBANIAN language.            |
 | Language.ARABIC                   | Arabic language.              |
+| Language.AZERBAIJANI              | Azerbaijani language.         |
 | Language.BULGARIAN                | Bulgarian language.           |
 | Language.CATALAN                  | Catalan language.             |
 | Language.CZECH                    | Czech language.               |
+| Language.DANISH                   | Danish language.              |
 | Language.GERMAN                   | German language.              |
 | Language.GREEK                    | Greek language.               |
 | Language.ENGLISH                  | English language.             |
+| Language.BASQUE                   | Basque language.              |
 | Language.PERSIAN                  | Persian (Farsi) language.     |
 | Language.FINNISH                  | Finnish language.             |
 | Language.FRENCH                   | French language.              |
 | Language.GALICIAN                 | Galician language.            |
+| Language.HEBREW                   | Hebrew language.              |
+| Language.HINDI                    | Hindi language.               |
 | Language.CROATIAN                 | Croatian language.            |
 | Language.HUNGARIAN                | Hungarian language.           |
+| Language.INDONESIAN               | Indonesian language.          |
 | Language.ITALIAN                  | Italian language.             |
 | Language.JAPANESE                 | Japanese language.            |
 | Language.KOREAN                   | Korean language.              |
 | Language.LATVIAN                  | Latvian language.             |
 | Language.LITHUANIAN               | Lithuanian language.          |
 | Language.MACEDONIAN               | Macedonian language.          |
+| Language.NORWEGIAN                | Norwegian language.           |
 | Language.DUTCH                    | Dutch language.               |
 | Language.POLISH                   | Polish language.              |
 | Language.PORTUGUESE               | Portuguese language.          |
+| Language.PORTUGUES_BRAZIL         | Português Brasil language.    |
 | Language.ROMANIAN                 | Romanian language.            |
 | Language.RUSSIAN                  | Russian language.             |
 | Language.SWEDISH                  | Swedish language.             |
 | Language.SLOVAK                   | Slovak language.              |
 | Language.SLOVENIAN                | Slovenian language.           |
 | Language.SPANISH                  | Spanish language.             |
+| Language.SERBIAN                  | Serbian language.             |
+| Language.THAI                     | Thai language.                |
 | Language.TURKISH                  | Turkish language.             |
 | Language.UKRANIAN                 | Ukrainian language.           |
 | Language.VIETNAMESE               | Vietnamese language.          |
 | Language.CHINESE_SIMPLIFIED       | Chinese Simplified language.  |
 | Language.CHINESE_TRADITIONAL      | Chinese Traditional language. |
+| Language.ZULU                     | Zulu language.                |
 
 #### Unit
 | Constant             | Description                                    |
