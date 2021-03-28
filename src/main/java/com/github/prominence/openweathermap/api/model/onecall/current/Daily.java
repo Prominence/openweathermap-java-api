@@ -31,8 +31,8 @@ import java.time.LocalDateTime;
 
 public class Daily {
     private LocalDateTime forecastTime;
-    private LocalDateTime sunrise;
-    private LocalDateTime sunset;
+    private LocalDateTime sunriseTime;
+    private LocalDateTime sunsetTime;
 
     private Integer weatherId;
     private String state;
@@ -57,20 +57,20 @@ public class Daily {
         this.forecastTime = forecastTime;
     }
 
-    public LocalDateTime getSunrise() {
-        return sunrise;
+    public LocalDateTime getSunriseTime() {
+        return sunriseTime;
     }
 
-    public void setSunrise(LocalDateTime sunrise) {
-        this.sunrise = sunrise;
+    public void setSunriseTime(LocalDateTime sunriseTime) {
+        this.sunriseTime = sunriseTime;
     }
 
-    public LocalDateTime getSunset() {
-        return sunset;
+    public LocalDateTime getSunsetTime() {
+        return sunsetTime;
     }
 
-    public void setSunset(LocalDateTime sunset) {
-        this.sunset = sunset;
+    public void setSunsetTime(LocalDateTime sunsetTime) {
+        this.sunsetTime = sunsetTime;
     }
 
     public Integer getWeatherId() {

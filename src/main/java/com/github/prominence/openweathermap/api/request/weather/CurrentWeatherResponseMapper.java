@@ -129,7 +129,7 @@ public class CurrentWeatherResponseMapper {
 
         final JsonNode dtNode = rootNode.get("dt");
         if (dtNode != null) {
-            weather.setCalculatedOn(LocalDateTime.ofInstant(Instant.ofEpochSecond(dtNode.asInt()), TimeZone.getDefault().toZoneId()));
+            weather.setCalculationTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dtNode.asInt()), TimeZone.getDefault().toZoneId()));
         }
 
         return weather;
@@ -280,10 +280,10 @@ public class CurrentWeatherResponseMapper {
             final JsonNode sunriseNode = sysNode.get("sunrise");
             final JsonNode sunsetNode = sysNode.get("sunset");
             if (sunriseNode != null) {
-                location.setSunrise(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunriseNode.asInt()), TimeZone.getDefault().toZoneId()));
+                location.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunriseNode.asInt()), TimeZone.getDefault().toZoneId()));
             }
             if (sunsetNode != null) {
-                location.setSunset(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunsetNode.asInt()), TimeZone.getDefault().toZoneId()));
+                location.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunsetNode.asInt()), TimeZone.getDefault().toZoneId()));
             }
         }
 

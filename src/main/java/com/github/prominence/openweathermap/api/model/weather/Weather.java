@@ -35,7 +35,7 @@ public class Weather {
     private String description;
     private String weatherIconId;
 
-    private LocalDateTime calculatedOn;
+    private LocalDateTime calculationTime;
 
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
@@ -147,17 +147,17 @@ public class Weather {
      *
      * @return the calculated on
      */
-    public LocalDateTime getCalculatedOn() {
-        return calculatedOn;
+    public LocalDateTime getCalculationTime() {
+        return calculationTime;
     }
 
     /**
      * Sets calculated on.
      *
-     * @param calculatedOn the calculated on
+     * @param calculationTime the calculated on
      */
-    public void setCalculatedOn(LocalDateTime calculatedOn) {
-        this.calculatedOn = calculatedOn;
+    public void setCalculationTime(LocalDateTime calculationTime) {
+        this.calculationTime = calculationTime;
     }
 
     /**
@@ -312,7 +312,7 @@ public class Weather {
         return Objects.equals(state, weather.state) &&
                 Objects.equals(description, weather.description) &&
                 Objects.equals(weatherIconId, weather.weatherIconId) &&
-                Objects.equals(calculatedOn, weather.calculatedOn) &&
+                Objects.equals(calculationTime, weather.calculationTime) &&
                 Objects.equals(temperature, weather.temperature) &&
                 Objects.equals(atmosphericPressure, weather.atmosphericPressure) &&
                 Objects.equals(humidity, weather.humidity) &&
@@ -325,7 +325,7 @@ public class Weather {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, description, weatherIconId, calculatedOn, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
+        return Objects.hash(state, description, weatherIconId, calculationTime, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
     }
 
     @Override

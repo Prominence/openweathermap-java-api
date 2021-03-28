@@ -108,7 +108,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 | `getDescription()`        | Returns weather description. Example: `clear sky`.                                                                                                                        |
 | `getWeatherIconId()`      | Returns a weather state ID. Examples: `01d`, `01n`, `11n`, etc.                                                                                                           |
 | `getWeatherIconUrl()`     | Returns a link to weather icon hosted on https://openweathermap.org website.                                                                                              |
-| `getCalculatedOn()`       | Returns `LocalDateTime` object with data calculation time.                                                                                                                |
+| `getCalculationTime()`    | Returns `LocalDateTime` object with data calculation time.                                                                                                                |
 | `getTemperature()`        | Returns `Temperature` instance that contains information about temperature. Available fields: `value`, `maxTemperature`, `minTemperature`, `feelsLike` and `unit`.        |
 | `getAtmosphericPressure()`| Returns `AtmosphericPressure` instance that contains information about atmospheric pressure. Available fields: `value`, `seaLevelValue`, `groundLevelValue` and `unit`.   |
 | `getHumidity()`           | Returns `Humidity` instance that contains humidity percentage information.                                                                                                |

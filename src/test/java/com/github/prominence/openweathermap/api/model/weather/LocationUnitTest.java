@@ -68,18 +68,18 @@ public class LocationUnitTest {
     public void whenSetSunrise_thenValueIsSet() {
         final Location location = Location.withValues(33, "test");
         final LocalDateTime now = LocalDateTime.now();
-        location.setSunrise(now);
+        location.setSunriseTime(now);
 
-        Assert.assertEquals(now, location.getSunrise());
+        Assert.assertEquals(now, location.getSunriseTime());
     }
 
     @Test
     public void whenSetSunset_thenValueIsSet() {
         final Location location = Location.withValues(33, "test");
         final LocalDateTime now = LocalDateTime.now();
-        location.setSunset(now);
+        location.setSunsetTime(now);
 
-        Assert.assertEquals(now, location.getSunset());
+        Assert.assertEquals(now, location.getSunsetTime());
     }
 
     @Test
@@ -164,19 +164,19 @@ public class LocationUnitTest {
 
         final LocalDateTime now = LocalDateTime.now();
 
-        one.setSunrise(now);
+        one.setSunriseTime(now);
 
         Assert.assertFalse(one.equals(two));
 
-        two.setSunrise(now);
+        two.setSunriseTime(now);
 
         Assert.assertTrue(one.equals(two));
 
-        one.setSunset(now);
+        one.setSunsetTime(now);
 
         Assert.assertFalse(one.equals(two));
 
-        two.setSunset(now);
+        two.setSunsetTime(now);
 
         Assert.assertTrue(one.equals(two));
 

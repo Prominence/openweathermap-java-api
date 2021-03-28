@@ -116,8 +116,8 @@ public class OneCallWeatherResponseMapper {
         }
         Current current = new Current();
         current.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
-        current.setSunrise(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
-        current.setSunset(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
+        current.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
+        current.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
         current.setTemperature(parseTemperature(currentNode));
         current.setAtmosphericPressure(parsePressure(currentNode));
         current.setHumidity(parseHumidity(currentNode));
@@ -205,8 +205,8 @@ public class OneCallWeatherResponseMapper {
         for (final JsonNode dailyNode : dailyListNode) {
             final Daily daily = new Daily();
             daily.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
-            daily.setSunrise(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
-            daily.setSunset(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
+            daily.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
+            daily.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
 
             daily.setTemperature(parseDailyTemperature(dailyNode));
             daily.setAtmosphericPressure(parsePressure(dailyNode));
@@ -240,8 +240,8 @@ public class OneCallWeatherResponseMapper {
             Alert alert = new Alert();
             alert.setSenderName(alertNode.get("sender_name").asText());
             alert.setEventName(alertNode.get("event").asText());
-            alert.setStartDateTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(alertNode.get("start").asInt()), TimeZone.getDefault().toZoneId()));
-            alert.setEndDateTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(alertNode.get("end").asInt()), TimeZone.getDefault().toZoneId()));
+            alert.setStartTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(alertNode.get("start").asInt()), TimeZone.getDefault().toZoneId()));
+            alert.setEndTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(alertNode.get("end").asInt()), TimeZone.getDefault().toZoneId()));
             alert.setDescription(alertNode.get("description").asText());
             alerts.add(alert);
         }
@@ -265,8 +265,8 @@ public class OneCallWeatherResponseMapper {
         }
         HistoricalWeather historicalWeather = new HistoricalWeather();
         historicalWeather.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
-        historicalWeather.setSunrise(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
-        historicalWeather.setSunset(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
+        historicalWeather.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
+        historicalWeather.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
         historicalWeather.setTemperature(parseTemperature(currentNode));
         historicalWeather.setAtmosphericPressure(parsePressure(currentNode));
         historicalWeather.setHumidity(parseHumidity(currentNode));

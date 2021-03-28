@@ -261,10 +261,10 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         final JsonNode sunriseNode = rootNode.get("sunrise");
         final JsonNode sunsetNode = rootNode.get("sunset");
         if (sunriseNode != null) {
-            location.setSunrise(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunriseNode.asLong()), TimeZone.getDefault().toZoneId()));
+            location.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunriseNode.asLong()), TimeZone.getDefault().toZoneId()));
         }
         if (sunsetNode != null) {
-            location.setSunset(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunsetNode.asLong()), TimeZone.getDefault().toZoneId()));
+            location.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunsetNode.asLong()), TimeZone.getDefault().toZoneId()));
         }
 
         final JsonNode coordNode = rootNode.get("coord");

@@ -36,8 +36,8 @@ public class Location {
     private String name;
     private String countryCode;
 
-    private LocalDateTime sunrise;
-    private LocalDateTime sunset;
+    private LocalDateTime sunriseTime;
+    private LocalDateTime sunsetTime;
     private ZoneOffset zoneOffset;
 
     private Coordinate coordinate;
@@ -112,32 +112,32 @@ public class Location {
      * Returns location sunrise time.
      * @return sunrise time
      */
-    public LocalDateTime getSunrise() {
-        return sunrise;
+    public LocalDateTime getSunriseTime() {
+        return sunriseTime;
     }
 
     /**
      * Sets location sunrise time.
-     * @param sunrise sunrise time
+     * @param sunriseTime sunrise time
      */
-    public void setSunrise(LocalDateTime sunrise) {
-        this.sunrise = sunrise;
+    public void setSunriseTime(LocalDateTime sunriseTime) {
+        this.sunriseTime = sunriseTime;
     }
 
     /**
      * Returns location sunset time.
      * @return sunset time
      */
-    public LocalDateTime getSunset() {
-        return sunset;
+    public LocalDateTime getSunsetTime() {
+        return sunsetTime;
     }
 
     /**
      * Sets location sunset time.
-     * @param sunset sunset time
+     * @param sunsetTime sunset time
      */
-    public void setSunset(LocalDateTime sunset) {
-        this.sunset = sunset;
+    public void setSunsetTime(LocalDateTime sunsetTime) {
+        this.sunsetTime = sunsetTime;
     }
 
     /**
@@ -180,15 +180,15 @@ public class Location {
         return id == location.id &&
                 Objects.equals(name, location.name) &&
                 Objects.equals(countryCode, location.countryCode) &&
-                Objects.equals(sunrise, location.sunrise) &&
-                Objects.equals(sunset, location.sunset) &&
+                Objects.equals(sunriseTime, location.sunriseTime) &&
+                Objects.equals(sunsetTime, location.sunsetTime) &&
                 Objects.equals(zoneOffset, location.zoneOffset) &&
                 Objects.equals(coordinate, location.coordinate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, countryCode, sunrise, sunset, zoneOffset, coordinate);
+        return Objects.hash(id, name, countryCode, sunriseTime, sunsetTime, zoneOffset, coordinate);
     }
 
     @Override

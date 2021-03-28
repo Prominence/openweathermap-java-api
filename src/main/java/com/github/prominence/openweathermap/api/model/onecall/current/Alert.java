@@ -28,8 +28,8 @@ import java.util.Objects;
 public class Alert {
     private String senderName;
     private String eventName;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String description;
 
     public String getSenderName() {
@@ -48,20 +48,20 @@ public class Alert {
         this.eventName = eventName;
     }
 
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
-        this.startDateTime = startDateTime;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDateTime getEndDateTime() {
-        return endDateTime;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public String getDescription() {
@@ -79,18 +79,18 @@ public class Alert {
         Alert alert = (Alert) o;
         return Objects.equals(senderName, alert.senderName) &&
                 Objects.equals(eventName, alert.eventName) &&
-                Objects.equals(startDateTime, alert.startDateTime) &&
-                Objects.equals(endDateTime, alert.endDateTime) &&
+                Objects.equals(startTime, alert.startTime) &&
+                Objects.equals(endTime, alert.endTime) &&
                 Objects.equals(description, alert.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(senderName, eventName, startDateTime, endDateTime, description);
+        return Objects.hash(senderName, eventName, startTime, endTime, description);
     }
 
     @Override
     public String toString() {
-        return senderName + " - " + eventName + "(" + startDateTime + " - " + endDateTime + "): " + description;
+        return senderName + " - " + eventName + "(" + startTime + " - " + endTime + "): " + description;
     }
 }
