@@ -43,7 +43,7 @@ public class Rain {
      * @return rain object.
      */
     public static Rain withOneHourLevelValue(double oneHourRainLevel) {
-        Rain rain = new Rain();
+        final Rain rain = new Rain();
         rain.setOneHourRainLevel(oneHourRainLevel);
         return rain;
     }
@@ -55,7 +55,7 @@ public class Rain {
      * @return rain object.
      */
     public static Rain withThreeHourLevelValue(double threeHourRainLevel) {
-        Rain rain = new Rain();
+        final Rain rain = new Rain();
         rain.setThreeHourRainLevel(threeHourRainLevel);
         return rain;
     }
@@ -68,7 +68,7 @@ public class Rain {
      * @return the rain
      */
     public static Rain withValues(double oneHourRainLevel, double threeHourRainLevel) {
-        Rain rain = new Rain();
+        final Rain rain = new Rain();
         rain.setOneHourRainLevel(oneHourRainLevel);
         rain.setThreeHourRainLevel(threeHourRainLevel);
         return rain;
@@ -141,7 +141,7 @@ public class Rain {
 
     @Override
     public String toString() {
-        StringBuilder snowString = new StringBuilder();
+        final StringBuilder snowString = new StringBuilder();
         if (oneHourRainLevel != null) {
             snowString.append("1-hour rain level: ");
             snowString.append(oneHourRainLevel);

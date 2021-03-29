@@ -49,8 +49,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());
@@ -114,8 +113,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());
@@ -179,8 +177,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());
@@ -243,8 +240,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());
@@ -304,8 +300,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());
@@ -366,8 +361,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());
@@ -431,8 +425,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .asJava();
 
         Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
+        Assert.assertNotNull(weather.getWeatherState());
         Assert.assertNotNull(weather.getCalculationTime());
         Assert.assertNotNull(weather.getTemperature());
         Assert.assertNotNull(weather.getLocation());

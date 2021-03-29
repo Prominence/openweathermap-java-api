@@ -28,6 +28,7 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.onecall.*;
 import com.github.prominence.openweathermap.api.model.onecall.current.*;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
@@ -65,10 +66,10 @@ public class OneCallWeatherResponseMapper {
      * @return the current data object
      */
     public CurrentWeatherData mapToCurrent(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         CurrentWeatherData currentData;
         try {
-            JsonNode root = objectMapper.readTree(json);
+            final JsonNode root = objectMapper.readTree(json);
             currentData = mapToCurrent(root);
         } catch (IOException e) {
             throw new RuntimeException("Cannot parse Forecast response");
@@ -84,10 +85,10 @@ public class OneCallWeatherResponseMapper {
      * @return the current data object
      */
     public HistoricalWeatherData mapToHistorical(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         HistoricalWeatherData historicalData;
         try {
-            JsonNode root = objectMapper.readTree(json);
+            final JsonNode root = objectMapper.readTree(json);
             historicalData = mapToHistorical(root);
         } catch (IOException e) {
             throw new RuntimeException("Cannot parse Forecast response");
@@ -97,7 +98,7 @@ public class OneCallWeatherResponseMapper {
     }
 
     private CurrentWeatherData mapToCurrent(JsonNode rootNode) {
-        CurrentWeatherData currentData = new CurrentWeatherData();
+        final CurrentWeatherData currentData = new CurrentWeatherData();
         currentData.setCoordinate(Coordinate.of(rootNode.get("lat").asDouble(), rootNode.get("lon").asDouble()));
         currentData.setTimezone(ZoneId.of(rootNode.get("timezone").asText()));
         currentData.setTimezoneOffset(ZoneOffset.ofTotalSeconds(rootNode.get("timezone_offset").asInt()));
@@ -114,10 +115,12 @@ public class OneCallWeatherResponseMapper {
         if (currentNode == null) {
             return null;
         }
-        Current current = new Current();
+        final Current current = new Current();
         current.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
         current.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
         current.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
+
+        current.setWeatherState(parseWeatherState(currentNode.get("weather").get(0)));
         current.setTemperature(parseTemperature(currentNode));
         current.setAtmosphericPressure(parsePressure(currentNode));
         current.setHumidity(parseHumidity(currentNode));
@@ -131,12 +134,6 @@ public class OneCallWeatherResponseMapper {
         current.setRain(parseRain(currentNode));
         current.setSnow(parseSnow(currentNode));
 
-        JsonNode weatherNode = currentNode.get("weather").get(0);
-        current.setWeatherId(weatherNode.get("id").asInt());
-        current.setState(weatherNode.get("main").asText());
-        current.setDescription(weatherNode.get("description").asText());
-        current.setIconId(weatherNode.get("icon").asText());
-
         return current;
     }
 
@@ -144,7 +141,7 @@ public class OneCallWeatherResponseMapper {
         if (minutelyListNode == null) {
             return null;
         }
-        List<Minutely> minutelyList = new ArrayList<>();
+        final List<Minutely> minutelyList = new ArrayList<>();
         for (final JsonNode minutelyNode : minutelyListNode) {
             minutelyList.add(Minutely.withValue(
                     LocalDateTime.ofInstant(Instant.ofEpochSecond(minutelyNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()),
@@ -159,10 +156,12 @@ public class OneCallWeatherResponseMapper {
         if (hourlyListNode == null) {
             return null;
         }
-        List<Hourly> hourlyList = new ArrayList<>();
+        final List<Hourly> hourlyList = new ArrayList<>();
         for (final JsonNode hourlyNode : hourlyListNode) {
             final Hourly hourly = new Hourly();
             hourly.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(hourlyNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
+
+            hourly.setWeatherState(parseWeatherState(hourlyNode.get("weather").get(0)));
             hourly.setTemperature(parseTemperature(hourlyNode));
             hourly.setAtmosphericPressure(parsePressure(hourlyNode));
             hourly.setHumidity(parseHumidity(hourlyNode));
@@ -185,12 +184,6 @@ public class OneCallWeatherResponseMapper {
             hourly.setRain(parseRain(hourlyNode));
             hourly.setSnow(parseSnow(hourlyNode));
 
-            JsonNode weatherNode = hourlyNode.get("weather").get(0);
-            hourly.setWeatherId(weatherNode.get("id").asInt());
-            hourly.setState(weatherNode.get("main").asText());
-            hourly.setDescription(weatherNode.get("description").asText());
-            hourly.setIconId(weatherNode.get("icon").asText());
-
             hourlyList.add(hourly);
         }
 
@@ -201,13 +194,14 @@ public class OneCallWeatherResponseMapper {
         if (dailyListNode == null) {
             return null;
         }
-        List<Daily> dailyList = new ArrayList<>();
+        final List<Daily> dailyList = new ArrayList<>();
         for (final JsonNode dailyNode : dailyListNode) {
             final Daily daily = new Daily();
             daily.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
             daily.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
             daily.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
 
+            daily.setWeatherState(parseWeatherState(dailyNode.get("weather").get(0)));
             daily.setTemperature(parseDailyTemperature(dailyNode));
             daily.setAtmosphericPressure(parsePressure(dailyNode));
             daily.setHumidity(parseHumidity(dailyNode));
@@ -217,13 +211,6 @@ public class OneCallWeatherResponseMapper {
             daily.setProbabilityOfPrecipitation(dailyNode.get("pop").asDouble());
             daily.setRain(parseDailyRain(dailyNode));
             daily.setSnow(parseDailySnow(dailyNode));
-
-            JsonNode weatherNode = dailyNode.get("weather").get(0);
-            daily.setWeatherId(weatherNode.get("id").asInt());
-            daily.setState(weatherNode.get("main").asText());
-            daily.setDescription(weatherNode.get("description").asText());
-            daily.setIconId(weatherNode.get("icon").asText());
-
 
             dailyList.add(daily);
         }
@@ -235,7 +222,7 @@ public class OneCallWeatherResponseMapper {
         if (alertsNode == null) {
             return null;
         }
-        List<Alert> alerts = new ArrayList<>();
+        final List<Alert> alerts = new ArrayList<>();
         for (final JsonNode alertNode : alertsNode) {
             Alert alert = new Alert();
             alert.setSenderName(alertNode.get("sender_name").asText());
@@ -249,7 +236,7 @@ public class OneCallWeatherResponseMapper {
     }
 
     private HistoricalWeatherData mapToHistorical(JsonNode rootNode) {
-        HistoricalWeatherData historicalData = new HistoricalWeatherData();
+        final HistoricalWeatherData historicalData = new HistoricalWeatherData();
         historicalData.setCoordinate(Coordinate.of(rootNode.get("lat").asDouble(), rootNode.get("lon").asDouble()));
         historicalData.setTimezone(ZoneId.of(rootNode.get("timezone").asText()));
         historicalData.setTimezoneOffset(ZoneOffset.ofTotalSeconds(rootNode.get("timezone_offset").asInt()));
@@ -263,10 +250,12 @@ public class OneCallWeatherResponseMapper {
         if (currentNode == null) {
             return null;
         }
-        HistoricalWeather historicalWeather = new HistoricalWeather();
+        final HistoricalWeather historicalWeather = new HistoricalWeather();
         historicalWeather.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
         historicalWeather.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
         historicalWeather.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
+
+        historicalWeather.setWeatherState(parseWeatherState(currentNode.get("weather").get(0)));
         historicalWeather.setTemperature(parseTemperature(currentNode));
         historicalWeather.setAtmosphericPressure(parsePressure(currentNode));
         historicalWeather.setHumidity(parseHumidity(currentNode));
@@ -280,12 +269,6 @@ public class OneCallWeatherResponseMapper {
         historicalWeather.setRain(parseRain(currentNode));
         historicalWeather.setSnow(parseSnow(currentNode));
 
-        JsonNode weatherNode = currentNode.get("weather").get(0);
-        historicalWeather.setWeatherId(weatherNode.get("id").asInt());
-        historicalWeather.setState(weatherNode.get("main").asText());
-        historicalWeather.setDescription(weatherNode.get("description").asText());
-        historicalWeather.setIconId(weatherNode.get("icon").asText());
-
         return historicalWeather;
     }
 
@@ -293,10 +276,12 @@ public class OneCallWeatherResponseMapper {
         if (hourlyListNode == null) {
             return null;
         }
-        List<HourlyHistorical> hourlyList = new ArrayList<>();
+        final List<HourlyHistorical> hourlyList = new ArrayList<>();
         for (final JsonNode hourlyNode : hourlyListNode) {
             final HourlyHistorical hourly = new HourlyHistorical();
             hourly.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(hourlyNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
+
+            hourly.setWeatherState(parseWeatherState(hourlyNode.get("weather").get(0)));
             hourly.setTemperature(parseTemperature(hourlyNode));
             hourly.setAtmosphericPressure(parsePressure(hourlyNode));
             hourly.setHumidity(parseHumidity(hourlyNode));
@@ -310,16 +295,23 @@ public class OneCallWeatherResponseMapper {
             hourly.setRain(parseRain(hourlyNode));
             hourly.setSnow(parseSnow(hourlyNode));
 
-            JsonNode weatherNode = hourlyNode.get("weather").get(0);
-            hourly.setWeatherId(weatherNode.get("id").asInt());
-            hourly.setState(weatherNode.get("main").asText());
-            hourly.setDescription(weatherNode.get("description").asText());
-            hourly.setIconId(weatherNode.get("icon").asText());
-
             hourlyList.add(hourly);
         }
 
         return hourlyList;
+    }
+
+    private WeatherState parseWeatherState(JsonNode weatherNode) {
+        if (weatherNode == null) {
+            return null;
+        }
+        final WeatherState weatherState = new WeatherState();
+        weatherState.setId(weatherNode.get("id").asInt());
+        weatherState.setName(weatherNode.get("main").asText());
+        weatherState.setDescription(weatherNode.get("description").asText());
+        weatherState.setIconId(weatherNode.get("icon").asText());
+
+        return weatherState;
     }
 
     private Temperature parseTemperature(JsonNode rootNode) {
@@ -361,7 +353,7 @@ public class OneCallWeatherResponseMapper {
     }
 
     private AtmosphericPressure parsePressure(JsonNode rootNode) {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
 
         final JsonNode seaLevelNode = rootNode.get("pressure");
         if (seaLevelNode != null) {
@@ -381,7 +373,7 @@ public class OneCallWeatherResponseMapper {
             return null;
         }
 
-        Wind wind = Wind.withValue(windSpeedNode.asDouble(), unitSystem.getWindUnit());
+        final Wind wind = Wind.withValue(windSpeedNode.asDouble(), unitSystem.getWindUnit());
 
         final JsonNode degNode = rootNode.get("wind_deg");
         if (degNode != null) {
@@ -434,14 +426,12 @@ public class OneCallWeatherResponseMapper {
     }
 
     private Clouds parseClouds(JsonNode rootNode) {
-        Clouds clouds = null;
-
         final JsonNode cloudsNode = rootNode.get("clouds");
         final JsonNode allValueNode = cloudsNode.get("all");
         if (allValueNode != null) {
-            clouds = Clouds.withValue((byte) allValueNode.asInt());
+            return Clouds.withValue((byte) allValueNode.asInt());
         }
 
-        return clouds;
+        return null;
     }
 }

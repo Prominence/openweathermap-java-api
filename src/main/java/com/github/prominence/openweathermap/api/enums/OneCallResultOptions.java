@@ -22,11 +22,29 @@
 
 package com.github.prominence.openweathermap.api.enums;
 
+/**
+ * The enum One call result options.
+ */
 public enum OneCallResultOptions {
+    /**
+     * Current one call result options.
+     */
     CURRENT("current"),
+    /**
+     * Minutely one call result options.
+     */
     MINUTELY("minutely"),
+    /**
+     * Hourly one call result options.
+     */
     HOURLY("hourly"),
+    /**
+     * Daily one call result options.
+     */
     DAILY("daily"),
+    /**
+     * Alerts one call result options.
+     */
     ALERTS("alerts");
 
     private final String value;
@@ -35,6 +53,11 @@ public enum OneCallResultOptions {
         this.value = value;
     }
 
+    /**
+     * Gets value.
+     *
+     * @return the value
+     */
     public String getValue() {
         return value;
     }

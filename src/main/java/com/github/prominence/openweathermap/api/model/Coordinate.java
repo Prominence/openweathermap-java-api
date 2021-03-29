@@ -35,29 +35,12 @@ public class Coordinate {
 
     }
 
-    @Deprecated
-    private Coordinate(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
     /**
      * Method for {@link Coordinate} creation with correctness check.
      * @param latitude latitude
      * @param longitude longitude
      * @return coordinate object.
      */
-    @Deprecated
-    public static Coordinate withValues(double latitude, double longitude) {
-        if (latitude < -90 || latitude > 90) {
-            throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
-        }
-        if (longitude < -180 || longitude > 180) {
-            throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
-        }
-        return new Coordinate(latitude, longitude);
-    }
-
     public static Coordinate of(double latitude, double longitude) {
         final Coordinate coordinate = new Coordinate();
         coordinate.setLatitude(latitude);

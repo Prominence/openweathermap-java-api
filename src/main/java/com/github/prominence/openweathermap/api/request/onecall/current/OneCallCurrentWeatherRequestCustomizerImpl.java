@@ -30,6 +30,9 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * The type One call current weather request customizer.
+ */
 public class OneCallCurrentWeatherRequestCustomizerImpl implements OneCallCurrentWeatherRequestCustomizer {
     private final RequestUrlBuilder urlBuilder;
 
@@ -37,6 +40,11 @@ public class OneCallCurrentWeatherRequestCustomizerImpl implements OneCallCurren
     private UnitSystem unitSystem = UnitSystem.STANDARD;
     private OneCallResultOptions[] excludeOptions;
 
+    /**
+     * Instantiates a new One call current weather request customizer.
+     *
+     * @param urlBuilder the url builder
+     */
     OneCallCurrentWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }

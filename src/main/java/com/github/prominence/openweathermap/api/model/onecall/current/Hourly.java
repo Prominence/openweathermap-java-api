@@ -24,18 +24,19 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.onecall.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+/**
+ * The type Hourly.
+ */
 public class Hourly {
     private LocalDateTime forecastTime;
 
-    private Integer weatherId;
-    private String state;
-    private String description;
-    private String iconId;
-
+    private WeatherState weatherState;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -47,123 +48,261 @@ public class Hourly {
     private Rain rain;
     private Snow snow;
 
+    /**
+     * Gets forecast time.
+     *
+     * @return the forecast time
+     */
     public LocalDateTime getForecastTime() {
         return forecastTime;
     }
 
+    /**
+     * Sets forecast time.
+     *
+     * @param forecastTime the forecast time
+     */
     public void setForecastTime(LocalDateTime forecastTime) {
         this.forecastTime = forecastTime;
     }
 
-    public Integer getWeatherId() {
-        return weatherId;
+    /**
+     * Gets weather state.
+     *
+     * @return the weather state
+     */
+    public WeatherState getWeatherState() {
+        return weatherState;
     }
 
-    public void setWeatherId(Integer weatherId) {
-        this.weatherId = weatherId;
+    /**
+     * Sets weather state.
+     *
+     * @param weatherState the weather state
+     */
+    public void setWeatherState(WeatherState weatherState) {
+        this.weatherState = weatherState;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIconId() {
-        return iconId;
-    }
-
-    public void setIconId(String iconId) {
-        this.iconId = iconId;
-    }
-
+    /**
+     * Gets temperature.
+     *
+     * @return the temperature
+     */
     public Temperature getTemperature() {
         return temperature;
     }
 
+    /**
+     * Sets temperature.
+     *
+     * @param temperature the temperature
+     */
     public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
     }
 
+    /**
+     * Gets atmospheric pressure.
+     *
+     * @return the atmospheric pressure
+     */
     public AtmosphericPressure getAtmosphericPressure() {
         return atmosphericPressure;
     }
 
+    /**
+     * Sets atmospheric pressure.
+     *
+     * @param atmosphericPressure the atmospheric pressure
+     */
     public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
         this.atmosphericPressure = atmosphericPressure;
     }
 
+    /**
+     * Gets humidity.
+     *
+     * @return the humidity
+     */
     public Humidity getHumidity() {
         return humidity;
     }
 
+    /**
+     * Sets humidity.
+     *
+     * @param humidity the humidity
+     */
     public void setHumidity(Humidity humidity) {
         this.humidity = humidity;
     }
 
+    /**
+     * Gets uv index.
+     *
+     * @return the uv index
+     */
     public Double getUvIndex() {
         return uvIndex;
     }
 
+    /**
+     * Sets uv index.
+     *
+     * @param uvIndex the uv index
+     */
     public void setUvIndex(Double uvIndex) {
         this.uvIndex = uvIndex;
     }
 
+    /**
+     * Gets clouds.
+     *
+     * @return the clouds
+     */
     public Clouds getClouds() {
         return clouds;
     }
 
+    /**
+     * Sets clouds.
+     *
+     * @param clouds the clouds
+     */
     public void setClouds(Clouds clouds) {
         this.clouds = clouds;
     }
 
+    /**
+     * Gets visibility in metres.
+     *
+     * @return the visibility in metres
+     */
     public Double getVisibilityInMetres() {
         return visibilityInMetres;
     }
 
+    /**
+     * Sets visibility in metres.
+     *
+     * @param visibilityInMetres the visibility in metres
+     */
     public void setVisibilityInMetres(Double visibilityInMetres) {
         this.visibilityInMetres = visibilityInMetres;
     }
 
+    /**
+     * Gets wind.
+     *
+     * @return the wind
+     */
     public Wind getWind() {
         return wind;
     }
 
+    /**
+     * Sets wind.
+     *
+     * @param wind the wind
+     */
     public void setWind(Wind wind) {
         this.wind = wind;
     }
 
+    /**
+     * Gets probability of precipitation.
+     *
+     * @return the probability of precipitation
+     */
     public Double getProbabilityOfPrecipitation() {
         return probabilityOfPrecipitation;
     }
 
+    /**
+     * Sets probability of precipitation.
+     *
+     * @param probabilityOfPrecipitation the probability of precipitation
+     */
     public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
         this.probabilityOfPrecipitation = probabilityOfPrecipitation;
     }
 
+    /**
+     * Gets rain.
+     *
+     * @return the rain
+     */
     public Rain getRain() {
         return rain;
     }
 
+    /**
+     * Sets rain.
+     *
+     * @param rain the rain
+     */
     public void setRain(Rain rain) {
         this.rain = rain;
     }
 
+    /**
+     * Gets snow.
+     *
+     * @return the snow
+     */
     public Snow getSnow() {
         return snow;
     }
 
+    /**
+     * Sets snow.
+     *
+     * @param snow the snow
+     */
     public void setSnow(Snow snow) {
         this.snow = snow;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hourly hourly = (Hourly) o;
+        return Objects.equals(forecastTime, hourly.forecastTime) &&
+                Objects.equals(weatherState, hourly.weatherState) &&
+                Objects.equals(temperature, hourly.temperature) &&
+                Objects.equals(atmosphericPressure, hourly.atmosphericPressure) &&
+                Objects.equals(humidity, hourly.humidity) &&
+                Objects.equals(uvIndex, hourly.uvIndex) &&
+                Objects.equals(clouds, hourly.clouds) &&
+                Objects.equals(visibilityInMetres, hourly.visibilityInMetres) &&
+                Objects.equals(wind, hourly.wind) &&
+                Objects.equals(probabilityOfPrecipitation, hourly.probabilityOfPrecipitation) &&
+                Objects.equals(rain, hourly.rain) &&
+                Objects.equals(snow, hourly.snow);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(forecastTime, weatherState, temperature, atmosphericPressure, humidity, uvIndex, clouds, visibilityInMetres, wind, probabilityOfPrecipitation, rain, snow);
+    }
+
+    @Override
+    public String toString() { // TODO: change
+        return "Hourly{" +
+                "forecastTime=" + forecastTime +
+                ", weatherState=" + weatherState +
+                ", temperature=" + temperature +
+                ", atmosphericPressure=" + atmosphericPressure +
+                ", humidity=" + humidity +
+                ", uvIndex=" + uvIndex +
+                ", clouds=" + clouds +
+                ", visibilityInMetres=" + visibilityInMetres +
+                ", wind=" + wind +
+                ", probabilityOfPrecipitation=" + probabilityOfPrecipitation +
+                ", rain=" + rain +
+                ", snow=" + snow +
+                '}';
     }
 }

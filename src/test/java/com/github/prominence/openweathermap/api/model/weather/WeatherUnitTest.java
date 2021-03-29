@@ -33,63 +33,8 @@ import java.time.LocalDateTime;
 
 public class WeatherUnitTest {
     @Test
-    public void whenCreateObjectWithValidArgs_thenObjectIsCreated() {
-        Weather.forValue("state", "desc");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void whenCreateObjectWithoutState_thenThrowAnException() {
-        Weather.forValue(null, "desc");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void whenCreateObjectWithoutDescription_thenThrowAnException() {
-        Weather.forValue("state", null);
-    }
-
-    @Test
-    public void whenSetState_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
-        weather.setState("test");
-
-        Assert.assertEquals("test", weather.getState());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void whenSetNullState_thenThrowAnException() {
-        final Weather weather = Weather.forValue("state", "desc");
-        weather.setState(null);
-    }
-
-    @Test
-    public void whenSetDescription_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
-        weather.setDescription("test");
-
-        Assert.assertEquals("test", weather.getDescription());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void whenSetNullDescription_thenThrowAnException() {
-        final Weather weather = Weather.forValue("state", "desc");
-        weather.setDescription(null);
-    }
-
-    @Test
-    public void whenSetIconId_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
-        Assert.assertNull(weather.getWeatherIconId());
-        Assert.assertNull(weather.getWeatherIconUrl());
-
-        weather.setWeatherIconId("11d");
-
-        Assert.assertEquals("11d", weather.getWeatherIconId());
-        Assert.assertNotNull(weather.getWeatherIconUrl());
-    }
-
-    @Test
     public void whenSetRequestedOn_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final LocalDateTime now = LocalDateTime.now();
         weather.setCalculationTime(now);
 
@@ -98,7 +43,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetTemperature_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Temperature temperature = Temperature.withValue(22.3, "a");
         weather.setTemperature(temperature);
 
@@ -107,7 +52,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetPressure_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.2);
         weather.setAtmosphericPressure(atmosphericPressure);
 
@@ -116,7 +61,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetHumidity_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Humidity humidity = Humidity.withValue((byte) 44);
         weather.setHumidity(humidity);
 
@@ -125,7 +70,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetWind_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Wind wind = Wind.withValue(22.2, "a");
         weather.setWind(wind);
 
@@ -134,7 +79,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetRain_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Rain rain = Rain.withValues(0, 0);
         weather.setRain(rain);
 
@@ -143,7 +88,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetSnow_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Snow snow = Snow.withValues(0, 0);
         weather.setSnow(snow);
 
@@ -152,7 +97,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetClouds_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Clouds clouds = Clouds.withValue((byte) 33);
         weather.setClouds(clouds);
 
@@ -161,7 +106,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetLocation_thenValueIsSet() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Location location = Location.withValues(22, "asd");
         weather.setLocation(location);
 
@@ -170,7 +115,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Weather weather = Weather.forValue("state", "desc");
+        final Weather weather = new Weather();
         final Location location = Location.withValues(12312, "asd");
         final Temperature temperature = Temperature.withValue(33.2, "asd");
         final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(44.4);
@@ -178,7 +123,7 @@ public class WeatherUnitTest {
         final Rain rain = Rain.withOneHourLevelValue(33.2);
         final Snow snow = Snow.withOneHourLevelValue(33.1);
 
-        Assert.assertNotEquals("", weather.toString());
+        Assert.assertEquals("", weather.toString());
         Assert.assertNotNull(weather.toString());
 
         weather.setLocation(location);
@@ -212,39 +157,23 @@ public class WeatherUnitTest {
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Weather one = Weather.forValue("state", "desc");
-        final Weather two = Weather.forValue("state", "desc");
+        final Weather one = new Weather();
+        final Weather two = new Weather();
 
         Assert.assertEquals(one.hashCode(), two.hashCode());
 
-        two.setDescription("112");
+        two.setCalculationTime(LocalDateTime.now());
 
         Assert.assertNotEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Weather one = Weather.forValue("state", "desc");
-        final Weather two = Weather.forValue("state1", "desc1");
+        final Weather one = new Weather();
+        final Weather two = new Weather();
 
         Assert.assertTrue(one.equals(one));
         Assert.assertFalse(one.equals(new Object()));
-        Assert.assertFalse(one.equals(two));
-
-        two.setState("state");
-
-        Assert.assertFalse(one.equals(two));
-
-        two.setDescription("desc");
-
-        Assert.assertTrue(one.equals(two));
-
-        one.setWeatherIconId("1");
-
-        Assert.assertFalse(one.equals(two));
-
-        two.setWeatherIconId("1");
-
         Assert.assertTrue(one.equals(two));
 
         final LocalDateTime now = LocalDateTime.now();

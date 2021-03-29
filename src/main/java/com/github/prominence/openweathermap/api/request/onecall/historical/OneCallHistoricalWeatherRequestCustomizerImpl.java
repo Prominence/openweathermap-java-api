@@ -26,12 +26,20 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
+/**
+ * The type One call historical weather request customizer.
+ */
 public class OneCallHistoricalWeatherRequestCustomizerImpl implements OneCallHistoricalWeatherRequestCustomizer {
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
 
+    /**
+     * Instantiates a new One call historical weather request customizer.
+     *
+     * @param urlBuilder the url builder
+     */
     public OneCallHistoricalWeatherRequestCustomizerImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
     }

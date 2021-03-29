@@ -128,7 +128,7 @@ public class Temperature {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Temperature: ");
         stringBuilder.append(value);
         stringBuilder.append(' ');

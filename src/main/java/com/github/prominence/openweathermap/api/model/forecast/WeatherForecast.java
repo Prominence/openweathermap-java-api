@@ -31,12 +31,9 @@ import java.util.Objects;
  * Represents weather forecast information for a particular timestamp.
  */
 public class WeatherForecast {
-    private String state;
-    private String description;
-    private String weatherIconId;
-
     private LocalDateTime forecastTime;
 
+    private WeatherState weatherState;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -48,100 +45,6 @@ public class WeatherForecast {
 
     private String forecastTimeISO;
     private DayTime dayTime;
-
-    private WeatherForecast(String state, String description) {
-        this.state = state;
-        this.description = description;
-    }
-
-    /**
-     * For value weather forecast.
-     *
-     * @param state       the state
-     * @param description the description
-     * @return the weather forecast
-     */
-    public static WeatherForecast forValue(String state, String description) {
-        if (state == null) {
-            throw new IllegalArgumentException("State must be set.");
-        }
-        if (description == null) {
-            throw new IllegalArgumentException("Description must be set.");
-        }
-        return new WeatherForecast(state, description);
-    }
-
-    /**
-     * Gets state.
-     *
-     * @return the state
-     */
-    public String getState() {
-        return state;
-    }
-
-    /**
-     * Sets state.
-     *
-     * @param state the state
-     */
-    public void setState(String state) {
-        if (state == null) {
-            throw new IllegalArgumentException("State must be not null.");
-        }
-        this.state = state;
-    }
-
-    /**
-     * Gets description.
-     *
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets description.
-     *
-     * @param description the description
-     */
-    public void setDescription(String description) {
-        if (description == null) {
-            throw new IllegalArgumentException("Description must be not null.");
-        }
-        this.description = description;
-    }
-
-    /**
-     * Gets weather icon ID.
-     *
-     * @return the weather icon ID
-     */
-    public String getWeatherIconId() {
-        return weatherIconId;
-    }
-
-    /**
-     * Sets weather icon ID.
-     *
-     * @param weatherIconId the weather icon ID
-     */
-    public void setWeatherIconId(String weatherIconId) {
-        this.weatherIconId = weatherIconId;
-    }
-
-    /**
-     * Gets weather icon url.
-     *
-     * @return the weather icon url
-     */
-    public String getWeatherIconUrl() {
-        if (weatherIconId != null) {
-            return "https://openweathermap.org/img/w/" + weatherIconId + ".png";
-        }
-        return null;
-    }
 
     /**
      * Gets forecast time.
@@ -159,6 +62,24 @@ public class WeatherForecast {
      */
     public void setForecastTime(LocalDateTime forecastTime) {
         this.forecastTime = forecastTime;
+    }
+
+    /**
+     * Gets weather state.
+     *
+     * @return the weather state
+     */
+    public WeatherState getWeatherState() {
+        return weatherState;
+    }
+
+    /**
+     * Sets weather state.
+     *
+     * @param weatherState the weather state
+     */
+    public void setWeatherState(WeatherState weatherState) {
+        this.weatherState = weatherState;
     }
 
     /**
@@ -328,10 +249,8 @@ public class WeatherForecast {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WeatherForecast that = (WeatherForecast) o;
-        return Objects.equals(state, that.state) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(weatherIconId, that.weatherIconId) &&
-                Objects.equals(forecastTime, that.forecastTime) &&
+        return Objects.equals(forecastTime, that.forecastTime) &&
+                Objects.equals(weatherState, that.weatherState) &&
                 Objects.equals(temperature, that.temperature) &&
                 Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
                 Objects.equals(humidity, that.humidity) &&
@@ -345,7 +264,7 @@ public class WeatherForecast {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, description, weatherIconId, forecastTime, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, dayTime);
+        return Objects.hash(forecastTime, weatherState, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, dayTime);
     }
 
     @Override
@@ -353,8 +272,10 @@ public class WeatherForecast {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Timestamp: ");
         stringBuilder.append(forecastTimeISO);
-        stringBuilder.append(", Weather: ");
-        stringBuilder.append(description);
+        if (weatherState != null) {
+            stringBuilder.append(", Weather: ");
+            stringBuilder.append(weatherState.getDescription());
+        }
         if (temperature != null) {
             stringBuilder.append(", ");
             stringBuilder.append(temperature.getValue());

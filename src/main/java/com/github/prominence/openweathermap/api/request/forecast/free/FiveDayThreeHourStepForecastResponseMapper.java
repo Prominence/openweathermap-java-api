@@ -105,10 +105,10 @@ public class FiveDayThreeHourStepForecastResponseMapper {
      * @return the forecast
      */
     public Forecast mapToForecast(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         Forecast forecast;
         try {
-            JsonNode root = objectMapper.readTree(json);
+            final JsonNode root = objectMapper.readTree(json);
             forecast = mapToForecast(root);
         } catch (IOException e) {
             throw new RuntimeException("Cannot parse Forecast response");
@@ -118,12 +118,12 @@ public class FiveDayThreeHourStepForecastResponseMapper {
     }
 
     private Forecast mapToForecast(JsonNode root) {
-        Forecast forecast = new Forecast();
+        final Forecast forecast = new Forecast();
         forecast.setLocation(parseLocation(root.get("city")));
 
-        List<WeatherForecast> forecasts = new ArrayList<>(root.get("cnt").asInt());
+        final List<WeatherForecast> forecasts = new ArrayList<>(root.get("cnt").asInt());
 
-        JsonNode forecastListNode = root.get("list");
+        final JsonNode forecastListNode = root.get("list");
         forecastListNode.forEach(forecastNode -> forecasts.add(parseWeatherForecast(forecastNode)));
 
         forecast.setWeatherForecasts(forecasts);
@@ -132,14 +132,11 @@ public class FiveDayThreeHourStepForecastResponseMapper {
     }
 
     private WeatherForecast parseWeatherForecast(JsonNode rootNode) {
-        JsonNode weatherNode = rootNode.get("weather").get(0);
-        WeatherForecast weatherForecast = WeatherForecast.forValue(
-                weatherNode.get("main").asText(),
-                weatherNode.get("description").asText()
-        );
-        weatherForecast.setWeatherIconId(weatherNode.get("icon").asText());
+        final WeatherForecast weatherForecast = new WeatherForecast();
+        final JsonNode weatherNode = rootNode.get("weather").get(0);
+        weatherForecast.setWeatherState(parseWeatherState(weatherNode));
 
-        JsonNode mainNode = rootNode.get("main");
+        final JsonNode mainNode = rootNode.get("main");
         weatherForecast.setTemperature(parseTemperature(mainNode));
         weatherForecast.setAtmosphericPressure(parsePressure(mainNode));
         weatherForecast.setHumidity(parseHumidity(mainNode));
@@ -148,7 +145,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         weatherForecast.setRain(parseRain(rootNode));
         weatherForecast.setSnow(parseSnow(rootNode));
 
-        JsonNode sysNode = rootNode.get("sys");
+        final JsonNode sysNode = rootNode.get("sys");
         if (sysNode != null) {
             weatherForecast.setDayTime("d".equals(sysNode.get("pod").asText()) ? DayTime.DAY : DayTime.NIGHT);
         }
@@ -159,9 +156,22 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         return weatherForecast;
     }
 
+    private WeatherState parseWeatherState(JsonNode weatherNode) {
+        if (weatherNode == null) {
+            return null;
+        }
+        final WeatherState weatherState = new WeatherState();
+        weatherState.setId(weatherNode.get("id").asInt());
+        weatherState.setName(weatherNode.get("main").asText());
+        weatherState.setDescription(weatherNode.get("description").asText());
+        weatherState.setIconId(weatherNode.get("icon").asText());
+
+        return weatherState;
+    }
+
     private Temperature parseTemperature(JsonNode rootNode) {
         final double tempValue = rootNode.get("temp").asDouble();
-        Temperature temperature = Temperature.withValue(tempValue, unitSystem.getTemperatureUnit());
+        final Temperature temperature = Temperature.withValue(tempValue, unitSystem.getTemperatureUnit());
 
         final JsonNode tempMaxNode = rootNode.get("temp_max");
         if (tempMaxNode != null) {
@@ -180,7 +190,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
     }
 
     private AtmosphericPressure parsePressure(JsonNode rootNode) {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
 
         final JsonNode seaLevelNode = rootNode.get("sea_level");
         final JsonNode groundLevelNode = rootNode.get("grnd_level");
@@ -202,7 +212,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         final JsonNode windNode = root.get("wind");
         double speed = windNode.get("speed").asDouble();
 
-        Wind wind = Wind.withValue(speed, unitSystem.getWindUnit());
+        final Wind wind = Wind.withValue(speed, unitSystem.getWindUnit());
         final JsonNode degNode = windNode.get("deg");
         if (degNode != null) {
             wind.setDegrees(degNode.asDouble());
@@ -234,19 +244,17 @@ public class FiveDayThreeHourStepForecastResponseMapper {
     }
 
     private Clouds parseClouds(JsonNode rootNode) {
-        Clouds clouds = null;
-
         final JsonNode cloudsNode = rootNode.get("clouds");
         final JsonNode allValueNode = cloudsNode.get("all");
         if (allValueNode != null) {
-            clouds = Clouds.withValue((byte) allValueNode.asInt());
+            return Clouds.withValue((byte) allValueNode.asInt());
         }
 
-        return clouds;
+        return null;
     }
 
     private Location parseLocation(JsonNode rootNode) {
-        Location location = Location.withValues(rootNode.get("id").asInt(), rootNode.get("name").asText());
+        final Location location = Location.withValues(rootNode.get("id").asInt(), rootNode.get("name").asText());
 
         final JsonNode timezoneNode = rootNode.get("timezone");
         if (timezoneNode != null) {
@@ -281,8 +289,8 @@ public class FiveDayThreeHourStepForecastResponseMapper {
     }
 
     private Coordinate parseCoordinate(JsonNode rootNode) {
-        JsonNode latitudeNode = rootNode.get("lat");
-        JsonNode longitudeNode = rootNode.get("lon");
+        final JsonNode latitudeNode = rootNode.get("lat");
+        final JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
             return Coordinate.of(latitudeNode.asDouble(), longitudeNode.asDouble());
         }

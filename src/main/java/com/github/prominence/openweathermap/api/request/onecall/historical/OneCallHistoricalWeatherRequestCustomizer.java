@@ -24,8 +24,21 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
+/**
+ * The interface One call historical weather request customizer.
+ */
 public interface OneCallHistoricalWeatherRequestCustomizer extends RequestCustomizer<OneCallHistoricalWeatherRequestCustomizer> {
+    /**
+     * Retrieve one call historical weather request terminator.
+     *
+     * @return the one call historical weather request terminator
+     */
     OneCallHistoricalWeatherRequestTerminator retrieve();
 
+    /**
+     * Retrieve async one call historical weather async request terminator.
+     *
+     * @return the one call historical weather async request terminator
+     */
     OneCallHistoricalWeatherAsyncRequestTerminator retrieveAsync();
 }

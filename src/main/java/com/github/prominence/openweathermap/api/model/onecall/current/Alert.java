@@ -25,6 +25,9 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * The type Alert.
+ */
 public class Alert {
     private String senderName;
     private String eventName;
@@ -32,42 +35,92 @@ public class Alert {
     private LocalDateTime endTime;
     private String description;
 
+    /**
+     * Gets sender name.
+     *
+     * @return the sender name
+     */
     public String getSenderName() {
         return senderName;
     }
 
+    /**
+     * Sets sender name.
+     *
+     * @param senderName the sender name
+     */
     public void setSenderName(String senderName) {
         this.senderName = senderName;
     }
 
+    /**
+     * Gets event name.
+     *
+     * @return the event name
+     */
     public String getEventName() {
         return eventName;
     }
 
+    /**
+     * Sets event name.
+     *
+     * @param eventName the event name
+     */
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
 
+    /**
+     * Gets start time.
+     *
+     * @return the start time
+     */
     public LocalDateTime getStartTime() {
         return startTime;
     }
 
+    /**
+     * Sets start time.
+     *
+     * @param startTime the start time
+     */
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Gets end time.
+     *
+     * @return the end time
+     */
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
+    /**
+     * Sets end time.
+     *
+     * @param endTime the end time
+     */
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Sets description.
+     *
+     * @param description the description
+     */
     public void setDescription(String description) {
         this.description = description;
     }

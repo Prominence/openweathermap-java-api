@@ -42,7 +42,7 @@ public class Snow {
      * @return snow object.
      */
     public static Snow withOneHourLevelValue(double oneHourSnowLevel) {
-        Snow snow = new Snow();
+        final Snow snow = new Snow();
         snow.setOneHourSnowLevel(oneHourSnowLevel);
         return snow;
     }
@@ -92,7 +92,7 @@ public class Snow {
 
     @Override
     public String toString() {
-        StringBuilder snowString = new StringBuilder();
+        final StringBuilder snowString = new StringBuilder();
         if (oneHourSnowLevel != null) {
             snowString.append("1-hour snow level: ");
             snowString.append(oneHourSnowLevel);

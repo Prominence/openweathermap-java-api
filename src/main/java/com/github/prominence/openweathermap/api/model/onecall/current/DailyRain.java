@@ -42,7 +42,7 @@ public class DailyRain {
      * @return rain object.
      */
     public static DailyRain withValue(double value) {
-        DailyRain rain = new DailyRain();
+        final DailyRain rain = new DailyRain();
         rain.setValue(value);
         return rain;
     }
@@ -92,7 +92,7 @@ public class DailyRain {
 
     @Override
     public String toString() {
-        StringBuilder snowString = new StringBuilder();
+        final StringBuilder snowString = new StringBuilder();
         if (value != null) {
             snowString.append("Rain level: ");
             snowString.append(value);

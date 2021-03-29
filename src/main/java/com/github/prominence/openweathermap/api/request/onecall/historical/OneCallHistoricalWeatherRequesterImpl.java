@@ -25,9 +25,17 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
+/**
+ * The type One call historical weather requester.
+ */
 public class OneCallHistoricalWeatherRequesterImpl implements OneCallHistoricalWeatherRequester {
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new One call historical weather requester.
+     *
+     * @param urlBuilder the url builder
+     */
     public OneCallHistoricalWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
         urlBuilder.append("onecall/timemachine");

@@ -24,5 +24,26 @@ package com.github.prominence.openweathermap.api.model.onecall.historical;
 
 import com.github.prominence.openweathermap.api.model.onecall.*;
 
+/**
+ * The type Historical weather.
+ */
 public class HistoricalWeather extends Current {
+    @Override
+    public String toString() { // TODO: change
+        return "HistoricalWeather{" +
+                "forecastTime=" + forecastTime +
+                ", sunriseTime=" + sunriseTime +
+                ", sunsetTime=" + sunsetTime +
+                ", weatherState=" + weatherState +
+                ", temperature=" + temperature +
+                ", atmosphericPressure=" + atmosphericPressure +
+                ", humidity=" + humidity +
+                ", clouds=" + clouds +
+                ", uvIndex=" + uvIndex +
+                ", visibilityInMetres=" + visibilityInMetres +
+                ", wind=" + wind +
+                ", rain=" + rain +
+                ", snow=" + snow +
+                '}';
+    }
 }

@@ -25,5 +25,8 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
 
+/**
+ * The interface One call historical weather async request terminator.
+ */
 public interface OneCallHistoricalWeatherAsyncRequestTerminator extends AsyncRequestTerminator<HistoricalWeatherData, String> {
 }

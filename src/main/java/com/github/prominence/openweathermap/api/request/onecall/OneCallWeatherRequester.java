@@ -25,8 +25,21 @@ package com.github.prominence.openweathermap.api.request.onecall;
 import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequester;
 
+/**
+ * The interface One call weather requester.
+ */
 public interface OneCallWeatherRequester {
+    /**
+     * Current one call current weather requester.
+     *
+     * @return the one call current weather requester
+     */
     OneCallCurrentWeatherRequester current();
 
+    /**
+     * Historical one call historical weather requester.
+     *
+     * @return the one call historical weather requester
+     */
     OneCallHistoricalWeatherRequester historical();
 }

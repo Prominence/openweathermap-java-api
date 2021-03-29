@@ -28,9 +28,17 @@ import com.github.prominence.openweathermap.api.request.onecall.current.OneCallC
 import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequester;
 import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequesterImpl;
 
+/**
+ * The type One call weather requester.
+ */
 public class OneCallWeatherRequesterImpl implements OneCallWeatherRequester {
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new One call weather requester.
+     *
+     * @param apiKey the api key
+     */
     public OneCallWeatherRequesterImpl(String apiKey) {
         urlBuilder =  new RequestUrlBuilder(apiKey);
     }

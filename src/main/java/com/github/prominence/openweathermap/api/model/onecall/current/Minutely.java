@@ -25,6 +25,9 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * The type Minutely.
+ */
 public class Minutely {
     private LocalDateTime forecastTime;
     private double precipitationVolume;
@@ -33,18 +36,30 @@ public class Minutely {
 
     }
 
+    /**
+     * With value minutely.
+     *
+     * @param forecastTime        the forecast time
+     * @param precipitationVolume the precipitation volume
+     * @return the minutely
+     */
     public static Minutely withValue(LocalDateTime forecastTime, double precipitationVolume) {
         Objects.requireNonNull(forecastTime);
         if (precipitationVolume < 0) {
             throw new IllegalArgumentException("Precipitation volume cannot be negative.");
         }
-        Minutely minutely = new Minutely();
+        final Minutely minutely = new Minutely();
         minutely.setForecastTime(forecastTime);
         minutely.setPrecipitationVolume(precipitationVolume);
 
         return minutely;
     }
 
+    /**
+     * Gets forecast time.
+     *
+     * @return the forecast time
+     */
     public LocalDateTime getForecastTime() {
         return forecastTime;
     }
@@ -53,6 +68,11 @@ public class Minutely {
         this.forecastTime = forecastTime;
     }
 
+    /**
+     * Gets precipitation volume.
+     *
+     * @return the precipitation volume
+     */
     public double getPrecipitationVolume() {
         return precipitationVolume;
     }

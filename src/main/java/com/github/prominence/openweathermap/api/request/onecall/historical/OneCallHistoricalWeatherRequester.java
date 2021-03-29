@@ -24,6 +24,16 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
 
+/**
+ * The interface One call historical weather requester.
+ */
 public interface OneCallHistoricalWeatherRequester {
+    /**
+     * By coordinate and timestamp one call historical weather request customizer.
+     *
+     * @param coordinate the coordinate
+     * @param unixTime   the unix time
+     * @return the one call historical weather request customizer
+     */
     OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinate coordinate, long unixTime);
 }

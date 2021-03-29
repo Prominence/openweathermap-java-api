@@ -25,6 +25,9 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
 import com.github.prominence.openweathermap.api.request.RequestTerminator;
 
+/**
+ * The interface One call current weather request terminator.
+ */
 public interface OneCallCurrentWeatherRequestTerminator extends RequestTerminator<CurrentWeatherData, String> {
 
 }

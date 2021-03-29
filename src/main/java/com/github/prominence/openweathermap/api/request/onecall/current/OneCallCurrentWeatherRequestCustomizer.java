@@ -25,10 +25,29 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.request.RequestCustomizer;
 
+/**
+ * The interface One call current weather request customizer.
+ */
 public interface OneCallCurrentWeatherRequestCustomizer extends RequestCustomizer<OneCallCurrentWeatherRequestCustomizer> {
+    /**
+     * Exclude one call current weather request customizer.
+     *
+     * @param excludeOptions the exclude options
+     * @return the one call current weather request customizer
+     */
     OneCallCurrentWeatherRequestCustomizer exclude(OneCallResultOptions... excludeOptions);
 
+    /**
+     * Retrieve one call current weather request terminator.
+     *
+     * @return the one call current weather request terminator
+     */
     OneCallCurrentWeatherRequestTerminator retrieve();
 
+    /**
+     * Retrieve async one call current weather async request terminator.
+     *
+     * @return the one call current weather async request terminator
+     */
     OneCallCurrentWeatherAsyncRequestTerminator retrieveAsync();
 }

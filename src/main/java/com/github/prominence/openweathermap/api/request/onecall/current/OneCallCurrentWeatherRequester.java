@@ -24,6 +24,15 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
 
+/**
+ * The interface One call current weather requester.
+ */
 public interface OneCallCurrentWeatherRequester {
+    /**
+     * By coordinate one call current weather request customizer.
+     *
+     * @param coordinate the coordinate
+     * @return the one call current weather request customizer
+     */
     OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
 }

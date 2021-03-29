@@ -24,161 +24,305 @@ package com.github.prominence.openweathermap.api.model.onecall;
 
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.WeatherState;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+/**
+ * The type Current.
+ */
 public class Current {
-    private LocalDateTime forecastTime;
-    private LocalDateTime sunriseTime;
-    private LocalDateTime sunsetTime;
+    protected LocalDateTime forecastTime;
+    protected LocalDateTime sunriseTime;
+    protected LocalDateTime sunsetTime;
 
-    private Integer weatherId;
-    private String state;
-    private String description;
-    private String iconId;
+    protected WeatherState weatherState;
+    protected Temperature temperature;
+    protected AtmosphericPressure atmosphericPressure;
+    protected Humidity humidity;
+    protected Clouds clouds;
+    protected Double uvIndex;
+    protected Double visibilityInMetres;
+    protected Wind wind;
+    protected Rain rain;
+    protected Snow snow;
 
-    private Temperature temperature;
-    private AtmosphericPressure atmosphericPressure;
-    private Humidity humidity;
-    private Clouds clouds;
-    private Double uvIndex;
-    private Double visibilityInMetres;
-    private Wind wind;
-    private Rain rain;
-    private Snow snow;
-
+    /**
+     * Gets forecast time.
+     *
+     * @return the forecast time
+     */
     public LocalDateTime getForecastTime() {
         return forecastTime;
     }
 
+    /**
+     * Sets forecast time.
+     *
+     * @param forecastTime the forecast time
+     */
     public void setForecastTime(LocalDateTime forecastTime) {
         this.forecastTime = forecastTime;
     }
 
+    /**
+     * Gets sunrise time.
+     *
+     * @return the sunrise time
+     */
     public LocalDateTime getSunriseTime() {
         return sunriseTime;
     }
 
+    /**
+     * Sets sunrise time.
+     *
+     * @param sunriseTime the sunrise time
+     */
     public void setSunriseTime(LocalDateTime sunriseTime) {
         this.sunriseTime = sunriseTime;
     }
 
+    /**
+     * Gets sunset time.
+     *
+     * @return the sunset time
+     */
     public LocalDateTime getSunsetTime() {
         return sunsetTime;
     }
 
+    /**
+     * Sets sunset time.
+     *
+     * @param sunsetTime the sunset time
+     */
     public void setSunsetTime(LocalDateTime sunsetTime) {
         this.sunsetTime = sunsetTime;
     }
 
-    public Integer getWeatherId() {
-        return weatherId;
+    /**
+     * Gets weather state.
+     *
+     * @return the weather state
+     */
+    public WeatherState getWeatherState() {
+        return weatherState;
     }
 
-    public void setWeatherId(Integer weatherId) {
-        this.weatherId = weatherId;
+    /**
+     * Sets weather state.
+     *
+     * @param weatherState the weather state
+     */
+    public void setWeatherState(WeatherState weatherState) {
+        this.weatherState = weatherState;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIconId() {
-        return iconId;
-    }
-
-    public void setIconId(String iconId) {
-        this.iconId = iconId;
-    }
-
-    public String getWeatherIconUrl() {
-        if (iconId != null) {
-            return "http://openweathermap.org/img/w/" + iconId + ".png";
-        }
-        return null;
-    }
-
+    /**
+     * Gets temperature.
+     *
+     * @return the temperature
+     */
     public Temperature getTemperature() {
         return temperature;
     }
 
+    /**
+     * Sets temperature.
+     *
+     * @param temperature the temperature
+     */
     public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
     }
 
+    /**
+     * Gets atmospheric pressure.
+     *
+     * @return the atmospheric pressure
+     */
     public AtmosphericPressure getAtmosphericPressure() {
         return atmosphericPressure;
     }
 
+    /**
+     * Sets atmospheric pressure.
+     *
+     * @param atmosphericPressure the atmospheric pressure
+     */
     public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
         this.atmosphericPressure = atmosphericPressure;
     }
 
+    /**
+     * Gets humidity.
+     *
+     * @return the humidity
+     */
     public Humidity getHumidity() {
         return humidity;
     }
 
+    /**
+     * Sets humidity.
+     *
+     * @param humidity the humidity
+     */
     public void setHumidity(Humidity humidity) {
         this.humidity = humidity;
     }
 
+    /**
+     * Gets clouds.
+     *
+     * @return the clouds
+     */
     public Clouds getClouds() {
         return clouds;
     }
 
+    /**
+     * Sets clouds.
+     *
+     * @param clouds the clouds
+     */
     public void setClouds(Clouds clouds) {
         this.clouds = clouds;
     }
 
+    /**
+     * Gets uv index.
+     *
+     * @return the uv index
+     */
     public Double getUvIndex() {
         return uvIndex;
     }
 
+    /**
+     * Sets uv index.
+     *
+     * @param uvIndex the uv index
+     */
     public void setUvIndex(Double uvIndex) {
         this.uvIndex = uvIndex;
     }
 
+    /**
+     * Gets visibility in metres.
+     *
+     * @return the visibility in metres
+     */
     public Double getVisibilityInMetres() {
         return visibilityInMetres;
     }
 
+    /**
+     * Sets visibility in metres.
+     *
+     * @param visibilityInMetres the visibility in metres
+     */
     public void setVisibilityInMetres(Double visibilityInMetres) {
         this.visibilityInMetres = visibilityInMetres;
     }
 
+    /**
+     * Gets wind.
+     *
+     * @return the wind
+     */
     public Wind getWind() {
         return wind;
     }
 
+    /**
+     * Sets wind.
+     *
+     * @param wind the wind
+     */
     public void setWind(Wind wind) {
         this.wind = wind;
     }
 
+    /**
+     * Gets rain.
+     *
+     * @return the rain
+     */
     public Rain getRain() {
         return rain;
     }
 
+    /**
+     * Sets rain.
+     *
+     * @param rain the rain
+     */
     public void setRain(Rain rain) {
         this.rain = rain;
     }
 
+    /**
+     * Gets snow.
+     *
+     * @return the snow
+     */
     public Snow getSnow() {
         return snow;
     }
 
+    /**
+     * Sets snow.
+     *
+     * @param snow the snow
+     */
     public void setSnow(Snow snow) {
         this.snow = snow;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Current current = (Current) o;
+        return Objects.equals(forecastTime, current.forecastTime) &&
+                Objects.equals(sunriseTime, current.sunriseTime) &&
+                Objects.equals(sunsetTime, current.sunsetTime) &&
+                Objects.equals(weatherState, current.weatherState) &&
+                Objects.equals(temperature, current.temperature) &&
+                Objects.equals(atmosphericPressure, current.atmosphericPressure) &&
+                Objects.equals(humidity, current.humidity) &&
+                Objects.equals(clouds, current.clouds) &&
+                Objects.equals(uvIndex, current.uvIndex) &&
+                Objects.equals(visibilityInMetres, current.visibilityInMetres) &&
+                Objects.equals(wind, current.wind) &&
+                Objects.equals(rain, current.rain) &&
+                Objects.equals(snow, current.snow);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(forecastTime, sunriseTime, sunsetTime, weatherState, temperature, atmosphericPressure, humidity, clouds, uvIndex, visibilityInMetres, wind, rain, snow);
+    }
+
+    @Override
+    public String toString() { // TODO: change
+        return "Current{" +
+                "forecastTime=" + forecastTime +
+                ", sunriseTime=" + sunriseTime +
+                ", sunsetTime=" + sunsetTime +
+                ", weatherState=" + weatherState +
+                ", temperature=" + temperature +
+                ", atmosphericPressure=" + atmosphericPressure +
+                ", humidity=" + humidity +
+                ", clouds=" + clouds +
+                ", uvIndex=" + uvIndex +
+                ", visibilityInMetres=" + visibilityInMetres +
+                ", wind=" + wind +
+                ", rain=" + rain +
+                ", snow=" + snow +
+                '}';
     }
 }

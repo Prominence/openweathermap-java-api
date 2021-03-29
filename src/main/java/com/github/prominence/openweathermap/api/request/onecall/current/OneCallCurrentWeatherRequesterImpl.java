@@ -25,9 +25,17 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 
+/**
+ * The type One call current weather requester.
+ */
 public class OneCallCurrentWeatherRequesterImpl implements OneCallCurrentWeatherRequester {
     private final RequestUrlBuilder urlBuilder;
 
+    /**
+     * Instantiates a new One call current weather requester.
+     *
+     * @param urlBuilder the url builder
+     */
     public OneCallCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
         this.urlBuilder = urlBuilder;
         urlBuilder.append("onecall");

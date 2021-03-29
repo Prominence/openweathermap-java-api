@@ -27,7 +27,11 @@ import com.github.prominence.openweathermap.api.model.Coordinate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * The type Historical weather data.
+ */
 public class HistoricalWeatherData {
     private Coordinate coordinate;
     private ZoneId timezone;
@@ -36,43 +40,121 @@ public class HistoricalWeatherData {
     private HistoricalWeather historicalWeather;
     private List<HourlyHistorical> hourlyList;
 
+    /**
+     * Gets coordinate.
+     *
+     * @return the coordinate
+     */
     public Coordinate getCoordinate() {
         return coordinate;
     }
 
+    /**
+     * Sets coordinate.
+     *
+     * @param coordinate the coordinate
+     */
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
 
+    /**
+     * Gets timezone.
+     *
+     * @return the timezone
+     */
     public ZoneId getTimezone() {
         return timezone;
     }
 
+    /**
+     * Sets timezone.
+     *
+     * @param timezone the timezone
+     */
     public void setTimezone(ZoneId timezone) {
         this.timezone = timezone;
     }
 
+    /**
+     * Gets timezone offset.
+     *
+     * @return the timezone offset
+     */
     public ZoneOffset getTimezoneOffset() {
         return timezoneOffset;
     }
 
+    /**
+     * Sets timezone offset.
+     *
+     * @param timezoneOffset the timezone offset
+     */
     public void setTimezoneOffset(ZoneOffset timezoneOffset) {
         this.timezoneOffset = timezoneOffset;
     }
 
+    /**
+     * Gets historical weather.
+     *
+     * @return the historical weather
+     */
     public HistoricalWeather getHistoricalWeather() {
         return historicalWeather;
     }
 
+    /**
+     * Sets historical weather.
+     *
+     * @param historicalWeather the historical weather
+     */
     public void setHistoricalWeather(HistoricalWeather historicalWeather) {
         this.historicalWeather = historicalWeather;
     }
 
+    /**
+     * Gets hourly list.
+     *
+     * @return the hourly list
+     */
     public List<HourlyHistorical> getHourlyList() {
         return hourlyList;
     }
 
+    /**
+     * Sets hourly list.
+     *
+     * @param hourlyList the hourly list
+     */
     public void setHourlyList(List<HourlyHistorical> hourlyList) {
         this.hourlyList = hourlyList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HistoricalWeatherData that = (HistoricalWeatherData) o;
+        return Objects.equals(coordinate, that.coordinate) &&
+                Objects.equals(timezone, that.timezone) &&
+                Objects.equals(timezoneOffset, that.timezoneOffset) &&
+                Objects.equals(historicalWeather, that.historicalWeather) &&
+                Objects.equals(hourlyList, that.hourlyList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate, timezone, timezoneOffset, historicalWeather, hourlyList);
+    }
+
+    @Override
+    public String toString() { // TODO: change
+        return "HistoricalWeatherData{" +
+                "coordinate=" + coordinate +
+                ", timezone=" + timezone +
+                ", timezoneOffset=" + timezoneOffset +
+                ", historicalWeather=" + historicalWeather +
+                ", hourlyList=" + hourlyList +
+                '}';
     }
 }

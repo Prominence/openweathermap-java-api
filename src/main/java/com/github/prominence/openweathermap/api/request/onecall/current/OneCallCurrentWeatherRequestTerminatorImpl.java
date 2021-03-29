@@ -28,10 +28,19 @@ import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
+/**
+ * The type One call current weather request terminator.
+ */
 public class OneCallCurrentWeatherRequestTerminatorImpl implements OneCallCurrentWeatherRequestTerminator {
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
+    /**
+     * Instantiates a new One call current weather request terminator.
+     *
+     * @param urlBuilder the url builder
+     * @param unitSystem the unit system
+     */
     OneCallCurrentWeatherRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;

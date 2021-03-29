@@ -30,10 +30,19 @@ import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The type One call historical weather async request terminator.
+ */
 public class OneCallHistoricalWeatherAsyncRequestTerminatorImpl implements OneCallHistoricalWeatherAsyncRequestTerminator {
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 
+    /**
+     * Instantiates a new One call historical weather async request terminator.
+     *
+     * @param urlBuilder the url builder
+     * @param unitSystem the unit system
+     */
     public OneCallHistoricalWeatherAsyncRequestTerminatorImpl(RequestUrlBuilder urlBuilder, UnitSystem unitSystem) {
         this.urlBuilder = urlBuilder;
         this.unitSystem = unitSystem;
