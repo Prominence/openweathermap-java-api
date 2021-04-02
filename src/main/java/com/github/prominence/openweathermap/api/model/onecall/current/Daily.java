@@ -227,6 +227,9 @@ public class Daily {
      * @param uvIndex the uv index
      */
     public void setUvIndex(Double uvIndex) {
+        if (uvIndex != null && uvIndex < 0) {
+            throw new IllegalArgumentException("UV index must not be negative.");
+        }
         this.uvIndex = uvIndex;
     }
 
@@ -245,6 +248,9 @@ public class Daily {
      * @param probabilityOfPrecipitation the probability of precipitation
      */
     public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
+        if (probabilityOfPrecipitation != null && (probabilityOfPrecipitation < 0 || probabilityOfPrecipitation > 100))  {
+            throw new IllegalArgumentException("Probability of precipitation value must be in [0, 100] range.");
+        }
         this.probabilityOfPrecipitation = probabilityOfPrecipitation;
     }
 
@@ -339,14 +345,14 @@ public class Daily {
             stringBuilder.append(clouds.toString());
             stringBuilder.append('.');
         }
-        if (rain != null && rain.getValue() != null) {
+        if (rain != null) {
             stringBuilder.append(" Rain: ");
             stringBuilder.append(rain.getValue());
             stringBuilder.append(' ');
             stringBuilder.append(rain.getUnit());
             stringBuilder.append('.');
         }
-        if (snow != null && snow.getValue() != null) {
+        if (snow != null) {
             stringBuilder.append(". Snow: ");
             stringBuilder.append(snow.getValue());
             stringBuilder.append(' ');

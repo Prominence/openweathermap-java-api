@@ -36,6 +36,29 @@ public class Alert {
     private String description;
 
     /**
+     * Instantiates a new Alert.
+     */
+    public Alert() {
+    }
+
+    /**
+     * Instantiates a new Alert.
+     *
+     * @param senderName  the sender name
+     * @param eventName   the event name
+     * @param startTime   the start time
+     * @param endTime     the end time
+     * @param description the description
+     */
+    public Alert(String senderName, String eventName, LocalDateTime startTime, LocalDateTime endTime, String description) {
+        this.senderName = senderName;
+        this.eventName = eventName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+    }
+
+    /**
      * Gets sender name.
      *
      * @return the sender name

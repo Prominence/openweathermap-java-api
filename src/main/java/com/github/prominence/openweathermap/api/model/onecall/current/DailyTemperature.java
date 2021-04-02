@@ -262,7 +262,7 @@ public class DailyTemperature {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DailyTemperature that = (DailyTemperature) o;
-        return Double.compare(that.dewPoint, dewPoint) == 0 &&
+        return Objects.equals(that.dewPoint, dewPoint) &&
                 Objects.equals(morning, that.morning) &&
                 Objects.equals(morningFeelsLike, that.morningFeelsLike) &&
                 Objects.equals(day, that.day) &&

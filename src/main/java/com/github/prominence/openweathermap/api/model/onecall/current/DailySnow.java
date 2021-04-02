@@ -30,7 +30,7 @@ import java.util.Objects;
 public class DailySnow {
     private static final String DEFAULT_UNIT = "mm";
 
-    private Double value;
+    private double value;
 
     private DailySnow() {
     }
@@ -52,7 +52,7 @@ public class DailySnow {
      *
      * @return the one hour snow level
      */
-    public Double getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -93,11 +93,9 @@ public class DailySnow {
     @Override
     public String toString() {
         final StringBuilder snowString = new StringBuilder();
-        if (value != null) {
-            snowString.append("Snow level: ");
-            snowString.append(value);
-            snowString.append(getUnit());
-        }
+        snowString.append("Snow level: ");
+        snowString.append(value);
+        snowString.append(getUnit());
         return snowString.toString();
     }
 }

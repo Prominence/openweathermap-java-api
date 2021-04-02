@@ -30,7 +30,7 @@ import java.util.Objects;
 public class DailyRain {
     private static final String DEFAULT_UNIT = "mm";
 
-    private Double value;
+    private double value;
 
     private DailyRain() {
     }
@@ -52,7 +52,7 @@ public class DailyRain {
      *
      * @return the one hour rain level
      */
-    public Double getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -92,12 +92,10 @@ public class DailyRain {
 
     @Override
     public String toString() {
-        final StringBuilder snowString = new StringBuilder();
-        if (value != null) {
-            snowString.append("Rain level: ");
-            snowString.append(value);
-            snowString.append(getUnit());
-        }
-        return snowString.toString();
+        final StringBuilder rainString = new StringBuilder();
+        rainString.append("Rain level: ");
+        rainString.append(value);
+        rainString.append(getUnit());
+        return rainString.toString();
     }
 }
