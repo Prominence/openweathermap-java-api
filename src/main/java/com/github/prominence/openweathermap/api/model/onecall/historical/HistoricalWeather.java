@@ -29,21 +29,7 @@ import com.github.prominence.openweathermap.api.model.onecall.*;
  */
 public class HistoricalWeather extends Current {
     @Override
-    public String toString() { // TODO: change
-        return "HistoricalWeather{" +
-                "forecastTime=" + forecastTime +
-                ", sunriseTime=" + sunriseTime +
-                ", sunsetTime=" + sunsetTime +
-                ", weatherState=" + weatherState +
-                ", temperature=" + temperature +
-                ", atmosphericPressure=" + atmosphericPressure +
-                ", humidity=" + humidity +
-                ", clouds=" + clouds +
-                ", uvIndex=" + uvIndex +
-                ", visibilityInMetres=" + visibilityInMetres +
-                ", wind=" + wind +
-                ", rain=" + rain +
-                ", snow=" + snow +
-                '}';
+    public String toString() {
+        return "Historical weather information forecasted for " + forecastTime + ".";
     }
 }

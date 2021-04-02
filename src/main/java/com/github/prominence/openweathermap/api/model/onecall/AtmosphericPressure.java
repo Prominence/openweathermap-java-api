@@ -33,14 +33,7 @@ public class AtmosphericPressure {
 
     private double seaLevelValue;
 
-    /**
-     * Instantiates a new Pressure.
-     *
-     * @param seaLevelValue the value representing pressure value.
-     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
-     */
-    private AtmosphericPressure(double seaLevelValue) {
-        this.seaLevelValue = seaLevelValue;
+    private AtmosphericPressure() {
     }
 
     /**
@@ -49,10 +42,9 @@ public class AtmosphericPressure {
      * @return instantiated {@link AtmosphericPressure} object.
      */
     public static AtmosphericPressure withValue(double seaLevelValue) {
-        if (seaLevelValue < 0)  {
-            throw new IllegalArgumentException("Atmospheric pressure value must be in [0, +∞) range.");
-        }
-        return new AtmosphericPressure(seaLevelValue);
+        final AtmosphericPressure atmosphericPressure = new AtmosphericPressure();
+        atmosphericPressure.setSeaLevelValue(seaLevelValue);
+        return atmosphericPressure;
     }
 
     /**

@@ -249,18 +249,7 @@ public class HourlyHistorical {
     }
 
     @Override
-    public String toString() { // TODO: change
-        return "HourlyHistorical{" +
-                "forecastTime=" + forecastTime +
-                ", weatherState=" + weatherState +
-                ", temperature=" + temperature +
-                ", atmosphericPressure=" + atmosphericPressure +
-                ", humidity=" + humidity +
-                ", clouds=" + clouds +
-                ", visibilityInMetres=" + visibilityInMetres +
-                ", wind=" + wind +
-                ", rain=" + rain +
-                ", snow=" + snow +
-                '}';
+    public String toString() {
+        return "Historical hourly information forecasted for " + forecastTime + ".";
     }
 }

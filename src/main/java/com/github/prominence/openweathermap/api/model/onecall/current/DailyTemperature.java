@@ -38,7 +38,7 @@ public class DailyTemperature {
     private Double nightFeelsLike;
     private Double min;
     private Double max;
-    private double dewPoint;
+    private Double dewPoint;
     private String unit;
 
     /**
@@ -226,7 +226,7 @@ public class DailyTemperature {
      *
      * @return the dew point temperature
      */
-    public double getDewPoint() {
+    public Double getDewPoint() {
         return dewPoint;
     }
 
@@ -235,7 +235,7 @@ public class DailyTemperature {
      *
      * @param dewPoint the dew point temperature
      */
-    public void setDewPoint(double dewPoint) {
+    public void setDewPoint(Double dewPoint) {
         this.dewPoint = dewPoint;
     }
 
@@ -279,65 +279,5 @@ public class DailyTemperature {
     @Override
     public int hashCode() {
         return Objects.hash(morning, morningFeelsLike, day, dayFeelsLike, eve, eveFeelsLike, night, nightFeelsLike, min, max, dewPoint, unit);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Daily temperature: ");
-        stringBuilder.append("dew point - ");
-        stringBuilder.append(dewPoint);
-        stringBuilder.append(unit);
-        if (morning != null) {
-            stringBuilder.append(", morning - ");
-            stringBuilder.append(morning);
-            stringBuilder.append(unit);
-        }
-        if (morningFeelsLike != null) {
-            stringBuilder.append(", morning feels like - ");
-            stringBuilder.append(morningFeelsLike);
-            stringBuilder.append(unit);
-        }
-        if (day != null) {
-            stringBuilder.append(", day - ");
-            stringBuilder.append(day);
-            stringBuilder.append(unit);
-        }
-        if (dayFeelsLike != null) {
-            stringBuilder.append(", day feels like - ");
-            stringBuilder.append(dayFeelsLike);
-            stringBuilder.append(unit);
-        }
-        if (eve != null) {
-            stringBuilder.append(", eve - ");
-            stringBuilder.append(eve);
-            stringBuilder.append(unit);
-        }
-        if (eveFeelsLike != null) {
-            stringBuilder.append(", eve feels like - ");
-            stringBuilder.append(eveFeelsLike);
-            stringBuilder.append(unit);
-        }
-        if (night != null) {
-            stringBuilder.append(", night - ");
-            stringBuilder.append(night);
-            stringBuilder.append(unit);
-        }
-        if (nightFeelsLike != null) {
-            stringBuilder.append(", night feels like - ");
-            stringBuilder.append(nightFeelsLike);
-            stringBuilder.append(unit);
-        }
-        if (min != null) {
-            stringBuilder.append(", min - ");
-            stringBuilder.append(min);
-            stringBuilder.append(unit);
-        }
-        if (max != null) {
-            stringBuilder.append(", max - ");
-            stringBuilder.append(max);
-            stringBuilder.append(unit);
-        }
-        return stringBuilder.toString();
     }
 }

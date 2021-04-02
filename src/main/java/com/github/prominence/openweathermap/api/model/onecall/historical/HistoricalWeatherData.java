@@ -148,13 +148,7 @@ public class HistoricalWeatherData {
     }
 
     @Override
-    public String toString() { // TODO: change
-        return "HistoricalWeatherData{" +
-                "coordinate=" + coordinate +
-                ", timezone=" + timezone +
-                ", timezoneOffset=" + timezoneOffset +
-                ", historicalWeather=" + historicalWeather +
-                ", hourlyList=" + hourlyList +
-                '}';
+    public String toString() {
+        return "Historical weather data for " + coordinate + ".";
     }
 }

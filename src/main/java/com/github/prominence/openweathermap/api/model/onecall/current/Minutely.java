@@ -33,7 +33,6 @@ public class Minutely {
     private double precipitationVolume;
 
     private Minutely() {
-
     }
 
     /**
@@ -44,10 +43,6 @@ public class Minutely {
      * @return the minutely
      */
     public static Minutely withValue(LocalDateTime forecastTime, double precipitationVolume) {
-        Objects.requireNonNull(forecastTime);
-        if (precipitationVolume < 0) {
-            throw new IllegalArgumentException("Precipitation volume cannot be negative.");
-        }
         final Minutely minutely = new Minutely();
         minutely.setForecastTime(forecastTime);
         minutely.setPrecipitationVolume(precipitationVolume);
@@ -65,6 +60,7 @@ public class Minutely {
     }
 
     private void setForecastTime(LocalDateTime forecastTime) {
+        Objects.requireNonNull(forecastTime);
         this.forecastTime = forecastTime;
     }
 
@@ -78,6 +74,9 @@ public class Minutely {
     }
 
     private void setPrecipitationVolume(double precipitationVolume) {
+        if (precipitationVolume < 0) {
+            throw new IllegalArgumentException("Precipitation volume cannot be negative.");
+        }
         this.precipitationVolume = precipitationVolume;
     }
 

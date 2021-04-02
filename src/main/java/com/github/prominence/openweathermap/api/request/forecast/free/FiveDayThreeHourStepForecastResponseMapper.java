@@ -160,10 +160,11 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         if (weatherNode == null) {
             return null;
         }
-        final WeatherState weatherState = new WeatherState();
-        weatherState.setId(weatherNode.get("id").asInt());
-        weatherState.setName(weatherNode.get("main").asText());
-        weatherState.setDescription(weatherNode.get("description").asText());
+        final WeatherState weatherState = new WeatherState(
+                weatherNode.get("id").asInt(),
+                weatherNode.get("main").asText(),
+                weatherNode.get("description").asText()
+        );
         weatherState.setIconId(weatherNode.get("icon").asText());
 
         return weatherState;

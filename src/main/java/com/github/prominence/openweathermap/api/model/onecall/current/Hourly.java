@@ -289,20 +289,7 @@ public class Hourly {
     }
 
     @Override
-    public String toString() { // TODO: change
-        return "Hourly{" +
-                "forecastTime=" + forecastTime +
-                ", weatherState=" + weatherState +
-                ", temperature=" + temperature +
-                ", atmosphericPressure=" + atmosphericPressure +
-                ", humidity=" + humidity +
-                ", uvIndex=" + uvIndex +
-                ", clouds=" + clouds +
-                ", visibilityInMetres=" + visibilityInMetres +
-                ", wind=" + wind +
-                ", probabilityOfPrecipitation=" + probabilityOfPrecipitation +
-                ", rain=" + rain +
-                ", snow=" + snow +
-                '}';
+    public String toString() {
+        return "Hourly weather information forecasted for " + forecastTime + ".";
     }
 }

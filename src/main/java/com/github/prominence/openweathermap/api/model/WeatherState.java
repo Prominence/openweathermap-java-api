@@ -36,6 +36,12 @@ public class WeatherState {
     private String iconId;
     private WeatherCondition weatherConditionEnum;
 
+    public WeatherState(Integer id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
     /**
      * Gets id.
      *
@@ -151,13 +157,7 @@ public class WeatherState {
     }
 
     @Override
-    public String toString() { // TODO: change
-        return "WeatherState{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", iconId='" + iconId + '\'' +
-                ", weatherConditionEnum=" + weatherConditionEnum +
-                '}';
+    public String toString() {
+        return "Weather state: " + name + "(" + description + ").";
     }
 }

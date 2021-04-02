@@ -308,21 +308,7 @@ public class Current {
     }
 
     @Override
-    public String toString() { // TODO: change
-        return "Current{" +
-                "forecastTime=" + forecastTime +
-                ", sunriseTime=" + sunriseTime +
-                ", sunsetTime=" + sunsetTime +
-                ", weatherState=" + weatherState +
-                ", temperature=" + temperature +
-                ", atmosphericPressure=" + atmosphericPressure +
-                ", humidity=" + humidity +
-                ", clouds=" + clouds +
-                ", uvIndex=" + uvIndex +
-                ", visibilityInMetres=" + visibilityInMetres +
-                ", wind=" + wind +
-                ", rain=" + rain +
-                ", snow=" + snow +
-                '}';
+    public String toString() {
+        return "Current weather information forecasted for " + forecastTime + ".";
     }
 }

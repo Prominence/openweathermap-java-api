@@ -33,9 +33,7 @@ public class Temperature {
     private Double dewPoint;
     private String unit;
 
-    private Temperature(double value, String unit) {
-        this.value = value;
-        this.unit = unit;
+    private Temperature() {
     }
 
     /**
@@ -45,10 +43,10 @@ public class Temperature {
      * @return temperature object
      */
     public static Temperature withValue(double value, String unit) {
-        if (unit == null) {
-            throw new IllegalArgumentException("Unit must be set.");
-        }
-        return new Temperature(value, unit);
+        final Temperature temperature = new Temperature();
+        temperature.setValue(value);
+        temperature.setUnit(unit);
+        return temperature;
     }
 
     /**

@@ -33,15 +33,7 @@ public class Wind {
     private Double gust;
     private String unit;
 
-    /**
-     * Instantiates a new Wind.
-     *
-     * @param speed the speed
-     * @param unit  the unitSystem
-     */
-    private Wind(double speed, String unit) {
-        this.speed = speed;
-        this.unit = unit;
+    private Wind() {
     }
 
     /**
@@ -51,13 +43,10 @@ public class Wind {
      * @return wind object
      */
     public static Wind withValue(double speed, String unit) {
-        if (speed < 0) {
-            throw new IllegalArgumentException("Wind speed value must be in positive or zero.");
-        }
-        if (unit == null) {
-            throw new IllegalArgumentException("Unit must be set.");
-        }
-        return new Wind(speed, unit);
+        final Wind wind = new Wind();
+        wind.setSpeed(speed);
+        wind.setUnit(unit);
+        return wind;
     }
 
     /**
