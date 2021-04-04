@@ -22,8 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class TemperatureUnitTest {
     @Test
@@ -41,7 +42,7 @@ public class TemperatureUnitTest {
         final Temperature temperature = Temperature.withValue(22.2, "K");
         temperature.setValue(55.44);
 
-        Assert.assertEquals(55.44, temperature.getValue(), 0.00001);
+        assertEquals(55.44, temperature.getValue(), 0.00001);
     }
 
     @Test
@@ -49,11 +50,11 @@ public class TemperatureUnitTest {
         final Temperature temperature = Temperature.withValue(22.2, "K");
         temperature.setMaxTemperature(44.4);
 
-        Assert.assertEquals(44.4, temperature.getMaxTemperature(), 0.00001);
+        assertEquals(44.4, temperature.getMaxTemperature(), 0.00001);
 
         temperature.setMaxTemperature(null);
 
-        Assert.assertNull(temperature.getMaxTemperature());
+        assertNull(temperature.getMaxTemperature());
     }
 
     @Test
@@ -61,11 +62,11 @@ public class TemperatureUnitTest {
         final Temperature temperature = Temperature.withValue(22.2, "K");
         temperature.setMinTemperature(33.2);
 
-        Assert.assertEquals(33.2, temperature.getMinTemperature(), 0.00001);
+        assertEquals(33.2, temperature.getMinTemperature(), 0.00001);
 
         temperature.setMinTemperature(null);
 
-        Assert.assertNull(temperature.getMinTemperature());
+        assertNull(temperature.getMinTemperature());
     }
 
     @Test
@@ -73,11 +74,11 @@ public class TemperatureUnitTest {
         final Temperature temperature = Temperature.withValue(22.2, "K");
         temperature.setFeelsLike(22.3);
 
-        Assert.assertEquals(22.3, temperature.getFeelsLike(), 0.00001);
+        assertEquals(22.3, temperature.getFeelsLike(), 0.00001);
 
         temperature.setFeelsLike(null);
 
-        Assert.assertNull(temperature.getFeelsLike());
+        assertNull(temperature.getFeelsLike());
     }
 
     @Test
@@ -85,7 +86,7 @@ public class TemperatureUnitTest {
         final Temperature temperature = Temperature.withValue(22.2, "K");
         temperature.setUnit("test");
 
-        Assert.assertTrue("test".equals(temperature.getUnit()));
+        assertEquals("test", temperature.getUnit());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -99,23 +100,23 @@ public class TemperatureUnitTest {
     public void whenCallToString_thenAllIsFine() {
         final Temperature temperature = Temperature.withValue(22.2, "K");
 
-        Assert.assertNotNull(temperature.toString());
-        Assert.assertNotEquals("", temperature.toString());
+        assertNotNull(temperature.toString());
+        assertNotEquals("", temperature.toString());
 
         temperature.setMinTemperature(11.2);
 
-        Assert.assertNotNull(temperature.toString());
-        Assert.assertNotEquals("", temperature.toString());
+        assertNotNull(temperature.toString());
+        assertNotEquals("", temperature.toString());
 
         temperature.setMaxTemperature(44.3);
 
-        Assert.assertNotNull(temperature.toString());
-        Assert.assertNotEquals("", temperature.toString());
+        assertNotNull(temperature.toString());
+        assertNotEquals("", temperature.toString());
 
         temperature.setFeelsLike(22.4);
 
-        Assert.assertNotNull(temperature.toString());
-        Assert.assertNotEquals("", temperature.toString());
+        assertNotNull(temperature.toString());
+        assertNotEquals("", temperature.toString());
     }
 
     @Test
@@ -123,7 +124,7 @@ public class TemperatureUnitTest {
         final Temperature one = Temperature.withValue(22.2, "K");
         final Temperature two = Temperature.withValue(22.2, "K");
 
-        Assert.assertEquals(one.hashCode(), two.hashCode());
+        assertEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
@@ -131,44 +132,44 @@ public class TemperatureUnitTest {
         final Temperature one = Temperature.withValue(22.2, "K");
         final Temperature two = Temperature.withValue(21.2, "K");
 
-        Assert.assertTrue(one.equals(one));
-        Assert.assertFalse(one.equals(new Object()));
-        Assert.assertFalse(one.equals(two));
+        assertEquals(one, one);
+        assertNotEquals(one, new Object());
+        assertNotEquals(one, two);
 
         one.setValue(21.2);
 
-        Assert.assertTrue(one.equals(two));
+        assertEquals(one, two);
 
         one.setMaxTemperature(33.56);
 
-        Assert.assertFalse(one.equals(two));
+        assertNotEquals(one, two);
 
         two.setMaxTemperature(33.56);
 
-        Assert.assertTrue(one.equals(two));
+        assertEquals(one, two);
 
         one.setMinTemperature(11.54);
 
-        Assert.assertFalse(one.equals(two));
+        assertNotEquals(one, two);
 
         two.setMinTemperature(11.54);
 
-        Assert.assertTrue(one.equals(two));
+        assertEquals(one, two);
 
         two.setUnit("U");
 
-        Assert.assertFalse(one.equals(two));
+        assertNotEquals(one, two);
 
         one.setUnit("U");
 
-        Assert.assertTrue(one.equals(two));
+        assertEquals(one, two);
 
         one.setFeelsLike(22.3);
 
-        Assert.assertFalse(one.equals(two));
+        assertNotEquals(one, two);
 
         two.setFeelsLike(22.3);
 
-        Assert.assertTrue(one.equals(two));
+        assertEquals(one, two);
     }
 }

@@ -27,13 +27,14 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.Assert.*;
 
 public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     @Test
@@ -47,7 +48,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(historicalWeatherData);
+        assertNotNull(historicalWeatherData);
     }
 
     @Test
@@ -61,8 +62,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertNotNull(responseJson);
-        Assert.assertNotEquals("", responseJson);
+        assertNotNull(responseJson);
+        assertNotEquals("", responseJson);
         System.out.println(responseJson);
     }
 
@@ -77,8 +78,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJava();
 
-        Assert.assertNotNull(historicalWeatherDataFuture);
-        Assert.assertNotNull(historicalWeatherDataFuture.get());
+        assertNotNull(historicalWeatherDataFuture);
+        assertNotNull(historicalWeatherDataFuture.get());
     }
 
     @Test
@@ -92,9 +93,9 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJSON();
 
-        Assert.assertNotNull(responseJsonFuture);
+        assertNotNull(responseJsonFuture);
         final String responseJson = responseJsonFuture.get();
-        Assert.assertNotEquals("", responseJson);
+        assertNotEquals("", responseJson);
         System.out.println(responseJson);
     }
 }

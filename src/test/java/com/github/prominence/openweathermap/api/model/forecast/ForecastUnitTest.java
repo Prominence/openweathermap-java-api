@@ -22,10 +22,11 @@
 
 package com.github.prominence.openweathermap.api.model.forecast;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class ForecastUnitTest {
     @Test
@@ -33,7 +34,7 @@ public class ForecastUnitTest {
         final Forecast forecast = new Forecast();
         forecast.setLocation(Location.withValues(2, "asd"));
 
-        Assert.assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getLocation());
     }
 
     @Test
@@ -41,7 +42,7 @@ public class ForecastUnitTest {
         final Forecast forecast = new Forecast();
         forecast.setWeatherForecasts(new ArrayList<>());
 
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast.getWeatherForecasts());
     }
 
     @Test
@@ -49,11 +50,11 @@ public class ForecastUnitTest {
         final Forecast one = new Forecast();
         final Forecast two = new Forecast();
 
-        Assert.assertEquals(one.hashCode(), two.hashCode());
+        assertEquals(one.hashCode(), two.hashCode());
 
         one.setLocation(Location.withValues(22, "444"));
 
-        Assert.assertNotEquals(one.hashCode(), two.hashCode());
+        assertNotEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
@@ -61,21 +62,21 @@ public class ForecastUnitTest {
         final Forecast one = new Forecast();
         final Forecast two = new Forecast();
 
-        Assert.assertTrue(one.equals(one));
-        Assert.assertFalse(one.equals(null));
-        Assert.assertTrue(one.equals(two));
-        Assert.assertFalse(one.equals(new Object()));
+        assertEquals(one, one);
+        assertNotEquals(null, one);
+        assertEquals(one, two);
+        assertNotEquals(one, new Object());
 
         one.setLocation(Location.withValues(22, "234"));
 
-        Assert.assertFalse(one.equals(two));
+        assertNotEquals(one, two);
 
         two.setLocation(one.getLocation());
 
-        Assert.assertTrue(one.equals(two));
+        assertEquals(one, two);
 
         one.setWeatherForecasts(new ArrayList<>());
 
-        Assert.assertFalse(one.equals(two));
+        assertNotEquals(one, two);
     }
 }

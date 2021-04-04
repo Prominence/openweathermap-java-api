@@ -22,18 +22,19 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class AtmosphericPressureUnitTest {
     @Test
     public void whenCreatePressureWithArgs_thenValueIsSet() {
         AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(100);
-        Assert.assertEquals(100, atmosphericPressure.getValue(), 0.00001);
+        assertEquals(100, atmosphericPressure.getValue(), 0.00001);
 
-        Assert.assertEquals(0, AtmosphericPressure.withValue(0).getValue(), 0.00001);
-        Assert.assertEquals(100, AtmosphericPressure.withValue(100).getValue(), 0.00001);
-        Assert.assertEquals(55, AtmosphericPressure.withValue(55).getValue(), 0.00001);
+        assertEquals(0, AtmosphericPressure.withValue(0).getValue(), 0.00001);
+        assertEquals(100, AtmosphericPressure.withValue(100).getValue(), 0.00001);
+        assertEquals(55, AtmosphericPressure.withValue(55).getValue(), 0.00001);
     }
 
     @Test
@@ -41,9 +42,9 @@ public class AtmosphericPressureUnitTest {
         AtmosphericPressure one = AtmosphericPressure.withValue(22);
         AtmosphericPressure two = AtmosphericPressure.withValue(22);
 
-        Assert.assertTrue(one.equals(two));
-        Assert.assertTrue(one.equals(one));
-        Assert.assertEquals(one.hashCode(), two.hashCode());
+        assertEquals(one, two);
+        assertEquals(one, one);
+        assertEquals(one.hashCode(), two.hashCode());
 
         one.setSeaLevelValue(333);
         one.setGroundLevelValue(555);
@@ -51,9 +52,9 @@ public class AtmosphericPressureUnitTest {
         two.setSeaLevelValue(333);
         two.setGroundLevelValue(555);
 
-        Assert.assertTrue(one.equals(two));
-        Assert.assertTrue(two.equals(one));
-        Assert.assertEquals(one.hashCode(), two.hashCode());
+        assertEquals(one, two);
+        assertEquals(two, one);
+        assertEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
@@ -61,23 +62,23 @@ public class AtmosphericPressureUnitTest {
         AtmosphericPressure one = AtmosphericPressure.withValue(5);
         AtmosphericPressure two = AtmosphericPressure.withValue(88);
 
-        Assert.assertFalse(one.equals(two));
-        Assert.assertFalse(two.equals(one));
-        Assert.assertFalse(one.equals(new Object()));
-        Assert.assertNotEquals(one.hashCode(), two.hashCode());
+        assertNotEquals(one, two);
+        assertNotEquals(two, one);
+        assertNotEquals(one, new Object());
+        assertNotEquals(one.hashCode(), two.hashCode());
 
         one = AtmosphericPressure.withValue(44);
         one.setSeaLevelValue(44);
         two = AtmosphericPressure.withValue(44);
         two.setGroundLevelValue(22);
 
-        Assert.assertFalse(one.equals(two));
-        Assert.assertFalse(two.equals(one));
+        assertNotEquals(one, two);
+        assertNotEquals(two, one);
 
         two.setSeaLevelValue(44);
 
-        Assert.assertFalse(one.equals(two));
-        Assert.assertFalse(two.equals(one));
+        assertNotEquals(one, two);
+        assertNotEquals(two, one);
     }
 
     @Test
@@ -88,17 +89,17 @@ public class AtmosphericPressureUnitTest {
         atmosphericPressure.setValue(100);
 
         atmosphericPressure.setGroundLevelValue(222);
-        Assert.assertEquals(222, atmosphericPressure.getGroundLevelValue(), 0.00001);
+        assertEquals(222, atmosphericPressure.getGroundLevelValue(), 0.00001);
 
         atmosphericPressure.setSeaLevelValue(4232);
-        Assert.assertEquals(4232, atmosphericPressure.getSeaLevelValue(), 0.00001);
+        assertEquals(4232, atmosphericPressure.getSeaLevelValue(), 0.00001);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final String pressureString = AtmosphericPressure.withValue(44).toString();
-        Assert.assertNotNull(pressureString);
-        Assert.assertNotEquals("", pressureString);
+        assertNotNull(pressureString);
+        assertNotEquals("", pressureString);
     }
 
     @Test(expected = IllegalArgumentException.class)

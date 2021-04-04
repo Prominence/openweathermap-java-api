@@ -36,7 +36,7 @@ public class SnowUnitTest {
     public void getOneHourRainLevel() {
         final Snow snow = Snow.withOneHourLevelValue(220.0);
 
-        assertEquals(220.0, snow.getOneHourSnowLevel(), 0.00001);
+        assertEquals(220.0, snow.getOneHourLevel(), 0.00001);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class SnowUnitTest {
 
         assertEquals(first, second);
 
-        first.setOneHourSnowLevel(200);
+        first.setOneHourLevel(200);
 
         assertNotEquals(first, second);
     }
@@ -70,7 +70,7 @@ public class SnowUnitTest {
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setOneHourSnowLevel(200);
+        first.setOneHourLevel(200);
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }

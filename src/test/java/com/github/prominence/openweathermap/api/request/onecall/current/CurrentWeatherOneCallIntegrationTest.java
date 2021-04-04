@@ -28,11 +28,12 @@ import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.Assert.*;
 
 public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
     @Test
@@ -46,7 +47,7 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(currentWeatherData);
+        assertNotNull(currentWeatherData);
     }
 
     @Test
@@ -60,8 +61,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertNotNull(responseJson);
-        Assert.assertNotNull("", responseJson);
+        assertNotNull(responseJson);
+        assertNotNull("", responseJson);
         System.out.println(responseJson);
     }
 
@@ -77,9 +78,9 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(currentWeatherData);
-        Assert.assertNull(currentWeatherData.getCurrent());
-        Assert.assertNull(currentWeatherData.getMinutelyList());
+        assertNotNull(currentWeatherData);
+        assertNull(currentWeatherData.getCurrent());
+        assertNull(currentWeatherData.getMinutelyList());
     }
 
     @Test
@@ -93,8 +94,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJava();
 
-        Assert.assertNotNull(currentWeatherDataFuture);
-        Assert.assertNotNull(currentWeatherDataFuture.get());
+        assertNotNull(currentWeatherDataFuture);
+        assertNotNull(currentWeatherDataFuture.get());
     }
 
     @Test
@@ -108,9 +109,9 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJSON();
 
-        Assert.assertNotNull(responseJsonFuture);
+        assertNotNull(responseJsonFuture);
         final String responseJson = responseJsonFuture.get();
-        Assert.assertNotNull(responseJson);
+        assertNotNull(responseJson);
         System.out.println(responseJson);
     }
 }

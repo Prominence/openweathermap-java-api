@@ -294,13 +294,13 @@ public class WeatherForecast {
         }
         if (rain != null) {
             stringBuilder.append(", Rain: ");
-            stringBuilder.append(rain.getThreeHourRainLevel());
+            stringBuilder.append(rain.getThreeHourLevel());
             stringBuilder.append(' ');
             stringBuilder.append(rain.getUnit());
         }
         if (snow != null) {
             stringBuilder.append(", Snow: ");
-            stringBuilder.append(snow.getThreeHourSnowLevel());
+            stringBuilder.append(snow.getThreeHourLevel());
             stringBuilder.append(' ');
             stringBuilder.append(snow.getUnit());
         }

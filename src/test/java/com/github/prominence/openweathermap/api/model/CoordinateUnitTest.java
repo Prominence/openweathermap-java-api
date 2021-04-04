@@ -22,10 +22,12 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class CoordinateUnitTest {
+
     @Test
     public void whenCreateCoordinateWithValidValues_thenObjectCreated() {
         Coordinate.of(44, 53);
@@ -56,18 +58,18 @@ public class CoordinateUnitTest {
         final Coordinate coordinate = Coordinate.of(0, 0);
 
         coordinate.setLatitude(-90);
-        Assert.assertEquals(-90, coordinate.getLatitude(), 0.00001);
+        assertEquals(-90, coordinate.getLatitude(), 0.00001);
         coordinate.setLatitude(90);
-        Assert.assertEquals(90, coordinate.getLatitude(), 0.00001);
+        assertEquals(90, coordinate.getLatitude(), 0.00001);
         coordinate.setLatitude(44);
-        Assert.assertEquals(44, coordinate.getLatitude(), 0.00001);
+        assertEquals(44, coordinate.getLatitude(), 0.00001);
 
         coordinate.setLongitude(-180);
-        Assert.assertEquals(-180, coordinate.getLongitude(), 0.00001);
+        assertEquals(-180, coordinate.getLongitude(), 0.00001);
         coordinate.setLongitude(180);
-        Assert.assertEquals(180, coordinate.getLongitude(), 0.00001);
+        assertEquals(180, coordinate.getLongitude(), 0.00001);
         coordinate.setLongitude(130);
-        Assert.assertEquals(130, coordinate.getLongitude(), 0.00001);
+        assertEquals(130, coordinate.getLongitude(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -97,28 +99,28 @@ public class CoordinateUnitTest {
     @Test
     public void whenGetLatitude_thenAllIsFine() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        Assert.assertEquals(0, coordinate.getLatitude(), 0.00001);
+        assertEquals(0, coordinate.getLatitude(), 0.00001);
 
         coordinate.setLatitude(45);
 
-        Assert.assertEquals(45, coordinate.getLatitude(), 0.00001);
+        assertEquals(45, coordinate.getLatitude(), 0.00001);
     }
 
     @Test
     public void whenGetLongitude_thenAllIsFine() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        Assert.assertEquals(0, coordinate.getLongitude(), 0.00001);
+        assertEquals(0, coordinate.getLongitude(), 0.00001);
 
         coordinate.setLongitude(33);
 
-        Assert.assertEquals(33, coordinate.getLongitude(), 0.00001);
+        assertEquals(33, coordinate.getLongitude(), 0.00001);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        Assert.assertNotNull(coordinate.toString());
-        Assert.assertNotEquals("", coordinate.toString());
+        assertNotNull(coordinate.toString());
+        assertNotEquals("", coordinate.toString());
     }
 
     @Test
@@ -126,19 +128,19 @@ public class CoordinateUnitTest {
         final Coordinate first = Coordinate.of(22, 66);
         final Coordinate second = Coordinate.of(22, 44);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         second.setLongitude(66);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
         second.setLatitude(89);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         first.setLatitude(89);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
@@ -146,24 +148,24 @@ public class CoordinateUnitTest {
         final Coordinate first = Coordinate.of(11, 99);
         final Coordinate second = Coordinate.of(11, 99);
 
-        Assert.assertTrue(first.equals(second));
-        Assert.assertTrue(first.equals(first));
-        Assert.assertFalse(first.equals(new Object()));
+        assertEquals(first, second);
+        assertEquals(first, first);
+        assertNotEquals(first, new Object());
 
         first.setLatitude(34);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         second.setLatitude(34);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
 
         second.setLongitude(74);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         first.setLongitude(74);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
     }
 }

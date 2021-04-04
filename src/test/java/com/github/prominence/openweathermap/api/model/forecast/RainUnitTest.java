@@ -22,8 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.forecast;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class RainUnitTest {
     @Test
@@ -41,25 +42,25 @@ public class RainUnitTest {
     public void whenSetValues_thenTheyAreSet() {
         final Rain rain = Rain.withThreeHourLevelValue(0);
 
-        Assert.assertEquals(0, rain.getThreeHourRainLevel(), 0.00001);
+        assertEquals(0, rain.getThreeHourLevel(), 0.00001);
 
-        rain.setThreeHourRainLevel(55.5);
-        Assert.assertEquals(55.5, rain.getThreeHourRainLevel(), 0.00001);
+        rain.setThreeHourLevel(55.5);
+        assertEquals(55.5, rain.getThreeHourLevel(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidValue_thenFail() {
         final Rain rain = Rain.withThreeHourLevelValue(0);
 
-        rain.setThreeHourRainLevel(-20);
+        rain.setThreeHourLevel(-20);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final Rain rain = Rain.withThreeHourLevelValue(33.5);
 
-        Assert.assertNotNull(rain.toString());
-        Assert.assertNotEquals("", rain.toString());
+        assertNotNull(rain.toString());
+        assertNotEquals("", rain.toString());
     }
 
     @Test
@@ -67,15 +68,15 @@ public class RainUnitTest {
         final Rain first = Rain.withThreeHourLevelValue(0);
         final Rain second = Rain.withThreeHourLevelValue(0);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
-        second.setThreeHourRainLevel(11.0);
+        second.setThreeHourLevel(11.0);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
-        first.setThreeHourRainLevel(11.0);
+        first.setThreeHourLevel(11.0);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
@@ -83,16 +84,16 @@ public class RainUnitTest {
         final Rain first = Rain.withThreeHourLevelValue(0);
         final Rain second = Rain.withThreeHourLevelValue(0);
 
-        Assert.assertTrue(first.equals(second));
-        Assert.assertTrue(first.equals(first));
-        Assert.assertFalse(first.equals(new Object()));
+        assertEquals(first, second);
+        assertEquals(first, first);
+        assertNotEquals(first, new Object());
 
-        second.setThreeHourRainLevel(66.7);
+        second.setThreeHourLevel(66.7);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
-        first.setThreeHourRainLevel(66.7);
+        first.setThreeHourLevel(66.7);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
     }
 }

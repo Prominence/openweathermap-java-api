@@ -281,15 +281,15 @@ public class Weather {
             stringBuilder.append(", ");
             stringBuilder.append(clouds.toString());
         }
-        if (rain != null && rain.getOneHourRainLevel() != null) {
+        if (rain != null && rain.getOneHourLevel() != null) {
             stringBuilder.append(", Rain: ");
-            stringBuilder.append(rain.getOneHourRainLevel());
+            stringBuilder.append(rain.getOneHourLevel());
             stringBuilder.append(' ');
             stringBuilder.append(rain.getUnit());
         }
-        if (snow != null && snow.getOneHourSnowLevel() != null) {
+        if (snow != null && snow.getOneHourLevel() != null) {
             stringBuilder.append(", Snow: ");
-            stringBuilder.append(snow.getOneHourSnowLevel());
+            stringBuilder.append(snow.getOneHourLevel());
             stringBuilder.append(' ');
             stringBuilder.append(snow.getUnit());
         }

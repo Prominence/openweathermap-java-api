@@ -26,7 +26,6 @@ import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import org.junit.Test;
 
 public class RequestUtilsUnitTest {
-
     @Test(expected = IllegalArgumentException.class)
     public void whenPassInvalidUrl_thenThrowAnException() {
         RequestUtils.getResponse("wrongUrl");

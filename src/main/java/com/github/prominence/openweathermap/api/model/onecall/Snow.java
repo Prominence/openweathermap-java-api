@@ -30,7 +30,7 @@ import java.util.Objects;
 public class Snow {
     private static final String DEFAULT_UNIT = "mm";
 
-    private double oneHourSnowLevel;
+    private double oneHourLevel;
 
     private Snow() {
     }
@@ -38,12 +38,12 @@ public class Snow {
     /**
      * Creates {@link Snow} object with correctness check.
      *
-     * @param oneHourSnowLevel 1-hour snow level value
+     * @param oneHourLevel 1-hour snow level value
      * @return snow object.
      */
-    public static Snow withOneHourLevelValue(double oneHourSnowLevel) {
+    public static Snow withOneHourLevelValue(double oneHourLevel) {
         final Snow snow = new Snow();
-        snow.setOneHourSnowLevel(oneHourSnowLevel);
+        snow.setOneHourLevel(oneHourLevel);
         return snow;
     }
 
@@ -52,20 +52,20 @@ public class Snow {
      *
      * @return the one hour snow level
      */
-    public double getOneHourSnowLevel() {
-        return oneHourSnowLevel;
+    public double getOneHourLevel() {
+        return oneHourLevel;
     }
 
     /**
      * Sets one hour snow level.
      *
-     * @param oneHourSnowLevel the one hour snow level
+     * @param oneHourLevel the one hour snow level
      */
-    public void setOneHourSnowLevel(double oneHourSnowLevel) {
-        if (oneHourSnowLevel < 0) {
+    public void setOneHourLevel(double oneHourLevel) {
+        if (oneHourLevel < 0) {
             throw new IllegalArgumentException("Snow level value cannot be negative.");
         }
-        this.oneHourSnowLevel = oneHourSnowLevel;
+        this.oneHourLevel = oneHourLevel;
     }
 
     /**
@@ -82,18 +82,18 @@ public class Snow {
         if (this == o) return true;
         if (!(o instanceof Snow)) return false;
         Snow snow = (Snow) o;
-        return Objects.equals(oneHourSnowLevel, snow.oneHourSnowLevel);
+        return Objects.equals(oneHourLevel, snow.oneHourLevel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oneHourSnowLevel);
+        return Objects.hash(oneHourLevel);
     }
 
     @Override
     public String toString() {
         return "1-hour snow level: " +
-                oneHourSnowLevel + ' ' +
+                oneHourLevel + ' ' +
                 getUnit();
     }
 }

@@ -25,7 +25,6 @@ package com.github.prominence.openweathermap.api;
 import org.junit.BeforeClass;
 
 public class ApiTest {
-
     private static OpenWeatherMapClient client;
 
     @BeforeClass

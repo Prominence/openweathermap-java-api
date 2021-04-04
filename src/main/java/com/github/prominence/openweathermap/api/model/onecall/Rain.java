@@ -30,7 +30,7 @@ import java.util.Objects;
 public class Rain {
     private static final String DEFAULT_UNIT = "mm";
 
-    private double oneHourRainLevel;
+    private double oneHourLevel;
 
     private Rain() {
     }
@@ -38,12 +38,12 @@ public class Rain {
     /**
      * Creates {@link Rain} object with correctness check.
      *
-     * @param oneHourRainLevel 1-hour rain level value
+     * @param oneHourLevel 1-hour rain level value
      * @return rain object.
      */
-    public static Rain withOneHourLevelValue(double oneHourRainLevel) {
+    public static Rain withOneHourLevelValue(double oneHourLevel) {
         final Rain rain = new Rain();
-        rain.setOneHourRainLevel(oneHourRainLevel);
+        rain.setOneHourLevel(oneHourLevel);
         return rain;
     }
 
@@ -52,20 +52,20 @@ public class Rain {
      *
      * @return the one hour rain level
      */
-    public double getOneHourRainLevel() {
-        return oneHourRainLevel;
+    public double getOneHourLevel() {
+        return oneHourLevel;
     }
 
     /**
      * Sets one hour rain level.
      *
-     * @param oneHourRainLevel the one hour rain level
+     * @param oneHourLevel the one hour rain level
      */
-    public void setOneHourRainLevel(double oneHourRainLevel) {
-        if (oneHourRainLevel < 0) {
+    public void setOneHourLevel(double oneHourLevel) {
+        if (oneHourLevel < 0) {
             throw new IllegalArgumentException("Rain level value cannot be negative.");
         }
-        this.oneHourRainLevel = oneHourRainLevel;
+        this.oneHourLevel = oneHourLevel;
     }
 
     /**
@@ -82,18 +82,18 @@ public class Rain {
         if (this == o) return true;
         if (!(o instanceof Rain)) return false;
         Rain rain = (Rain) o;
-        return Objects.equals(oneHourRainLevel, rain.oneHourRainLevel);
+        return Objects.equals(oneHourLevel, rain.oneHourLevel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oneHourRainLevel);
+        return Objects.hash(oneHourLevel);
     }
 
     @Override
     public String toString() {
         return "1-hour rain level: " +
-                oneHourRainLevel + ' ' +
+                oneHourLevel + ' ' +
                 getUnit();
     }
 }
