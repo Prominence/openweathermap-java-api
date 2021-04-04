@@ -30,16 +30,17 @@ import java.util.Objects;
  * The type Weather state.
  */
 public class WeatherState {
-    private Integer id;
-    private String name;
-    private String description;
+    private final int id;
+    private final String name;
+    private final String description;
     private String iconId;
-    private WeatherCondition weatherConditionEnum;
+    private final WeatherCondition weatherConditionEnum;
 
     public WeatherState(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.weatherConditionEnum = WeatherCondition.getById(id);
     }
 
     /**
@@ -47,18 +48,8 @@ public class WeatherState {
      *
      * @return the id
      */
-    public Integer getId() {
+    public int getId() {
         return id;
-    }
-
-    /**
-     * Sets id.
-     *
-     * @param id the id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-        this.weatherConditionEnum = WeatherCondition.getById(id);
     }
 
     /**
@@ -71,30 +62,12 @@ public class WeatherState {
     }
 
     /**
-     * Sets name.
-     *
-     * @param name the name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Gets description.
      *
      * @return the description
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Sets description.
-     *
-     * @param description the description
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -148,7 +121,7 @@ public class WeatherState {
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(iconId, that.iconId) && weatherConditionEnum == that.weatherConditionEnum;
+                Objects.equals(iconId, that.iconId);
     }
 
     @Override

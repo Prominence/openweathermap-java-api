@@ -62,7 +62,7 @@ public class CurrentUnitTest {
     @Test
     public void getWeatherState() {
         final Current current = new Current();
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
         current.setWeatherState(weatherState);
 
         assertEquals(weatherState, current.getWeatherState());
@@ -207,7 +207,7 @@ public class CurrentUnitTest {
 
         assertEquals(first, second);
 
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
 
         first.setWeatherState(weatherState);
 

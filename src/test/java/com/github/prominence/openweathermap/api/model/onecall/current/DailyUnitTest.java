@@ -64,7 +64,7 @@ public class DailyUnitTest {
     @Test
     public void getWeatherState() {
         final Daily daily = new Daily();
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
         daily.setWeatherState(weatherState);
 
         assertEquals(weatherState, daily.getWeatherState());
@@ -217,7 +217,7 @@ public class DailyUnitTest {
 
         assertEquals(first, second);
 
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
 
         first.setWeatherState(weatherState);
 
@@ -340,7 +340,7 @@ public class DailyUnitTest {
         assertNotNull(daily.toString());
         assertNotEquals("", daily.toString());
 
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
 
         daily.setWeatherState(weatherState);
 

@@ -365,7 +365,7 @@ public enum WeatherCondition {
      */
     public static WeatherCondition getById(int id) {
         final Optional<WeatherCondition> optionalWeatherCondition = Arrays.stream(values()).filter(weatherCondition -> weatherCondition.getId() == id).findFirst();
-        return optionalWeatherCondition.orElseGet(optionalWeatherCondition::get);
+        return optionalWeatherCondition.orElse(null);
     }
 
     @Override

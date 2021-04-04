@@ -22,8 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class CoordinateRectangleUnitTest {
     @Test
@@ -78,9 +79,21 @@ public class CoordinateRectangleUnitTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void whenCreateObjectUsingBuilderWithInvalidLatitudeBottom2_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLatitudeBottom(1000);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectUsingBuilderWithInvalidLatitudeTop_thenFail() {
         new CoordinateRectangle.Builder()
                 .setLatitudeTop(-1000);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenCreateObjectUsingBuilderWithInvalidLatitudeTop2_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLatitudeTop(1000);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -90,22 +103,56 @@ public class CoordinateRectangleUnitTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void whenCreateObjectUsingBuilderWithInvalidLongitudeLeft2_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLongitudeLeft(1000);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void whenCreateObjectUsingBuilderWithInvalidLongitudeRight_thenFail() {
         new CoordinateRectangle.Builder()
                 .setLongitudeRight(-1000);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void whenCreateObjectUsingBuilderWithInvalidLongitudeRight2_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLongitudeRight(1000);
+    }
+
     @Test(expected = IllegalStateException.class)
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet_thenFail() {
         new CoordinateRectangle.Builder()
+                .build();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet1_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLongitudeLeft(10)
+                .build();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet2_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLongitudeRight(10)
+                .setLatitudeBottom(10)
+                .build();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet3_thenFail() {
+        new CoordinateRectangle.Builder()
+                .setLongitudeRight(10)
+                .setLatitudeBottom(10)
                 .setLongitudeRight(10)
                 .build();
     }
 
-    @Test
-    public void whenCreateObjectUsingBuilderWithCorrectUsage_thenOk() {
+    @Test(expected = IllegalStateException.class)
+    public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet4_thenFail() {
         new CoordinateRectangle.Builder()
-                .setLongitudeRight(10)
                 .setLongitudeLeft(10)
                 .setLatitudeTop(10)
                 .setLatitudeBottom(10)
@@ -113,20 +160,32 @@ public class CoordinateRectangleUnitTest {
     }
 
     @Test
+    public void whenCreateObjectUsingBuilderWithCorrectUsage_thenOk() {
+        final CoordinateRectangle rectangle = new CoordinateRectangle.Builder()
+                .setLongitudeRight(10)
+                .setLongitudeLeft(10)
+                .setLatitudeTop(10)
+                .setLatitudeBottom(10)
+                .build();
+
+        assertNotNull(rectangle);
+    }
+
+    @Test
     public void whenGetAllParameters_thenAllIsFine() {
         final CoordinateRectangle rectangle = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
-        Assert.assertEquals(44.5, rectangle.getLongitudeLeft(), 0.00001);
-        Assert.assertEquals(22.4, rectangle.getLatitudeBottom(), 0.00001);
-        Assert.assertEquals(54.4, rectangle.getLongitudeRight(), 0.00001);
-        Assert.assertEquals(22.2, rectangle.getLatitudeTop(), 0.00001);
+        assertEquals(44.5, rectangle.getLongitudeLeft(), 0.00001);
+        assertEquals(22.4, rectangle.getLatitudeBottom(), 0.00001);
+        assertEquals(54.4, rectangle.getLongitudeRight(), 0.00001);
+        assertEquals(22.2, rectangle.getLatitudeTop(), 0.00001);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final CoordinateRectangle rectangle = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
 
-        Assert.assertNotNull(rectangle.toString());
-        Assert.assertNotEquals("", rectangle.toString());
+        assertNotNull(rectangle.toString());
+        assertNotEquals("", rectangle.toString());
     }
 
     @Test
@@ -134,12 +193,12 @@ public class CoordinateRectangleUnitTest {
         final CoordinateRectangle first = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
         final CoordinateRectangle second = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
         final CoordinateRectangle third = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 23.566);
 
-        Assert.assertNotEquals(first.hashCode(), third.hashCode());
-        Assert.assertNotEquals(second.hashCode(), third.hashCode());
+        assertNotEquals(first.hashCode(), third.hashCode());
+        assertNotEquals(second.hashCode(), third.hashCode());
     }
 
     @Test
@@ -147,24 +206,24 @@ public class CoordinateRectangleUnitTest {
         CoordinateRectangle first = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
         CoordinateRectangle second = CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
 
-        Assert.assertTrue(first.equals(second));
-        Assert.assertTrue(first.equals(first));
-        Assert.assertFalse(first.equals(new Object()));
+        assertEquals(first, second);
+        assertEquals(first, first);
+        assertNotEquals(first, new Object());
 
         first = CoordinateRectangle.withValues(49.5, 22.4, 54.4, 22.2);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         first = CoordinateRectangle.withValues(44.5, 29.4, 54.4, 22.2);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         first = CoordinateRectangle.withValues(44.5, 22.4, 24.4, 22.2);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         first = CoordinateRectangle.withValues(44.5, 22.4, 54.4, -2.2);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
     }
 }

@@ -45,7 +45,7 @@ public class HourlyUnitTest {
     @Test
     public void getWeatherState() {
         final Hourly hourly = new Hourly();
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
         hourly.setWeatherState(weatherState);
 
         assertEquals(weatherState, hourly.getWeatherState());
@@ -151,7 +151,7 @@ public class HourlyUnitTest {
         assertNotEquals(first, new Object());
 
         final LocalDateTime forecastTime = LocalDateTime.now();
-        final WeatherState weatherState = new WeatherState(10, "Clear", "clear sky");
+        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
         final Temperature temperature = Temperature.withValue(10, "K");
         final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(200);
         final Humidity humidity = Humidity.withValue((byte) 13);
