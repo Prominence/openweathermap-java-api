@@ -22,13 +22,14 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class WindUnitTest {
     @Test
     public void whenCreateWindWithValidArgs_thenValueIsSet() {
-        Assert.assertEquals(44.0, Wind.withValue(44, "ms").getSpeed(), 0.00001);
+        assertEquals(44.0, Wind.withValue(44, "ms").getSpeed(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -45,22 +46,22 @@ public class WindUnitTest {
     public void whenSetValidSpeed_thenValueIsSet() {
         final Wind wind = Wind.withValue(33, "as");
 
-        Assert.assertEquals(33, wind.getSpeed(), 0.00001);
+        assertEquals(33, wind.getSpeed(), 0.00001);
 
         wind.setSpeed(0);
 
-        Assert.assertEquals(0, wind.getSpeed(), 0.00001);
+        assertEquals(0, wind.getSpeed(), 0.00001);
 
         wind.setSpeed(3656);
 
-        Assert.assertEquals(3656, wind.getSpeed(), 0.00001);
+        assertEquals(3656, wind.getSpeed(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSetInvalidSpeedBelow0_thenThrowAnException() {
         final Wind wind = Wind.withValue(33, "as");
 
-        Assert.assertEquals(33, wind.getSpeed(), 0.00001);
+        assertEquals(33, wind.getSpeed(), 0.00001);
 
         wind.setSpeed(-22);
     }
@@ -69,19 +70,19 @@ public class WindUnitTest {
     public void whenSetValidDegrees_thenValueIsSet() {
         final Wind wind = Wind.withValue(33, "as");
 
-        Assert.assertNull(wind.getDegrees());
+        assertNull(wind.getDegrees());
 
         wind.setDegrees(22);
 
-        Assert.assertEquals(22, wind.getDegrees(), 0.00001);
+        assertEquals(22, wind.getDegrees(), 0.00001);
 
         wind.setDegrees(0);
 
-        Assert.assertEquals(0, wind.getDegrees(), 0.00001);
+        assertEquals(0, wind.getDegrees(), 0.00001);
 
         wind.setDegrees(360);
 
-        Assert.assertEquals(360, wind.getDegrees(), 0.00001);
+        assertEquals(360, wind.getDegrees(), 0.00001);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -100,11 +101,11 @@ public class WindUnitTest {
     public void whenSetNonNullUnit_thenValueIsSet() {
         final Wind wind = Wind.withValue(33, "as");
 
-        Assert.assertEquals(wind.getUnit(), "as");
+        assertEquals(wind.getUnit(), "as");
 
         wind.setUnit("myUnit");
 
-        Assert.assertEquals(wind.getUnit(), "myUnit");
+        assertEquals(wind.getUnit(), "myUnit");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -127,23 +128,23 @@ public class WindUnitTest {
 
         wind.setGust(30);
 
-        Assert.assertEquals(30, wind.getGust(), 0.00001);
+        assertEquals(30, wind.getGust(), 0.00001);
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final Wind wind = Wind.withValue(302, "a");
 
-        Assert.assertNotNull(wind.toString());
+        assertNotNull(wind.toString());
 
         wind.setDegrees(22);
 
-        Assert.assertNotNull(wind.toString());
-        Assert.assertNotEquals("", wind.toString());
+        assertNotNull(wind.toString());
+        assertNotEquals("", wind.toString());
 
         wind.setGust(20);
-        Assert.assertNotNull(wind.toString());
-        Assert.assertNotEquals("", wind.toString());
+        assertNotNull(wind.toString());
+        assertNotEquals("", wind.toString());
     }
 
     @Test
@@ -151,23 +152,23 @@ public class WindUnitTest {
         final Wind first = Wind.withValue(22, "a");
         final Wind second = Wind.withValue(22, "b");
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         second.setUnit("a");
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
         second.setSpeed(33);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         first.setSpeed(333);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         first.setSpeed(33);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
@@ -175,32 +176,36 @@ public class WindUnitTest {
         final Wind first = Wind.withValue(11, "a");
         final Wind second = Wind.withValue(11, "a");
 
-        Assert.assertTrue(first.equals(second));
-        Assert.assertTrue(first.equals(first));
-        Assert.assertFalse(first.equals(new Object()));
+        assertEquals(first, second);
+        assertEquals(first, first);
+        assertNotEquals(first, new Object());
 
         first.setDegrees(34);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         second.setDegrees(34);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
 
         second.setUnit("v");
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         first.setUnit("v");
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
 
         first.setGust(4);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         second.setGust(4);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
+
+        first.setSpeed(32);
+
+        assertNotEquals(first, second);
     }
 }

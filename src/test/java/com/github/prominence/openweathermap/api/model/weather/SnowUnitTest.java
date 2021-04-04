@@ -25,6 +25,8 @@ package com.github.prominence.openweathermap.api.model.weather;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class SnowUnitTest {
     @Test
     public void whenCreateSnowWithValidArgs_ObjectIsCreated() {
@@ -58,20 +60,25 @@ public class SnowUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Snow snow = Snow.withOneHourLevelValue(33.5);
+        Snow snow = Snow.withOneHourLevelValue(33.5);
 
-        Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("", snow.toString());
+        assertNotNull(snow.toString());
+        assertNotEquals("", snow.toString());
 
         snow.setOneHourSnowLevel(22.2);
 
-        Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("", snow.toString());
+        assertNotNull(snow.toString());
+        assertNotEquals("", snow.toString());
 
         snow.setThreeHourSnowLevel(33.2);
 
-        Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("", snow.toString());
+        assertNotNull(snow.toString());
+        assertNotEquals("", snow.toString());
+
+        snow = Snow.withThreeHourLevelValue(33.2);
+
+        assertNotNull(snow.toString());
+        assertNotEquals("", snow.toString());
     }
 
     @Test
@@ -83,7 +90,7 @@ public class SnowUnitTest {
 
         second.setThreeHourSnowLevel(11.0);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         first.setThreeHourSnowLevel(11.0);
 
@@ -91,7 +98,7 @@ public class SnowUnitTest {
 
         first.setOneHourSnowLevel(333.2);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
         second.setOneHourSnowLevel(333.2);
 
@@ -103,24 +110,24 @@ public class SnowUnitTest {
         final Snow first = Snow.withValues(0, 0);
         final Snow second = Snow.withValues(0, 0);
 
-        Assert.assertTrue(first.equals(second));
-        Assert.assertTrue(first.equals(first));
-        Assert.assertFalse(first.equals(new Object()));
+        assertEquals(first, second);
+        assertEquals(first, first);
+        assertNotEquals(first, new Object());
 
         first.setOneHourSnowLevel(0.34);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         second.setOneHourSnowLevel(0.34);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
 
         second.setThreeHourSnowLevel(66.7);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
         first.setThreeHourSnowLevel(66.7);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
     }
 }
