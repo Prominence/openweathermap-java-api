@@ -41,7 +41,7 @@ public class OpenWeatherMapClient {
 
     /**
      * Created OpenWeatherMap client object.
-     * @param apiKey API key obtained on <a href="https://home.openweathermap.org/api_keys">OpwnWeatherMap site</a>.
+     * @param apiKey API key obtained on <a href="https://home.openweathermap.org/api_keys">OpenWeatherMap site</a>.
      */
     public OpenWeatherMapClient(String apiKey) {
         this.apiKey = apiKey;
