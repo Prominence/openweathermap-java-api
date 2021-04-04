@@ -207,6 +207,9 @@ public class Current {
      * @param uvIndex the uv index
      */
     public void setUvIndex(Double uvIndex) {
+        if (uvIndex != null && uvIndex < 0) {
+            throw new IllegalArgumentException("UV index must not be negative.");
+        }
         this.uvIndex = uvIndex;
     }
 
@@ -225,6 +228,9 @@ public class Current {
      * @param visibilityInMetres the visibility in metres
      */
     public void setVisibilityInMetres(Double visibilityInMetres) {
+        if (visibilityInMetres != null && visibilityInMetres < 0) {
+            throw new IllegalArgumentException("Visibility must not be negative.");
+        }
         this.visibilityInMetres = visibilityInMetres;
     }
 

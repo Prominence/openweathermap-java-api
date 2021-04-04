@@ -146,91 +146,91 @@ public class DailyTemperatureUnitTest {
 
         assertEquals(first, second);
 
-        first.setMorning(1d);
+        first.setMorning(1.0);
 
         assertNotEquals(first, second);
 
-        second.setMorning(1d);
+        second.setMorning(1.0);
 
         assertEquals(first, second);
 
-        first.setMorningFeelsLike(2d);
+        first.setMorningFeelsLike(2.0);
 
         assertNotEquals(first, second);
 
-        second.setMorningFeelsLike(2d);
+        second.setMorningFeelsLike(2.0);
 
         assertEquals(first, second);
 
-        first.setDay(3d);
+        first.setDay(3.0);
 
         assertNotEquals(first, second);
 
-        second.setDay(3d);
+        second.setDay(3.0);
 
         assertEquals(first, second);
 
-        first.setDayFeelsLike(4d);
+        first.setDayFeelsLike(4.0);
 
         assertNotEquals(first, second);
 
-        second.setDayFeelsLike(4d);
+        second.setDayFeelsLike(4.0);
 
         assertEquals(first, second);
 
-        first.setEve(5d);
+        first.setEve(5.0);
 
         assertNotEquals(first, second);
 
-        second.setEve(5d);
+        second.setEve(5.0);
 
         assertEquals(first, second);
 
-        first.setEveFeelsLike(6d);
+        first.setEveFeelsLike(6.0);
 
         assertNotEquals(first, second);
 
-        second.setEveFeelsLike(6d);
+        second.setEveFeelsLike(6.0);
 
         assertEquals(first, second);
 
-        first.setNight(7d);
+        first.setNight(7.0);
 
         assertNotEquals(first, second);
 
-        second.setNight(7d);
+        second.setNight(7.0);
 
         assertEquals(first, second);
 
-        first.setNightFeelsLike(8d);
+        first.setNightFeelsLike(8.0);
 
         assertNotEquals(first, second);
 
-        second.setNightFeelsLike(8d);
+        second.setNightFeelsLike(8.0);
 
         assertEquals(first, second);
 
-        first.setDewPoint(9d);
+        first.setDewPoint(9.0);
 
         assertNotEquals(first, second);
 
-        second.setDewPoint(9d);
+        second.setDewPoint(9.0);
 
         assertEquals(first, second);
 
-        first.setMin(10d);
+        first.setMin(10.0);
 
         assertNotEquals(first, second);
 
-        second.setMin(10d);
+        second.setMin(10.0);
 
         assertEquals(first, second);
 
-        first.setMax(11d);
+        first.setMax(11.0);
 
         assertNotEquals(first, second);
 
-        second.setMax(11d);
+        second.setMax(11.0);
 
         assertEquals(first, second);
 
