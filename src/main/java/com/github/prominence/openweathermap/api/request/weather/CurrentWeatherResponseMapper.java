@@ -22,13 +22,13 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.weather.*;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.*;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -106,7 +106,7 @@ public class CurrentWeatherResponseMapper {
         try {
             final JsonNode root = objectMapper.readTree(json);
             weather = getSingle(root);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Weather response");
         }
 
@@ -114,7 +114,8 @@ public class CurrentWeatherResponseMapper {
     }
 
     private Weather getSingle(JsonNode rootNode) {
-        final JsonNode weatherNode = rootNode.get("weather").get(0);
+        final JsonNode weatherArrayNode = rootNode.get("weather");
+        final JsonNode weatherNode = weatherArrayNode != null ? weatherArrayNode.get(0) : null;
         final Weather weather = new Weather();
 
         weather.setWeatherState(parseWeatherState(weatherNode));
@@ -148,7 +149,7 @@ public class CurrentWeatherResponseMapper {
             final JsonNode root = objectMapper.readTree(json);
             final JsonNode listNode = root.get("list");
             listNode.forEach(jsonNode -> weatherList.add(getSingle(jsonNode)));
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Weather response");
         }
 
@@ -235,11 +236,11 @@ public class CurrentWeatherResponseMapper {
         if (rainNode != null) {
             final JsonNode oneHourNode = rainNode.get("1h");
             final JsonNode threeHourNode = rainNode.get("3h");
-            if (oneHourNode != null && oneHourNode.isDouble() && threeHourNode != null && threeHourNode.isDouble()) {
+            if (oneHourNode != null && threeHourNode != null) {
                 return Rain.withValues(oneHourNode.asDouble(), threeHourNode.asDouble());
-            } else if (oneHourNode != null && oneHourNode.isDouble()) {
+            } else if (oneHourNode != null) {
                 return Rain.withOneHourLevelValue(oneHourNode.asDouble());
-            } else if (threeHourNode != null && threeHourNode.isDouble()) {
+            } else if (threeHourNode != null) {
                 return Rain.withThreeHourLevelValue(threeHourNode.asDouble());
             }
         }
@@ -251,11 +252,11 @@ public class CurrentWeatherResponseMapper {
         if (snowNode != null) {
             final JsonNode oneHourNode = snowNode.get("1h");
             final JsonNode threeHourNode = snowNode.get("3h");
-            if (oneHourNode != null && oneHourNode.isDouble() && threeHourNode != null && threeHourNode.isDouble()) {
+            if (oneHourNode != null && threeHourNode != null) {
                 return Snow.withValues(oneHourNode.asDouble(), threeHourNode.asDouble());
-            } else if (oneHourNode != null && oneHourNode.isDouble()) {
+            } else if (oneHourNode != null) {
                 return Snow.withOneHourLevelValue(oneHourNode.asDouble());
-            } else if (threeHourNode != null && threeHourNode.isDouble()) {
+            } else if (threeHourNode != null) {
                 return Snow.withThreeHourLevelValue(threeHourNode.asDouble());
             }
         }
