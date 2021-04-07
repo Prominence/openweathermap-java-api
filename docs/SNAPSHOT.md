@@ -266,4 +266,5 @@ A forecast for Minsk with 15 timestamps.
 ### Dependencies
 * com.fasterxml.jackson.core:jackson-databind:2.12.2
 * org.slf4j:slf4j-api:1.7.30 (*compile*)
-* org.junit.jupiter:junit-jupiter-api:5.7.1 (*test*)
+* org.junit.jupiter:junit-jupiter-engine:5.7.1 (*test*)
+* org.junit.platform:junit-platform-runner:1.7.1 (*test*)
