@@ -22,11 +22,11 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MinutelyUnitTest {
     @Test
@@ -38,9 +38,10 @@ public class MinutelyUnitTest {
         assertEquals(10.0, minutely.getPrecipitationVolume(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInvalidValueValue_negative() {
-        Minutely.withValue(LocalDateTime.now(), -10.0);
+        assertThrows(IllegalArgumentException.class, () -> Minutely.withValue(LocalDateTime.now(), -10.0));
+
     }
 
     @Test

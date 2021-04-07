@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HumidityUnitTest {
     @Test
@@ -36,14 +36,14 @@ public class HumidityUnitTest {
         assertEquals(55, Humidity.withValue((byte) 55).getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityByConstructorWithInvalidDataAboveHundred_thenThrowAnException() {
-        Humidity.withValue((byte) 112);
+        assertThrows(IllegalArgumentException.class, () -> Humidity.withValue((byte) 112));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        Humidity.withValue((byte) -33);
+        assertThrows(IllegalArgumentException.class, () -> Humidity.withValue((byte) -33));
     }
 
     @Test
@@ -58,16 +58,16 @@ public class HumidityUnitTest {
         assertEquals(100, humidity.getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityAndSetInvalidDataAboveHundred_thenThrowAnException() {
         Humidity humidity = Humidity.withValue((byte) 12);
-        humidity.setValue((byte) 112);
+        assertThrows(IllegalArgumentException.class, () -> humidity.setValue((byte) 112));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityAndSetInvalidDataNegative_thenThrowAnException() {
         Humidity humidity = Humidity.withValue((byte) 88);
-        humidity.setValue((byte) -89);
+        assertThrows(IllegalArgumentException.class, () -> humidity.setValue((byte) -89));
     }
 
     @Test

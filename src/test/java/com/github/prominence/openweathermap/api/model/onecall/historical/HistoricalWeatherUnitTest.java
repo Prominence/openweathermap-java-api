@@ -26,11 +26,11 @@ import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.onecall.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoricalWeatherUnitTest {
     @Test
@@ -128,10 +128,11 @@ public class HistoricalWeatherUnitTest {
         assertNull(historicalWeather.getUvIndex());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getIllegalUvIndexValue() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        historicalWeather.setUvIndex(-1.2);
+
+        assertThrows(IllegalArgumentException.class, () -> historicalWeather.setUvIndex(-1.2));
     }
 
     @Test
@@ -147,10 +148,11 @@ public class HistoricalWeatherUnitTest {
         assertNull(historicalWeather.getVisibilityInMetres());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getIllegalProbabilityOfPrecipitationValue_negative() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        historicalWeather.setVisibilityInMetres(-20.0);
+
+        assertThrows(IllegalArgumentException.class, () -> historicalWeather.setVisibilityInMetres(-20.0));
     }
 
     @Test

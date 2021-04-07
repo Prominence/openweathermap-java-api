@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.forecast;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SnowUnitTest {
     @Test
@@ -32,9 +32,9 @@ public class SnowUnitTest {
         Snow.withThreeHourLevelValue(2222.3);
         Snow.withThreeHourLevelValue(0);
     }
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateWithInvalidData_thenFail() {
-        Snow.withThreeHourLevelValue(-20);
+        assertThrows(IllegalArgumentException.class, () -> Snow.withThreeHourLevelValue(-20));
     }
 
     @Test
@@ -47,11 +47,11 @@ public class SnowUnitTest {
         assertEquals(55.5, snow.getThreeHourLevel(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidValue_thenFail() {
         final Snow snow = Snow.withThreeHourLevelValue(0);
 
-        snow.setThreeHourLevel(-20);
+        assertThrows(IllegalArgumentException.class, () -> snow.setThreeHourLevel(-20));
     }
 
     @Test

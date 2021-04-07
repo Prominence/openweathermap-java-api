@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CoordinateUnitTest {
 
@@ -33,24 +33,24 @@ public class CoordinateUnitTest {
         Coordinate.of(44, 53);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCoordinateWithInvalidLatitudeBelowMinus90_thenThrowAnException() {
-        Coordinate.of(-333, 44);
+        assertThrows(IllegalArgumentException.class, () -> Coordinate.of(-333, 44));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCoordinateWithInvalidLatitudeAbove90_thenThrowAnException() {
-        Coordinate.of(223, 44);
+        assertThrows(IllegalArgumentException.class, () -> Coordinate.of(223, 44));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCoordinateWithInvalidLongitudeBelowMinus180_thenThrowAnException() {
-        Coordinate.of(33, -999);
+        assertThrows(IllegalArgumentException.class, () -> Coordinate.of(33, -999));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCoordinateWithInvalidLongitudeAbove180_thenThrowAnException() {
-        Coordinate.of(33, 999);
+        assertThrows(IllegalArgumentException.class, () -> Coordinate.of(33, 999));
     }
 
     @Test
@@ -72,28 +72,28 @@ public class CoordinateUnitTest {
         assertEquals(130, coordinate.getLongitude(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidLatitudeBelowMinus90_thenThrowAnException() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        coordinate.setLatitude(-91);
+        assertThrows(IllegalArgumentException.class, () -> coordinate.setLatitude(-91));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidLatitudeAbove90_thenThrowAnException() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        coordinate.setLatitude(92);
+        assertThrows(IllegalArgumentException.class, () -> coordinate.setLatitude(92));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidLongitudeBelowMinus180_thenThrowAnException() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        coordinate.setLongitude(-194);
+        assertThrows(IllegalArgumentException.class, () -> coordinate.setLongitude(-194));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidLongitudeAbove180_thenThrowAnException() {
         final Coordinate coordinate = Coordinate.of(0, 0);
-        coordinate.setLongitude(444);
+        assertThrows(IllegalArgumentException.class, () -> coordinate.setLongitude(444));
     }
 
     @Test

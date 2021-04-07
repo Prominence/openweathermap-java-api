@@ -27,11 +27,11 @@ import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.onecall.Wind;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DailyUnitTest {
     @Test
@@ -131,10 +131,11 @@ public class DailyUnitTest {
         assertNull(daily.getUvIndex());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getIllegalUvIndexValue() {
         final Daily daily = new Daily();
-        daily.setUvIndex(-1.2);
+
+        assertThrows(IllegalArgumentException.class, () -> daily.setUvIndex(-1.2));
     }
 
     @Test
@@ -150,16 +151,18 @@ public class DailyUnitTest {
         assertNull(daily.getProbabilityOfPrecipitation());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getIllegalProbabilityOfPrecipitationValue_negative() {
         final Daily daily = new Daily();
-        daily.setProbabilityOfPrecipitation(-20.0);
+
+        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(-20.0));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getIllegalProbabilityOfPrecipitationValue_tooBig() {
         final Daily daily = new Daily();
-        daily.setProbabilityOfPrecipitation(120.0);
+
+        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(120.0));
     }
 
     @Test

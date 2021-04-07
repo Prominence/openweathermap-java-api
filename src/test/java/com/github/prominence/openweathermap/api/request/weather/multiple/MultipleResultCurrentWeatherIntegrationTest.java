@@ -31,13 +31,13 @@ import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
     @Test
@@ -225,24 +225,28 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
         System.out.println(weatherFuture.get());
     }
 
-    @Test(expected = InvalidAuthTokenException.class)
+    @Test
     public void whenRequestCurrentWeatherWithInvalidApiKey_thenThrowAnException() {
         OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
-        client
-                .currentWeather()
-                .single()
-                .byCityName("London")
-                .retrieve()
-                .asJSON();
+        assertThrows(InvalidAuthTokenException.class, () ->
+                client
+                        .currentWeather()
+                        .single()
+                        .byCityName("London")
+                        .retrieve()
+                        .asJSON()
+        );
     }
 
-    @Test(expected = NoDataFoundException.class)
+    @Test
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
-        getClient()
-                .currentWeather()
-                .single()
-                .byCityName("InvalidCity")
-                .retrieve()
-                .asJava();
+        assertThrows(NoDataFoundException.class, () ->
+                getClient()
+                        .currentWeather()
+                        .single()
+                        .byCityName("InvalidCity")
+                        .retrieve()
+                        .asJava()
+        );
     }
 }

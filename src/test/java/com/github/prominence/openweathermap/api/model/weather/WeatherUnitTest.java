@@ -23,11 +23,11 @@
 package com.github.prominence.openweathermap.api.model.weather;
 
 import com.github.prominence.openweathermap.api.model.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeatherUnitTest {
     @Test

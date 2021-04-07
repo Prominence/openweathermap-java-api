@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CoordinateRectangleUnitTest {
     @Test
@@ -32,131 +32,131 @@ public class CoordinateRectangleUnitTest {
         CoordinateRectangle.withValues(44.5, 22.4, 54.4, 22.2);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLatitudeBottomBelowMinus90_thenThrowAnException() {
-        CoordinateRectangle.withValues(44.5, -91.2, 54.4, 22.2);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(44.5, -91.2, 54.4, 22.2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLatitudeBottomAbove90_thenThrowAnException() {
-        CoordinateRectangle.withValues(44.5, 91.2, 54.4, 22.2);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(44.5, 91.2, 54.4, 22.2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLatitudeTopBelowMinus90_thenThrowAnException() {
-        CoordinateRectangle.withValues(44.5, 22.4, 54.4, -92.3);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(44.5, 22.4, 54.4, -92.3));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLatitudeTopAbove90_thenThrowAnException() {
-        CoordinateRectangle.withValues(44.5, 22.5, 54.4, 94.887);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(44.5, 22.5, 54.4, 94.887));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLongitudeLeftBelowMinus180_thenThrowAnException() {
-        CoordinateRectangle.withValues(-944.5, 22.4, 54.4, 22.2);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(-944.5, 22.4, 54.4, 22.2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLongitudeLeftAbove180_thenThrowAnException() {
-        CoordinateRectangle.withValues(544.5, 22.4, 54.4, 22.2);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(544.5, 22.4, 54.4, 22.2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLongitudeRightBelowMinus180_thenThrowAnException() {
-        CoordinateRectangle.withValues(44.5, 22.4, -254.4, 22.2);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(44.5, 22.4, -254.4, 22.2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithLongitudeRightAbove180_thenThrowAnException() {
-        CoordinateRectangle.withValues(44.5, 22.4, 354.4, 22.2);
+        assertThrows(IllegalArgumentException.class, () -> CoordinateRectangle.withValues(44.5, 22.4, 354.4, 22.2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLatitudeBottom_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLatitudeBottom(-1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLatitudeBottom(-1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLatitudeBottom2_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLatitudeBottom(1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLatitudeBottom(1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLatitudeTop_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLatitudeTop(-1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLatitudeTop(-1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLatitudeTop2_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLatitudeTop(1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLatitudeTop(1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLongitudeLeft_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLongitudeLeft(-1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLongitudeLeft(-1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLongitudeLeft2_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLongitudeLeft(1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLongitudeLeft(1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLongitudeRight_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLongitudeRight(-1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLongitudeRight(-1000));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithInvalidLongitudeRight2_thenFail() {
-        new CoordinateRectangle.Builder()
-                .setLongitudeRight(1000);
+        assertThrows(IllegalArgumentException.class, () -> new CoordinateRectangle.Builder()
+                .setLongitudeRight(1000));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet_thenFail() {
-        new CoordinateRectangle.Builder()
-                .build();
+        assertThrows(IllegalStateException.class, () -> new CoordinateRectangle.Builder()
+                .build());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet1_thenFail() {
-        new CoordinateRectangle.Builder()
+        assertThrows(IllegalStateException.class, () -> new CoordinateRectangle.Builder()
                 .setLongitudeLeft(10)
-                .build();
+                .build());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet2_thenFail() {
-        new CoordinateRectangle.Builder()
+        assertThrows(IllegalStateException.class, () -> new CoordinateRectangle.Builder()
                 .setLongitudeRight(10)
                 .setLatitudeBottom(10)
-                .build();
+                .build());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet3_thenFail() {
-        new CoordinateRectangle.Builder()
+        assertThrows(IllegalStateException.class, () -> new CoordinateRectangle.Builder()
                 .setLongitudeRight(10)
                 .setLatitudeBottom(10)
                 .setLongitudeRight(10)
-                .build();
+                .build());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet4_thenFail() {
-        new CoordinateRectangle.Builder()
+        assertThrows(IllegalStateException.class, () -> new CoordinateRectangle.Builder()
                 .setLongitudeLeft(10)
                 .setLatitudeTop(10)
                 .setLatitudeBottom(10)
-                .build();
+                .build());
     }
 
     @Test

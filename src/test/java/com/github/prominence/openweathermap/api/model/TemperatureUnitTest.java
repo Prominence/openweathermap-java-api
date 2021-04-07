@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TemperatureUnitTest {
     @Test
@@ -32,9 +32,9 @@ public class TemperatureUnitTest {
         Temperature.withValue(22.2, "K");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithEmptyUnit_thenThrowAnException() {
-        Temperature.withValue(22.2, null);
+        assertThrows(IllegalArgumentException.class, () -> Temperature.withValue(22.2, null));
     }
 
     @Test
@@ -89,11 +89,11 @@ public class TemperatureUnitTest {
         assertEquals("test", temperature.getUnit());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetNullUnit_thenThrowAnException() {
         final Temperature temperature = Temperature.withValue(22.2, "K");
 
-        temperature.setUnit(null);
+        assertThrows(IllegalArgumentException.class, () -> temperature.setUnit(null));
     }
 
     @Test

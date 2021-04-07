@@ -23,9 +23,9 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeatherStateUnitTest {
     @Test

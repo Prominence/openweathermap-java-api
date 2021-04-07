@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CloudsUnitTest {
     @Test
@@ -37,14 +37,14 @@ public class CloudsUnitTest {
         assertEquals(55, Clouds.withValue((byte) 55).getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCloudsByConstructorWithInvalidDataAboveHundred_thenThrowAnException() {
-        Clouds.withValue((byte) 110);
+        assertThrows(IllegalArgumentException.class, () -> Clouds.withValue((byte) 110));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCloudsByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        Clouds.withValue((byte) -33);
+        assertThrows(IllegalArgumentException.class, () -> Clouds.withValue((byte) -33));
     }
 
     @Test
@@ -58,16 +58,18 @@ public class CloudsUnitTest {
         assertEquals(100, clouds.getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCloudsAndSetInvalidDataAboveHundred_thenThrowAnException() {
         Clouds clouds = Clouds.withValue((byte) 12);
-        clouds.setValue((byte) 112);
+
+        assertThrows(IllegalArgumentException.class, () -> clouds.setValue((byte) 112));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateCloudsAndSetInvalidDataNegative_thenThrowAnException() {
         Clouds clouds = Clouds.withValue((byte) 88);
-        clouds.setValue((byte) -89);
+
+        assertThrows(IllegalArgumentException.class, () -> clouds.setValue((byte) -89));
     }
 
     @Test

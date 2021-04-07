@@ -23,12 +23,12 @@
 package com.github.prominence.openweathermap.api.model.forecast;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LocationUnitTest {
     @Test
@@ -36,9 +36,9 @@ public class LocationUnitTest {
         Location.withValues(33, "test");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateObjectWithoutName_thenThrowAnException() {
-        Location.withValues(33, null);
+        assertThrows(IllegalArgumentException.class, () -> Location.withValues(33, null));
     }
 
     @Test

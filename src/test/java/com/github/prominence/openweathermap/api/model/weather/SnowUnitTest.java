@@ -22,10 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SnowUnitTest {
     @Test
@@ -40,22 +39,22 @@ public class SnowUnitTest {
         final Snow snow = Snow.withValues(0, 0);
 
         snow.setOneHourLevel(33.3);
-        Assert.assertEquals(33.3, snow.getOneHourLevel(), 0.00001);
+        assertEquals(33.3, snow.getOneHourLevel(), 0.00001);
 
         snow.setThreeHourLevel(55.5);
-        Assert.assertEquals(55.5, snow.getThreeHourLevel(), 0.00001);
+        assertEquals(55.5, snow.getThreeHourLevel(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidOneHourLevelValue_thenFail() {
         final Snow rain = Snow.withValues(0, 0);
-        rain.setOneHourLevel(-20);
+        assertThrows(IllegalArgumentException.class, () -> rain.setOneHourLevel(-20));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidThreeHourLevelValue_thenFail() {
         final Snow rain = Snow.withValues(0, 0);
-        rain.setThreeHourLevel(-20);
+        assertThrows(IllegalArgumentException.class, () -> rain.setThreeHourLevel(-20));
     }
 
     @Test
@@ -86,7 +85,7 @@ public class SnowUnitTest {
         final Snow first = Snow.withValues(0, 0);
         final Snow second = Snow.withValues(0, 0);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
         second.setThreeHourLevel(11.0);
 
@@ -94,7 +93,7 @@ public class SnowUnitTest {
 
         first.setThreeHourLevel(11.0);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
         first.setOneHourLevel(333.2);
 
@@ -102,7 +101,7 @@ public class SnowUnitTest {
 
         second.setOneHourLevel(333.2);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test

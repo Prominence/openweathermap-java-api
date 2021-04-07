@@ -30,12 +30,12 @@ import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
     @Test
@@ -538,24 +538,28 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         System.out.println(weatherFuture.get());
     }
 
-    @Test(expected = InvalidAuthTokenException.class)
+    @Test
     public void whenRequestCurrentWeatherWithInvalidApiKey_thenThrowAnException() {
         OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
-        client
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.of(34.53, 66.74), 10)
-                .retrieve()
-                .asJSON();
+        assertThrows(InvalidAuthTokenException.class, () ->
+                client
+                        .currentWeather()
+                        .multiple()
+                        .byCitiesInCycle(Coordinate.of(34.53, 66.74), 10)
+                        .retrieve()
+                        .asJSON()
+        );
     }
 
-    @Test(expected = NoDataFoundException.class)
+    @Test
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
-        getClient()
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.of(90.00, 66.74), 10)
-                .retrieve()
-                .asJava();
+        assertThrows(NoDataFoundException.class, () ->
+                getClient()
+                        .currentWeather()
+                        .multiple()
+                        .byCitiesInCycle(Coordinate.of(90.00, 66.74), 10)
+                        .retrieve()
+                        .asJava()
+        );
     }
 }

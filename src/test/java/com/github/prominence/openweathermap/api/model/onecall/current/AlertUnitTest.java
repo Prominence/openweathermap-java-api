@@ -22,12 +22,12 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AlertUnitTest {
     @Test

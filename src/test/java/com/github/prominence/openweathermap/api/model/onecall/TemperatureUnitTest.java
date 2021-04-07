@@ -22,14 +22,14 @@
 
 package com.github.prominence.openweathermap.api.model.onecall;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TemperatureUnitTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInvalidValue_noUnit() {
-        Temperature.withValue(-20, null);
+        assertThrows(IllegalArgumentException.class, () -> Temperature.withValue(-20, null));
     }
 
     @Test

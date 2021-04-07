@@ -22,9 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 public class FiveDayThreeHourStepForecastResponseMapperUnitTest {
     @Test

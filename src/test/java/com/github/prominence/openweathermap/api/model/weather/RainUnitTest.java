@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RainUnitTest {
     @Test
@@ -63,16 +63,18 @@ public class RainUnitTest {
         assertNotEquals("", rain.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidOneHourLevelValue_thenFail() {
         final Rain rain = Rain.withValues(0, 0);
-        rain.setOneHourLevel(-20);
+
+        assertThrows(IllegalArgumentException.class, () -> rain.setOneHourLevel(-20));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidThreeHourLevelValue_thenFail() {
         final Rain rain = Rain.withValues(0, 0);
-        rain.setThreeHourLevel(-20);
+
+        assertThrows(IllegalArgumentException.class, () -> rain.setThreeHourLevel(-20));
     }
 
     @Test

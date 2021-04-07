@@ -23,18 +23,21 @@
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
+import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     @Test
@@ -97,5 +100,20 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final String responseJson = responseJsonFuture.get();
         assertNotEquals("", responseJson);
         System.out.println(responseJson);
+    }
+
+    @Test
+    public void whenRequestOnecallWithInvalidApiKey_thenThrowAnException() {
+        OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
+        assertThrows(InvalidAuthTokenException.class, () ->
+                client
+                        .oneCall()
+                        .historical()
+                        .byCoordinateAndTimestamp(Coordinate.of(53.54, 27.34), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                        .language(Language.ENGLISH)
+                        .unitSystem(UnitSystem.METRIC)
+                        .retrieve()
+                        .asJSON()
+        );
     }
 }

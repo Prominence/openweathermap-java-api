@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DailyRainUnitTest {
     @Test
@@ -34,9 +34,9 @@ public class DailyRainUnitTest {
         assertEquals(20, dailyRain.getValue(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void getInvalidValue_negative() {
-        DailyRain.withValue(-20);
+        assertThrows(IllegalArgumentException.class, () -> DailyRain.withValue(-20));
     }
 
     @Test

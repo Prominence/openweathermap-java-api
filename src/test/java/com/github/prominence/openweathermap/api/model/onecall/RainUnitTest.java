@@ -22,14 +22,14 @@
 
 package com.github.prominence.openweathermap.api.model.onecall;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RainUnitTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInvalidValue_negative() {
-        Rain.withOneHourLevelValue(-20.0);
+        assertThrows(IllegalArgumentException.class, () -> Rain.withOneHourLevelValue(-20.0));
     }
 
     @Test

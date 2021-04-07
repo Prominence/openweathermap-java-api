@@ -22,19 +22,19 @@
 
 package com.github.prominence.openweathermap.api.model.onecall;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WindUnitTest {
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInvalidValue_noUnit() {
-        Wind.withValue(20, null);
+        assertThrows(IllegalArgumentException.class, () -> Wind.withValue(20, null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void withInvalidValue_negative() {
-        Wind.withValue(-20, "m/s");
+        assertThrows(IllegalArgumentException.class, () -> Wind.withValue(-20, "m/s"));
     }
 
     @Test
@@ -52,10 +52,11 @@ public class WindUnitTest {
         assertEquals(40.0, wind.getGust(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setGust_negative() {
         final Wind wind = Wind.withValue(20, "m/s");
-        wind.setGust(-20);
+
+        assertThrows(IllegalArgumentException.class, () -> wind.setGust(-20));
     }
 
     @Test
@@ -66,16 +67,18 @@ public class WindUnitTest {
         assertEquals(180.0, wind.getDegrees(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setDegrees_lessThanZero() {
         final Wind wind = Wind.withValue(20, "m/s");
-        wind.setDegrees(-20);
+
+        assertThrows(IllegalArgumentException.class, () -> wind.setDegrees(-20));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void setDegrees_moreThan360() {
         final Wind wind = Wind.withValue(20, "m/s");
-        wind.setDegrees(420);
+
+        assertThrows(IllegalArgumentException.class, () -> wind.setDegrees(420));
     }
 
     @Test

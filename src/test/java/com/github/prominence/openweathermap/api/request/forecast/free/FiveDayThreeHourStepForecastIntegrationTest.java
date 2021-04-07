@@ -31,12 +31,12 @@ import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     @Test
@@ -443,22 +443,26 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         System.out.println(forecastFuture.get());
     }
 
-    @Test(expected = InvalidAuthTokenException.class)
+    @Test
     public void whenRequestCurrentWeatherWithInvalidApiKey_thenThrowAnException() {
         OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
-        client
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
-                .retrieve()
-                .asJSON();
+        assertThrows(InvalidAuthTokenException.class, () ->
+                client
+                        .forecast5Day3HourStep()
+                        .byCityId(350001514)
+                        .retrieve()
+                        .asJSON()
+        );
     }
 
-    @Test(expected = NoDataFoundException.class)
+    @Test
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
-        getClient()
-                .forecast5Day3HourStep()
-                .byCityName("invalidCity")
-                .retrieve()
-                .asJava();
+        assertThrows(NoDataFoundException.class, () ->
+                getClient()
+                        .forecast5Day3HourStep()
+                        .byCityName("invalidCity")
+                        .retrieve()
+                        .asJava()
+        );
     }
 }

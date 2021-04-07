@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WindUnitTest {
     @Test
@@ -32,14 +32,14 @@ public class WindUnitTest {
         assertEquals(44.0, Wind.withValue(44, "ms").getSpeed(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateWindWithInvalidSpeedArg_thenThrowAnException() {
-        Wind.withValue(-21, "a");
+        assertThrows(IllegalArgumentException.class, () -> Wind.withValue(-21, "a"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateWindWithInvalidUnitArg_thenThrowAnException() {
-        Wind.withValue(342, null);
+        assertThrows(IllegalArgumentException.class, () -> Wind.withValue(342, null));
     }
 
     @Test
@@ -57,13 +57,13 @@ public class WindUnitTest {
         assertEquals(3656, wind.getSpeed(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidSpeedBelow0_thenThrowAnException() {
         final Wind wind = Wind.withValue(33, "as");
 
         assertEquals(33, wind.getSpeed(), 0.00001);
 
-        wind.setSpeed(-22);
+        assertThrows(IllegalArgumentException.class, () -> wind.setSpeed(-22));
     }
 
     @Test
@@ -85,16 +85,18 @@ public class WindUnitTest {
         assertEquals(360, wind.getDegrees(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidDegreesBelow0_thenThrowAnException() {
         final Wind wind = Wind.withValue(33, "as");
-        wind.setDegrees(-32);
+
+        assertThrows(IllegalArgumentException.class, () -> wind.setDegrees(-32));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidDegreesAbove360_thenThrowAnException() {
         final Wind wind = Wind.withValue(33, "as");
-        wind.setDegrees(378);
+
+        assertThrows(IllegalArgumentException.class, () -> wind.setDegrees(378));
     }
 
     @Test
@@ -108,18 +110,18 @@ public class WindUnitTest {
         assertEquals(wind.getUnit(), "myUnit");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetNullUnit_thenThrowAnException() {
         final Wind wind = Wind.withValue(33, "as");
 
-        wind.setUnit(null);
+        assertThrows(IllegalArgumentException.class, () -> wind.setUnit(null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidGustValue_thenThrowAnException() {
         final Wind wind = Wind.withValue(33, "as");
 
-        wind.setGust(-50);
+        assertThrows(IllegalArgumentException.class, () -> wind.setGust(-50));
     }
 
     @Test

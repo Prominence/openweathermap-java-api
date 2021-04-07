@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AtmosphericPressureUnitTest {
     @Test
@@ -102,26 +102,29 @@ public class AtmosphericPressureUnitTest {
         assertNotEquals("", pressureString);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreatePressureByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        AtmosphericPressure.withValue(-33);
+        assertThrows(IllegalArgumentException.class, () -> AtmosphericPressure.withValue(-33));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreatePressureAndSetInvalidDataNegative_thenThrowAnException() {
         AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
-        atmosphericPressure.setValue(-89);
+
+        assertThrows(IllegalArgumentException.class, () -> atmosphericPressure.setValue(-89));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidSeaLevelPressure_thenThrowAnException() {
         AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
-        atmosphericPressure.setSeaLevelValue(-89);
+
+        assertThrows(IllegalArgumentException.class, () -> atmosphericPressure.setSeaLevelValue(-89));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidGroundLevelPressure_thenThrowAnException() {
         AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
-        atmosphericPressure.setGroundLevelValue(-223);
+
+        assertThrows(IllegalArgumentException.class, () -> atmosphericPressure.setGroundLevelValue(-223));
     }
 }
