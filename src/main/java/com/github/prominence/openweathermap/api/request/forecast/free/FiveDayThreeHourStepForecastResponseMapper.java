@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
@@ -32,7 +33,6 @@ import com.github.prominence.openweathermap.api.model.forecast.Rain;
 import com.github.prominence.openweathermap.api.model.forecast.Snow;
 import com.github.prominence.openweathermap.api.model.Temperature;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -110,7 +110,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         try {
             final JsonNode root = objectMapper.readTree(json);
             forecast = mapToForecast(root);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Forecast response");
         }
 
@@ -133,8 +133,11 @@ public class FiveDayThreeHourStepForecastResponseMapper {
 
     private WeatherForecast parseWeatherForecast(JsonNode rootNode) {
         final WeatherForecast weatherForecast = new WeatherForecast();
-        final JsonNode weatherNode = rootNode.get("weather").get(0);
-        weatherForecast.setWeatherState(parseWeatherState(weatherNode));
+        final JsonNode weatherArrayNode = rootNode.get("weather");
+        if (weatherArrayNode != null) {
+            final JsonNode weatherNode = weatherArrayNode.get(0);
+            weatherForecast.setWeatherState(parseWeatherState(weatherNode));
+        }
 
         final JsonNode mainNode = rootNode.get("main");
         weatherForecast.setTemperature(parseTemperature(mainNode));
@@ -182,7 +185,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         if (tempMinNode != null) {
             temperature.setMinTemperature(tempMinNode.asDouble());
         }
-        final JsonNode tempFeelsLike = rootNode.get("fells_like");
+        final JsonNode tempFeelsLike = rootNode.get("feels_like");
         if (tempFeelsLike != null) {
             temperature.setFeelsLike(tempFeelsLike.asDouble());
         }
@@ -238,7 +241,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         if (snowNode != null) {
             final JsonNode threeHourNode = snowNode.get("3h");
             if (threeHourNode != null) {
-                Rain.withThreeHourLevelValue(threeHourNode.asDouble());
+                return Snow.withThreeHourLevelValue(threeHourNode.asDouble());
             }
         }
         return null;
