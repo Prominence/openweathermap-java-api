@@ -92,10 +92,8 @@ public class DailySnow {
 
     @Override
     public String toString() {
-        final StringBuilder snowString = new StringBuilder();
-        snowString.append("Snow level: ");
-        snowString.append(value);
-        snowString.append(getUnit());
-        return snowString.toString();
+        return "Snow level: " +
+                value +
+                getUnit();
     }
 }

@@ -92,10 +92,8 @@ public class DailyRain {
 
     @Override
     public String toString() {
-        final StringBuilder rainString = new StringBuilder();
-        rainString.append("Rain level: ");
-        rainString.append(value);
-        rainString.append(getUnit());
-        return rainString.toString();
+        return "Rain level: " +
+                value +
+                getUnit();
     }
 }
