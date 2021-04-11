@@ -63,7 +63,7 @@ public class ForecastUnitTest {
         final Forecast two = new Forecast();
 
         assertEquals(one, one);
-        assertNotEquals(null, one);
+        assertNotEquals(one, null);
         assertEquals(one, two);
         assertNotEquals(one, new Object());
 

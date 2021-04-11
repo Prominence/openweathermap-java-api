@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.onecall;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
@@ -35,7 +36,6 @@ import com.github.prominence.openweathermap.api.model.onecall.historical.Histori
 import com.github.prominence.openweathermap.api.model.onecall.historical.HourlyHistorical;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -71,7 +71,7 @@ public class OneCallWeatherResponseMapper {
         try {
             final JsonNode root = objectMapper.readTree(json);
             currentData = mapToCurrent(root);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Forecast response");
         }
 
@@ -90,7 +90,7 @@ public class OneCallWeatherResponseMapper {
         try {
             final JsonNode root = objectMapper.readTree(json);
             historicalData = mapToHistorical(root);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Forecast response");
         }
 
@@ -126,9 +126,9 @@ public class OneCallWeatherResponseMapper {
         current.setHumidity(parseHumidity(currentNode));
         current.setClouds(parseClouds(currentNode));
         current.setUvIndex(currentNode.get("uvi").asDouble());
-        final JsonNode visibilityMode = currentNode.get("visibility");
-        if (visibilityMode != null) {
-            current.setVisibilityInMetres(visibilityMode.asDouble());
+        final JsonNode visibilityNode = currentNode.get("visibility");
+        if (visibilityNode != null) {
+            current.setVisibilityInMetres(visibilityNode.asDouble());
         }
         current.setWind(parseWind(currentNode));
         current.setRain(parseRain(currentNode));
@@ -255,7 +255,10 @@ public class OneCallWeatherResponseMapper {
         historicalWeather.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
         historicalWeather.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
 
-        historicalWeather.setWeatherState(parseWeatherState(currentNode.get("weather").get(0)));
+        final JsonNode weatherListNode = currentNode.get("weather");
+        if (weatherListNode != null) {
+            historicalWeather.setWeatherState(parseWeatherState(weatherListNode.get(0)));
+        }
         historicalWeather.setTemperature(parseTemperature(currentNode));
         historicalWeather.setAtmosphericPressure(parsePressure(currentNode));
         historicalWeather.setHumidity(parseHumidity(currentNode));
@@ -319,7 +322,7 @@ public class OneCallWeatherResponseMapper {
         final double tempValue = rootNode.get("temp").asDouble();
         final Temperature temperature = Temperature.withValue(tempValue, unitSystem.getTemperatureUnit());
 
-        final JsonNode tempFeelsLike = rootNode.get("fells_like");
+        final JsonNode tempFeelsLike = rootNode.get("feels_like");
         if (tempFeelsLike != null) {
             temperature.setFeelsLike(tempFeelsLike.asDouble());
         }
@@ -332,9 +335,6 @@ public class OneCallWeatherResponseMapper {
     }
 
     private DailyTemperature parseDailyTemperature(JsonNode dailyNode) {
-        if (dailyNode == null) {
-            return null;
-        }
         final DailyTemperature temperature = new DailyTemperature();
         final JsonNode tempNode = dailyNode.get("temp");
         temperature.setMorning(tempNode.get("morn").asDouble());
@@ -354,14 +354,7 @@ public class OneCallWeatherResponseMapper {
     }
 
     private AtmosphericPressure parsePressure(JsonNode rootNode) {
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
-
-        final JsonNode seaLevelNode = rootNode.get("pressure");
-        if (seaLevelNode != null) {
-            atmosphericPressure.setSeaLevelValue(seaLevelNode.asDouble());
-        }
-
-        return atmosphericPressure;
+        return AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
     }
 
     private Humidity parseHumidity(JsonNode rootNode) {
@@ -391,9 +384,9 @@ public class OneCallWeatherResponseMapper {
     private Rain parseRain(JsonNode root) {
         final JsonNode rainNode = root.get("rain");
         if (rainNode != null) {
-            final JsonNode threeHourNode = rainNode.get("1h");
-            if (threeHourNode != null) {
-                return Rain.withOneHourLevelValue(threeHourNode.asDouble());
+            final JsonNode oneHourNode = rainNode.get("1h");
+            if (oneHourNode != null) {
+                return Rain.withOneHourLevelValue(oneHourNode.asDouble());
             }
         }
         return null;
@@ -410,9 +403,9 @@ public class OneCallWeatherResponseMapper {
     private Snow parseSnow(JsonNode root) {
         final JsonNode snowNode = root.get("snow");
         if (snowNode != null) {
-            final JsonNode threeHourNode = snowNode.get("1h");
-            if (threeHourNode != null) {
-                Rain.withOneHourLevelValue(threeHourNode.asDouble());
+            final JsonNode OneHourNode = snowNode.get("1h");
+            if (OneHourNode != null) {
+                Rain.withOneHourLevelValue(OneHourNode.asDouble());
             }
         }
         return null;
@@ -428,9 +421,8 @@ public class OneCallWeatherResponseMapper {
 
     private Clouds parseClouds(JsonNode rootNode) {
         final JsonNode cloudsNode = rootNode.get("clouds");
-        final JsonNode allValueNode = cloudsNode.get("all");
-        if (allValueNode != null) {
-            return Clouds.withValue((byte) allValueNode.asInt());
+        if (cloudsNode != null) {
+            return Clouds.withValue((byte) cloudsNode.asInt());
         }
 
         return null;

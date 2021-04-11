@@ -201,7 +201,7 @@ public class WeatherForecastUnitTest {
         final WeatherForecast second = new WeatherForecast();
 
         assertEquals(first, first);
-        assertNotEquals(null, first);
+        assertNotEquals(first, null);
         assertNotEquals(first, new Object());
         assertEquals(first, second);
 

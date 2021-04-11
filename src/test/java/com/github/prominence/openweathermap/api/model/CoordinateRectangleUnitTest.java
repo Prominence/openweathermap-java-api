@@ -144,7 +144,7 @@ public class CoordinateRectangleUnitTest {
     @Test
     public void whenCreateObjectUsingBuilderWithoutAllPropertiesSet3_thenFail() {
         assertThrows(IllegalStateException.class, () -> new CoordinateRectangle.Builder()
-                .setLongitudeRight(10)
+                .setLongitudeLeft(10)
                 .setLatitudeBottom(10)
                 .setLongitudeRight(10)
                 .build());
