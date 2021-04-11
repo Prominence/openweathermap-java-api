@@ -32,7 +32,6 @@ import com.github.prominence.openweathermap.api.request.weather.single.SingleLoc
  * The type Current weather requester.
  */
 public class CurrentWeatherRequesterImpl implements CurrentWeatherRequester {
-
     private final RequestUrlBuilder urlBuilder;
 
     /**

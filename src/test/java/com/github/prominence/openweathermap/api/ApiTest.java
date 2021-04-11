@@ -22,19 +22,18 @@
 
 package com.github.prominence.openweathermap.api;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 public class ApiTest {
+    private static OpenWeatherMapClient client;
 
-    private static OpenWeatherMapClient manager;
-
-    @BeforeClass
+    @BeforeAll
     public static void retrieveApiKey() {
         String apiKey = System.getenv("OPENWEATHER_API_KEY");
-        manager = new OpenWeatherMapClient(apiKey);
+        client = new OpenWeatherMapClient(apiKey);
     }
 
     protected static OpenWeatherMapClient getClient() {
-        return manager;
+        return client;
     }
 }

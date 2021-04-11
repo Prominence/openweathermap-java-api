@@ -29,7 +29,6 @@ import com.github.prominence.openweathermap.api.model.Coordinate;
  * The type Single location current weather requester.
  */
 public class SingleLocationCurrentWeatherRequesterImpl implements SingleLocationCurrentWeatherRequester {
-
     private final RequestUrlBuilder urlBuilder;
 
     /**

@@ -22,13 +22,13 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.weather.*;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.*;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -83,7 +83,6 @@ import java.util.TimeZone;
  * --- cod Internal parameter
  */
 public class CurrentWeatherResponseMapper {
-
     private final UnitSystem unitSystem;
 
     /**
@@ -102,12 +101,12 @@ public class CurrentWeatherResponseMapper {
      * @return the weather object
      */
     public Weather getSingle(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         Weather weather;
         try {
-            JsonNode root = objectMapper.readTree(json);
+            final JsonNode root = objectMapper.readTree(json);
             weather = getSingle(root);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Weather response");
         }
 
@@ -115,10 +114,11 @@ public class CurrentWeatherResponseMapper {
     }
 
     private Weather getSingle(JsonNode rootNode) {
-        JsonNode weatherState = rootNode.get("weather").get(0);
-        Weather weather = Weather.forValue(weatherState.get("main").asText(), weatherState.get("description").asText());
-        weather.setWeatherIconId(weatherState.get("icon").asText());
+        final JsonNode weatherArrayNode = rootNode.get("weather");
+        final JsonNode weatherNode = weatherArrayNode != null ? weatherArrayNode.get(0) : null;
+        final Weather weather = new Weather();
 
+        weather.setWeatherState(parseWeatherState(weatherNode));
         weather.setTemperature(parseTemperature(rootNode));
         weather.setAtmosphericPressure(parsePressure(rootNode));
         weather.setHumidity(parseHumidity(rootNode));
@@ -130,7 +130,7 @@ public class CurrentWeatherResponseMapper {
 
         final JsonNode dtNode = rootNode.get("dt");
         if (dtNode != null) {
-            weather.setCalculatedOn(LocalDateTime.ofInstant(Instant.ofEpochSecond(dtNode.asInt()), TimeZone.getDefault().toZoneId()));
+            weather.setCalculationTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dtNode.asInt()), TimeZone.getDefault().toZoneId()));
         }
 
         return weather;
@@ -143,25 +143,37 @@ public class CurrentWeatherResponseMapper {
      * @return the list of weathers
      */
     public List<Weather> getList(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Weather> weatherList = new ArrayList<>();
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final List<Weather> weatherList = new ArrayList<>();
         try {
             final JsonNode root = objectMapper.readTree(json);
             final JsonNode listNode = root.get("list");
             listNode.forEach(jsonNode -> weatherList.add(getSingle(jsonNode)));
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             throw new RuntimeException("Cannot parse Weather response");
         }
 
         return weatherList;
     }
 
-    private Temperature parseTemperature(JsonNode rootNode) {
-        Temperature temperature;
-        final JsonNode mainNode = rootNode.get("main");
+    private WeatherState parseWeatherState(JsonNode weatherNode) {
+        if (weatherNode == null) {
+            return null;
+        }
+        final WeatherState weatherState = new WeatherState(
+                weatherNode.get("id").asInt(),
+                weatherNode.get("main").asText(),
+                weatherNode.get("description").asText()
+        );
+        weatherState.setIconId(weatherNode.get("icon").asText());
 
+        return weatherState;
+    }
+
+    private Temperature parseTemperature(JsonNode rootNode) {
+        final JsonNode mainNode = rootNode.get("main");
         final double tempValue = mainNode.get("temp").asDouble();
-        temperature = Temperature.withValue(tempValue, unitSystem.getTemperatureUnit());
+        final Temperature temperature = Temperature.withValue(tempValue, unitSystem.getTemperatureUnit());
 
         final JsonNode feelsLikeNode = mainNode.get("feels_like");
         if (feelsLikeNode != null) {
@@ -181,7 +193,7 @@ public class CurrentWeatherResponseMapper {
 
     private AtmosphericPressure parsePressure(JsonNode rootNode) {
         final JsonNode mainNode = rootNode.get("main");
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(mainNode.get("pressure").asDouble());
+        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(mainNode.get("pressure").asDouble());
 
         final JsonNode seaLevelNode = mainNode.get("sea_level");
         final JsonNode groundLevelNode = mainNode.get("grnd_level");
@@ -205,7 +217,7 @@ public class CurrentWeatherResponseMapper {
         final JsonNode windNode = rootNode.get("wind");
         double speed = windNode.get("speed").asDouble();
 
-        Wind wind = Wind.withValue(speed, unitSystem.getWindUnit());
+        final Wind wind = Wind.withValue(speed, unitSystem.getWindUnit());
 
         final JsonNode degNode = windNode.get("deg");
         if (degNode != null) {
@@ -224,11 +236,11 @@ public class CurrentWeatherResponseMapper {
         if (rainNode != null) {
             final JsonNode oneHourNode = rainNode.get("1h");
             final JsonNode threeHourNode = rainNode.get("3h");
-            if (oneHourNode != null && oneHourNode.isDouble() && threeHourNode != null && threeHourNode.isDouble()) {
+            if (oneHourNode != null && threeHourNode != null) {
                 return Rain.withValues(oneHourNode.asDouble(), threeHourNode.asDouble());
-            } else if (oneHourNode != null && oneHourNode.isDouble()) {
+            } else if (oneHourNode != null) {
                 return Rain.withOneHourLevelValue(oneHourNode.asDouble());
-            } else if (threeHourNode != null && threeHourNode.isDouble()) {
+            } else if (threeHourNode != null) {
                 return Rain.withThreeHourLevelValue(threeHourNode.asDouble());
             }
         }
@@ -240,11 +252,11 @@ public class CurrentWeatherResponseMapper {
         if (snowNode != null) {
             final JsonNode oneHourNode = snowNode.get("1h");
             final JsonNode threeHourNode = snowNode.get("3h");
-            if (oneHourNode != null && oneHourNode.isDouble() && threeHourNode != null && threeHourNode.isDouble()) {
+            if (oneHourNode != null && threeHourNode != null) {
                 return Snow.withValues(oneHourNode.asDouble(), threeHourNode.asDouble());
-            } else if (oneHourNode != null && oneHourNode.isDouble()) {
+            } else if (oneHourNode != null) {
                 return Snow.withOneHourLevelValue(oneHourNode.asDouble());
-            } else if (threeHourNode != null && threeHourNode.isDouble()) {
+            } else if (threeHourNode != null) {
                 return Snow.withThreeHourLevelValue(threeHourNode.asDouble());
             }
         }
@@ -252,19 +264,17 @@ public class CurrentWeatherResponseMapper {
     }
 
     private Clouds parseClouds(JsonNode rootNode) {
-        Clouds clouds = null;
-
         final JsonNode cloudsNode = rootNode.get("clouds");
         final JsonNode allValueNode = cloudsNode.get("all");
         if (allValueNode != null) {
-            clouds = Clouds.withValue((byte) allValueNode.asInt());
+            return Clouds.withValue((byte) allValueNode.asInt());
         }
 
-        return clouds;
+        return null;
     }
 
     private Location parseLocation(JsonNode rootNode) {
-        Location location = Location.withValues(rootNode.get("id").asInt(), rootNode.get("name").asText());
+        final Location location = Location.withValues(rootNode.get("id").asInt(), rootNode.get("name").asText());
 
         final JsonNode timezoneNode = rootNode.get("timezone");
         if (timezoneNode != null) {
@@ -281,10 +291,10 @@ public class CurrentWeatherResponseMapper {
             final JsonNode sunriseNode = sysNode.get("sunrise");
             final JsonNode sunsetNode = sysNode.get("sunset");
             if (sunriseNode != null) {
-                location.setSunrise(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunriseNode.asInt()), TimeZone.getDefault().toZoneId()));
+                location.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunriseNode.asInt()), TimeZone.getDefault().toZoneId()));
             }
             if (sunsetNode != null) {
-                location.setSunset(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunsetNode.asInt()), TimeZone.getDefault().toZoneId()));
+                location.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(sunsetNode.asInt()), TimeZone.getDefault().toZoneId()));
             }
         }
 
@@ -297,10 +307,10 @@ public class CurrentWeatherResponseMapper {
     }
 
     private Coordinate parseCoordinate(JsonNode rootNode) {
-        JsonNode latitudeNode = rootNode.get("lat");
-        JsonNode longitudeNode = rootNode.get("lon");
+        final JsonNode latitudeNode = rootNode.get("lat");
+        final JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
-            return Coordinate.withValues(latitudeNode.asDouble(), longitudeNode.asDouble());
+            return Coordinate.of(latitudeNode.asDouble(), longitudeNode.asDouble());
         }
         return null;
     }

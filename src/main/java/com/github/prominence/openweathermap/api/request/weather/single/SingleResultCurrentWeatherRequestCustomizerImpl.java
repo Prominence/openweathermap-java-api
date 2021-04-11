@@ -30,7 +30,6 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
  * The type Single result current weather request customizer.
  */
 public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleResultCurrentWeatherRequestCustomizer {
-
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
@@ -46,18 +45,6 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     }
 
     @Override
-    public SingleResultCurrentWeatherRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
-    public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
     public SingleResultCurrentWeatherRequestCustomizer language(Language language) {
         this.language = language;
         return this;
@@ -67,5 +54,17 @@ public class SingleResultCurrentWeatherRequestCustomizerImpl implements SingleRe
     public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
+    }
+
+    @Override
+    public SingleResultCurrentWeatherRequestTerminator retrieve() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new SingleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new SingleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 }

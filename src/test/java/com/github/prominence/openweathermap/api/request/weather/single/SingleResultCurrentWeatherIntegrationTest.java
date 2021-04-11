@@ -30,11 +30,12 @@ import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
     @Test
@@ -48,15 +49,14 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -71,7 +71,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asHTML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -113,15 +113,14 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -136,7 +135,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -150,7 +149,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -164,7 +163,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asHTML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -178,15 +177,14 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -201,7 +199,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -215,7 +213,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -229,7 +227,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asHTML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -242,15 +240,14 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -264,7 +261,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -277,7 +274,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -290,7 +287,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -298,20 +295,19 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final Weather weather = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -320,12 +316,12 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final String weatherJson = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -333,12 +329,12 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final String weatherXml = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -346,12 +342,12 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
         final String weatherHtml = getClient()
                 .currentWeather()
                 .single()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asHTML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -365,15 +361,14 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -388,7 +383,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -402,7 +397,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -416,7 +411,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asHTML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -430,15 +425,14 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(weather);
-        Assert.assertNotNull(weather.getState());
-        Assert.assertNotNull(weather.getDescription());
-        Assert.assertNotNull(weather.getCalculatedOn());
-        Assert.assertNotNull(weather.getTemperature());
-        Assert.assertNotNull(weather.getLocation());
-        Assert.assertNotNull(weather.getAtmosphericPressure());
-        Assert.assertNotNull(weather.getHumidity());
-        Assert.assertNotNull(weather.getWind());
+        assertNotNull(weather);
+        assertNotNull(weather.getWeatherState());
+        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getTemperature());
+        assertNotNull(weather.getLocation());
+        assertNotNull(weather.getAtmosphericPressure());
+        assertNotNull(weather.getHumidity());
+        assertNotNull(weather.getWind());
         System.out.println(weather);
     }
 
@@ -453,7 +447,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(weatherJson.startsWith("{"));
+        assertTrue(weatherJson.startsWith("{"));
     }
 
     @Test
@@ -467,7 +461,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(weatherXml.startsWith("<"));
+        assertTrue(weatherXml.startsWith("<"));
     }
 
     @Test
@@ -481,7 +475,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieve()
                 .asHTML();
 
-        Assert.assertTrue(weatherHtml.startsWith("<"));
+        assertTrue(weatherHtml.startsWith("<"));
     }
 
     @Test
@@ -495,7 +489,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJava();
 
-        Assert.assertNotNull(weatherFuture);
+        assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
     }
 
@@ -510,7 +504,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJSON();
 
-        Assert.assertNotNull(weatherFuture);
+        assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
     }
 
@@ -525,7 +519,7 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asXML();
 
-        Assert.assertNotNull(weatherXmlFuture);
+        assertNotNull(weatherXmlFuture);
         System.out.println(weatherXmlFuture.get());
     }
 
@@ -540,28 +534,32 @@ public class SingleResultCurrentWeatherIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asHTML();
 
-        Assert.assertNotNull(weatherFuture);
+        assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
     }
 
-    @Test(expected = InvalidAuthTokenException.class)
+    @Test
     public void whenRequestCurrentWeatherWithInvalidApiKey_thenThrowAnException() {
         OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
-        client
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.withValues(34.53, 66.74), 10)
-                .retrieve()
-                .asJSON();
+        assertThrows(InvalidAuthTokenException.class, () ->
+                client
+                        .currentWeather()
+                        .multiple()
+                        .byCitiesInCycle(Coordinate.of(34.53, 66.74), 10)
+                        .retrieve()
+                        .asJSON()
+        );
     }
 
-    @Test(expected = NoDataFoundException.class)
+    @Test
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
-        getClient()
-                .currentWeather()
-                .multiple()
-                .byCitiesInCycle(Coordinate.withValues(90.00, 66.74), 10)
-                .retrieve()
-                .asJava();
+        assertThrows(NoDataFoundException.class, () ->
+                getClient()
+                        .currentWeather()
+                        .multiple()
+                        .byCitiesInCycle(Coordinate.of(90.00, 66.74), 10)
+                        .retrieve()
+                        .asJava()
+        );
     }
 }

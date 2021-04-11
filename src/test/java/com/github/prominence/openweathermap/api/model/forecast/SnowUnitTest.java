@@ -22,8 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.forecast;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SnowUnitTest {
     @Test
@@ -31,34 +32,34 @@ public class SnowUnitTest {
         Snow.withThreeHourLevelValue(2222.3);
         Snow.withThreeHourLevelValue(0);
     }
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateWithInvalidData_thenFail() {
-        Snow.withThreeHourLevelValue(-20);
+        assertThrows(IllegalArgumentException.class, () -> Snow.withThreeHourLevelValue(-20));
     }
 
     @Test
     public void whenSetValues_thenTheyAreSet() {
         final Snow snow = Snow.withThreeHourLevelValue(0);
 
-        Assert.assertEquals(0, snow.getThreeHourSnowLevel(), 0.00001);
+        assertEquals(0, snow.getThreeHourLevel(), 0.00001);
 
-        snow.setThreeHourSnowLevel(55.5);
-        Assert.assertEquals(55.5, snow.getThreeHourSnowLevel(), 0.00001);
+        snow.setThreeHourLevel(55.5);
+        assertEquals(55.5, snow.getThreeHourLevel(), 0.00001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSetInvalidValue_thenFail() {
         final Snow snow = Snow.withThreeHourLevelValue(0);
 
-        snow.setThreeHourSnowLevel(-20);
+        assertThrows(IllegalArgumentException.class, () -> snow.setThreeHourLevel(-20));
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final Snow snow = Snow.withThreeHourLevelValue(33.5);
 
-        Assert.assertNotNull(snow.toString());
-        Assert.assertNotEquals("", snow.toString());
+        assertNotNull(snow.toString());
+        assertNotEquals("", snow.toString());
     }
 
     @Test
@@ -66,15 +67,15 @@ public class SnowUnitTest {
         final Snow first = Snow.withThreeHourLevelValue(0);
         final Snow second = Snow.withThreeHourLevelValue(0);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
 
-        second.setThreeHourSnowLevel(11.0);
+        second.setThreeHourLevel(11.0);
 
-        Assert.assertNotEquals(first.hashCode(), second.hashCode());
+        assertNotEquals(first.hashCode(), second.hashCode());
 
-        first.setThreeHourSnowLevel(11.0);
+        first.setThreeHourLevel(11.0);
 
-        Assert.assertEquals(first.hashCode(), second.hashCode());
+        assertEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
@@ -82,16 +83,16 @@ public class SnowUnitTest {
         final Snow first = Snow.withThreeHourLevelValue(0);
         final Snow second = Snow.withThreeHourLevelValue(0);
 
-        Assert.assertTrue(first.equals(second));
-        Assert.assertTrue(first.equals(first));
-        Assert.assertFalse(first.equals(new Object()));
+        assertEquals(first, second);
+        assertEquals(first, first);
+        assertNotEquals(first, new Object());
 
-        second.setThreeHourSnowLevel(66.7);
+        second.setThreeHourLevel(66.7);
 
-        Assert.assertFalse(first.equals(second));
+        assertNotEquals(first, second);
 
-        first.setThreeHourSnowLevel(66.7);
+        first.setThreeHourLevel(66.7);
 
-        Assert.assertTrue(first.equals(second));
+        assertEquals(first, second);
     }
 }

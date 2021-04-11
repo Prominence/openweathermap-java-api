@@ -28,7 +28,6 @@ import com.github.prominence.openweathermap.api.request.RequestCustomizer;
  * The current weather request customizer interface.
  */
 public interface SingleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<SingleResultCurrentWeatherRequestCustomizer> {
-
     /**
      * Retrieve current weather request terminator.
      *

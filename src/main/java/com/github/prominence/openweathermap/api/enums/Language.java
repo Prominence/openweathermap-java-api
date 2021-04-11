@@ -28,9 +28,24 @@ package com.github.prominence.openweathermap.api.enums;
  */
 public enum Language {
     /**
+     * Afrikaans language.
+     */
+    AFRIKAANS("af"),
+
+    /**
+     * Albanian language.
+     */
+    ALBANIAN("al"),
+
+    /**
      * Arabic language.
      */
     ARABIC("ar"),
+
+    /**
+     * Azerbaijani language.
+     */
+    AZERBAIJANI("az"),
 
     /**
      * Bulgarian language.
@@ -48,6 +63,11 @@ public enum Language {
     CZECH("cz"),
 
     /**
+     * Danish language
+     */
+    DANISH("da"),
+
+    /**
      * German language.
      */
     GERMAN("de"),
@@ -61,6 +81,11 @@ public enum Language {
      * English language.
      */
     ENGLISH("en"),
+
+    /**
+     * Basque language.
+     */
+    BASQUE("eu"),
 
     /**
      * Persian language.
@@ -83,6 +108,16 @@ public enum Language {
     GALICIAN("gl"),
 
     /**
+     * Hebrew language.
+     */
+    HEBREW("he"),
+
+    /**
+     * Hindi language.
+     */
+    HINDI("hi"),
+
+    /**
      * Croatian language.
      */
     CROATIAN("hr"),
@@ -91,6 +126,11 @@ public enum Language {
      * Hungarian language.
      */
     HUNGARIAN("hu"),
+
+    /**
+     * Indonesian language.
+     */
+    INDONESIAN("id"),
 
     /**
      * Italian language.
@@ -123,6 +163,11 @@ public enum Language {
     MACEDONIAN("mk"),
 
     /**
+     * Norwegian language.
+     */
+    NORWEGIAN("no"),
+
+    /**
      * Dutch language.
      */
     DUTCH("nl"),
@@ -136,6 +181,11 @@ public enum Language {
      * Portuguese language.
      */
     PORTUGUESE("pt"),
+
+    /**
+     * Português Brasil language.
+     */
+    PORTUGUES_BRAZIL("pt_br"),
 
     /**
      * Romanian language.
@@ -165,7 +215,17 @@ public enum Language {
     /**
      * Spanish language.
      */
-    SPANISH("en"),
+    SPANISH("es"),
+
+    /**
+     * Serbian language.
+     */
+    SERBIAN("sr"),
+
+    /**
+     * Thai language.
+     */
+    THAI("th"),
 
     /**
      * Turkish language.
@@ -190,7 +250,12 @@ public enum Language {
     /**
      * Chinese traditional language.
      */
-    CHINESE_TRADITIONAL("zh_tw");
+    CHINESE_TRADITIONAL("zh_tw"),
+
+    /**
+     * Zulu language.
+     */
+    ZULU("zu");
 
     private final String value;
 

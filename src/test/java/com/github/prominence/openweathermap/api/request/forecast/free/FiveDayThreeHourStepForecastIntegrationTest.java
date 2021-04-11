@@ -31,11 +31,12 @@ import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     @Test
@@ -49,17 +50,16 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -74,7 +74,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
@@ -102,17 +102,16 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -127,7 +126,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
@@ -141,7 +140,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
@@ -155,17 +154,16 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -180,7 +178,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
@@ -193,7 +191,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
@@ -207,17 +205,16 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -232,7 +229,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
@@ -245,31 +242,30 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
     public void whenGetForecastByCoordinatesRequestAsJava_thenReturnNotNull() {
         final Forecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -277,27 +273,27 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJSON_thenReturnNotNull() {
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .language(Language.SPANISH)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
     public void whenGetForecastByCoordinatesRequestAsXML_thenReturnNotNull() {
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.withValues(5, 5))
+                .byCoordinate(Coordinate.of(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
@@ -311,17 +307,16 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -336,7 +331,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
@@ -349,7 +344,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
@@ -363,17 +358,16 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJava();
 
-        Assert.assertNotNull(forecast);
-        Assert.assertNotNull(forecast.getLocation());
-        Assert.assertNotNull(forecast.getWeatherForecasts());
+        assertNotNull(forecast);
+        assertNotNull(forecast.getLocation());
+        assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            Assert.assertNotNull(weatherForecast.getState());
-            Assert.assertNotNull(weatherForecast.getDescription());
-            Assert.assertNotNull(weatherForecast.getForecastTime());
-            Assert.assertNotNull(weatherForecast.getTemperature());
-            Assert.assertNotNull(weatherForecast.getAtmosphericPressure());
-            Assert.assertNotNull(weatherForecast.getHumidity());
-            Assert.assertNotNull(weatherForecast.getWind());
+            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getForecastTime());
+            assertNotNull(weatherForecast.getTemperature());
+            assertNotNull(weatherForecast.getAtmosphericPressure());
+            assertNotNull(weatherForecast.getHumidity());
+            assertNotNull(weatherForecast.getWind());
         }
     }
 
@@ -388,7 +382,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asJSON();
 
-        Assert.assertTrue(forecastJson.startsWith("{"));
+        assertTrue(forecastJson.startsWith("{"));
     }
 
     @Test
@@ -401,7 +395,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieve()
                 .asXML();
 
-        Assert.assertTrue(forecastXml.startsWith("<"));
+        assertTrue(forecastXml.startsWith("<"));
     }
 
     @Test
@@ -415,7 +409,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJava();
 
-        Assert.assertNotNull(forecastFuture);
+        assertNotNull(forecastFuture);
         System.out.println(forecastFuture.get());
     }
 
@@ -430,7 +424,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asJSON();
 
-        Assert.assertNotNull(forecastFuture);
+        assertNotNull(forecastFuture);
         System.out.println(forecastFuture.get());
     }
 
@@ -445,26 +439,30 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .retrieveAsync()
                 .asXML();
 
-        Assert.assertNotNull(forecastFuture);
+        assertNotNull(forecastFuture);
         System.out.println(forecastFuture.get());
     }
 
-    @Test(expected = InvalidAuthTokenException.class)
+    @Test
     public void whenRequestCurrentWeatherWithInvalidApiKey_thenThrowAnException() {
         OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
-        client
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
-                .retrieve()
-                .asJSON();
+        assertThrows(InvalidAuthTokenException.class, () ->
+                client
+                        .forecast5Day3HourStep()
+                        .byCityId(350001514)
+                        .retrieve()
+                        .asJSON()
+        );
     }
 
-    @Test(expected = NoDataFoundException.class)
+    @Test
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
-        getClient()
-                .forecast5Day3HourStep()
-                .byCityName("invalidCity")
-                .retrieve()
-                .asJava();
+        assertThrows(NoDataFoundException.class, () ->
+                getClient()
+                        .forecast5Day3HourStep()
+                        .byCityName("invalidCity")
+                        .retrieve()
+                        .asJava()
+        );
     }
 }

@@ -31,12 +31,9 @@ import java.util.Objects;
  * Represents weather information.
  */
 public class Weather {
-    private String state;
-    private String description;
-    private String weatherIconId;
+    private LocalDateTime calculationTime;
 
-    private LocalDateTime calculatedOn;
-
+    private WeatherState weatherState;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -48,116 +45,40 @@ public class Weather {
 
     private Location location;
 
-    private Weather(String state, String description) {
-        this.state = state;
-        this.description = description;
-    }
-
-    /**
-     * For value weather.
-     *
-     * @param state       the state
-     * @param description the description
-     * @return the weather
-     */
-    public static Weather forValue(String state, String description) {
-        if (state == null) {
-            throw new IllegalArgumentException("State must be set.");
-        }
-        if (description == null) {
-            throw new IllegalArgumentException("Description must be set.");
-        }
-        return new Weather(state, description);
-    }
-
-    /**
-     * Gets state.
-     *
-     * @return the state
-     */
-    public String getState() {
-        return state;
-    }
-
-    /**
-     * Sets state.
-     *
-     * @param state the state
-     */
-    public void setState(String state) {
-        if (state == null) {
-            throw new IllegalArgumentException("State must be set.");
-        }
-        this.state = state;
-    }
-
-    /**
-     * Gets description.
-     *
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets description.
-     *
-     * @param description the description
-     */
-    public void setDescription(String description) {
-        if (description == null) {
-            throw new IllegalArgumentException("Description must be set.");
-        }
-        this.description = description;
-    }
-
-    /**
-     * Gets weather icon ID.
-     *
-     * @return the weather icon ID
-     */
-    public String getWeatherIconId() {
-        return weatherIconId;
-    }
-
-    /**
-     * Sets weather icon ID.
-     *
-     * @param weatherIconId the weather icon ID
-     */
-    public void setWeatherIconId(String weatherIconId) {
-        this.weatherIconId = weatherIconId;
-    }
-
-    /**
-     * Gets weather icon url.
-     *
-     * @return the weather icon url
-     */
-    public String getWeatherIconUrl() {
-        if (weatherIconId != null) {
-            return "http://openweathermap.org/img/w/" + weatherIconId + ".png";
-        }
-        return null;
-    }
-
     /**
      * Gets calculated on.
      *
      * @return the calculated on
      */
-    public LocalDateTime getCalculatedOn() {
-        return calculatedOn;
+    public LocalDateTime getCalculationTime() {
+        return calculationTime;
     }
 
     /**
      * Sets calculated on.
      *
-     * @param calculatedOn the calculated on
+     * @param calculationTime the calculated on
      */
-    public void setCalculatedOn(LocalDateTime calculatedOn) {
-        this.calculatedOn = calculatedOn;
+    public void setCalculationTime(LocalDateTime calculationTime) {
+        this.calculationTime = calculationTime;
+    }
+
+    /**
+     * Gets weather state.
+     *
+     * @return the weather state
+     */
+    public WeatherState getWeatherState() {
+        return weatherState;
+    }
+
+    /**
+     * Sets weather state.
+     *
+     * @param weatherState the weather state
+     */
+    public void setWeatherState(WeatherState weatherState) {
+        this.weatherState = weatherState;
     }
 
     /**
@@ -309,10 +230,8 @@ public class Weather {
         if (this == o) return true;
         if (!(o instanceof Weather)) return false;
         Weather weather = (Weather) o;
-        return Objects.equals(state, weather.state) &&
-                Objects.equals(description, weather.description) &&
-                Objects.equals(weatherIconId, weather.weatherIconId) &&
-                Objects.equals(calculatedOn, weather.calculatedOn) &&
+        return Objects.equals(calculationTime, weather.calculationTime) &&
+                Objects.equals(weatherState, weather.weatherState) &&
                 Objects.equals(temperature, weather.temperature) &&
                 Objects.equals(atmosphericPressure, weather.atmosphericPressure) &&
                 Objects.equals(humidity, weather.humidity) &&
@@ -325,7 +244,7 @@ public class Weather {
 
     @Override
     public int hashCode() {
-        return Objects.hash(state, description, weatherIconId, calculatedOn, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
+        return Objects.hash(calculationTime, weatherState, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
     }
 
     @Override
@@ -342,8 +261,10 @@ public class Weather {
                 stringBuilder.append(')');
             }
         }
-        stringBuilder.append(", Weather: ");
-        stringBuilder.append(description);
+        if (weatherState != null) {
+            stringBuilder.append(", Weather: ");
+            stringBuilder.append(weatherState.getDescription());
+        }
         if (temperature != null) {
             stringBuilder.append(", ");
             stringBuilder.append(temperature.getValue());
@@ -360,15 +281,15 @@ public class Weather {
             stringBuilder.append(", ");
             stringBuilder.append(clouds.toString());
         }
-        if (rain != null && rain.getOneHourRainLevel() != null) {
+        if (rain != null && rain.getOneHourLevel() != null) {
             stringBuilder.append(", Rain: ");
-            stringBuilder.append(rain.getOneHourRainLevel());
+            stringBuilder.append(rain.getOneHourLevel());
             stringBuilder.append(' ');
             stringBuilder.append(rain.getUnit());
         }
-        if (snow != null && snow.getOneHourSnowLevel() != null) {
+        if (snow != null && snow.getOneHourLevel() != null) {
             stringBuilder.append(", Snow: ");
-            stringBuilder.append(snow.getOneHourSnowLevel());
+            stringBuilder.append(snow.getOneHourLevel());
             stringBuilder.append(' ');
             stringBuilder.append(snow.getUnit());
         }

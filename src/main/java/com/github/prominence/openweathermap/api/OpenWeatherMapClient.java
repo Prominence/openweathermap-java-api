@@ -25,6 +25,8 @@ package com.github.prominence.openweathermap.api;
 import com.github.prominence.openweathermap.api.annotation.SubscriptionAvailability;
 import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThreeHourStepForecastRequester;
 import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThreeHourStepForecastRequesterImpl;
+import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequester;
+import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequesterImpl;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequesterImpl;
 
@@ -39,7 +41,7 @@ public class OpenWeatherMapClient {
 
     /**
      * Created OpenWeatherMap client object.
-     * @param apiKey API key obtained on <a href="https://home.openweathermap.org/api_keys">OpwnWeatherMap site</a>.
+     * @param apiKey API key obtained on <a href="https://home.openweathermap.org/api_keys">OpenWeatherMap site</a>.
      */
     public OpenWeatherMapClient(String apiKey) {
         this.apiKey = apiKey;
@@ -61,5 +63,15 @@ public class OpenWeatherMapClient {
     @SubscriptionAvailability(plans = ALL)
     public FiveDayThreeHourStepForecastRequester forecast5Day3HourStep() {
         return new FiveDayThreeHourStepForecastRequesterImpl(apiKey);
+    }
+
+    /**
+     * One Call <a href="https://openweathermap.org/api/one-call-api">API</a>.
+     * To get information about current weather, minute forecast for 1 hour, hourly forecast for 48 hours, daily forecast for 7 days and government weather alerts.
+     * @return requester for retrieving one call weather information.
+     */
+    @SubscriptionAvailability(plans = ALL)
+    public OneCallWeatherRequester oneCall() {
+        return new OneCallWeatherRequesterImpl(apiKey);
     }
 }

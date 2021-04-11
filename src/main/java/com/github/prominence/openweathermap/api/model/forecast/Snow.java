@@ -30,41 +30,41 @@ import java.util.Objects;
 public class Snow {
     private static final String DEFAULT_UNIT = "mm";
 
-    private double threeHourSnowLevel;
+    private double threeHourLevel;
 
-    private Snow(double threeHourSnowLevel) {
-        this.threeHourSnowLevel = threeHourSnowLevel;
+    private Snow(double threeHourLevel) {
+        this.threeHourLevel = threeHourLevel;
     }
 
     /**
      * Creates {@link Snow} object with correctness check.
-     * @param threeHourSnowLevel 3-hour snow level value
+     * @param threeHourLevel 3-hour snow level value
      * @return snow object.
      */
-    public static Snow withThreeHourLevelValue(double threeHourSnowLevel) {
-        if (threeHourSnowLevel < 0) {
+    public static Snow withThreeHourLevelValue(double threeHourLevel) {
+        if (threeHourLevel < 0) {
             throw new IllegalArgumentException("Snow level value cannot be negative.");
         }
-        return new Snow(threeHourSnowLevel);
+        return new Snow(threeHourLevel);
     }
 
     /**
      * Returns 3-hour snow level value.
      * @return 3-hour snow level value
      */
-    public double getThreeHourSnowLevel() {
-        return threeHourSnowLevel;
+    public double getThreeHourLevel() {
+        return threeHourLevel;
     }
 
     /**
      * Sets 3-hour snow level value with correctness check.
-     * @param threeHourSnowLevel 3-hour snow level value
+     * @param threeHourLevel 3-hour snow level value
      */
-    public void setThreeHourSnowLevel(double threeHourSnowLevel) {
-        if (threeHourSnowLevel < 0) {
+    public void setThreeHourLevel(double threeHourLevel) {
+        if (threeHourLevel < 0) {
             throw new IllegalArgumentException("Snow level value cannot be negative.");
         }
-        this.threeHourSnowLevel = threeHourSnowLevel;
+        this.threeHourLevel = threeHourLevel;
     }
 
     /**
@@ -80,18 +80,18 @@ public class Snow {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Snow snow = (Snow) o;
-        return Double.compare(snow.threeHourSnowLevel, threeHourSnowLevel) == 0;
+        return Double.compare(snow.threeHourLevel, threeHourLevel) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(threeHourSnowLevel);
+        return Objects.hash(threeHourLevel);
     }
 
     @Override
     public String toString() {
         return "3-hour snow level: " +
-                threeHourSnowLevel + ' ' +
+                threeHourLevel + ' ' +
                 getUnit();
     }
 }

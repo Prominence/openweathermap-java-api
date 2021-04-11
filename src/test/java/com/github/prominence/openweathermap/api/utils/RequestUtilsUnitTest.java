@@ -23,17 +23,18 @@
 package com.github.prominence.openweathermap.api.utils;
 
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RequestUtilsUnitTest {
-
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenPassInvalidUrl_thenThrowAnException() {
-        RequestUtils.getResponse("wrongUrl");
+        assertThrows(IllegalArgumentException.class, () -> RequestUtils.getResponse("wrongUrl"));
     }
 
-    @Test(expected = NoDataFoundException.class)
+    @Test
     public void whenPassUrlToNonExistingPage_thenThrowAnException() {
-        RequestUtils.getResponse("https://openweathermap.org/somePage");
+        assertThrows(NoDataFoundException.class, () -> RequestUtils.getResponse("https://openweathermap.org/somePage"));
     }
 }

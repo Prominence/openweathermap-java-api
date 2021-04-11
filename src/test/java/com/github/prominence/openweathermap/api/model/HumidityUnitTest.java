@@ -22,51 +22,52 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HumidityUnitTest {
     @Test
     public void whenCreateHumidityWithArgs_thenValueIsSet() {
         Humidity humidity = Humidity.withValue((byte) 100);
-        Assert.assertEquals(100, humidity.getValue());
+        assertEquals(100, humidity.getValue());
 
-        Assert.assertEquals(0, Humidity.withValue((byte) 0).getValue());
-        Assert.assertEquals(55, Humidity.withValue((byte) 55).getValue());
+        assertEquals(0, Humidity.withValue((byte) 0).getValue());
+        assertEquals(55, Humidity.withValue((byte) 55).getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityByConstructorWithInvalidDataAboveHundred_thenThrowAnException() {
-        Humidity.withValue((byte) 112);
+        assertThrows(IllegalArgumentException.class, () -> Humidity.withValue((byte) 112));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        Humidity.withValue((byte) -33);
+        assertThrows(IllegalArgumentException.class, () -> Humidity.withValue((byte) -33));
     }
 
     @Test
     public void whenSetValidValues_thenAllIsFine() {
         Humidity humidity = Humidity.withValue((byte) 14);
-        Assert.assertEquals(14, humidity.getValue());
+        assertEquals(14, humidity.getValue());
         humidity.setValue((byte) 0);
-        Assert.assertEquals(0, humidity.getValue());
+        assertEquals(0, humidity.getValue());
         humidity.setValue((byte) 15);
-        Assert.assertEquals(15, humidity.getValue());
+        assertEquals(15, humidity.getValue());
         humidity.setValue((byte) 100);
-        Assert.assertEquals(100, humidity.getValue());
+        assertEquals(100, humidity.getValue());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityAndSetInvalidDataAboveHundred_thenThrowAnException() {
         Humidity humidity = Humidity.withValue((byte) 12);
-        humidity.setValue((byte) 112);
+        assertThrows(IllegalArgumentException.class, () -> humidity.setValue((byte) 112));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenCreateHumidityAndSetInvalidDataNegative_thenThrowAnException() {
         Humidity humidity = Humidity.withValue((byte) 88);
-        humidity.setValue((byte) -89);
+        assertThrows(IllegalArgumentException.class, () -> humidity.setValue((byte) -89));
     }
 
     @Test
@@ -74,9 +75,9 @@ public class HumidityUnitTest {
         Humidity one = Humidity.withValue((byte) 22);
         Humidity two = Humidity.withValue((byte) 22);
 
-        Assert.assertTrue(one.equals(two));
-        Assert.assertTrue(one.equals(one));
-        Assert.assertEquals(one.hashCode(), two.hashCode());
+        assertEquals(one, two);
+        assertEquals(one, one);
+        assertEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
@@ -84,16 +85,16 @@ public class HumidityUnitTest {
         Humidity one = Humidity.withValue((byte) 5);
         Humidity two = Humidity.withValue((byte) 88);
 
-        Assert.assertFalse(one.equals(two));
-        Assert.assertFalse(two.equals(one));
-        Assert.assertFalse(one.equals(new Object()));
-        Assert.assertNotEquals(one.hashCode(), two.hashCode());
+        assertNotEquals(one, two);
+        assertNotEquals(two, one);
+        assertNotEquals(one, new Object());
+        assertNotEquals(one.hashCode(), two.hashCode());
     }
 
     @Test
     public void whenCallToString_thenAllIsFine() {
         final String humidityString = Humidity.withValue((byte) 44).toString();
-        Assert.assertNotNull(humidityString);
-        Assert.assertNotEquals("", humidityString);
+        assertNotNull(humidityString);
+        assertNotEquals("", humidityString);
     }
 }

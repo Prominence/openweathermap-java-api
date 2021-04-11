@@ -79,7 +79,7 @@ final Weather weather = openWeatherClient
 final List<Weather> weatherList = openWeatherClient
         .currentWeather()
         .multiple()
-        .byCitiesInCycle(Coordinate.withValues(55.5, 37.5))
+        .byCitiesInCycle(Coordinate.of(55.5, 37.5))
         .language(Language.GERMAN)
         .unitSystem(UnitSystem.IMPERIAL)
         .retrieve()

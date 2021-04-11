@@ -22,13 +22,14 @@
 
 package com.github.prominence.openweathermap.api.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DayTimeUnitTest {
     @Test
     public void whenGetValue_thenValueIsPresentAndValid() {
-        Assert.assertEquals("d", DayTime.DAY.getValue());
-        Assert.assertEquals("n", DayTime.NIGHT.getValue());
+        assertEquals("d", DayTime.DAY.getValue());
+        assertEquals("n", DayTime.NIGHT.getValue());
     }
 }

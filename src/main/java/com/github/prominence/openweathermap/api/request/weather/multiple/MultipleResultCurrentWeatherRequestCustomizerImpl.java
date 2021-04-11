@@ -30,7 +30,6 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
  * The type Multiple result current weather request customizer.
  */
 public class MultipleResultCurrentWeatherRequestCustomizerImpl implements MultipleResultCurrentWeatherRequestCustomizer {
-
     private final RequestUrlBuilder urlBuilder;
 
     private Language language;
@@ -46,18 +45,6 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
     }
 
     @Override
-    public MultipleResultCurrentWeatherRequestTerminator retrieve() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
-    public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
-        urlBuilder.applyCustomization(language, unitSystem);
-        return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
-    }
-
-    @Override
     public MultipleResultCurrentWeatherRequestCustomizer language(Language language) {
         this.language = language;
         return this;
@@ -67,5 +54,17 @@ public class MultipleResultCurrentWeatherRequestCustomizerImpl implements Multip
     public MultipleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
         return this;
+    }
+
+    @Override
+    public MultipleResultCurrentWeatherRequestTerminator retrieve() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new MultipleResultCurrentWeatherRequestTerminatorImpl(urlBuilder, unitSystem);
+    }
+
+    @Override
+    public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        urlBuilder.applyCustomization(language, unitSystem);
+        return new MultipleResultCurrentWeatherAsyncRequestTerminatorImpl(urlBuilder, unitSystem);
     }
 }

@@ -30,8 +30,8 @@ import java.util.Objects;
 public class Rain {
     private static final String DEFAULT_UNIT = "mm";
 
-    private Double oneHourRainLevel;
-    private Double threeHourRainLevel;
+    private Double oneHourLevel;
+    private Double threeHourLevel;
 
     private Rain() {
     }
@@ -39,38 +39,38 @@ public class Rain {
     /**
      * Creates {@link Rain} object with correctness check.
      *
-     * @param oneHourRainLevel 1-hour rain level value
+     * @param oneHourLevel 1-hour rain level value
      * @return rain object.
      */
-    public static Rain withOneHourLevelValue(double oneHourRainLevel) {
-        Rain rain = new Rain();
-        rain.setOneHourRainLevel(oneHourRainLevel);
+    public static Rain withOneHourLevelValue(double oneHourLevel) {
+        final Rain rain = new Rain();
+        rain.setOneHourLevel(oneHourLevel);
         return rain;
     }
 
     /**
      * Creates {@link Rain} object with correctness check.
      *
-     * @param threeHourRainLevel 3-hour rain level value
+     * @param threeHourLevel 3-hour rain level value
      * @return rain object.
      */
-    public static Rain withThreeHourLevelValue(double threeHourRainLevel) {
-        Rain rain = new Rain();
-        rain.setThreeHourRainLevel(threeHourRainLevel);
+    public static Rain withThreeHourLevelValue(double threeHourLevel) {
+        final Rain rain = new Rain();
+        rain.setThreeHourLevel(threeHourLevel);
         return rain;
     }
 
     /**
      * Creates {@link Rain} object with correctness check.
      *
-     * @param oneHourRainLevel   the one hour rain level
-     * @param threeHourRainLevel the three hour rain level
+     * @param oneHourLevel   the one hour rain level
+     * @param threeHourLevel the three hour rain level
      * @return the rain
      */
-    public static Rain withValues(double oneHourRainLevel, double threeHourRainLevel) {
-        Rain rain = new Rain();
-        rain.setOneHourRainLevel(oneHourRainLevel);
-        rain.setThreeHourRainLevel(threeHourRainLevel);
+    public static Rain withValues(double oneHourLevel, double threeHourLevel) {
+        final Rain rain = new Rain();
+        rain.setOneHourLevel(oneHourLevel);
+        rain.setThreeHourLevel(threeHourLevel);
         return rain;
     }
 
@@ -79,20 +79,20 @@ public class Rain {
      *
      * @return the one hour rain level
      */
-    public Double getOneHourRainLevel() {
-        return oneHourRainLevel;
+    public Double getOneHourLevel() {
+        return oneHourLevel;
     }
 
     /**
      * Sets one hour rain level.
      *
-     * @param oneHourRainLevel the one hour rain level
+     * @param oneHourLevel the one hour rain level
      */
-    public void setOneHourRainLevel(double oneHourRainLevel) {
-        if (oneHourRainLevel < 0) {
+    public void setOneHourLevel(double oneHourLevel) {
+        if (oneHourLevel < 0) {
             throw new IllegalArgumentException("Rain level value cannot be negative.");
         }
-        this.oneHourRainLevel = oneHourRainLevel;
+        this.oneHourLevel = oneHourLevel;
     }
 
     /**
@@ -100,20 +100,20 @@ public class Rain {
      *
      * @return the three hour rain level
      */
-    public Double getThreeHourRainLevel() {
-        return threeHourRainLevel;
+    public Double getThreeHourLevel() {
+        return threeHourLevel;
     }
 
     /**
      * Sets three hour rain level.
      *
-     * @param threeHourRainLevel the three hour rain level
+     * @param threeHourLevel the three hour rain level
      */
-    public void setThreeHourRainLevel(double threeHourRainLevel) {
-        if (threeHourRainLevel < 0) {
+    public void setThreeHourLevel(double threeHourLevel) {
+        if (threeHourLevel < 0) {
             throw new IllegalArgumentException("Rain level value cannot be negative.");
         }
-        this.threeHourRainLevel = threeHourRainLevel;
+        this.threeHourLevel = threeHourLevel;
     }
 
     /**
@@ -130,29 +130,29 @@ public class Rain {
         if (this == o) return true;
         if (!(o instanceof Rain)) return false;
         Rain rain = (Rain) o;
-        return Objects.equals(oneHourRainLevel, rain.oneHourRainLevel) &&
-                Objects.equals(threeHourRainLevel, rain.threeHourRainLevel);
+        return Objects.equals(oneHourLevel, rain.oneHourLevel) &&
+                Objects.equals(threeHourLevel, rain.threeHourLevel);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(oneHourRainLevel, threeHourRainLevel);
+        return Objects.hash(oneHourLevel, threeHourLevel);
     }
 
     @Override
     public String toString() {
-        StringBuilder snowString = new StringBuilder();
-        if (oneHourRainLevel != null) {
+        final StringBuilder snowString = new StringBuilder();
+        if (oneHourLevel != null) {
             snowString.append("1-hour rain level: ");
-            snowString.append(oneHourRainLevel);
+            snowString.append(oneHourLevel);
             snowString.append(getUnit());
         }
-        if (threeHourRainLevel != null) {
-            if (oneHourRainLevel != null) {
+        if (threeHourLevel != null) {
+            if (oneHourLevel != null) {
                 snowString.append(", ");
             }
             snowString.append("3-hours rain level: ");
-            snowString.append(threeHourRainLevel);
+            snowString.append(threeHourLevel);
             snowString.append(getUnit());
         }
         return snowString.toString();

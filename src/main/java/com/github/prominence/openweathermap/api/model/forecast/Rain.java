@@ -30,41 +30,41 @@ import java.util.Objects;
 public class Rain {
     private static final String DEFAULT_UNIT = "mm";
 
-    private double threeHourRainLevel;
+    private double threeHourLevel;
 
-    private Rain(double threeHourRainLevel) {
-        this.threeHourRainLevel = threeHourRainLevel;
+    private Rain(double threeHourLevel) {
+        this.threeHourLevel = threeHourLevel;
     }
 
     /**
      * Creates {@link Rain} object with correctness check.
-     * @param threeHourRainLevel 3-hour rain level value
+     * @param threeHourLevel 3-hour rain level value
      * @return rain object.
      */
-    public static Rain withThreeHourLevelValue(double threeHourRainLevel) {
-        if (threeHourRainLevel < 0) {
+    public static Rain withThreeHourLevelValue(double threeHourLevel) {
+        if (threeHourLevel < 0) {
             throw new IllegalArgumentException("Rain level value cannot be negative.");
         }
-        return new Rain(threeHourRainLevel);
+        return new Rain(threeHourLevel);
     }
 
     /**
      * Returns 3-hour rain level value.
      * @return 3-hour rain level value
      */
-    public double getThreeHourRainLevel() {
-        return threeHourRainLevel;
+    public double getThreeHourLevel() {
+        return threeHourLevel;
     }
 
     /**
      * Sets 3-hour rain level value with correctness check.
-     * @param threeHourRainLevel 3-hour rain level value
+     * @param threeHourLevel 3-hour rain level value
      */
-    public void setThreeHourRainLevel(double threeHourRainLevel) {
-        if (threeHourRainLevel < 0) {
+    public void setThreeHourLevel(double threeHourLevel) {
+        if (threeHourLevel < 0) {
             throw new IllegalArgumentException("Rain level value cannot be negative.");
         }
-        this.threeHourRainLevel = threeHourRainLevel;
+        this.threeHourLevel = threeHourLevel;
     }
 
     /**
@@ -80,18 +80,18 @@ public class Rain {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rain rain = (Rain) o;
-        return Double.compare(rain.threeHourRainLevel, threeHourRainLevel) == 0;
+        return Double.compare(rain.threeHourLevel, threeHourLevel) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(threeHourRainLevel);
+        return Objects.hash(threeHourLevel);
     }
 
     @Override
     public String toString() {
         return "3-hour rain level: " +
-                threeHourRainLevel + ' ' +
+                threeHourLevel + ' ' +
                 getUnit();
     }
 }

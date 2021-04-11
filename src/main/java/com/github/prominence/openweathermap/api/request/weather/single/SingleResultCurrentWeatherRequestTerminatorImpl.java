@@ -32,7 +32,6 @@ import com.github.prominence.openweathermap.api.utils.RequestUtils;
  * The type Single result current weather request terminator.
  */
 public class SingleResultCurrentWeatherRequestTerminatorImpl implements SingleResultCurrentWeatherRequestTerminator {
-
     private final RequestUrlBuilder urlBuilder;
     private final UnitSystem unitSystem;
 

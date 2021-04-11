@@ -28,7 +28,6 @@ import com.github.prominence.openweathermap.api.request.RequestCustomizer;
  * The forecast request customizer interface.
  */
 public interface FiveDayThreeHourStepForecastRequestCustomizer extends RequestCustomizer<FiveDayThreeHourStepForecastRequestCustomizer> {
-
     /**
      * Count customizer.
      *
