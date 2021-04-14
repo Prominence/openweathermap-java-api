@@ -43,6 +43,7 @@ compile('com.github.prominence:openweathermap-api:2.1.1')
 * [OpenWeatherMap Java API - 2.0.0](docs/Release_2.0.0.md)
 * [OpenWeatherMap Java API - 2.0.1](docs/Release_2.0.1.md)
 * [OpenWeatherMap Java API - 2.1.0](docs/Release_2.1.0.md)
+* [OpenWeatherMap Java API - 2.1.1](docs/Release_2.1.1.md)
 * [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
 
 ### License
