@@ -141,14 +141,16 @@ public class DailyUnitTest {
     @Test
     public void getProbabilityOfPrecipitation() {
         final Daily daily = new Daily();
-        final double pop = 70.5;
+        final double pop = 0.84;
         daily.setProbabilityOfPrecipitation(pop);
 
         assertEquals(pop, daily.getProbabilityOfPrecipitation(), 0.00001);
+        assertEquals((byte) 84, daily.getProbabilityOfPrecipitationPercentage());
 
         daily.setProbabilityOfPrecipitation(null);
 
         assertNull(daily.getProbabilityOfPrecipitation());
+        assertNull(daily.getProbabilityOfPrecipitationPercentage());
     }
 
     @Test
