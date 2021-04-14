@@ -225,7 +225,23 @@ public class Hourly {
      * @param probabilityOfPrecipitation the probability of precipitation
      */
     public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
+        if (probabilityOfPrecipitation != null && (probabilityOfPrecipitation < 0 || probabilityOfPrecipitation > 100))  {
+            throw new IllegalArgumentException("Probability of precipitation value must be in [0, 100] range.");
+        }
         this.probabilityOfPrecipitation = probabilityOfPrecipitation;
+    }
+
+    /**
+     * Gets probability of precipitation percentage.
+     *
+     * @return the probability of precipitation percentage
+     */
+    public Byte getProbabilityOfPrecipitationPercentage() {
+        if (probabilityOfPrecipitation != null) {
+            return (byte)(probabilityOfPrecipitation * 100);
+        }
+
+        return null;
     }
 
     /**

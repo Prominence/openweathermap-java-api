@@ -117,10 +117,30 @@ public class HourlyUnitTest {
     @Test
     public void getProbabilityOfPrecipitation() {
         final Hourly hourly = new Hourly();
-        final double pop = 42.0;
+        final double pop = 0.84;
         hourly.setProbabilityOfPrecipitation(pop);
 
         assertEquals(pop, hourly.getProbabilityOfPrecipitation(), 0.00001);
+        assertEquals((byte) 84, hourly.getProbabilityOfPrecipitationPercentage());
+
+        hourly.setProbabilityOfPrecipitation(null);
+
+        assertNull(hourly.getProbabilityOfPrecipitation());
+        assertNull(hourly.getProbabilityOfPrecipitationPercentage());
+    }
+
+    @Test
+    public void getIllegalProbabilityOfPrecipitationValue_negative() {
+        final Hourly daily = new Hourly();
+
+        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(-20.0));
+    }
+
+    @Test
+    public void getIllegalProbabilityOfPrecipitationValue_tooBig() {
+        final Hourly daily = new Hourly();
+
+        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(120.0));
     }
 
     @Test

@@ -332,38 +332,40 @@ You are able to set preferable options(via chain methods) and execute appropriat
 
 `com.github.prominence.openweathermap.api.model.onecall.current.Hourly`'s useful public methods(setters are not listed):
 
-| Method                            | Description                                                                                       |
-|-----------------------------------|---------------------------------------------------------------------------------------------------|
-| `getForecastTime()`               | Returns `LocalDateTime` object with weather forecast time.                                        |
-| `getWeatherState()`               | Returns `WeatherState` object with basic weather state information.                               |
-| `getTemperature()`                | Returns `Temperature` object. Available fields: `value`, `feelsLike`, `dewPoint` and `unit`.      |
-| `getAtmosphericPressure()`        | Returns `AtmosphericPressure` object. Available fields: `seaLevelValue`.                          |
-| `getHumidity()`                   | Returns `Humidity` object. Available fields: `value` and `unit`.                                  |
-| `getClouds()`                     | Returns `Clouds` object. Available fields: `value` and `unit`.                                    |
-| `getUvIndex()`                    | Returns UV index value.                                                                           |
-| `getVisibilityInMetres()`         | Returns visibility in metres.                                                                     |
-| `getWind()`                       | Returns `Wind` object. Available fields: `speed`, `degrees`, `gust` and `unit`.                   |
-| `getProbabilityOfPrecipitation()` | Returns probability of precipitation(not percentage).                                             |
-| `getRain()`                       | Returns `Rain` object. Available fields: `oneHourLevel` and `unit`.                               |
-| `getSnow()`                       | Returns `Snow` object. Available fields: `oneHourLevel` and `unit`.                               |
+| Method                                        | Description                                                                                       |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `getForecastTime()`                           | Returns `LocalDateTime` object with weather forecast time.                                        |
+| `getWeatherState()`                           | Returns `WeatherState` object with basic weather state information.                               |
+| `getTemperature()`                            | Returns `Temperature` object. Available fields: `value`, `feelsLike`, `dewPoint` and `unit`.      |
+| `getAtmosphericPressure()`                    | Returns `AtmosphericPressure` object. Available fields: `seaLevelValue`.                          |
+| `getHumidity()`                               | Returns `Humidity` object. Available fields: `value` and `unit`.                                  |
+| `getClouds()`                                 | Returns `Clouds` object. Available fields: `value` and `unit`.                                    |
+| `getUvIndex()`                                | Returns UV index value.                                                                           |
+| `getVisibilityInMetres()`                     | Returns visibility in metres.                                                                     |
+| `getWind()`                                   | Returns `Wind` object. Available fields: `speed`, `degrees`, `gust` and `unit`.                   |
+| `getProbabilityOfPrecipitation()`             | Returns probability of precipitation(not percentage).                                             |
+| `getProbabilityOfPrecipitationPercentage()`   | Returns probability of precipitation percentage.                                                  |
+| `getRain()`                                   | Returns `Rain` object. Available fields: `oneHourLevel` and `unit`.                               |
+| `getSnow()`                                   | Returns `Snow` object. Available fields: `oneHourLevel` and `unit`.                               |
 
 `com.github.prominence.openweathermap.api.model.onecall.current.Daily`'s useful public methods(setters are not listed):
 
-| Method                            | Description                                                                                       |
-|-----------------------------------|---------------------------------------------------------------------------------------------------|
-| `getForecastTime()`               | Returns `LocalDateTime` object with weather forecast time.                                        |
-| `getSunriseTime()`                | Returns `LocalDateTime` object with sunrise time.                                                 |
-| `getSunsetTime()`                 | Returns `LocalDateTime` object with sunset time.                                                  |
-| `getWeatherState()`               | Returns `WeatherState` object with basic weather state information.                               |
-| `getTemperature()`                | Returns `DailyTemperature` object. Available fields: `value`, `feelsLike`, `dewPoint` and `unit`. |
-| `getAtmosphericPressure()`        | Returns `AtmosphericPressure` object. Available fields: `seaLevelValue`.                          |
-| `getHumidity()`                   | Returns `Humidity` object. Available fields: `value` and `unit`.                                  |
-| `getWind()`                       | Returns `Wind` object. Available fields: `speed`, `degrees`, `gust` and `unit`.                   |
-| `getClouds()`                     | Returns `Clouds` object. Available fields: `value` and `unit`.                                    |
-| `getUvIndex()`                    | Returns UV index value.                                                                           |
-| `getProbabilityOfPrecipitation()` | Returns probability of precipitation(not percentage).                                             |
-| `getRain()`                       | Returns `DailyRain` object. Available fields: `value`.                                            |
-| `getSnow()`                       | Returns `DailySnow` object. Available fields: `value`.                                            |
+| Method                                        | Description                                                                                       |
+|-----------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `getForecastTime()`                           | Returns `LocalDateTime` object with weather forecast time.                                        |
+| `getSunriseTime()`                            | Returns `LocalDateTime` object with sunrise time.                                                 |
+| `getSunsetTime()`                             | Returns `LocalDateTime` object with sunset time.                                                  |
+| `getWeatherState()`                           | Returns `WeatherState` object with basic weather state information.                               |
+| `getTemperature()`                            | Returns `DailyTemperature` object. Available fields: `value`, `feelsLike`, `dewPoint` and `unit`. |
+| `getAtmosphericPressure()`                    | Returns `AtmosphericPressure` object. Available fields: `seaLevelValue`.                          |
+| `getHumidity()`                               | Returns `Humidity` object. Available fields: `value` and `unit`.                                  |
+| `getWind()`                                   | Returns `Wind` object. Available fields: `speed`, `degrees`, `gust` and `unit`.                   |
+| `getClouds()`                                 | Returns `Clouds` object. Available fields: `value` and `unit`.                                    |
+| `getUvIndex()`                                | Returns UV index value.                                                                           |
+| `getProbabilityOfPrecipitation()`             | Returns probability of precipitation(not percentage).                                             |
+| `getProbabilityOfPrecipitationPercentage()`   | Returns probability of precipitation percentage.                                                  |
+| `getRain()`                                   | Returns `DailyRain` object. Available fields: `value`.                                            |
+| `getSnow()`                                   | Returns `DailySnow` object. Available fields: `value`.                                            |
 
 `com.github.prominence.openweathermap.api.model.onecall.current.Alert`'s useful public methods(setters are not listed):
 

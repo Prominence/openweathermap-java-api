@@ -255,6 +255,19 @@ public class Daily {
     }
 
     /**
+     * Gets probability of precipitation percentage.
+     *
+     * @return the probability of precipitation percentage
+     */
+    public Byte getProbabilityOfPrecipitationPercentage() {
+        if (probabilityOfPrecipitation != null) {
+            return (byte)(probabilityOfPrecipitation * 100);
+        }
+
+        return null;
+    }
+
+    /**
      * Gets rain.
      *
      * @return the rain
