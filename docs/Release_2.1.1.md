@@ -9,14 +9,14 @@
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.1.1-SNAPSHOT</version>
+  <version>2.1.1</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.1.1-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.1.1')
 ```
 
 ### How to use:

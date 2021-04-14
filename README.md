@@ -26,14 +26,14 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.1.0-SNAPSHOT</version>
+  <version>2.1.1</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.1.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.1.1')
 ```
 
 ### Documentation
@@ -48,9 +48,9 @@ compile('com.github.prominence:openweathermap-api:2.1.0-SNAPSHOT')
 ### License
 MIT
 
-[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=dev
+[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=master
 [ci-link]: https://travis-ci.org/Prominence/openweathermap-java-api
 
 
-[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/dev/graph/badge.svg
+[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api
