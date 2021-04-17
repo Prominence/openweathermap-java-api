@@ -72,7 +72,7 @@ public class OneCallWeatherResponseMapper {
             final JsonNode root = objectMapper.readTree(json);
             currentData = mapToCurrent(root);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Cannot parse Forecast response");
+            throw new RuntimeException("Cannot parse OneCall response");
         }
 
         return currentData;
@@ -91,7 +91,7 @@ public class OneCallWeatherResponseMapper {
             final JsonNode root = objectMapper.readTree(json);
             historicalData = mapToHistorical(root);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Cannot parse Forecast response");
+            throw new RuntimeException("Cannot parse OneCall response");
         }
 
         return historicalData;

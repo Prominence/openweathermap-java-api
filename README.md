@@ -6,11 +6,11 @@ Free:
 * Current weather data
 * 5 day / 3-hour forecast
 * One Call API
+* Air pollution
 
 ### Will be implemented later:
 
 Free:
-* Air pollution
 * Geocoding API
 * Weather Stations
 * Weather Triggers

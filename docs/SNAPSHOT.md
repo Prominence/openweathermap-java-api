@@ -2,6 +2,7 @@
 * Current weather data
 * 5 day / 3-hour forecast
 * One Call API
+* Air Pollution
 
 ### Maven coordinates:
 
@@ -31,6 +32,7 @@ Currently, available APIs are:
 * `currentWeather()`
 * `forecast5Day3HourStep()`
 * `oneCall()`
+* `airPollution()`
 
 Default(more or less) customization points:
 ```java
@@ -419,6 +421,56 @@ You are able to set preferable options(via chain methods) and execute appropriat
 | `getWind()`                       | Returns `Wind` object. Available fields: `speed`, `degrees`, `gust` and `unit`.                   |
 | `getRain()`                       | Returns `Rain` object. Available fields: `oneHourLevel` and `unit`.                               |
 | `getSnow()`                       | Returns `Snow` object. Available fields: `oneHourLevel` and `unit`.                               |
+
+#### Air Pollution API
+Examples:
+```java
+final AirPollutionDetails airPollutionDetails = openWeatherClient
+        .airPollution()
+        .current()
+        .byCoordinate(Coordinate.of(53.54, 27.34))
+        .retrieve()
+        .asJava();
+```
+
+```java
+final AirPollutionDetails airPollutionDetails = openWeatherClient
+        .airPollution()
+        .historical()
+        .byCoordinateAndPeriod(Coordinate.of(53.54, 27.34), 1606223802, 1606482999)
+        .retrieve()
+        .asJava();
+```
+
+`com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails`'s useful public methods(setters are not listed):
+
+| Method                        | Description                                                               |
+|-------------------------------|---------------------------------------------------------------------------|
+| `getCoordinate()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.   |
+| `getAirPollutionRecords()`    | Returns list of `AirPollutionRecord` objects.                             |
+
+`com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionRecord`'s useful public methods(setters are not listed):
+
+| Method                        | Description                                                               |
+|-------------------------------|---------------------------------------------------------------------------|
+| `getForecastTime()`           | Returns `LocalDateTime` object with air pollution forecast time.          |
+| `getAirQualityIndex()`        | Returns `AirQualityIndex` object.                                         |
+| `getCO()`                     | Returns carbon monoxide concentration value in μg/m^3.s.                  |
+| `getCarbonMonoxide()`         | An alias for `getCO()` method.                                            |
+| `getNO()`                     | Returns nitrogen monoxide concentration value in μg/m^3.                  |
+| `getNitrogenMonoxide()`       | An alias for `getNO()` method.                                            |
+| `getNO2()`                    | Returns nitrogen dioxide concentration value in μg/m^3.                   |
+| `getNitrogenDioxide()`        | An alias for `getNO2()` method.                                           |
+| `getO3()`                     | Returns ozone concentration value in μg/m^3.                              |
+| `getOzone()`                  | An alias for `getO3()` method.                                            |
+| `getSO2()`                    | Returns sulphur dioxide concentration value in μg/m^3.                    |
+| `getSulphurDioxide()`         | An alias for `getSO2()` method.                                           |
+| `getPM2_5()`                  | Returns fine particles matter concentration value in μg/m^3.              |
+| `getFineParticlesMatter()`    | An alias for `getPM2_5()` method.                                         |
+| `getPM10()`                   | Returns coarse particulate matter concentration value in μg/m^3.          |
+| `getCoarseParticulateMatter()`| An alias for `getPM10()` method.                                          |
+| `getNH3()`                    | Returns ammonia concentration value in μg/m^3.                            |
+| `getAmmonia()`                | An alias for `getNH3()` method.                                           |
 
 ### Constants and options
 

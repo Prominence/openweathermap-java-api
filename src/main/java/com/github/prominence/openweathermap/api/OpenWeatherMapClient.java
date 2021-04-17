@@ -23,6 +23,8 @@
 package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.annotation.SubscriptionAvailability;
+import com.github.prominence.openweathermap.api.request.air.pollution.AirPollutionRequester;
+import com.github.prominence.openweathermap.api.request.air.pollution.AirPollutionRequesterImpl;
 import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThreeHourStepForecastRequester;
 import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThreeHourStepForecastRequesterImpl;
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequester;
@@ -73,5 +75,15 @@ public class OpenWeatherMapClient {
     @SubscriptionAvailability(plans = ALL)
     public OneCallWeatherRequester oneCall() {
         return new OneCallWeatherRequesterImpl(apiKey);
+    }
+
+    /**
+     * Air Pollution <a href="https://openweathermap.org/api/air-pollution">API</a>.
+     * Air Pollution API provides current, forecast and historical air pollution data for any coordinates on the globe.
+     * @return requester for air pollution information retrieval.
+     */
+    @SubscriptionAvailability(plans = ALL)
+    public AirPollutionRequester airPollution() {
+        return new AirPollutionRequesterImpl(apiKey);
     }
 }

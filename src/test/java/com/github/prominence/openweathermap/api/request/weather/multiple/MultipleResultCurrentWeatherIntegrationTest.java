@@ -87,6 +87,34 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
     }
 
     @Test
+    public void whenGetMultipleCurrentWeatherByCoordinateRectangleAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<List<Weather>> weatherListFuture = getClient()
+                .currentWeather()
+                .multiple()
+                .byRectangle(CoordinateRectangle.withValues(12, 32, 15, 37), 10)
+                .language(Language.ROMANIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asJava();
+
+        assertNotNull(weatherListFuture.get());
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCoordinateRectangleAsyncRequestAsJSON_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherJsonFuture = getClient()
+                .currentWeather()
+                .multiple()
+                .byRectangle(CoordinateRectangle.withValues(12, 32, 15, 37), 10)
+                .language(Language.ROMANIAN)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieveAsync()
+                .asJSON();
+
+        assertTrue(weatherJsonFuture.get().startsWith("{"));
+    }
+
+    @Test
     public void whenGetMultipleCurrentWeatherByCitiesInCycleRequestAsJava_thenReturnNotNull() {
         final List<Weather> weatherList = getClient()
                 .currentWeather()
@@ -223,6 +251,21 @@ public class MultipleResultCurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weatherFuture);
         System.out.println(weatherFuture.get());
+    }
+
+    @Test
+    public void whenGetMultipleCurrentWeatherByCoordinateAsyncRequestAsXML_thenReturnNotNull() throws ExecutionException, InterruptedException {
+        final CompletableFuture<String> weatherXMLFuture = getClient()
+                .currentWeather()
+                .multiple()
+                .byCitiesInCycle(Coordinate.of(55.5, 37.5), 10)
+                .language(Language.GERMAN)
+                .unitSystem(UnitSystem.IMPERIAL)
+                .retrieveAsync()
+                .asXML();
+
+        assertNotNull(weatherXMLFuture);
+        System.out.println(weatherXMLFuture.get());
     }
 
     @Test
