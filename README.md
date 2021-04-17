@@ -6,11 +6,11 @@ Free:
 * Current weather data
 * 5 day / 3-hour forecast
 * One Call API
+* Air pollution
 
 ### Will be implemented later:
 
 Free:
-* Air pollution
 * Geocoding API
 * Weather Stations
 * Weather Triggers
@@ -26,14 +26,14 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.1.1</version>
+  <version>2.2.0</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.1.1')
+compile('com.github.prominence:openweathermap-api:2.2.0')
 ```
 
 ### Documentation
@@ -44,6 +44,7 @@ compile('com.github.prominence:openweathermap-api:2.1.1')
 * [OpenWeatherMap Java API - 2.0.1](docs/Release_2.0.1.md)
 * [OpenWeatherMap Java API - 2.1.0](docs/Release_2.1.0.md)
 * [OpenWeatherMap Java API - 2.1.1](docs/Release_2.1.1.md)
+* [OpenWeatherMap Java API - 2.2.0](docs/Release_2.2.0.md)
 * [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
 
 ### License
