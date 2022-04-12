@@ -23,6 +23,8 @@
 package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.annotation.SubscriptionAvailability;
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.air.pollution.AirPollutionRequester;
 import com.github.prominence.openweathermap.api.request.air.pollution.AirPollutionRequesterImpl;
 import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThreeHourStepForecastRequester;
@@ -30,9 +32,8 @@ import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThr
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequester;
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequesterImpl;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequesterImpl;
 
-import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
+import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.ALL;
 
 /**
  * The main public API client to communicate with OpenWeatherMap services.
@@ -40,6 +41,7 @@ import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
  */
 public class OpenWeatherMapClient {
     private final String apiKey;
+    private final TimeoutSettings timeoutSettings = new TimeoutSettings();
 
     /**
      * Created OpenWeatherMap client object.
@@ -49,13 +51,21 @@ public class OpenWeatherMapClient {
         this.apiKey = apiKey;
     }
 
+    public void setConnectionTimeout(int connectionTimeout) {
+        timeoutSettings.setConnectionTimeout(connectionTimeout);
+    }
+
+    public void setReadTimeout(int readTimeout) {
+        timeoutSettings.setReadTimeout(readTimeout);
+    }
+
     /**
      * Current Weather <a href="https://openweathermap.org/current">API</a>.
      * @return requester for retrieving current weather information.
      */
     @SubscriptionAvailability(plans = ALL)
     public CurrentWeatherRequester currentWeather() {
-        return new CurrentWeatherRequesterImpl(apiKey);
+        return new CurrentWeatherRequester(new RequestSettings(apiKey, timeoutSettings));
     }
 
     /**

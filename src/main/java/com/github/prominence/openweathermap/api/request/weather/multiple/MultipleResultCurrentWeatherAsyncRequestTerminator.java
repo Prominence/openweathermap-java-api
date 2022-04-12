@@ -23,12 +23,37 @@
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
- * The interface Multiple result current weather async request terminator.
+ * The type Multiple result current weather async request terminator.
  */
-public interface MultipleResultCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<List<Weather>, String> {
+public class MultipleResultCurrentWeatherAsyncRequestTerminator {
+    private final RequestSettings requestSettings;
+
+    /**
+     * Instantiates a new Multiple result current weather async request terminator.
+     *
+     * @param requestSettings request settings object.
+     */
+    MultipleResultCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public CompletableFuture<List<Weather>> asJava() {
+        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(requestSettings.getUnitSystem()).getList(getRawResponse()));
+    }
+
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

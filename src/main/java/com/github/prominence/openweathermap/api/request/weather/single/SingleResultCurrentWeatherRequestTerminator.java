@@ -22,24 +22,46 @@
 
 package com.github.prominence.openweathermap.api.request.weather.single;
 
+import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
- * The current weather request terminator interface.
+ * The type Single result current weather request terminator.
  */
-public interface SingleResultCurrentWeatherRequestTerminator extends RequestTerminator<Weather, String> {
-    /**
-     * XML response format.
-     *
-     * @return the XML string
-     */
-    String asXML();
+public class SingleResultCurrentWeatherRequestTerminator {
+    private final RequestSettings requestSettings;
 
     /**
-     * HTML response format.
+     * Instantiates a new Single result current weather request terminator.
      *
-     * @return the HTML string
+     * @param requestSettings request settings object.
      */
-    String asHTML();
+    SingleResultCurrentWeatherRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public Weather asJava() {
+        return new CurrentWeatherResponseMapper(requestSettings.getUnitSystem()).getSingle(asJSON());
+    }
+
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    public String asXML() {
+        requestSettings.setResponseType(ResponseType.XML);
+        return getRawResponse();
+    }
+
+    public String asHTML() {
+        requestSettings.setResponseType(ResponseType.HTML);
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

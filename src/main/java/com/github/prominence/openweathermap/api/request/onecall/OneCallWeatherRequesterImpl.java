@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.onecall;
 
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequesterImpl;

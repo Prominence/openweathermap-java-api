@@ -23,12 +23,36 @@
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
 
 /**
- * The interface Multiple result current weather request terminator.
+ * The type Multiple result current weather request terminator.
  */
-public interface MultipleResultCurrentWeatherRequestTerminator extends RequestTerminator<List<Weather>, String> {
+public class MultipleResultCurrentWeatherRequestTerminator {
+    private final RequestSettings requestSettings;
+
+    /**
+     * Instantiates a new Multiple result current weather request terminator.
+     *
+     * @param requestSettings request settings object.
+     */
+    MultipleResultCurrentWeatherRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public List<Weather> asJava() {
+        return new CurrentWeatherResponseMapper(requestSettings.getUnitSystem()).getList(getRawResponse());
+    }
+
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 

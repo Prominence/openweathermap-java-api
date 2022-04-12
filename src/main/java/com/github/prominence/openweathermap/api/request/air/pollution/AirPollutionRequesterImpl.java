@@ -24,6 +24,7 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.request.air.pollution.current.CurrentAirPollutionRequester;
 import com.github.prominence.openweathermap.api.request.air.pollution.current.CurrentAirPollutionRequesterImpl;

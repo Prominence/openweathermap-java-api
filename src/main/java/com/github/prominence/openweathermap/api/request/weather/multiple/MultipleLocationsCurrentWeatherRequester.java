@@ -24,36 +24,45 @@ package com.github.prominence.openweathermap.api.request.weather.multiple;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
 import com.github.prominence.openweathermap.api.model.CoordinateRectangle;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface Multiple locations current weather requester.
+ * The type Multiple locations current weather requester.
  */
-public interface MultipleLocationsCurrentWeatherRequester {
+public class MultipleLocationsCurrentWeatherRequester {
+    private final RequestSettings requestSettings;
 
     /**
-     * By rectangle multiple result current weather request customizer.
+     * Instantiates a new Multiple locations current weather requester.
      *
-     * @param rectangle the rectangle
-     * @param zoom      the zoom
-     * @return the multiple result current weather request customizer
+     * @param requestSettings request settings object.
      */
-    MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom);
+    public MultipleLocationsCurrentWeatherRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * By cities in cycle multiple result current weather request customizer.
-     *
-     * @param point the point
-     * @return the multiple result cities in circle current weather request customizer
-     */
-    MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point);
+    public MultipleResultCurrentWeatherRequestCustomizer byRectangle(CoordinateRectangle rectangle, int zoom) {
+        String coordinates = rectangle.getFormattedRequestString() + "," + zoom;
+        requestSettings.appendToURL("box/city");
+        requestSettings.putRequestParameter("bbox", coordinates);
 
-    /**
-     * By cities in cycle multiple result current weather request customizer.
-     *
-     * @param point       the point
-     * @param citiesCount the cities count
-     * @return the multiple result cities in circle current weather request customizer
-     */
-    MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount);
+        return new MultipleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point, int citiesCount) {
+        requestSettings.appendToURL("find");
+        requestSettings.putRequestParameter("lat", Double.toString(point.getLatitude()));
+        requestSettings.putRequestParameter("lon", Double.toString(point.getLongitude()));
+        requestSettings.putRequestParameter("cnt", Integer.toString(citiesCount));
+
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer byCitiesInCycle(Coordinate point) {
+        requestSettings.appendToURL("find");
+        requestSettings.putRequestParameter("lat", Double.toString(point.getLatitude()));
+        requestSettings.putRequestParameter("lon", Double.toString(point.getLongitude()));
+
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer(requestSettings);
+    }
 }

@@ -22,23 +22,42 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
 /**
- * The interface Multiple result current weather request customizer.
+ * The type Multiple result current weather request customizer.
  */
-public interface MultipleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<MultipleResultCurrentWeatherRequestCustomizer> {
-    /**
-     * Retrieve multiple result current weather request terminator.
-     *
-     * @return the multiple result current weather request terminator
-     */
-    MultipleResultCurrentWeatherRequestTerminator retrieve();
+public class MultipleResultCurrentWeatherRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve async multiple result current weather async request terminator.
+     * Instantiates a new Multiple result current weather request customizer.
      *
-     * @return the multiple result current weather async request terminator
+     * @param requestSettings request settings object.
      */
-    MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
+    MultipleResultCurrentWeatherRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public MultipleResultCurrentWeatherRequestCustomizer language(Language language) {
+        requestSettings.setLanguage(language);
+        return this;
+    }
+
+    public MultipleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(unitSystem);
+        return this;
+    }
+
+    public MultipleResultCurrentWeatherRequestTerminator retrieve() {
+        return new MultipleResultCurrentWeatherRequestTerminator(requestSettings);
+    }
+
+    public MultipleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        return new MultipleResultCurrentWeatherAsyncRequestTerminator(requestSettings);
+    }
 }

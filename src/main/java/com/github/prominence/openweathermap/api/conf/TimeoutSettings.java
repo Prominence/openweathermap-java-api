@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,32 +20,39 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.conf;
 
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
+public class TimeoutSettings {
+    private Integer connectionTimeout;
+    private Integer readTimeout;
 
-/**
- * The type Current weather requester.
- */
-public class CurrentWeatherRequester {
-    private final RequestSettings requestSettings;
-
-    /**
-     * Instantiates a new Current weather requester.
-     *
-     * @param requestSettings request settings object.
-     */
-    public CurrentWeatherRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+    public TimeoutSettings() {
+        this(2000, 2000);
     }
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequester(requestSettings);
+    public TimeoutSettings(Integer connectionTimeout, Integer readTimeout) {
+        this.connectionTimeout = connectionTimeout;
+        this.readTimeout = readTimeout;
     }
 
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequester(requestSettings);
+    public TimeoutSettings(TimeoutSettings from) {
+        this.connectionTimeout = from.connectionTimeout;
+        this.readTimeout = from.readTimeout;
+    }
+
+    public Integer getConnectionTimeout() {
+        return connectionTimeout;
+    }
+
+    public void setConnectionTimeout(Integer connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+
+    public Integer getReadTimeout() {
+        return readTimeout;
+    }
+
+    public void setReadTimeout(Integer readTimeout) {
+        this.readTimeout = readTimeout;
     }
 }

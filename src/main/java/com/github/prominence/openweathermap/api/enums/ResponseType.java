@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,32 +20,23 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.weather;
+package com.github.prominence.openweathermap.api.enums;
 
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
+public enum ResponseType {
+    HTML("html"),
+    XML("xml");
 
-/**
- * The type Current weather requester.
- */
-public class CurrentWeatherRequester {
-    private final RequestSettings requestSettings;
+    private final String value;
+
+    ResponseType(String value) {
+        this.value = value;
+    }
 
     /**
-     * Instantiates a new Current weather requester.
-     *
-     * @param requestSettings request settings object.
+     * Returns language's value.
+     * @return value.
      */
-    public CurrentWeatherRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
-
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequester(requestSettings);
-    }
-
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequester(requestSettings);
+    public String getValue() {
+        return value;
     }
 }

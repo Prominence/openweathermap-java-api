@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 /**
  * The type Request url builder.
  */
+@Deprecated
 public class RequestUrlBuilder {
 
     private static final String API_KEY_PARAM_NAME = "appid";

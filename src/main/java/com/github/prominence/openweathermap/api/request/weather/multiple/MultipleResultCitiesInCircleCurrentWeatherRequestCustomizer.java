@@ -22,23 +22,40 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface Multiple result current weather request customizer.
+ * The type Multiple result current weather request customizer.
  */
-public interface MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer extends RequestCustomizer<MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer> {
-    /**
-     * Retrieve multiple result current weather request terminator.
-     *
-     * @return the multiple result current weather request terminator
-     */
-    MultipleResultCitiesInCircleCurrentWeatherRequestTerminator retrieve();
+public class MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve async multiple result current weather async request terminator.
+     * Instantiates a new Multiple result current weather request customizer.
      *
-     * @return the multiple result current weather async request terminator
+     * @param requestSettings request settings object.
      */
-    MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator retrieveAsync();
+    MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer language(Language language) {
+        requestSettings.setLanguage(language);
+        return this;
+    }
+
+    public MultipleResultCitiesInCircleCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(unitSystem);
+        return this;
+    }
+
+    public MultipleResultCitiesInCircleCurrentWeatherRequestTerminator retrieve() {
+        return new MultipleResultCitiesInCircleCurrentWeatherRequestTerminator(requestSettings);
+    }
+
+    public MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        return new MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator(requestSettings);
+    }
 }
