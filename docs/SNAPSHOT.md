@@ -34,6 +34,13 @@ Currently, available APIs are:
 * `oneCall()`
 * `airPollution()`
 
+Also, it is possible to set timeouts for the requests on `openWeatherClient` object:
+```java
+openWeatherClient.setReadTimeout(1000);
+openWeatherClient.setConnectTimeout(1000);
+```
+Timeout settings are passed to the requesters as a copy.
+
 Default(more or less) customization points:
 ```java
 ...
