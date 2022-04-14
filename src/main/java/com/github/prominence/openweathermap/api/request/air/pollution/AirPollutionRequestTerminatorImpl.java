@@ -24,6 +24,7 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
+import com.github.prominence.openweathermap.api.mapper.AirPollutionResponseMapper;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;

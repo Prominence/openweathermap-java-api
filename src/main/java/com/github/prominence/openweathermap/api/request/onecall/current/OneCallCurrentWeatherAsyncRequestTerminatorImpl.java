@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.concurrent.CompletableFuture;

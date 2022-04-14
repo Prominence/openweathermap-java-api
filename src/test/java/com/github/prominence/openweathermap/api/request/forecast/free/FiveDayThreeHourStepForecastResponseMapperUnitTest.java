@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.mapper.FiveDayThreeHourStepForecastResponseMapper;
 import com.github.prominence.openweathermap.api.model.forecast.Forecast;
 import org.junit.jupiter.api.Test;
 

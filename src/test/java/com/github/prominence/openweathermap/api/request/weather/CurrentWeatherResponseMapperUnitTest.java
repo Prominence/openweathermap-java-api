@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.weather;
 
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.mapper.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import org.junit.jupiter.api.Test;
 

@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.request.weather.single;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.mapper.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**

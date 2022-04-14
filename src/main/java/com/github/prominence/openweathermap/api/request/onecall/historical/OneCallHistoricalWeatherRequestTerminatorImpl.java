@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
-import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
