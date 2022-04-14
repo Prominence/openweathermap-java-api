@@ -22,19 +22,41 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
+import com.github.prominence.openweathermap.api.enums.ResponseType;
+import com.github.prominence.openweathermap.api.mapper.FiveDayThreeHourStepForecastResponseMapper;
 import com.github.prominence.openweathermap.api.model.forecast.Forecast;
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
-
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
- * The forecast request terminator interface.
+ * The forecast request terminator.
  */
-public interface FiveDayThreeHourStepForecastRequestTerminator extends RequestTerminator<Forecast, String> {
+public class FiveDayThreeHourStepForecastRequestTerminator {
+    private final RequestSettings requestSettings;
 
     /**
-     * XML response format.
+     * Instantiates a new forecast request terminator.
      *
-     * @return the XML string
+     * @param requestSettings request settings object.
      */
-    String asXML();
+    FiveDayThreeHourStepForecastRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public Forecast asJava() {
+        return new FiveDayThreeHourStepForecastResponseMapper(requestSettings.getUnitSystem()).mapToForecast(getRawResponse());
+    }
+
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    public String asXML() {
+        requestSettings.setResponseType(ResponseType.XML);
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

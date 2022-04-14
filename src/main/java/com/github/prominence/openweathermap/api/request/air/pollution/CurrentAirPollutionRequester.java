@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,27 +20,29 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request;
+package com.github.prominence.openweathermap.api.request.air.pollution;
+
+import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface Request terminator.
- *
- * @param <T> the type parameter
- * @param <S> the type parameter
+ * The type Current air pollution requester.
  */
-public interface RequestTerminator<T, S> {
+public class CurrentAirPollutionRequester {
+    private final RequestSettings requestSettings;
 
     /**
-     * Java object response format.
+     * Instantiates a new Current air pollution requester.
      *
-     * @return the java object
+     * @param requestSettings request settings object.
      */
-    T asJava();
+    public CurrentAirPollutionRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * JSON response format.
-     *
-     * @return the JSON string
-     */
-    S asJSON();
+    public AirPollutionRequestCustomizer byCoordinate(Coordinate coordinate) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+        return new AirPollutionRequestCustomizer(requestSettings);
+    }
 }

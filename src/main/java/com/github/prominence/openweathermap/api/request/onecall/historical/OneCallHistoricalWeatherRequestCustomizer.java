@@ -22,23 +22,40 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface One call historical weather request customizer.
+ * The type One call historical weather request customizer.
  */
-public interface OneCallHistoricalWeatherRequestCustomizer extends RequestCustomizer<OneCallHistoricalWeatherRequestCustomizer> {
-    /**
-     * Retrieve one call historical weather request terminator.
-     *
-     * @return the one call historical weather request terminator
-     */
-    OneCallHistoricalWeatherRequestTerminator retrieve();
+public class OneCallHistoricalWeatherRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve async one call historical weather async request terminator.
+     * Instantiates a new One call historical weather request customizer.
      *
-     * @return the one call historical weather async request terminator
+     * @param requestSettings request settings object.
      */
-    OneCallHistoricalWeatherAsyncRequestTerminator retrieveAsync();
+    public OneCallHistoricalWeatherRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public OneCallHistoricalWeatherRequestCustomizer language(Language language) {
+        requestSettings.setLanguage(language);
+        return this;
+    }
+
+    public OneCallHistoricalWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(unitSystem);
+        return this;
+    }
+
+    public OneCallHistoricalWeatherRequestTerminator retrieve() {
+        return new OneCallHistoricalWeatherRequestTerminator(requestSettings);
+    }
+
+    public OneCallHistoricalWeatherAsyncRequestTerminator retrieveAsync() {
+        return new OneCallHistoricalWeatherAsyncRequestTerminator(requestSettings);
+    }
 }

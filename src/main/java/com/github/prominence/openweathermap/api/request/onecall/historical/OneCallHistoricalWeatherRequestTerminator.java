@@ -22,11 +22,35 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
+import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
- * The interface One call historical weather request terminator.
+ * The type One call historical weather request terminator.
  */
-public interface OneCallHistoricalWeatherRequestTerminator extends RequestTerminator<HistoricalWeatherData, String> {
+public class OneCallHistoricalWeatherRequestTerminator {
+    private final RequestSettings requestSettings;
+
+    /**
+     * Instantiates a new One call historical weather request terminator.
+     *
+     * @param requestSettings request settings object.
+     */
+    public OneCallHistoricalWeatherRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public HistoricalWeatherData asJava() {
+        return new OneCallWeatherResponseMapper(requestSettings.getUnitSystem()).mapToHistorical(getRawResponse());
+    }
+
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

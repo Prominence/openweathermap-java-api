@@ -82,6 +82,10 @@ public class RequestSettings {
         this.requestParameters.put(key, value);
     }
 
+    public void removeRequestParameter(String key) {
+        this.requestParameters.remove(key);
+    }
+
     public Map<String, String> getRequestParameters() {
         return requestParameters;
     }

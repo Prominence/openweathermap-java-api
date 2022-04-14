@@ -24,11 +24,35 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
+import com.github.prominence.openweathermap.api.mapper.AirPollutionResponseMapper;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
- * The interface Current air pollution request terminator.
+ * The type Air pollution request terminator.
  */
-public interface AirPollutionRequestTerminator extends RequestTerminator<AirPollutionDetails, String> {
+public class AirPollutionRequestTerminator {
+    private final RequestSettings requestSettings;
+
+    /**
+     * Instantiates a new Air pollution request terminator.
+     *
+     * @param requestSettings request settings object.
+     */
+    public AirPollutionRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public AirPollutionDetails asJava() {
+        return new AirPollutionResponseMapper().mapToAirPollution(getRawResponse());
+    }
+
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

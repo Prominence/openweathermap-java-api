@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,31 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.request.air.pollution;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The type One call current weather requester.
+ * The type Historical air pollution requester.
  */
-public class OneCallCurrentWeatherRequesterImpl implements OneCallCurrentWeatherRequester {
-    private final RequestUrlBuilder urlBuilder;
+public class HistoricalAirPollutionRequester {
+    private final RequestSettings requestSettings;
 
     /**
-     * Instantiates a new One call current weather requester.
+     * Instantiates a new Historical air pollution requester.
      *
-     * @param urlBuilder the url builder
+     * @param requestSettings request settings object.
      */
-    public OneCallCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
-        this.urlBuilder = urlBuilder;
-        urlBuilder.append("onecall");
+    public HistoricalAirPollutionRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
     }
 
-    @Override
-    public OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
-        urlBuilder.addRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
-        urlBuilder.addRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
-        return new OneCallCurrentWeatherRequestCustomizerImpl(urlBuilder);
+    public AirPollutionRequestCustomizer byCoordinateAndPeriod(Coordinate coordinate, long startUnixTime, long endUnixTime) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+        requestSettings.putRequestParameter("start", String.valueOf(startUnixTime));
+        requestSettings.putRequestParameter("end", String.valueOf(endUnixTime));
+        return new AirPollutionRequestCustomizer(requestSettings);
     }
 }

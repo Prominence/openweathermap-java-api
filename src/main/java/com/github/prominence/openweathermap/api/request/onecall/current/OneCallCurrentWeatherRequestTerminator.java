@@ -22,12 +22,35 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.current;
 
+import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
-import com.github.prominence.openweathermap.api.request.RequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
- * The interface One call current weather request terminator.
+ * The type One call current weather request terminator.
  */
-public interface OneCallCurrentWeatherRequestTerminator extends RequestTerminator<CurrentWeatherData, String> {
+public class OneCallCurrentWeatherRequestTerminator {
+    private final RequestSettings requestSettings;
 
+    /**
+     * Instantiates a new One call current weather request terminator.
+     *
+     * @param requestSettings request settings object.
+     */
+    OneCallCurrentWeatherRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public CurrentWeatherData asJava() {
+        return new OneCallWeatherResponseMapper(requestSettings.getUnitSystem()).mapToCurrent(getRawResponse());
+    }
+
+    public String asJSON() {
+        return getRawResponse();
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

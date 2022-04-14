@@ -23,16 +23,27 @@
 package com.github.prominence.openweathermap.api.request.onecall.current;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface One call current weather requester.
+ * The type One call current weather requester.
  */
-public interface OneCallCurrentWeatherRequester {
+public class OneCallCurrentWeatherRequester {
+    private final RequestSettings requestSettings;
+
     /**
-     * By coordinate one call current weather request customizer.
+     * Instantiates a new One call current weather requester.
      *
-     * @param coordinate the coordinate
-     * @return the one call current weather request customizer
+     * @param requestSettings request settings object.
      */
-    OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
+    public OneCallCurrentWeatherRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+        this.requestSettings.appendToURL("onecall");
+    }
+
+    public OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+        return new OneCallCurrentWeatherRequestCustomizer(requestSettings);
+    }
 }

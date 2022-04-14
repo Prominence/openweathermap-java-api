@@ -22,32 +22,53 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.current;
 
+import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
- * The interface One call current weather request customizer.
+ * The type One call current weather request customizer.
  */
-public interface OneCallCurrentWeatherRequestCustomizer extends RequestCustomizer<OneCallCurrentWeatherRequestCustomizer> {
-    /**
-     * Exclude one call current weather request customizer.
-     *
-     * @param excludeOptions the exclude options
-     * @return the one call current weather request customizer
-     */
-    OneCallCurrentWeatherRequestCustomizer exclude(OneCallResultOptions... excludeOptions);
+public class OneCallCurrentWeatherRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve one call current weather request terminator.
+     * Instantiates a new One call current weather request customizer.
      *
-     * @return the one call current weather request terminator
+     * @param requestSettings request settings object.
      */
-    OneCallCurrentWeatherRequestTerminator retrieve();
+    OneCallCurrentWeatherRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * Retrieve async one call current weather async request terminator.
-     *
-     * @return the one call current weather async request terminator
-     */
-    OneCallCurrentWeatherAsyncRequestTerminator retrieveAsync();
+    public OneCallCurrentWeatherRequestCustomizer language(Language language) {
+        requestSettings.setLanguage(language);
+        return this;
+    }
+
+    public OneCallCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        this.requestSettings.setUnitSystem(unitSystem);
+        return this;
+    }
+
+    public OneCallCurrentWeatherRequestCustomizer exclude(OneCallResultOptions... excludeOptions) {
+        if (excludeOptions != null && excludeOptions.length > 0) {
+            requestSettings.putRequestParameter("exclude", Stream.of(excludeOptions).map(OneCallResultOptions::getValue).collect(Collectors.joining(",")));
+        } else {
+            requestSettings.removeRequestParameter("exclude");
+        }
+        return this;
+    }
+
+    public OneCallCurrentWeatherRequestTerminator retrieve() {
+        return new OneCallCurrentWeatherRequestTerminator(requestSettings);
+    }
+
+    public OneCallCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        return new OneCallCurrentWeatherAsyncRequestTerminator(requestSettings);
+    }
 }
