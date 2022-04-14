@@ -39,6 +39,10 @@ public class Daily {
     private LocalDateTime sunriseTime;
     private LocalDateTime sunsetTime;
 
+    private LocalDateTime moonriseTime;
+    private LocalDateTime moonsetTime;
+    private MoonPhase moonPhase;
+
     private WeatherState weatherState;
     private DailyTemperature temperature;
     private AtmosphericPressure atmosphericPressure;
@@ -102,6 +106,60 @@ public class Daily {
      */
     public void setSunsetTime(LocalDateTime sunsetTime) {
         this.sunsetTime = sunsetTime;
+    }
+
+    /**
+     * Gets moonrise time.
+     *
+     * @return the moonrise time
+     */
+    public LocalDateTime getMoonriseTime() {
+        return moonriseTime;
+    }
+
+    /**
+     * Sets moonrise time.
+     *
+     * @param moonriseTime the moonrise time
+     */
+    public void setMoonriseTime(LocalDateTime moonriseTime) {
+        this.moonriseTime = moonriseTime;
+    }
+
+    /**
+     * Gets moonset time.
+     *
+     * @return the moonset time
+     */
+    public LocalDateTime getMoonsetTime() {
+        return moonsetTime;
+    }
+
+    /**
+     * Sets moonset time.
+     *
+     * @param moonsetTime the moonset time
+     */
+    public void setMoonsetTime(LocalDateTime moonsetTime) {
+        this.moonsetTime = moonsetTime;
+    }
+
+    /**
+     * Gets moon phase.
+     *
+     * @return the moon phase
+     */
+    public MoonPhase getMoonPhase() {
+        return moonPhase;
+    }
+
+    /**
+     * Sets moon phase.
+     *
+     * @param moonPhase the moon phase
+     */
+    public void setMoonPhase(MoonPhase moonPhase) {
+        this.moonPhase = moonPhase;
     }
 
     /**
@@ -311,6 +369,9 @@ public class Daily {
         return Objects.equals(forecastTime, daily.forecastTime) &&
                 Objects.equals(sunriseTime, daily.sunriseTime) &&
                 Objects.equals(sunsetTime, daily.sunsetTime) &&
+                Objects.equals(moonriseTime, daily.moonriseTime) &&
+                Objects.equals(moonsetTime, daily.moonsetTime) &&
+                Objects.equals(moonPhase, daily.moonPhase) &&
                 Objects.equals(weatherState, daily.weatherState) &&
                 Objects.equals(temperature, daily.temperature) &&
                 Objects.equals(atmosphericPressure, daily.atmosphericPressure) &&
@@ -325,7 +386,7 @@ public class Daily {
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, sunriseTime, sunsetTime, weatherState, temperature, atmosphericPressure, humidity, wind, clouds, uvIndex, probabilityOfPrecipitation, rain, snow);
+        return Objects.hash(forecastTime, sunriseTime, sunsetTime, moonriseTime, moonsetTime, moonPhase, weatherState, temperature, atmosphericPressure, humidity, wind, clouds, uvIndex, probabilityOfPrecipitation, rain, snow);
     }
 
     @Override
@@ -355,7 +416,7 @@ public class Daily {
         }
         if (clouds != null) {
             stringBuilder.append(" Clouds: ");
-            stringBuilder.append(clouds.toString());
+            stringBuilder.append(clouds);
             stringBuilder.append('.');
         }
         if (rain != null) {
