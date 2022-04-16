@@ -22,20 +22,44 @@
 
 package com.github.prominence.openweathermap.api.request.weather.multiple;
 
+import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.mapper.CurrentWeatherResponseMapper;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The interface Multiple result current weather async request terminator.
+ * The type Multiple result current weather async request terminator.
  */
-public interface MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<List<Weather>, String> {
+public class MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator {
+    private final RequestSettings requestSettings;
+
     /**
-     * XML response format.
+     * Instantiates a new Multiple result current weather async request terminator.
      *
-     * @return the completable future
+     * @param requestSettings request settings object.
      */
-    CompletableFuture<String> asXML();
+    MultipleResultCitiesInCircleCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public CompletableFuture<List<Weather>> asJava() {
+        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(requestSettings.getUnitSystem()).getList(getRawResponse()));
+    }
+
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    public CompletableFuture<String> asXML() {
+        requestSettings.setResponseType(ResponseType.XML);
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

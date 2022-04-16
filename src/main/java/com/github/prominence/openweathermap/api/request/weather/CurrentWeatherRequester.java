@@ -22,25 +22,30 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
 
 /**
- * An interface for <a href="https://openweathermap.org/current">API</a> methods.
+ * The type Current weather requester.
  */
-public interface CurrentWeatherRequester {
+public class CurrentWeatherRequester {
+    private final RequestSettings requestSettings;
 
     /**
-     * Single location current weather requester.
+     * Instantiates a new Current weather requester.
      *
-     * @return the single location current weather requester
+     * @param requestSettings request settings object.
      */
-    SingleLocationCurrentWeatherRequester single();
+    public CurrentWeatherRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * Multiple locations current weather requester.
-     *
-     * @return the multiple locations current weather requester
-     */
-    MultipleLocationsCurrentWeatherRequester multiple();
+    public SingleLocationCurrentWeatherRequester single() {
+        return new SingleLocationCurrentWeatherRequester(requestSettings);
+    }
+
+    public MultipleLocationsCurrentWeatherRequester multiple() {
+        return new MultipleLocationsCurrentWeatherRequester(requestSettings);
+    }
 }

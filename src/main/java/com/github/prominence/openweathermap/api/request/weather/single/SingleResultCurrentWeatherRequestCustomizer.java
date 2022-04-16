@@ -22,24 +22,40 @@
 
 package com.github.prominence.openweathermap.api.request.weather.single;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The current weather request customizer interface.
+ * The type Single result current weather request customizer.
  */
-public interface SingleResultCurrentWeatherRequestCustomizer extends RequestCustomizer<SingleResultCurrentWeatherRequestCustomizer> {
-    /**
-     * Retrieve current weather request terminator.
-     *
-     * @return the single result current weather request terminator
-     */
-    SingleResultCurrentWeatherRequestTerminator retrieve();
+public class SingleResultCurrentWeatherRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve current weather async request terminator.
+     * Instantiates a new Single result current weather request customizer.
      *
-     * @return the single result current weather async request terminator
+     * @param requestSettings request settings object.
      */
-    SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync();
+    SingleResultCurrentWeatherRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
+    public SingleResultCurrentWeatherRequestCustomizer language(Language language) {
+        requestSettings.setLanguage(language);
+        return this;
+    }
+
+    public SingleResultCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(unitSystem);
+        return this;
+    }
+
+    public SingleResultCurrentWeatherRequestTerminator retrieve() {
+        return new SingleResultCurrentWeatherRequestTerminator(requestSettings);
+    }
+
+    public SingleResultCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+        return new SingleResultCurrentWeatherAsyncRequestTerminator(requestSettings);
+    }
 }

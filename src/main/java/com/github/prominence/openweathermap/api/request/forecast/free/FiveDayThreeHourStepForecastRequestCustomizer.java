@@ -22,31 +22,45 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.request.RequestCustomizer;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The forecast request customizer interface.
+ * The forecast request customizer.
  */
-public interface FiveDayThreeHourStepForecastRequestCustomizer extends RequestCustomizer<FiveDayThreeHourStepForecastRequestCustomizer> {
-    /**
-     * Count customizer.
-     *
-     * @param numberOfTimestamps the number of timestamps
-     * @return forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps);
+public class FiveDayThreeHourStepForecastRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve forecast request terminator.
+     * Instantiates a new forecast request customizer.
      *
-     * @return forecast request terminator
+     * @param requestSettings request settings object.
      */
-    FiveDayThreeHourStepForecastRequestTerminator retrieve();
+    FiveDayThreeHourStepForecastRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * Retrieve forecast async request terminator.
-     *
-     * @return forecast async request terminator
-     */
-    FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync();
+    public FiveDayThreeHourStepForecastRequestCustomizer language(Language language) {
+        requestSettings.setLanguage(language);
+        return this;
+    }
+
+    public FiveDayThreeHourStepForecastRequestCustomizer unitSystem(UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(unitSystem);
+        return this;
+    }
+
+    public FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps) {
+        requestSettings.putRequestParameter("cnt", Integer.toString(numberOfTimestamps));
+        return this;
+    }
+
+    public FiveDayThreeHourStepForecastRequestTerminator retrieve() {
+        return new FiveDayThreeHourStepForecastRequestTerminator(requestSettings);
+    }
+
+    public FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync() {
+        return new FiveDayThreeHourStepForecastAsyncRequestTerminator(requestSettings);
+    }
 }

@@ -22,26 +22,48 @@
 
 package com.github.prominence.openweathermap.api.request.weather.single;
 
+import com.github.prominence.openweathermap.api.enums.ResponseType;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.mapper.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The current weather async request terminator interface.
+ * The type Single result current weather async request terminator.
  */
-public interface SingleResultCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<Weather, String> {
-    /**
-     * XML response format.
-     *
-     * @return the completable future
-     */
-    CompletableFuture<String> asXML();
+public class SingleResultCurrentWeatherAsyncRequestTerminator {
+    private final RequestSettings requestSettings;
 
     /**
-     * HTML response format.
+     * Instantiates a new Single result current weather async request terminator.
      *
-     * @return the completable future
+     * @param requestSettings request settings object.
      */
-    CompletableFuture<String> asHTML();
+    SingleResultCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public CompletableFuture<Weather> asJava() {
+        return CompletableFuture.supplyAsync(() -> new CurrentWeatherResponseMapper(requestSettings.getUnitSystem()).getSingle(getRawResponse()));
+    }
+
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    public CompletableFuture<String> asXML() {
+        requestSettings.setResponseType(ResponseType.XML);
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    public CompletableFuture<String> asHTML() {
+        requestSettings.setResponseType(ResponseType.HTML);
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,23 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.enums;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.request.RequestUrlBuilder;
+public enum ResponseType {
+    HTML("html"),
+    XML("xml");
 
-/**
- * The type One call current weather requester.
- */
-public class OneCallCurrentWeatherRequesterImpl implements OneCallCurrentWeatherRequester {
-    private final RequestUrlBuilder urlBuilder;
+    private final String value;
 
-    /**
-     * Instantiates a new One call current weather requester.
-     *
-     * @param urlBuilder the url builder
-     */
-    public OneCallCurrentWeatherRequesterImpl(RequestUrlBuilder urlBuilder) {
-        this.urlBuilder = urlBuilder;
-        urlBuilder.append("onecall");
+    ResponseType(String value) {
+        this.value = value;
     }
 
-    @Override
-    public OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
-        urlBuilder.addRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
-        urlBuilder.addRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
-        return new OneCallCurrentWeatherRequestCustomizerImpl(urlBuilder);
+    /**
+     * Returns language's value.
+     * @return value.
+     */
+    public String getValue() {
+        return value;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall;
+package com.github.prominence.openweathermap.api.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -200,6 +200,18 @@ public class OneCallWeatherResponseMapper {
             daily.setForecastTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("dt").asInt()), TimeZone.getDefault().toZoneId()));
             daily.setSunriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunrise").asInt()), TimeZone.getDefault().toZoneId()));
             daily.setSunsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(dailyNode.get("sunset").asInt()), TimeZone.getDefault().toZoneId()));
+            final JsonNode moonriseTimeNode = dailyNode.get("moonrise");
+            if (moonriseTimeNode != null) {
+                daily.setMoonriseTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(moonriseTimeNode.asInt()), TimeZone.getDefault().toZoneId()));
+            }
+            final JsonNode moonsetTimeNode = dailyNode.get("moonset");
+            if (moonsetTimeNode != null) {
+                daily.setMoonsetTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(moonsetTimeNode.asInt()), TimeZone.getDefault().toZoneId()));
+            }
+            final JsonNode moonPhaseNode = dailyNode.get("moon_phase");
+            if (moonPhaseNode != null) {
+                daily.setMoonPhase(new MoonPhase(moonPhaseNode.asDouble()));
+            }
 
             daily.setWeatherState(parseWeatherState(dailyNode.get("weather").get(0)));
             daily.setTemperature(parseDailyTemperature(dailyNode));

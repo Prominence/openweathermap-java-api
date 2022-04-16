@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.onecall;
 
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import org.junit.jupiter.api.Assertions;

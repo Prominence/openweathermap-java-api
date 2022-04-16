@@ -22,21 +22,43 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
+import com.github.prominence.openweathermap.api.enums.ResponseType;
+import com.github.prominence.openweathermap.api.mapper.FiveDayThreeHourStepForecastResponseMapper;
 import com.github.prominence.openweathermap.api.model.forecast.Forecast;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.concurrent.CompletableFuture;
 
-
 /**
- * The forecast async request terminator interface.
+ * Async request terminator.
  */
-public interface FiveDayThreeHourStepForecastAsyncRequestTerminator extends AsyncRequestTerminator<Forecast, String> {
+public class FiveDayThreeHourStepForecastAsyncRequestTerminator {
+    private final RequestSettings requestSettings;
 
     /**
-     * XML response format.
+     * Instantiates a new async request terminator.
      *
-     * @return the completable future
+     * @param requestSettings request settings object.
      */
-    CompletableFuture<String> asXML();
+    FiveDayThreeHourStepForecastAsyncRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public CompletableFuture<Forecast> asJava() {
+        return CompletableFuture.supplyAsync(() -> new FiveDayThreeHourStepForecastResponseMapper(requestSettings.getUnitSystem()).mapToForecast(getRawResponse()));
+    }
+
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    public CompletableFuture<String> asXML() {
+        requestSettings.setResponseType(ResponseType.XML);
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

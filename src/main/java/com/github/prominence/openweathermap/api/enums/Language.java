@@ -233,9 +233,9 @@ public enum Language {
     TURKISH("tr"),
 
     /**
-     * Ukranian language.
+     * Ukrainian language.
      */
-    UKRANIAN("uk"),
+    UKRAINIAN("uk"),
 
     /**
      * Vietnamese language.

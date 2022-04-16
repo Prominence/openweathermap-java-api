@@ -24,21 +24,28 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+
 /**
- * The interface Current air pollution request customizer.
+ * The Air Pollution request customizer.
  */
-public interface AirPollutionRequestCustomizer {
-    /**
-     * Retrieve current air pollution request terminator.
-     *
-     * @return the current air pollution request terminator
-     */
-    AirPollutionRequestTerminator retrieve();
+public class AirPollutionRequestCustomizer {
+    private final RequestSettings requestSettings;
 
     /**
-     * Retrieve async current air pollution async request terminator.
+     * Instantiates a new Air pollution request customizer.
      *
-     * @return the current air pollution async request terminator
+     * @param requestSettings request settings object.
      */
-    AirPollutionAsyncRequestTerminator retrieveAsync();
+    public AirPollutionRequestCustomizer(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public AirPollutionRequestTerminator retrieve() {
+        return new AirPollutionRequestTerminator(requestSettings);
+    }
+
+    public AirPollutionAsyncRequestTerminator retrieveAsync() {
+        return new AirPollutionAsyncRequestTerminator(requestSettings);
+    }
 }

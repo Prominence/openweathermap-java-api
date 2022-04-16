@@ -23,17 +23,28 @@
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface One call historical weather requester.
+ * The type One call historical weather requester.
  */
-public interface OneCallHistoricalWeatherRequester {
+public class OneCallHistoricalWeatherRequester {
+    private final RequestSettings requestSettings;
+
     /**
-     * By coordinate and timestamp one call historical weather request customizer.
+     * Instantiates a new One call historical weather requester.
      *
-     * @param coordinate the coordinate
-     * @param unixTime   the unix time
-     * @return the one call historical weather request customizer
+     * @param requestSettings request settings object.
      */
-    OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinate coordinate, long unixTime);
+    public OneCallHistoricalWeatherRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+        this.requestSettings.appendToURL("onecall/timemachine");
+    }
+
+    public OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinate coordinate, long unixTime) {
+        requestSettings.putRequestParameter("lat", Double.toString(coordinate.getLatitude()));
+        requestSettings.putRequestParameter("lon", Double.toString(coordinate.getLongitude()));
+        requestSettings.putRequestParameter("dt", Long.toString(unixTime));
+        return new OneCallHistoricalWeatherRequestCustomizer(requestSettings);
+    }
 }

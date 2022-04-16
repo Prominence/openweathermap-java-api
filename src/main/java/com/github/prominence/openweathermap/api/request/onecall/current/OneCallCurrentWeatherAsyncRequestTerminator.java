@@ -22,11 +22,37 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.current;
 
+import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
-import com.github.prominence.openweathermap.api.request.AsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
- * The interface One call current weather async request terminator.
+ * The type One call current weather async request terminator.
  */
-public interface OneCallCurrentWeatherAsyncRequestTerminator extends AsyncRequestTerminator<CurrentWeatherData, String> {
+public class OneCallCurrentWeatherAsyncRequestTerminator {
+    private final RequestSettings requestSettings;
+
+    /**
+     * Instantiates a new One call current weather async request terminator.
+     *
+     * @param requestSettings request settings object.
+     */
+    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
+
+    public CompletableFuture<CurrentWeatherData> asJava() {
+        return CompletableFuture.supplyAsync(() -> new OneCallWeatherResponseMapper(requestSettings.getUnitSystem()).mapToCurrent(getRawResponse()));
+    }
+
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
+
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

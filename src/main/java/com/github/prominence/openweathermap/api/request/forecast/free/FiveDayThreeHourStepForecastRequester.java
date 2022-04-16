@@ -23,69 +23,57 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * An interface for <a href="https://openweathermap.org/forecast5">API</a> methods.
+ * The forecast requester.
  */
-public interface FiveDayThreeHourStepForecastRequester {
+public class FiveDayThreeHourStepForecastRequester {
+    private final RequestSettings requestSettings;
 
     /**
-     * By city name forecast request customizer.
+     * Instantiates a new forecast requester.
      *
-     * @param cityName the city name
-     * @return the forecast request customizer
+     * @param requestSettings request settings object.
      */
-    FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName);
+    public FiveDayThreeHourStepForecastRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+        this.requestSettings.appendToURL("forecast");
+    }
 
-    /**
-     * By city name forecast request customizer.
-     *
-     * @param cityName  the city name
-     * @param stateCode the state code
-     * @return the forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode);
+    public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName) {
+        requestSettings.putRequestParameter("q", cityName);
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By city name forecast request customizer.
-     *
-     * @param cityName    the city name
-     * @param stateCode   the state code
-     * @param countryCode the country code
-     * @return the forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode, String countryCode);
+    public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode) {
+        requestSettings.putRequestParameter("q", cityName + "," + stateCode);
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By city id forecast request customizer.
-     *
-     * @param cityId the city id
-     * @return the forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer byCityId(long cityId);
+    public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode, String countryCode) {
+        requestSettings.putRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By coordinate forecast request customizer.
-     *
-     * @param coordinate the coordinate
-     * @return the forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer byCoordinate(Coordinate coordinate);
+    public FiveDayThreeHourStepForecastRequestCustomizer byCityId(long cityId) {
+        requestSettings.putRequestParameter("id", Long.toString(cityId));
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By zip code and country forecast request customizer.
-     *
-     * @param zipCode     the zip code
-     * @param countryCode the country code
-     * @return the forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
+    public FiveDayThreeHourStepForecastRequestCustomizer byCoordinate(Coordinate coordinate) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By zip code in USA forecast request customizer.
-     *
-     * @param zipCode the zip code
-     * @return the forecast request customizer
-     */
-    FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode);
+    public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
+        requestSettings.putRequestParameter("zip", zipCode + "," + countryCode);
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
+
+    public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode) {
+        requestSettings.putRequestParameter("zip", zipCode);
+        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
+    }
 }

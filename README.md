@@ -8,6 +8,9 @@ Free:
 * One Call API
 * Air pollution
 
+Other:
+* Request timeout settings
+
 ### Will be implemented later:
 
 Free:
@@ -26,14 +29,14 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.2.0</version>
+  <version>2.3.0</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.2.0')
+compile('com.github.prominence:openweathermap-api:2.3.0')
 ```
 
 ### Documentation
@@ -45,14 +48,14 @@ compile('com.github.prominence:openweathermap-api:2.2.0')
 * [OpenWeatherMap Java API - 2.1.0](docs/Release_2.1.0.md)
 * [OpenWeatherMap Java API - 2.1.1](docs/Release_2.1.1.md)
 * [OpenWeatherMap Java API - 2.2.0](docs/Release_2.2.0.md)
-* [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
+* [OpenWeatherMap Java API - 2.3.0](docs/Release_2.3.0.md)
 
 ### License
 MIT
 
-[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=master
+[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=dev
 [ci-link]: https://travis-ci.org/Prominence/openweathermap-java-api
 
 
-[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/master/graph/badge.svg
+[codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/dev/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api

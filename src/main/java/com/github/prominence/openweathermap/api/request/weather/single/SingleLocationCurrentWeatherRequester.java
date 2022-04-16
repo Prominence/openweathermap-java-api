@@ -23,69 +23,57 @@
 package com.github.prominence.openweathermap.api.request.weather.single;
 
 import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
- * The interface Single location current weather requester.
+ * The type Single location current weather requester.
  */
-public interface SingleLocationCurrentWeatherRequester {
+public class SingleLocationCurrentWeatherRequester {
+    private final RequestSettings requestSettings;
 
     /**
-     * By city name current weather request customizer.
+     * Instantiates a new Single location current weather requester.
      *
-     * @param cityName the city name
-     * @return the single result current weather request customizer
+     * @param requestSettings request settings object.
      */
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName);
+    public SingleLocationCurrentWeatherRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+        this.requestSettings.appendToURL("weather");
+    }
 
-    /**
-     * By city name current weather request customizer.
-     *
-     * @param cityName    the city name
-     * @param countryCode the country code
-     * @return the single result current weather request customizer
-     */
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode);
+    public SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName) {
+        requestSettings.putRequestParameter("q", cityName);
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By city name current weather request customizer.
-     *
-     * @param cityName    the city name
-     * @param stateCode   the state code
-     * @param countryCode the country code
-     * @return the single result current weather request customizer
-     */
-    SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String stateCode, String countryCode);
+    public SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode) {
+        requestSettings.putRequestParameter("q", cityName + "," + countryCode);
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By city id current weather request customizer.
-     *
-     * @param cityId the city id
-     * @return the single result current weather request customizer
-     */
-    SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId);
+    public SingleResultCurrentWeatherRequestCustomizer byCityName(String cityName, String stateCode, String countryCode) {
+        requestSettings.putRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By coordinate current weather request customizer.
-     *
-     * @param coordinate the coordinate
-     * @return the single result current weather request customizer
-     */
-    SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate);
+    public SingleResultCurrentWeatherRequestCustomizer byCityId(long cityId) {
+        requestSettings.putRequestParameter("id", String.valueOf(cityId));
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By zip code and country current weather request customizer.
-     *
-     * @param zipCode     the zip code
-     * @param countryCode the country code
-     * @return the single result current weather request customizer
-     */
-    SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode);
+    public SingleResultCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 
-    /**
-     * By zip code in usa current weather request customizer.
-     *
-     * @param zipCode the zip code
-     * @return the single result current weather request customizer
-     */
-    SingleResultCurrentWeatherRequestCustomizer byZipCodeInUSA(String zipCode);
+    public SingleResultCurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
+        requestSettings.putRequestParameter("zip", zipCode + "," + countryCode);
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    public SingleResultCurrentWeatherRequestCustomizer byZipCodeInUSA(String zipCode) {
+        requestSettings.putRequestParameter("zip", zipCode);
+        return new SingleResultCurrentWeatherRequestCustomizer(requestSettings);
+    }
 }

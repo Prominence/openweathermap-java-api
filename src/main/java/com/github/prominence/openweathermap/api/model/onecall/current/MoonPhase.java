@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,44 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request;
+package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.enums.MoonType;
 
-/**
- * The interface Request customizer.
- *
- * @param <T> the type parameter
- */
-public interface RequestCustomizer<T extends RequestCustomizer<?>> {
+import java.util.Objects;
 
-    /**
-     * Customize language.
-     *
-     * @param language the language
-     * @return the request customizer
-     */
-    T language(Language language);
+public class MoonPhase {
+    private final double value;
+    private final MoonType type;
 
-    /**
-     * Customize unit system.
-     *
-     * @param unitSystem the unit system
-     * @return the request customizer
-     */
-    T unitSystem(UnitSystem unitSystem);
+    public MoonPhase(Double value) {
+        this.value = value;
+        this.type = MoonType.valueOf(value);
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public MoonType getType() {
+        return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MoonPhase moonPhase = (MoonPhase) o;
+        return Double.compare(moonPhase.value, value) == 0 && type == moonPhase.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, type);
+    }
+
+    @Override
+    public String toString() {
+        return type.name() + "(" + value + ")";
+    }
 }

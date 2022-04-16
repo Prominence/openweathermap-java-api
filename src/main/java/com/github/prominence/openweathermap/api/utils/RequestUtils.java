@@ -22,8 +22,10 @@
 
 package com.github.prominence.openweathermap.api.utils;
 
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,15 +37,30 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for API calls execution.
  */
 public final class RequestUtils {
 
+    private static final String OWM_URL_BASE = "http://api.openweathermap.org/data/2.5/";
+
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
     private RequestUtils() {
+    }
+
+    public static String getResponse(RequestSettings requestSettings) {
+        StringBuilder requestUrlBuilder = new StringBuilder(OWM_URL_BASE);
+        requestUrlBuilder.append(requestSettings.getUrlAppender());
+        requestUrlBuilder.append('?');
+        String parameters = requestSettings.getRequestParameters().entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+        requestUrlBuilder.append(parameters);
+
+        return getResponse(requestUrlBuilder.toString(), requestSettings.getTimeoutSettings());
     }
 
     /**
@@ -54,6 +71,18 @@ public final class RequestUtils {
      * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
      */
     public static String getResponse(String url) {
+        return getResponse(url, new TimeoutSettings());
+    }
+
+    /**
+     * Executes call to provided API url and retrieves response in <code>String</code> representation.
+     *
+     * @param url the url to make API request.
+     * @param timeoutSettings an object with timeout settings.
+     * @return response from the request in <code>String</code> representation.
+     * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
+     */
+    public static String getResponse(String url, TimeoutSettings timeoutSettings) {
         URL requestUrl;
         try {
             requestUrl = new URL(url);
@@ -62,7 +91,7 @@ public final class RequestUtils {
             throw new IllegalArgumentException(ex);
         }
         logger.debug("Executing OpenWeatherMap API request: " + url);
-        final InputStream requestInputStream = executeRequest(requestUrl);
+        final InputStream requestInputStream = executeRequest(requestUrl, timeoutSettings);
 
         return convertInputStreamToString(requestInputStream);
     }
@@ -75,11 +104,20 @@ public final class RequestUtils {
      * @throws InvalidAuthTokenException in case if authentication token wasn't set or requested functionality is not permitted for its subscription plan.
      * @throws NoDataFoundException in case if there is no any data for requested location(s) or request is invalid.
      */
-    private static InputStream executeRequest(URL requestUrl) {
+    private static InputStream executeRequest(URL requestUrl, TimeoutSettings timeoutSettings) {
         InputStream resultStream;
 
         try {
             HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
+
+            if (timeoutSettings.getConnectionTimeout() != null) {
+                connection.setConnectTimeout(timeoutSettings.getConnectionTimeout());
+            }
+
+            if (timeoutSettings.getReadTimeout() != null) {
+                connection.setReadTimeout(timeoutSettings.getReadTimeout());
+            }
+
             connection.setRequestMethod("GET");
 
             switch (connection.getResponseCode()) {
