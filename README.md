@@ -8,6 +8,9 @@ Free:
 * One Call API
 * Air pollution
 
+Other:
+* Request timeout settings
+
 ### Will be implemented later:
 
 Free:
@@ -26,14 +29,14 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.3.0-SNAPSHOT</version>
+  <version>2.3.0</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.3.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.3.0')
 ```
 
 ### Documentation
@@ -45,7 +48,7 @@ compile('com.github.prominence:openweathermap-api:2.3.0-SNAPSHOT')
 * [OpenWeatherMap Java API - 2.1.0](docs/Release_2.1.0.md)
 * [OpenWeatherMap Java API - 2.1.1](docs/Release_2.1.1.md)
 * [OpenWeatherMap Java API - 2.2.0](docs/Release_2.2.0.md)
-* [OpenWeatherMap Java API - SNAPSHOT](docs/SNAPSHOT.md)
+* [OpenWeatherMap Java API - 2.3.0](docs/Release_2.3.0.md)
 
 ### License
 MIT

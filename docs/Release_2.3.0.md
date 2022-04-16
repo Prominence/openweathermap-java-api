@@ -4,20 +4,24 @@
 * One Call API
 * Air Pollution
 
+
+Other:
+* Request timeout settings
+
 ### Maven coordinates:
 
 ```xml
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.3.0-SNAPSHOT</version>
+  <version>2.3.0</version>
 </dependency>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.3.0-SNAPSHOT')
+compile('com.github.prominence:openweathermap-api:2.3.0')
 ```
 
 ### How to use:
