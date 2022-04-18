@@ -1,4 +1,5 @@
 # OpenWeatherMap Java API [![Build Status][ci-shield]][ci-link] [![codecov][codecov-shield]][codecov-link]
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FProminence%2Fopenweathermap-java-api.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FProminence%2Fopenweathermap-java-api?ref=badge_shield)
 Java API for OpenWeatherMap services.
 
 ### Implemented features:
@@ -59,3 +60,6 @@ MIT
 
 [codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FProminence%2Fopenweathermap-java-api.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FProminence%2Fopenweathermap-java-api?ref=badge_large)
