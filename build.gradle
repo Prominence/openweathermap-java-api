@@ -1,0 +1,96 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    testImplementation 'org.junit.platform:junit-platform-runner:1.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+group = 'com.github.prominence'
+version = '3.0.0-SNAPSHOT'
+description = 'Java OpenWeatherMap API'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+ext {
+    isReleaseVersion = !version.endsWith("SNAPSHOT")
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            pom {
+                name = 'Java OpenWeatherMap API'
+                description = 'Java API for OpenWeatherMap services.'
+                url = 'https://github.com/Prominence/openweathermap-java-api'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'Prominence'
+                        name = 'Alexey Zinchenko'
+                        email = 'alexey.zinchenko@protonmail.com'
+                        url = 'https://github.com/prominence'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/Prominence/openweathermap-java-api.git'
+                    developerConnection = 'scm:git:git@github.com:prominence/openweathermap-java-api.git'
+                    url = 'https://github.com/Prominence/openweathermap-java-api'
+                }
+                issueManagement {
+                    url = 'https://github.com/Prominence/openweathermap-java-api/issues'
+                    system = 'GitHub Issues'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+
+            url = isReleaseVersion ?
+                    'https://oss.sonatype.org/service/local/staging/deploy/maven2/' :
+                    'https://oss.sonatype.org/content/repositories/snapshots/'
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}

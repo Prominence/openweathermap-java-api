@@ -29,14 +29,46 @@ Paid:
 <dependency>
   <groupId>com.github.prominence</groupId>
   <artifactId>openweathermap-api</artifactId>
-  <version>2.3.0</version>
+  <version>3.0.0-SNAPSHOT</version>
 </dependency>
+```
+
+```xml
+<repositories>
+    ...
+    <!-- Repository for snapshot versions -->
+    <repository>
+        <id>oss.sonatype.org-snapshot</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+    ...
+</repositories>
 ```
 
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.3.0')
+implementation 'com.github.prominence:openweathermap-api:3.0.0-SNAPSHOT'
+```
+
+```groovy
+repositories {
+    ...
+    // Repository for snapshot versions
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    ...
+}
 ```
 
 ### Documentation
