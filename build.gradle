@@ -72,8 +72,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username = ossrhUsername ?: ''
-                password = ossrhPassword ?: ''
+                username = project.property('ossrhUsername')
+                password = project.property('ossrhPassword')
             }
 
             url = isReleaseVersion ?
