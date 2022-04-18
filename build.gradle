@@ -72,8 +72,8 @@ publishing {
     repositories {
         maven {
             credentials {
-                username = project.property('ossrhUsername')
-                password = project.property('ossrhPassword')
+                username = project.findProperty('ossrhUsername')
+                password = project.findProperty('ossrhPassword')
             }
 
             url = isReleaseVersion ?
