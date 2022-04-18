@@ -1,4 +1,4 @@
-# OpenWeatherMap Java API [![Build Status][ci-shield]][ci-link] [![codecov][codecov-shield]][codecov-link]
+# OpenWeatherMap Java API [![Build Status][ci-shield]][ci-link] [![codecov][codecov-shield]][codecov-link] [![FOSSA Status][FOSSA-shield]][FOSSA-link]
 Java API for OpenWeatherMap services.
 
 ### Implemented features:
@@ -86,9 +86,12 @@ repositories {
 ### License
 MIT
 
-[ci-shield]: https://travis-ci.org/Prominence/openweathermap-java-api.svg?branch=dev
-[ci-link]: https://travis-ci.org/Prominence/openweathermap-java-api
+[ci-shield]: https://api.cirrus-ci.com/github/Prominence/openweathermap-java-api.svg?branch=dev
+[ci-link]: https://api.cirrus-ci.com/github/Prominence/openweathermap-java-api
 
 
 [codecov-shield]: https://codecov.io/gh/Prominence/openweathermap-java-api/branch/dev/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/Prominence/openweathermap-java-api
+
+[FOSSA-shield]: https://app.fossa.com/api/projects/git%2Bgithub.com%2FProminence%2Fopenweathermap-java-api.svg?type=shield
+[FOSSA-link]: https://app.fossa.com/projects/git%2Bgithub.com%2FProminence%2Fopenweathermap-java-api?ref=badge_shield
