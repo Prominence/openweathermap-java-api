@@ -27,9 +27,9 @@ Paid:
 
 ```xml
 <dependency>
-  <groupId>com.github.prominence</groupId>
-  <artifactId>openweathermap-api</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+    <groupId>com.github.prominence</groupId>
+    <artifactId>openweathermap-api</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
