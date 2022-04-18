@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
+    id 'jacoco'
 }
 
 repositories {
@@ -21,7 +22,7 @@ dependencies {
 group = 'com.github.prominence'
 version = '3.0.0-SNAPSHOT'
 description = 'Java OpenWeatherMap API'
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")
@@ -30,6 +31,10 @@ ext {
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 publishing {
@@ -94,3 +99,13 @@ tasks.withType(JavaCompile) {
 tasks.withType(GenerateModuleMetadata) {
     enabled = false
 }
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
