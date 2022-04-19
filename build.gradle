@@ -17,12 +17,22 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.36'
     testImplementation 'org.junit.platform:junit-platform-runner:1.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
+    annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
 }
 
 group = 'com.github.prominence'
 version = '3.0.0-SNAPSHOT'
 description = 'Java OpenWeatherMap API'
-java.sourceCompatibility = JavaVersion.VERSION_17
+
+configure([tasks.compileJava]) {
+    sourceCompatibility = 17 // for the IDE support
+    options.release = 8
+
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 ext {
     isReleaseVersion = !version.endsWith("SNAPSHOT")

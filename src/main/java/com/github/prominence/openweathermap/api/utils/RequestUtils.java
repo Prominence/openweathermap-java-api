@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
  */
 public final class RequestUtils {
 
-    private static final String OWM_URL_BASE = "http://api.openweathermap.org/data/2.5/";
+    private static final String OWM_URL_BASE = "https://api.openweathermap.org/data/2.5/";
 
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
@@ -120,18 +120,13 @@ public final class RequestUtils {
 
             connection.setRequestMethod("GET");
 
-            switch (connection.getResponseCode()) {
-                case HttpURLConnection.HTTP_OK:
-                    resultStream = connection.getInputStream();
-                    break;
-                case HttpURLConnection.HTTP_UNAUTHORIZED:
-                    throw new InvalidAuthTokenException();
-                case HttpURLConnection.HTTP_NOT_FOUND:
-                case HttpURLConnection.HTTP_BAD_REQUEST:
-                    throw new NoDataFoundException();
-                default:
-                    throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
-            }
+            resultStream = switch (connection.getResponseCode()) {
+                case HttpURLConnection.HTTP_OK -> connection.getInputStream();
+                case HttpURLConnection.HTTP_UNAUTHORIZED -> throw new InvalidAuthTokenException();
+                case HttpURLConnection.HTTP_NOT_FOUND, HttpURLConnection.HTTP_BAD_REQUEST ->
+                        throw new NoDataFoundException();
+                default -> throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
+            };
         } catch (IllegalStateException | IOException ex) {
             logger.error("An error occurred during OpenWeatherMap API response parsing: ", ex);
             throw new NoDataFoundException(ex);

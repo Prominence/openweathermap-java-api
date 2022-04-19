@@ -52,14 +52,10 @@ public enum UnitSystem {
      * @return wind unit.
      */
     public String getWindUnit() {
-        switch (this) {
-            case IMPERIAL:
-                return "miles/hour";
-            case STANDARD:
-            case METRIC:
-            default:
-                return "meter/sec";
-        }
+        return switch (this) {
+            case IMPERIAL -> "miles/hour";
+            case STANDARD, METRIC -> "meter/sec";
+        };
     }
 
     /**
@@ -67,15 +63,11 @@ public enum UnitSystem {
      * @return temperature unit.
      */
     public String getTemperatureUnit() {
-        switch (this) {
-            case METRIC:
-                return "°C";
-            case IMPERIAL:
-                return "°F";
-            case STANDARD:
-            default:
-                return "K";
-        }
+        return switch (this) {
+            case METRIC -> "°C";
+            case IMPERIAL -> "°F";
+            case STANDARD -> "K";
+        };
     }
 
     /**

@@ -15,7 +15,7 @@
 ### Gradle coordinates:
 
 ```groovy
-compile('com.github.prominence:openweathermap-api:2.0.0')
+implementation 'com.github.prominence:openweathermap-api:2.0.0'
 ```
 
 ### How to use:
