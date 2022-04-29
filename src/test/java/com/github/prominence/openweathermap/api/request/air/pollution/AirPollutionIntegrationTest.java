@@ -25,7 +25,7 @@
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
 import com.github.prominence.openweathermap.api.ApiTest;
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +40,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .current()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieve()
                 .asJava();
 
@@ -56,7 +56,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final String jsonString = getClient()
                 .airPollution()
                 .current()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieve()
                 .asJSON();
 
@@ -69,7 +69,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .current()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieveAsync()
                 .asJava();
 
@@ -82,7 +82,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .current()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieveAsync()
                 .asJSON();
 
@@ -97,7 +97,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieve()
                 .asJava();
 
@@ -113,7 +113,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final String jsonString = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieve()
                 .asJSON();
 
@@ -126,7 +126,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieveAsync()
                 .asJava();
 
@@ -139,7 +139,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinate(Coordinate.of(53.54, 27.34))
+                .byCoordinates(Coordinates.of(53.54, 27.34))
                 .retrieveAsync()
                 .asJSON();
 
@@ -154,7 +154,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinate.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
                 .retrieve()
                 .asJava();
 
@@ -170,7 +170,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final String jsonString = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinate.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
                 .retrieve()
                 .asJSON();
 
@@ -183,7 +183,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinate.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
                 .retrieveAsync()
                 .asJava();
 
@@ -196,7 +196,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinate.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
                 .retrieveAsync()
                 .asJSON();
 

@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -131,8 +132,8 @@ public class AlertUnitTest {
 
     @Test
     public void getHashCode() {
-        final Alert event1 = new Alert("Sender", "Event1", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description1");
-        final Alert event2 = new Alert("Sender", "Event2", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description2");
+        final Alert event1 = new Alert("Sender", "Event1", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description1", Collections.emptyList());
+        final Alert event2 = new Alert("Sender", "Event2", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description2", Collections.emptyList());
 
         assertEquals(event1.hashCode(), event1.hashCode());
         assertNotEquals(event1.hashCode(), event2.hashCode());
@@ -140,7 +141,7 @@ public class AlertUnitTest {
 
     @Test
     public void getToString() {
-        final Alert alert = new Alert("Sender", "Event", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description");
+        final Alert alert = new Alert("Sender", "Event", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description", Collections.emptyList());
 
         assertNotNull(alert.toString());
         assertNotEquals("", alert.toString());

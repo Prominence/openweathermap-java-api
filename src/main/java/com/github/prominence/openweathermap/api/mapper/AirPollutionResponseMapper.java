@@ -26,7 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.enums.AirQualityIndex;
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionRecord;
 
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 /**
- * The type Air pollution response mapper.
+ * Official API response documentation: <a href="https://openweathermap.org/api/air-pollution#fields">https://openweathermap.org/api/air-pollution#fields</a>.
  */
 public class AirPollutionResponseMapper {
     /**
@@ -91,11 +91,11 @@ public class AirPollutionResponseMapper {
         return airPollutionRecord;
     }
 
-    private Coordinate parseCoordinate(JsonNode rootNode) {
+    private Coordinates parseCoordinate(JsonNode rootNode) {
         final JsonNode latitudeNode = rootNode.get("lat");
         final JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
-            return Coordinate.of(latitudeNode.asDouble(), longitudeNode.asDouble());
+            return Coordinates.of(latitudeNode.asDouble(), longitudeNode.asDouble());
         }
         return null;
     }

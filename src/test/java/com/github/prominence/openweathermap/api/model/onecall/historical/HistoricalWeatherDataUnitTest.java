@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
@@ -36,10 +36,10 @@ public class HistoricalWeatherDataUnitTest {
     @Test
     public void getCoordinate() {
         final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        final Coordinate coordinate = Coordinate.of(11.2, 43.2);
-        historicalWeatherData.setCoordinate(coordinate);
+        final Coordinates coordinates = Coordinates.of(11.2, 43.2);
+        historicalWeatherData.setCoordinate(coordinates);
 
-        assertEquals(coordinate, historicalWeatherData.getCoordinate());
+        assertEquals(coordinates, historicalWeatherData.getCoordinate());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class HistoricalWeatherDataUnitTest {
         assertNotEquals(first, null);
         assertNotEquals(first, new Object());
 
-        final Coordinate coordinate = Coordinate.of(11, 12);
+        final Coordinates coordinates = Coordinates.of(11, 12);
         final ZoneId timeZone = ZoneId.of("GMT");
         final ZoneOffset offset = ZoneOffset.UTC;
         final HistoricalWeather historicalWeather = new HistoricalWeather();
@@ -95,11 +95,11 @@ public class HistoricalWeatherDataUnitTest {
 
         assertEquals(first, second);
 
-        first.setCoordinate(coordinate);
+        first.setCoordinate(coordinates);
 
         assertNotEquals(first, second);
 
-        second.setCoordinate(coordinate);
+        second.setCoordinate(coordinates);
 
         assertEquals(first, second);
 
@@ -143,7 +143,7 @@ public class HistoricalWeatherDataUnitTest {
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setCoordinate(Coordinate.of(11, 42));
+        first.setCoordinate(Coordinates.of(11, 42));
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }
@@ -151,7 +151,7 @@ public class HistoricalWeatherDataUnitTest {
     @Test
     public void getToString() {
         final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        historicalWeatherData.setCoordinate(Coordinate.of(32, 22));
+        historicalWeatherData.setCoordinate(Coordinates.of(32, 22));
 
         assertNotNull(historicalWeatherData.toString());
         assertNotEquals("", historicalWeatherData.toString());

@@ -41,7 +41,9 @@ public class RequestSettings {
 
     private final Map<String, String> requestParameters = new HashMap<>(8);
 
-    private final StringBuilder urlAppenderBuilder = new StringBuilder("");
+    private final StringBuilder urlAppenderBuilder = new StringBuilder();
+
+    private String subdomain = "api";
 
     private Language language = Language.ENGLISH;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
@@ -54,6 +56,14 @@ public class RequestSettings {
 
     public TimeoutSettings getTimeoutSettings() {
         return timeoutSettings;
+    }
+
+    public String getSubdomain() {
+        return subdomain;
+    }
+
+    public void setSubdomain(String subdomain) {
+        this.subdomain = subdomain;
     }
 
     public UnitSystem getUnitSystem() {

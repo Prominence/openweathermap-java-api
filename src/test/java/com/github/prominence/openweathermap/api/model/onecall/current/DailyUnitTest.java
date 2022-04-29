@@ -26,10 +26,11 @@ import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.onecall.Wind;
+import com.github.prominence.openweathermap.api.model.Wind;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -65,9 +66,9 @@ public class DailyUnitTest {
     public void getWeatherState() {
         final Daily daily = new Daily();
         final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        daily.setWeatherState(weatherState);
+        daily.setWeatherStates(List.of(weatherState));
 
-        assertEquals(weatherState, daily.getWeatherState());
+        assertEquals(weatherState, daily.getWeatherStates().get(0));
     }
 
     @Test
@@ -224,11 +225,11 @@ public class DailyUnitTest {
 
         final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
 
-        first.setWeatherState(weatherState);
+        first.setWeatherStates(List.of(weatherState));
 
         assertNotEquals(first, second);
 
-        second.setWeatherState(weatherState);
+        second.setWeatherStates(List.of(weatherState));
 
         assertEquals(first, second);
 
@@ -347,7 +348,7 @@ public class DailyUnitTest {
 
         final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
 
-        daily.setWeatherState(weatherState);
+        daily.setWeatherStates(List.of(weatherState));
 
         assertNotNull(daily.toString());
         assertNotEquals("", daily.toString());

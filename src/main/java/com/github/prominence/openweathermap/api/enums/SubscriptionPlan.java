@@ -33,6 +33,11 @@ public enum SubscriptionPlan {
     FREE,
 
     /**
+     * An alias that represents any of paid plans: startup, developer, professional or enterprise.
+     */
+    PAID,
+
+    /**
      * Startup subscription plan.
      */
     STARTUP,

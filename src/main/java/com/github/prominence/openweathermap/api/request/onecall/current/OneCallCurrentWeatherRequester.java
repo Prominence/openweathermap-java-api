@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
@@ -38,12 +38,11 @@ public class OneCallCurrentWeatherRequester {
      */
     public OneCallCurrentWeatherRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
-        this.requestSettings.appendToURL("onecall");
     }
 
-    public OneCallCurrentWeatherRequestCustomizer byCoordinate(Coordinate coordinate) {
-        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
-        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+    public OneCallCurrentWeatherRequestCustomizer byCoordinates(Coordinates coordinates) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
         return new OneCallCurrentWeatherRequestCustomizer(requestSettings);
     }
 }

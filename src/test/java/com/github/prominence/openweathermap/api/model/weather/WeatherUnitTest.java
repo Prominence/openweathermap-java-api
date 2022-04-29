@@ -26,6 +26,8 @@ import com.github.prominence.openweathermap.api.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -201,11 +203,11 @@ public class WeatherUnitTest {
         assertEquals(one, two);
 
         final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        one.setWeatherState(weatherState);
+        one.setWeatherStates(Collections.singletonList(weatherState));
 
         assertNotEquals(one, two);
 
-        two.setWeatherState(weatherState);
+        two.setWeatherStates(Collections.singletonList(weatherState));
 
         assertEquals(one, two);
 

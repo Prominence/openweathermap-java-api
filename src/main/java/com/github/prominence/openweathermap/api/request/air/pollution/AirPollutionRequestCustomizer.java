@@ -37,7 +37,7 @@ public class AirPollutionRequestCustomizer {
      *
      * @param requestSettings request settings object.
      */
-    public AirPollutionRequestCustomizer(RequestSettings requestSettings) {
+    AirPollutionRequestCustomizer(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
     }
 

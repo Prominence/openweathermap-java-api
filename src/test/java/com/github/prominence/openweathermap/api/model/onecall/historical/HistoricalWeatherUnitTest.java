@@ -25,10 +25,12 @@ package com.github.prominence.openweathermap.api.model.onecall.historical;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
+import com.github.prominence.openweathermap.api.model.Wind;
 import com.github.prominence.openweathermap.api.model.onecall.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,9 +66,9 @@ public class HistoricalWeatherUnitTest {
     public void getWeatherState() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
         final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        historicalWeather.setWeatherState(weatherState);
+        historicalWeather.setWeatherStates(List.of(weatherState));
 
-        assertEquals(weatherState, historicalWeather.getWeatherState());
+        assertEquals(weatherState, historicalWeather.getWeatherStates().get(0));
     }
 
     @Test
@@ -212,11 +214,11 @@ public class HistoricalWeatherUnitTest {
 
         final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
 
-        first.setWeatherState(weatherState);
+        first.setWeatherStates(List.of(weatherState));
 
         assertNotEquals(first, second);
 
-        second.setWeatherState(weatherState);
+        second.setWeatherStates(List.of(weatherState));
 
         assertEquals(first, second);
 

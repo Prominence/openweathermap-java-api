@@ -28,9 +28,9 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
-import com.github.prominence.openweathermap.api.model.Coordinate;
-import com.github.prominence.openweathermap.api.model.forecast.Forecast;
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.forecast.free.Forecast;
+import com.github.prominence.openweathermap.api.model.forecast.free.WeatherForecast;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
@@ -249,7 +249,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJava_thenReturnNotNull() {
         final Forecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.of(5, 5))
+                .byCoordinates(Coordinates.of(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -273,7 +273,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJSON_thenReturnNotNull() {
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.of(5, 5))
+                .byCoordinates(Coordinates.of(5, 5))
                 .language(Language.SPANISH)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
@@ -287,7 +287,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsXML_thenReturnNotNull() {
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinate(Coordinate.of(5, 5))
+                .byCoordinates(Coordinates.of(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()

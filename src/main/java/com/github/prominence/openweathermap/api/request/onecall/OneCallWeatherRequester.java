@@ -39,6 +39,7 @@ public class OneCallWeatherRequester {
      */
     public OneCallWeatherRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
+        this.requestSettings.appendToURL("data/2.5/onecall");
     }
 
     public OneCallCurrentWeatherRequester current() {

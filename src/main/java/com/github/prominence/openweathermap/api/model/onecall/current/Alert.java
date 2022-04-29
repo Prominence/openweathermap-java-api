@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -34,6 +35,8 @@ public class Alert {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String description;
+
+    private List<String> tags;
 
     /**
      * Instantiates a new Alert.
@@ -49,13 +52,15 @@ public class Alert {
      * @param startTime   the start time
      * @param endTime     the end time
      * @param description the description
+     * @param tags        the tags
      */
-    public Alert(String senderName, String eventName, LocalDateTime startTime, LocalDateTime endTime, String description) {
+    public Alert(String senderName, String eventName, LocalDateTime startTime, LocalDateTime endTime, String description, List<String> tags) {
         this.senderName = senderName;
         this.eventName = eventName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
+        this.tags = tags;
     }
 
     /**
@@ -148,6 +153,14 @@ public class Alert {
         this.description = description;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,12 +170,13 @@ public class Alert {
                 Objects.equals(eventName, alert.eventName) &&
                 Objects.equals(startTime, alert.startTime) &&
                 Objects.equals(endTime, alert.endTime) &&
-                Objects.equals(description, alert.description);
+                Objects.equals(description, alert.description) &&
+                Objects.equals(tags, alert.tags);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(senderName, eventName, startTime, endTime, description);
+        return Objects.hash(senderName, eventName, startTime, endTime, description, tags);
     }
 
     @Override

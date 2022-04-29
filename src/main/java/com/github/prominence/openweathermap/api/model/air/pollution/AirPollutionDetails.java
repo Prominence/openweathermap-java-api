@@ -24,7 +24,7 @@
 
 package com.github.prominence.openweathermap.api.model.air.pollution;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * The type Air pollution.
  */
 public class AirPollutionDetails {
-    private Coordinate coordinate;
+    private Coordinates coordinates;
     private List<AirPollutionRecord> airPollutionRecords;
 
     /**
@@ -41,17 +41,17 @@ public class AirPollutionDetails {
      *
      * @return the coordinate
      */
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinates getCoordinate() {
+        return coordinates;
     }
 
     /**
      * Sets coordinate.
      *
-     * @param coordinate the coordinate
+     * @param coordinates the coordinate
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     /**
@@ -77,11 +77,11 @@ public class AirPollutionDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AirPollutionDetails that = (AirPollutionDetails) o;
-        return Objects.equals(coordinate, that.coordinate) && Objects.equals(airPollutionRecords, that.airPollutionRecords);
+        return Objects.equals(coordinates, that.coordinates) && Objects.equals(airPollutionRecords, that.airPollutionRecords);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate, airPollutionRecords);
+        return Objects.hash(coordinates, airPollutionRecords);
     }
 }

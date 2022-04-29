@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.mapper.FiveDayThreeHourStepForecastResponseMapper;
-import com.github.prominence.openweathermap.api.model.forecast.Forecast;
+import com.github.prominence.openweathermap.api.model.forecast.free.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Async request terminator.
  */
-public class FiveDayThreeHourStepForecastAsyncRequestTerminator {
+class FiveDayThreeHourStepForecastAsyncRequestTerminator {
     private final RequestSettings requestSettings;
 
     /**

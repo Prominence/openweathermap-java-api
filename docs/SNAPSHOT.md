@@ -1,8 +1,11 @@
 ### Implemented features:
 * Current weather data
-* 5 day / 3-hour forecast
+* Hourly forecast
 * One Call API
+* Daily forecast
+* 5 day / 3-hour forecast
 * Air Pollution
+* Geocoding API
 
 
 Other:
@@ -159,7 +162,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 | `getRain()`               | Returns `Rain` instance that contains information about rain volume for the last one hour and/or the last 3 hours. Can be absent in case of no data.                      |
 | `getSnow()`               | Returns `Snow` instance that contains information about snow volume for the last one hour and/or the last 3 hours. Can be absent in case of no data.                      |
 | `getClouds()`             | Returns `Clouds` instance that contains information about cloudiness percentage.                                                                                          |
-| `getLocation()`           | Returns `Location` object. Available fields: `id`, `name`, `countryCode`, `sunrise` and `sunset` time, `zoneOffset` and `coordinate`.                                     |
+| `getLocation()`           | Returns `Location` object. Available fields: `id`, `name`, `countryCode`, `sunrise` and `sunset` time, `zoneOffset` and `coordinates`.                                     |
 | `toString()`              | Returns informative string for the whole available weather information.                                                                                                   |
 
 `toString()` output example:
@@ -218,7 +221,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 
 | Method                        | Description                                                                                                                                           |
 |-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `getLocation()`               | Returns `Location` object. Available fields: `id`, `name`, `countryCode`, `sunrise` and `sunset` time, `zoneOffset`, `coordinate` and `population`.   |
+| `getLocation()`               | Returns `Location` object. Available fields: `id`, `name`, `countryCode`, `sunrise` and `sunset` time, `zoneOffset`, `coordinates` and `population`.   |
 | `getWeatherForecasts()`       | Returns list of `WeatherForecast` objects with forecast information.                                                                                  |
 | `toString()`                  | Returns informative string for the whole available forecast information.                                                                              |
 
@@ -227,7 +230,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 A forecast for Minsk with 15 timestamps.
 ```
 
-`com.github.prominence.openweathermap.api.model.forecast.WeatherForecast`'s useful public methods(setters are not listed):
+`com.github.prominence.openweathermap.api.model.forecast.free.WeatherForecast`'s useful public methods(setters are not listed):
 
 | Method                        | Description                                                                                                                                                               |
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

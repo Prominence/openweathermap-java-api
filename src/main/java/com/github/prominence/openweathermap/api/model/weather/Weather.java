@@ -25,6 +25,7 @@ package com.github.prominence.openweathermap.api.model.weather;
 import com.github.prominence.openweathermap.api.model.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -33,7 +34,7 @@ import java.util.Objects;
 public class Weather {
     private LocalDateTime calculationTime;
 
-    private WeatherState weatherState;
+    private List<WeatherState> weatherStates;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -44,6 +45,8 @@ public class Weather {
     private Clouds clouds;
 
     private Location location;
+
+    private String base;
 
     /**
      * Gets calculated on.
@@ -68,17 +71,17 @@ public class Weather {
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -225,13 +228,20 @@ public class Weather {
         this.location = location;
     }
 
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Weather)) return false;
-        Weather weather = (Weather) o;
+        if (!(o instanceof Weather weather)) return false;
         return Objects.equals(calculationTime, weather.calculationTime) &&
-                Objects.equals(weatherState, weather.weatherState) &&
+                Objects.equals(weatherStates, weather.weatherStates) &&
                 Objects.equals(temperature, weather.temperature) &&
                 Objects.equals(atmosphericPressure, weather.atmosphericPressure) &&
                 Objects.equals(humidity, weather.humidity) &&
@@ -239,12 +249,13 @@ public class Weather {
                 Objects.equals(rain, weather.rain) &&
                 Objects.equals(snow, weather.snow) &&
                 Objects.equals(clouds, weather.clouds) &&
-                Objects.equals(location, weather.location);
+                Objects.equals(location, weather.location) &&
+                Objects.equals(base, weather.base);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(calculationTime, weatherState, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location);
+        return Objects.hash(calculationTime, weatherStates, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, location, base);
     }
 
     @Override
@@ -261,9 +272,9 @@ public class Weather {
                 stringBuilder.append(')');
             }
         }
-        if (weatherState != null) {
+        if (weatherStates != null && weatherStates.size() > 0) {
             stringBuilder.append(", Weather: ");
-            stringBuilder.append(weatherState.getDescription());
+            stringBuilder.append(weatherStates.get(0).getDescription());
         }
         if (temperature != null) {
             stringBuilder.append(", ");
@@ -279,7 +290,7 @@ public class Weather {
         }
         if (clouds != null) {
             stringBuilder.append(", ");
-            stringBuilder.append(clouds.toString());
+            stringBuilder.append(clouds);
         }
         if (rain != null && rain.getOneHourLevel() != null) {
             stringBuilder.append(", Rain: ");

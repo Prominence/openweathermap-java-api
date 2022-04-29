@@ -29,7 +29,7 @@ import com.github.prominence.openweathermap.api.request.RequestSettings;
 /**
  * The type One call historical weather request customizer.
  */
-public class OneCallHistoricalWeatherRequestCustomizer {
+class OneCallHistoricalWeatherRequestCustomizer {
     private final RequestSettings requestSettings;
 
     /**

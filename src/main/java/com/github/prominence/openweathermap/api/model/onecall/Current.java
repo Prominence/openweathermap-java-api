@@ -25,8 +25,10 @@ package com.github.prominence.openweathermap.api.model.onecall;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
+import com.github.prominence.openweathermap.api.model.Wind;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -37,7 +39,7 @@ public class Current {
     protected LocalDateTime sunriseTime;
     protected LocalDateTime sunsetTime;
 
-    protected WeatherState weatherState;
+    protected List<WeatherState> weatherStates;
     protected Temperature temperature;
     protected AtmosphericPressure atmosphericPressure;
     protected Humidity humidity;
@@ -107,17 +109,17 @@ public class Current {
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -296,7 +298,7 @@ public class Current {
         return Objects.equals(forecastTime, current.forecastTime) &&
                 Objects.equals(sunriseTime, current.sunriseTime) &&
                 Objects.equals(sunsetTime, current.sunsetTime) &&
-                Objects.equals(weatherState, current.weatherState) &&
+                Objects.equals(weatherStates, current.weatherStates) &&
                 Objects.equals(temperature, current.temperature) &&
                 Objects.equals(atmosphericPressure, current.atmosphericPressure) &&
                 Objects.equals(humidity, current.humidity) &&
@@ -310,7 +312,7 @@ public class Current {
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, sunriseTime, sunsetTime, weatherState, temperature, atmosphericPressure, humidity, clouds, uvIndex, visibilityInMetres, wind, rain, snow);
+        return Objects.hash(forecastTime, sunriseTime, sunsetTime, weatherStates, temperature, atmosphericPressure, humidity, clouds, uvIndex, visibilityInMetres, wind, rain, snow);
     }
 
     @Override

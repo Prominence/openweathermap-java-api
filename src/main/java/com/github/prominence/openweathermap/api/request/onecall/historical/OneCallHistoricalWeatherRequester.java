@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
@@ -38,12 +38,12 @@ public class OneCallHistoricalWeatherRequester {
      */
     public OneCallHistoricalWeatherRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
-        this.requestSettings.appendToURL("onecall/timemachine");
+        this.requestSettings.appendToURL("/timemachine");
     }
 
-    public OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinate coordinate, long unixTime) {
-        requestSettings.putRequestParameter("lat", Double.toString(coordinate.getLatitude()));
-        requestSettings.putRequestParameter("lon", Double.toString(coordinate.getLongitude()));
+    public OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinates coordinates, long unixTime) {
+        requestSettings.putRequestParameter("lat", Double.toString(coordinates.getLatitude()));
+        requestSettings.putRequestParameter("lon", Double.toString(coordinates.getLongitude()));
         requestSettings.putRequestParameter("dt", Long.toString(unixTime));
         return new OneCallHistoricalWeatherRequestCustomizer(requestSettings);
     }

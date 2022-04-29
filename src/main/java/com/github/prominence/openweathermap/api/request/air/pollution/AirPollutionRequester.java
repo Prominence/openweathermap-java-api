@@ -39,20 +39,20 @@ public class AirPollutionRequester {
      */
     public AirPollutionRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
+        requestSettings.appendToURL("data/2.5/air_pollution");
     }
 
     public CurrentAirPollutionRequester current() {
-        requestSettings.appendToURL("air_pollution");
         return new CurrentAirPollutionRequester(requestSettings);
     }
 
     public ForecastAirPollutionRequester forecast() {
-        requestSettings.appendToURL("air_pollution/forecast");
+        requestSettings.appendToURL("/forecast");
         return new ForecastAirPollutionRequester(requestSettings);
     }
 
     public HistoricalAirPollutionRequester historical() {
-        requestSettings.appendToURL("air_pollution/history");
+        requestSettings.appendToURL("/history");
         return new HistoricalAirPollutionRequester(requestSettings);
     }
 }

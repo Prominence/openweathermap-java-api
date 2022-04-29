@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * The type Historical weather data.
  */
 public class HistoricalWeatherData {
-    private Coordinate coordinate;
+    private Coordinates coordinates;
     private ZoneId timezone;
     private ZoneOffset timezoneOffset;
 
@@ -45,17 +45,17 @@ public class HistoricalWeatherData {
      *
      * @return the coordinate
      */
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinates getCoordinate() {
+        return coordinates;
     }
 
     /**
      * Sets coordinate.
      *
-     * @param coordinate the coordinate
+     * @param coordinates the coordinate
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     /**
@@ -135,7 +135,7 @@ public class HistoricalWeatherData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HistoricalWeatherData that = (HistoricalWeatherData) o;
-        return Objects.equals(coordinate, that.coordinate) &&
+        return Objects.equals(coordinates, that.coordinates) &&
                 Objects.equals(timezone, that.timezone) &&
                 Objects.equals(timezoneOffset, that.timezoneOffset) &&
                 Objects.equals(historicalWeather, that.historicalWeather) &&
@@ -144,11 +144,11 @@ public class HistoricalWeatherData {
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate, timezone, timezoneOffset, historicalWeather, hourlyList);
+        return Objects.hash(coordinates, timezone, timezoneOffset, historicalWeather, hourlyList);
     }
 
     @Override
     public String toString() {
-        return "Historical weather data for " + coordinate + ".";
+        return "Historical weather data for " + coordinates + ".";
     }
 }

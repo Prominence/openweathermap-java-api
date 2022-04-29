@@ -22,17 +22,19 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.github.prominence.openweathermap.api.deserializer.AtmosphericPressureDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.WeatherStateDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.WindDeserializer;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.*;
-import com.github.prominence.openweathermap.api.model.forecast.*;
-import com.github.prominence.openweathermap.api.model.forecast.Location;
-import com.github.prominence.openweathermap.api.model.forecast.Rain;
-import com.github.prominence.openweathermap.api.model.forecast.Snow;
-import com.github.prominence.openweathermap.api.model.Temperature;
+import com.github.prominence.openweathermap.api.model.forecast.free.*;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -41,53 +43,10 @@ import java.util.List;
 import java.util.TimeZone;
 
 /**
- * Official API response documentation.
- * Parameters(but the real response can differ):
- * --- cod Internal parameter
- * --- message Internal parameter
- * --- cnt A number of timestamps returned in the API response
- * --- list
- *      |- list.dt Time of data forecasted, unix, UTC
- *      |- list.main
- *          |- list.main.temp Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *          |- list.main.feels_like This temperature parameter accounts for the human perception of weather. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *          |- list.main.temp_min Minimum temperature at the moment of calculation. This is minimal forecasted temperature (within large megalopolises and urban areas), use this parameter optionally. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *          |- list.main.temp_max Maximum temperature at the moment of calculation. This is maximal forecasted temperature (within large megalopolises and urban areas), use this parameter optionally. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.
- *          |- list.main.pressure Atmospheric pressure on the sea level by default, hPa
- *          |- list.main.sea_level Atmospheric pressure on the sea level, hPa
- *          |- list.main.grnd_level Atmospheric pressure on the ground level, hPa
- *          |- list.main.humidity Humidity, %
- *          |- list.main.temp_kf Internal par
- *      |- list.weather
- *          |- list.weather.id Weather condition id
- *          |- list.weather.main Group of weather parameters (Rain, Snow, Extreme etc.)
- *          |- list.weather.description Weather condition within the group. You can get the output in your language.
- *          |- list.weather.icon Weather icon id
- *      |- list.clouds
- *          |- list.clouds.all Cloudiness, %
- *      |- list.wind
- *          |- list.wind.speed Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.
- *          |- list.wind.deg Wind direction, degrees (meteorological)
- *      |- list.visibility Average visibility, metres
- *      |- list.pop Probability of precipitation
- *      |- list.rain
- *          |- list.rain.3h Rain volume for last 3 hours, mm
- *      |- list.snow
- *          |- list.snow.3h Snow volume for last 3 hours
- *      |- list.sys
- *          |- list.sys.pod Part of the day (n - night, d - day)
- *      |- list.dt_txt Time of data forecasted, ISO, UTC
- * --- city
- *      |- city.id City ID
- *      |- city.name City name
- *      |- city.coord
- *          |- city.coord.lat City geo location, latitude
- *          |- city.coord.lon City geo location, longitude
- *      |- city.country Country code (GB, JP etc.)
- *      |- city.timezone Shift in seconds from UTC
+ * Official API response documentation: <a href="https://openweathermap.org/forecast5#JSON">https://openweathermap.org/forecast5#JSON</a>.
  */
 public class FiveDayThreeHourStepForecastResponseMapper {
-    private final UnitSystem unitSystem;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * Instantiates a new forecast response mapper.
@@ -95,7 +54,14 @@ public class FiveDayThreeHourStepForecastResponseMapper {
      * @param unitSystem the unit system
      */
     public FiveDayThreeHourStepForecastResponseMapper(UnitSystem unitSystem) {
-        this.unitSystem = unitSystem;
+        objectMapper.setInjectableValues(new InjectableValues.Std().addValue("unitSystem", unitSystem != null ? unitSystem : UnitSystem.STANDARD));
+        final SimpleModule module = new SimpleModule();
+        module.addDeserializer(WeatherState.class, new WeatherStateDeserializer());
+        module.addDeserializer(Temperature.class, new TemperatureDeserializer());
+        module.addDeserializer(AtmosphericPressure.class, new AtmosphericPressureDeserializer());
+        module.addDeserializer(Wind.class, new WindDeserializer());
+        objectMapper.registerModule(module);
+
     }
 
     /**
@@ -105,33 +71,35 @@ public class FiveDayThreeHourStepForecastResponseMapper {
      * @return the forecast
      */
     public Forecast mapToForecast(String json) {
-        final ObjectMapper objectMapper = new ObjectMapper();
+
         Forecast forecast;
         try {
             final JsonNode root = objectMapper.readTree(json);
             forecast = mapToForecast(root);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Cannot parse Forecast response");
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot parse Forecast response", e);
         }
 
         return forecast;
     }
 
-    private Forecast mapToForecast(JsonNode root) {
+    private Forecast mapToForecast(JsonNode root) throws IOException {
         final Forecast forecast = new Forecast();
         forecast.setLocation(parseLocation(root.get("city")));
 
         final List<WeatherForecast> forecasts = new ArrayList<>(root.get("cnt").asInt());
 
         final JsonNode forecastListNode = root.get("list");
-        forecastListNode.forEach(forecastNode -> forecasts.add(parseWeatherForecast(forecastNode)));
+        for (JsonNode forecastNode : forecastListNode) {
+            forecasts.add(parseWeatherForecast(forecastNode));
+        }
 
         forecast.setWeatherForecasts(forecasts);
 
         return forecast;
     }
 
-    private WeatherForecast parseWeatherForecast(JsonNode rootNode) {
+    private WeatherForecast parseWeatherForecast(JsonNode rootNode) throws IOException {
         final WeatherForecast weatherForecast = new WeatherForecast();
         final JsonNode weatherArrayNode = rootNode.get("weather");
         if (weatherArrayNode != null) {
@@ -159,70 +127,28 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         return weatherForecast;
     }
 
-    private WeatherState parseWeatherState(JsonNode weatherNode) {
+    private WeatherState parseWeatherState(JsonNode weatherNode) throws IOException {
         if (weatherNode == null) {
             return null;
         }
-        final WeatherState weatherState = new WeatherState(
-                weatherNode.get("id").asInt(),
-                weatherNode.get("main").asText(),
-                weatherNode.get("description").asText()
-        );
-        weatherState.setIconId(weatherNode.get("icon").asText());
-
-        return weatherState;
+        return objectMapper.readValue(objectMapper.treeAsTokens(weatherNode), WeatherState.class);
     }
 
-    private Temperature parseTemperature(JsonNode rootNode) {
-        final double tempValue = rootNode.get("temp").asDouble();
-        final Temperature temperature = Temperature.withValue(tempValue, unitSystem.getTemperatureUnit());
-
-        final JsonNode tempMaxNode = rootNode.get("temp_max");
-        if (tempMaxNode != null) {
-            temperature.setMaxTemperature(tempMaxNode.asDouble());
-        }
-        final JsonNode tempMinNode = rootNode.get("temp_min");
-        if (tempMinNode != null) {
-            temperature.setMinTemperature(tempMinNode.asDouble());
-        }
-        final JsonNode tempFeelsLike = rootNode.get("feels_like");
-        if (tempFeelsLike != null) {
-            temperature.setFeelsLike(tempFeelsLike.asDouble());
-        }
-
-        return temperature;
+    private Temperature parseTemperature(JsonNode rootNode) throws IOException {
+        return objectMapper.readValue(objectMapper.treeAsTokens(rootNode), Temperature.class);
     }
 
-    private AtmosphericPressure parsePressure(JsonNode rootNode) {
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(rootNode.get("pressure").asDouble());
-
-        final JsonNode seaLevelNode = rootNode.get("sea_level");
-        final JsonNode groundLevelNode = rootNode.get("grnd_level");
-        if (seaLevelNode != null) {
-            atmosphericPressure.setSeaLevelValue(seaLevelNode.asDouble());
-        }
-        if (groundLevelNode != null) {
-            atmosphericPressure.setGroundLevelValue(groundLevelNode.asDouble());
-        }
-
-        return atmosphericPressure;
+    private AtmosphericPressure parsePressure(JsonNode rootNode) throws IOException {
+        return objectMapper.readValue(objectMapper.treeAsTokens(rootNode), AtmosphericPressure.class);
     }
 
     private Humidity parseHumidity(JsonNode rootNode) {
         return Humidity.withValue((byte) (rootNode.get("humidity").asInt()));
     }
 
-    private Wind parseWind(JsonNode root) {
+    private Wind parseWind(JsonNode root) throws IOException {
         final JsonNode windNode = root.get("wind");
-        double speed = windNode.get("speed").asDouble();
-
-        final Wind wind = Wind.withValue(speed, unitSystem.getWindUnit());
-        final JsonNode degNode = windNode.get("deg");
-        if (degNode != null) {
-            wind.setDegrees(degNode.asDouble());
-        }
-
-        return wind;
+        return objectMapper.readValue(objectMapper.treeAsTokens(windNode), Wind.class);
     }
 
     private Rain parseRain(JsonNode root) {
@@ -292,11 +218,11 @@ public class FiveDayThreeHourStepForecastResponseMapper {
         return location;
     }
 
-    private Coordinate parseCoordinate(JsonNode rootNode) {
+    private Coordinates parseCoordinate(JsonNode rootNode) {
         final JsonNode latitudeNode = rootNode.get("lat");
         final JsonNode longitudeNode = rootNode.get("lon");
         if (latitudeNode != null && longitudeNode != null) {
-            return Coordinate.of(latitudeNode.asDouble(), longitudeNode.asDouble());
+            return Coordinates.of(latitudeNode.asDouble(), longitudeNode.asDouble());
         }
         return null;
     }

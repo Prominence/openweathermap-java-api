@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
@@ -36,13 +36,13 @@ public class HistoricalAirPollutionRequester {
      *
      * @param requestSettings request settings object.
      */
-    public HistoricalAirPollutionRequester(RequestSettings requestSettings) {
+    HistoricalAirPollutionRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
     }
 
-    public AirPollutionRequestCustomizer byCoordinateAndPeriod(Coordinate coordinate, long startUnixTime, long endUnixTime) {
-        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
-        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+    public AirPollutionRequestCustomizer byCoordinateAndPeriod(Coordinates coordinates, long startUnixTime, long endUnixTime) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
         requestSettings.putRequestParameter("start", String.valueOf(startUnixTime));
         requestSettings.putRequestParameter("end", String.valueOf(endUnixTime));
         return new AirPollutionRequestCustomizer(requestSettings);

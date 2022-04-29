@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
+import com.github.prominence.openweathermap.api.model.Wind;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

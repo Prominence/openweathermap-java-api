@@ -29,7 +29,7 @@ import com.github.prominence.openweathermap.api.request.RequestSettings;
 /**
  * The forecast request customizer.
  */
-public class FiveDayThreeHourStepForecastRequestCustomizer {
+class FiveDayThreeHourStepForecastRequestCustomizer {
     private final RequestSettings requestSettings;
 
     /**

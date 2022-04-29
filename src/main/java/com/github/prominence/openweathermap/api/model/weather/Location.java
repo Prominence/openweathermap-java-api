@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -40,7 +40,7 @@ public class Location {
     private LocalDateTime sunsetTime;
     private ZoneOffset zoneOffset;
 
-    private Coordinate coordinate;
+    private Coordinates coordinates;
 
     private Location(int id, String name) {
         this.id = id;
@@ -49,7 +49,8 @@ public class Location {
 
     /**
      * Creates {@link Location} object with correctness check.
-     * @param id location id
+     *
+     * @param id   location id
      * @param name location name
      * @return location object
      */
@@ -62,6 +63,7 @@ public class Location {
 
     /**
      * Returns ID.
+     *
      * @return location ID
      */
     public int getId() {
@@ -70,6 +72,7 @@ public class Location {
 
     /**
      * Sets location ID.
+     *
      * @param id location id
      */
     public void setId(int id) {
@@ -78,6 +81,7 @@ public class Location {
 
     /**
      * Returns location name.
+     *
      * @return location name
      */
     public String getName() {
@@ -86,6 +90,7 @@ public class Location {
 
     /**
      * Sets location name.
+     *
      * @param name location name
      */
     public void setName(String name) {
@@ -94,6 +99,7 @@ public class Location {
 
     /**
      * Returns country code.
+     *
      * @return location country code
      */
     public String getCountryCode() {
@@ -102,6 +108,7 @@ public class Location {
 
     /**
      * Sets location country code.
+     *
      * @param countryCode location country code
      */
     public void setCountryCode(String countryCode) {
@@ -110,6 +117,7 @@ public class Location {
 
     /**
      * Returns location sunrise time.
+     *
      * @return sunrise time
      */
     public LocalDateTime getSunriseTime() {
@@ -118,6 +126,7 @@ public class Location {
 
     /**
      * Sets location sunrise time.
+     *
      * @param sunriseTime sunrise time
      */
     public void setSunriseTime(LocalDateTime sunriseTime) {
@@ -126,6 +135,7 @@ public class Location {
 
     /**
      * Returns location sunset time.
+     *
      * @return sunset time
      */
     public LocalDateTime getSunsetTime() {
@@ -134,6 +144,7 @@ public class Location {
 
     /**
      * Sets location sunset time.
+     *
      * @param sunsetTime sunset time
      */
     public void setSunsetTime(LocalDateTime sunsetTime) {
@@ -142,6 +153,7 @@ public class Location {
 
     /**
      * Returns location timezone offset.
+     *
      * @return timezone offset
      */
     public ZoneOffset getZoneOffset() {
@@ -150,6 +162,7 @@ public class Location {
 
     /**
      * Sets location timezone offset.
+     *
      * @param zoneOffset timezone offset
      */
     public void setZoneOffset(ZoneOffset zoneOffset) {
@@ -158,18 +171,20 @@ public class Location {
 
     /**
      * Returns location coordinates.
+     *
      * @return location coordinates.
      */
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinates getCoordinate() {
+        return coordinates;
     }
 
     /**
      * Sets location coordinates.
-     * @param coordinate location coordinates
+     *
+     * @param coordinates location coordinates
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     @Override
@@ -183,19 +198,19 @@ public class Location {
                 Objects.equals(sunriseTime, location.sunriseTime) &&
                 Objects.equals(sunsetTime, location.sunsetTime) &&
                 Objects.equals(zoneOffset, location.zoneOffset) &&
-                Objects.equals(coordinate, location.coordinate);
+                Objects.equals(coordinates, location.coordinates);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, countryCode, sunriseTime, sunsetTime, zoneOffset, coordinate);
+        return Objects.hash(id, name, countryCode, sunriseTime, sunsetTime, zoneOffset, coordinates);
     }
 
     @Override
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
-        if (coordinate != null) {
-            stringBuilder.append(coordinate.toString());
+        if (coordinates != null) {
+            stringBuilder.append(coordinates.toString());
             stringBuilder.append(". ");
         }
         stringBuilder.append("ID: ");

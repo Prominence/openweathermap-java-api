@@ -24,14 +24,14 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.mapper.FiveDayThreeHourStepForecastResponseMapper;
-import com.github.prominence.openweathermap.api.model.forecast.Forecast;
+import com.github.prominence.openweathermap.api.model.forecast.free.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
  * The forecast request terminator.
  */
-public class FiveDayThreeHourStepForecastRequestTerminator {
+class FiveDayThreeHourStepForecastRequestTerminator {
     private final RequestSettings requestSettings;
 
     /**

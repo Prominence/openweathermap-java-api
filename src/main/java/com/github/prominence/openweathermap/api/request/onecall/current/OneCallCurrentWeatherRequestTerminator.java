@@ -30,7 +30,7 @@ import com.github.prominence.openweathermap.api.utils.RequestUtils;
 /**
  * The type One call current weather request terminator.
  */
-public class OneCallCurrentWeatherRequestTerminator {
+class OneCallCurrentWeatherRequestTerminator {
     private final RequestSettings requestSettings;
 
     /**

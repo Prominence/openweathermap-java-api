@@ -25,9 +25,11 @@ package com.github.prominence.openweathermap.api.model.onecall.historical;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
+import com.github.prominence.openweathermap.api.model.Wind;
 import com.github.prominence.openweathermap.api.model.onecall.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,7 +38,7 @@ import java.util.Objects;
 public class HourlyHistorical {
     private LocalDateTime forecastTime;
 
-    private WeatherState weatherState;
+    private List<WeatherState> weatherStates;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -69,17 +71,17 @@ public class HourlyHistorical {
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -232,7 +234,7 @@ public class HourlyHistorical {
         if (o == null || getClass() != o.getClass()) return false;
         HourlyHistorical that = (HourlyHistorical) o;
         return Objects.equals(forecastTime, that.forecastTime) &&
-                Objects.equals(weatherState, that.weatherState) &&
+                Objects.equals(weatherStates, that.weatherStates) &&
                 Objects.equals(temperature, that.temperature) &&
                 Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
                 Objects.equals(humidity, that.humidity) &&
@@ -245,7 +247,7 @@ public class HourlyHistorical {
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, weatherState, temperature, atmosphericPressure, humidity, clouds, visibilityInMetres, wind, rain, snow);
+        return Objects.hash(forecastTime, weatherStates, temperature, atmosphericPressure, humidity, clouds, visibilityInMetres, wind, rain, snow);
     }
 
     @Override

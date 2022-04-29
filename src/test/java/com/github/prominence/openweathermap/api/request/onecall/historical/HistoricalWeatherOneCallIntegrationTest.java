@@ -27,8 +27,7 @@ import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +44,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final HistoricalWeatherData historicalWeatherData = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -59,7 +58,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final String responseJson = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -75,7 +74,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final CompletableFuture<HistoricalWeatherData> historicalWeatherDataFuture = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
@@ -90,7 +89,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final CompletableFuture<String> responseJsonFuture = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinate.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
@@ -109,7 +108,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 client
                         .oneCall()
                         .historical()
-                        .byCoordinateAndTimestamp(Coordinate.of(53.54, 27.34), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                        .byCoordinateAndTimestamp(Coordinates.of(53.54, 27.34), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                         .language(Language.ENGLISH)
                         .unitSystem(UnitSystem.METRIC)
                         .retrieve()

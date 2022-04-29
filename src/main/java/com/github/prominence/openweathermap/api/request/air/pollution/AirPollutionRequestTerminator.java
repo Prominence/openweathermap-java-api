@@ -40,7 +40,7 @@ public class AirPollutionRequestTerminator {
      *
      * @param requestSettings request settings object.
      */
-    public AirPollutionRequestTerminator(RequestSettings requestSettings) {
+    AirPollutionRequestTerminator(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
     }
 

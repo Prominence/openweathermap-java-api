@@ -25,9 +25,11 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
+import com.github.prominence.openweathermap.api.model.Wind;
 import com.github.prominence.openweathermap.api.model.onecall.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,7 +38,7 @@ import java.util.Objects;
 public class Hourly {
     private LocalDateTime forecastTime;
 
-    private WeatherState weatherState;
+    private List<WeatherState> weatherStates;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -71,17 +73,17 @@ public class Hourly {
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -286,7 +288,7 @@ public class Hourly {
         if (o == null || getClass() != o.getClass()) return false;
         Hourly hourly = (Hourly) o;
         return Objects.equals(forecastTime, hourly.forecastTime) &&
-                Objects.equals(weatherState, hourly.weatherState) &&
+                Objects.equals(weatherStates, hourly.weatherStates) &&
                 Objects.equals(temperature, hourly.temperature) &&
                 Objects.equals(atmosphericPressure, hourly.atmosphericPressure) &&
                 Objects.equals(humidity, hourly.humidity) &&
@@ -301,7 +303,7 @@ public class Hourly {
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, weatherState, temperature, atmosphericPressure, humidity, uvIndex, clouds, visibilityInMetres, wind, probabilityOfPrecipitation, rain, snow);
+        return Objects.hash(forecastTime, weatherStates, temperature, atmosphericPressure, humidity, uvIndex, clouds, visibilityInMetres, wind, probabilityOfPrecipitation, rain, snow);
     }
 
     @Override

@@ -26,9 +26,10 @@ import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.onecall.Wind;
+import com.github.prominence.openweathermap.api.model.Wind;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,7 +44,7 @@ public class Daily {
     private LocalDateTime moonsetTime;
     private MoonPhase moonPhase;
 
-    private WeatherState weatherState;
+    private List<WeatherState> weatherStates;
     private DailyTemperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -167,17 +168,17 @@ public class Daily {
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -372,7 +373,7 @@ public class Daily {
                 Objects.equals(moonriseTime, daily.moonriseTime) &&
                 Objects.equals(moonsetTime, daily.moonsetTime) &&
                 Objects.equals(moonPhase, daily.moonPhase) &&
-                Objects.equals(weatherState, daily.weatherState) &&
+                Objects.equals(weatherStates, daily.weatherStates) &&
                 Objects.equals(temperature, daily.temperature) &&
                 Objects.equals(atmosphericPressure, daily.atmosphericPressure) &&
                 Objects.equals(humidity, daily.humidity) &&
@@ -386,7 +387,7 @@ public class Daily {
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, sunriseTime, sunsetTime, moonriseTime, moonsetTime, moonPhase, weatherState, temperature, atmosphericPressure, humidity, wind, clouds, uvIndex, probabilityOfPrecipitation, rain, snow);
+        return Objects.hash(forecastTime, sunriseTime, sunsetTime, moonriseTime, moonsetTime, moonPhase, weatherStates, temperature, atmosphericPressure, humidity, wind, clouds, uvIndex, probabilityOfPrecipitation, rain, snow);
     }
 
     @Override
@@ -395,9 +396,9 @@ public class Daily {
         stringBuilder.append("Weather on ");
         stringBuilder.append(forecastTime);
         stringBuilder.append(".");
-        if (weatherState != null) {
+        if (weatherStates != null && weatherStates.size() > 0) {
             stringBuilder.append(" Weather: ");
-            stringBuilder.append(weatherState.getDescription());
+            stringBuilder.append(weatherStates.get(0).getDescription());
             stringBuilder.append('.');
         }
         if (temperature != null) {

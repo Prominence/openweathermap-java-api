@@ -33,7 +33,7 @@ import java.util.stream.Stream;
 /**
  * The type One call current weather request customizer.
  */
-public class OneCallCurrentWeatherRequestCustomizer {
+class OneCallCurrentWeatherRequestCustomizer {
     private final RequestSettings requestSettings;
 
     /**

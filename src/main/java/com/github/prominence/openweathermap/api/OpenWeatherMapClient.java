@@ -26,11 +26,14 @@ import com.github.prominence.openweathermap.api.annotation.SubscriptionAvailabil
 import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.air.pollution.AirPollutionRequester;
+import com.github.prominence.openweathermap.api.request.forecast.daily.DailyForecastRequester;
 import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThreeHourStepForecastRequester;
+import com.github.prominence.openweathermap.api.request.forecast.hourly.FourDaysHourlyForecastRequester;
+import com.github.prominence.openweathermap.api.request.geocoding.GeocodingRequester;
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequester;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 
-import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.ALL;
+import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
 
 /**
  * The main public API client to communicate with OpenWeatherMap services.
@@ -75,6 +78,24 @@ public class OpenWeatherMapClient {
     }
 
     /**
+     * Hourly forecast <a href="https://openweathermap.org/api/hourly-forecast">API</a>.
+     * @return requester for retrieving hourly weather forecast information for 4 days.
+     */
+    @SubscriptionAvailability(plans = { DEVELOPER, PROFESSIONAL, ENTERPRISE })
+    public FourDaysHourlyForecastRequester forecastHourly4Days() {
+        return new FourDaysHourlyForecastRequester(new RequestSettings(apiKey, timeoutSettings));
+    }
+
+    /**
+     * Daily forecast <a href="https://openweathermap.org/api/hourly-forecast">API</a>.
+     * @return requester for retrieving daily weather forecast information for 16 days.
+     */
+    @SubscriptionAvailability(plans = PAID)
+    public DailyForecastRequester forecastDaily16Days() {
+        return new DailyForecastRequester(new RequestSettings(apiKey, timeoutSettings));
+    }
+
+    /**
      * One Call <a href="https://openweathermap.org/api/one-call-api">API</a>.
      * To get information about current weather, minute forecast for 1 hour, hourly forecast for 48 hours, daily forecast for 7 days and government weather alerts.
      * @return requester for retrieving one call weather information.
@@ -92,5 +113,10 @@ public class OpenWeatherMapClient {
     @SubscriptionAvailability(plans = ALL)
     public AirPollutionRequester airPollution() {
         return new AirPollutionRequester(new RequestSettings(apiKey, timeoutSettings));
+    }
+
+    @SubscriptionAvailability(plans = ALL)
+    public GeocodingRequester geocoding() {
+        return new GeocodingRequester(new RequestSettings(apiKey, timeoutSettings));
     }
 }

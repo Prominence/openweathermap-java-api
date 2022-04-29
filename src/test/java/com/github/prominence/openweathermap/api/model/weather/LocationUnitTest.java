@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -95,10 +95,10 @@ public class LocationUnitTest {
     @Test
     public void whenSetCoordinate_thenValueIsSet() {
         final Location location = Location.withValues(33, "test");
-        final Coordinate coordinate = Coordinate.of(33.2, 64.2);
-        location.setCoordinate(coordinate);
+        final Coordinates coordinates = Coordinates.of(33.2, 64.2);
+        location.setCoordinate(coordinates);
 
-        assertEquals(coordinate, location.getCoordinate());
+        assertEquals(coordinates, location.getCoordinate());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class LocationUnitTest {
 
         assertNotEquals("", location.toString());
 
-        location.setCoordinate(Coordinate.of(33.2, 56.3));
+        location.setCoordinate(Coordinates.of(33.2, 56.3));
 
         assertNotEquals("", location.toString());
 
@@ -189,13 +189,13 @@ public class LocationUnitTest {
 
         assertEquals(one, two);
 
-        final Coordinate coordinate = Coordinate.of(33.5, -22.4);
+        final Coordinates coordinates = Coordinates.of(33.5, -22.4);
 
-        one.setCoordinate(coordinate);
+        one.setCoordinate(coordinates);
 
         assertNotEquals(one, two);
 
-        two.setCoordinate(coordinate);
+        two.setCoordinate(coordinates);
 
         assertEquals(one, two);
     }

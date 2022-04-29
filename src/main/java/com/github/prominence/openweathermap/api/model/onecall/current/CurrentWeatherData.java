@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.Current;
 
 import java.time.ZoneId;
@@ -34,7 +34,7 @@ import java.util.Objects;
  * The type Current weather data.
  */
 public class CurrentWeatherData {
-    private Coordinate coordinate;
+    private Coordinates coordinates;
     private ZoneId timezone;
     private ZoneOffset timezoneOffset;
 
@@ -49,17 +49,17 @@ public class CurrentWeatherData {
      *
      * @return the coordinate
      */
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinates getCoordinate() {
+        return coordinates;
     }
 
     /**
      * Sets coordinate.
      *
-     * @param coordinate the coordinate
+     * @param coordinates the coordinate
      */
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinate(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     /**
@@ -193,7 +193,7 @@ public class CurrentWeatherData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CurrentWeatherData that = (CurrentWeatherData) o;
-        return Objects.equals(coordinate, that.coordinate) &&
+        return Objects.equals(coordinates, that.coordinates) &&
                 Objects.equals(timezone, that.timezone) &&
                 Objects.equals(timezoneOffset, that.timezoneOffset) &&
                 Objects.equals(current, that.current) &&
@@ -205,11 +205,11 @@ public class CurrentWeatherData {
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate, timezone, timezoneOffset, current, minutelyList, hourlyList, dailyList, alerts);
+        return Objects.hash(coordinates, timezone, timezoneOffset, current, minutelyList, hourlyList, dailyList, alerts);
     }
 
     @Override
     public String toString() {
-        return "Current weather data for " + coordinate + ".";
+        return "Current weather data for " + coordinates + ".";
     }
 }

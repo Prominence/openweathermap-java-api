@@ -32,7 +32,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * The type One call historical weather async request terminator.
  */
-public class OneCallHistoricalWeatherAsyncRequestTerminator {
+class OneCallHistoricalWeatherAsyncRequestTerminator {
     private final RequestSettings requestSettings;
 
     /**

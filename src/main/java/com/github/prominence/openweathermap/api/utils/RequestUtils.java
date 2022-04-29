@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
  */
 public final class RequestUtils {
 
-    private static final String OWM_URL_BASE = "https://api.openweathermap.org/data/2.5/";
+    private static final String OWM_URL_BASE = "https://SUBDOMAIN.openweathermap.org/";
 
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
@@ -52,7 +52,7 @@ public final class RequestUtils {
     }
 
     public static String getResponse(RequestSettings requestSettings) {
-        StringBuilder requestUrlBuilder = new StringBuilder(OWM_URL_BASE);
+        StringBuilder requestUrlBuilder = new StringBuilder(OWM_URL_BASE.replace("SUBDOMAIN", requestSettings.getSubdomain()));
         requestUrlBuilder.append(requestSettings.getUrlAppender());
         requestUrlBuilder.append('?');
         String parameters = requestSettings.getRequestParameters().entrySet().stream()

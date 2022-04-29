@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 /**
@@ -38,7 +38,7 @@ public class FiveDayThreeHourStepForecastRequester {
      */
     public FiveDayThreeHourStepForecastRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
-        this.requestSettings.appendToURL("forecast");
+        this.requestSettings.appendToURL("data/2.5/forecast");
     }
 
     public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName) {
@@ -61,9 +61,9 @@ public class FiveDayThreeHourStepForecastRequester {
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
-    public FiveDayThreeHourStepForecastRequestCustomizer byCoordinate(Coordinate coordinate) {
-        requestSettings.putRequestParameter("lat", String.valueOf(coordinate.getLatitude()));
-        requestSettings.putRequestParameter("lon", String.valueOf(coordinate.getLongitude()));
+    public FiveDayThreeHourStepForecastRequestCustomizer byCoordinates(Coordinates coordinates) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 

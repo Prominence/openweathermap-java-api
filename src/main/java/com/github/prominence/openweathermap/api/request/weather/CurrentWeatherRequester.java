@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2022 Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,64 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.weather.multiple.MultipleLocationsCurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleLocationCurrentWeatherRequester;
 
 /**
- * The type Current weather requester.
+ * The type Single location current weather requester.
  */
 public class CurrentWeatherRequester {
     private final RequestSettings requestSettings;
 
     /**
-     * Instantiates a new Current weather requester.
+     * Instantiates a new Single location current weather requester.
      *
      * @param requestSettings request settings object.
      */
     public CurrentWeatherRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
+        this.requestSettings.appendToURL("data/2.5/weather");
     }
 
-    public SingleLocationCurrentWeatherRequester single() {
-        return new SingleLocationCurrentWeatherRequester(requestSettings);
+    @Deprecated
+    public CurrentWeatherRequestCustomizer byCityName(String cityName) {
+        requestSettings.putRequestParameter("q", cityName);
+        return new CurrentWeatherRequestCustomizer(requestSettings);
     }
 
-    public MultipleLocationsCurrentWeatherRequester multiple() {
-        return new MultipleLocationsCurrentWeatherRequester(requestSettings);
+    @Deprecated
+    public CurrentWeatherRequestCustomizer byCityName(String cityName, String countryCode) {
+        requestSettings.putRequestParameter("q", cityName + "," + countryCode);
+        return new CurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    @Deprecated
+    public CurrentWeatherRequestCustomizer byCityName(String cityName, String stateCode, String countryCode) {
+        requestSettings.putRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
+        return new CurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    @Deprecated
+    public CurrentWeatherRequestCustomizer byCityId(long cityId) {
+        requestSettings.putRequestParameter("id", String.valueOf(cityId));
+        return new CurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    public CurrentWeatherRequestCustomizer byCoordinates(Coordinates coordinates) {
+        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
+        return new CurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    @Deprecated
+    public CurrentWeatherRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
+        requestSettings.putRequestParameter("zip", zipCode + "," + countryCode);
+        return new CurrentWeatherRequestCustomizer(requestSettings);
+    }
+
+    @Deprecated
+    public CurrentWeatherRequestCustomizer byZipCodeInUSA(String zipCode) {
+        requestSettings.putRequestParameter("zip", zipCode);
+        return new CurrentWeatherRequestCustomizer(requestSettings);
     }
 }

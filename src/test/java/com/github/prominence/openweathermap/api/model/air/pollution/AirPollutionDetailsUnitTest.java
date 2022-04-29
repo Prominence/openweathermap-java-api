@@ -24,7 +24,7 @@
 
 package com.github.prominence.openweathermap.api.model.air.pollution;
 
-import com.github.prominence.openweathermap.api.model.Coordinate;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -36,10 +36,10 @@ public class AirPollutionDetailsUnitTest {
     @Test
     public void getCoordinate() {
         final AirPollutionDetails airPollutionDetails = new AirPollutionDetails();
-        final Coordinate coordinate = Coordinate.of(22.3, 44.2);
-        airPollutionDetails.setCoordinate(coordinate);
+        final Coordinates coordinates = Coordinates.of(22.3, 44.2);
+        airPollutionDetails.setCoordinate(coordinates);
 
-        assertEquals(coordinate, airPollutionDetails.getCoordinate());
+        assertEquals(coordinates, airPollutionDetails.getCoordinate());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class AirPollutionDetailsUnitTest {
     public void testEquals() {
         final AirPollutionDetails first = new AirPollutionDetails();
         final AirPollutionDetails second = new AirPollutionDetails();
-        final Coordinate coordinate = Coordinate.of(22.3, 44.2);
+        final Coordinates coordinates = Coordinates.of(22.3, 44.2);
         final List<AirPollutionRecord> airPollutionRecords = new ArrayList<>();
 
         assertEquals(first, first);
@@ -65,11 +65,11 @@ public class AirPollutionDetailsUnitTest {
 
         assertEquals(first, second);
 
-        first.setCoordinate(coordinate);
+        first.setCoordinate(coordinates);
 
         assertNotEquals(first, second);
 
-        second.setCoordinate(coordinate);
+        second.setCoordinate(coordinates);
 
         assertEquals(first, second);
 
@@ -86,11 +86,11 @@ public class AirPollutionDetailsUnitTest {
     public void testHashCode() {
         final AirPollutionDetails first = new AirPollutionDetails();
         final AirPollutionDetails second = new AirPollutionDetails();
-        final Coordinate coordinate = Coordinate.of(22.3, 44.2);
+        final Coordinates coordinates = Coordinates.of(22.3, 44.2);
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setCoordinate(coordinate);
+        first.setCoordinate(coordinates);
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }
