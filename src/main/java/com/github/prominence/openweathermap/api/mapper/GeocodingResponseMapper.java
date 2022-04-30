@@ -28,8 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.github.prominence.openweathermap.api.deserializer.GeocodingRecordDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.ZipCodeGeocodingDeserializer;
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingRecord;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingRecord;
+import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingRecord;
 
 import java.util.List;
 

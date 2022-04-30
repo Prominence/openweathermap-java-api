@@ -32,33 +32,33 @@ public class Rain {
 
     private double level;
 
-    private Rain(double level) {
+    protected Rain(double level) {
         this.level = level;
     }
 
     /**
      * Creates {@link Rain} object with correctness check.
-     * @param threeHourLevel 3-hour rain level value
+     * @param level rain level value
      * @return rain object.
      */
-    public static Rain withThreeHourLevelValue(double threeHourLevel) {
-        if (threeHourLevel < 0) {
+    public static Rain withValue(double level) {
+        if (level < 0) {
             throw new IllegalArgumentException("Rain level value cannot be negative.");
         }
-        return new Rain(threeHourLevel);
+        return new Rain(level);
     }
 
     /**
-     * Returns 3-hour rain level value.
-     * @return 3-hour rain level value
+     * Returns rain level value.
+     * @return rain level value
      */
     public double getLevel() {
         return level;
     }
 
     /**
-     * Sets 3-hour rain level value with correctness check.
-     * @param level 3-hour rain level value
+     * Sets rain level value with correctness check.
+     * @param level rain level value
      */
     public void setLevel(double level) {
         if (level < 0) {
@@ -68,7 +68,7 @@ public class Rain {
     }
 
     /**
-     * Returns rain level unit of measure. Currently is constant.
+     * Returns rain level unit of measure. Currently, is constant.
      * @return rain level unit of measure
      */
     public String getUnit() {
@@ -90,7 +90,7 @@ public class Rain {
 
     @Override
     public String toString() {
-        return "3-hour rain level: " +
+        return "Rain precipitation volume, mm: " +
                 level + ' ' +
                 getUnit();
     }

@@ -22,22 +22,21 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.InjectableValues;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.github.prominence.openweathermap.api.deserializer.*;
 import com.github.prominence.openweathermap.api.deserializer.weather.WeatherLocationDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.weather.WeatherRainDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.weather.WeatherSnowDeserializer;
-import com.github.prominence.openweathermap.api.model.weather.*;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.*;
+import com.github.prominence.openweathermap.api.model.weather.Location;
+import com.github.prominence.openweathermap.api.model.weather.Rain;
+import com.github.prominence.openweathermap.api.model.weather.Snow;
+import com.github.prominence.openweathermap.api.model.weather.Weather;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Official API response documentation: <a href="https://openweathermap.org/current#current_JSON">https://openweathermap.org/current#current_JSON</a>.
@@ -86,13 +85,7 @@ public class CurrentWeatherResponseMapper extends AbstractMapper {
         final JsonNode weatherArrayNode = rootNode.get("weather");
         final Weather weather = new Weather();
 
-        final List<WeatherState> weatherStateList = new ArrayList<>();
-        if (weatherArrayNode != null && weatherArrayNode.isArray()) {
-            for (JsonNode weatherNode : weatherArrayNode) {
-                weatherStateList.add(objectMapper.readValue(objectMapper.treeAsTokens(weatherNode), WeatherState.class));
-            }
-            weather.setWeatherStates(weatherStateList);
-        }
+        weather.setWeatherStates(parseWeatherStates(weatherArrayNode));
 
         weather.setTemperature(objectMapper.readValue(objectMapper.treeAsTokens(rootNode.get("main")), Temperature.class));
         weather.setAtmosphericPressure(objectMapper.readValue(objectMapper.treeAsTokens(rootNode.get("main")), AtmosphericPressure.class));

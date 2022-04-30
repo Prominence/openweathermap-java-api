@@ -30,7 +30,7 @@ public class DailyForecastRequester {
 
     public DailyForecastRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
-        this.requestSettings.appendToURL("data/2.5/forecast/hourly");
+        this.requestSettings.appendToURL("data/2.5/forecast/daily");
     }
 
     public DailyForecastRequestCustomizer byCoordinates(Coordinates coordinates) {

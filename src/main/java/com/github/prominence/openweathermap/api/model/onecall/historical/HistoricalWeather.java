@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.onecall.*;
+import com.github.prominence.openweathermap.api.model.onecall.Current;
 
 /**
  * The type Historical weather.

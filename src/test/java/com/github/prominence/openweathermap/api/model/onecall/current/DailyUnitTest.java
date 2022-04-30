@@ -25,8 +25,8 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

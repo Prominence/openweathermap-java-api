@@ -7,6 +7,12 @@ Free:
 * 5 day / 3-hour forecast
 * One Call API
 * Air pollution
+* Geocoding API
+
+Paid:
+* Hourly Forecast 4 days
+* Daily Forecast 16 days
+* Climatic 30 days
 
 Other:
 * Request timeout settings
@@ -14,14 +20,15 @@ Other:
 ### Will be implemented later:
 
 Free:
-* Geocoding API
 * Weather Stations
 * Weather Triggers
   
 Paid:
-* Daily Forecast 16 days
-* Hourly Forecast 4 days
-* probably others...
+* Climatic Forecast 30 days
+* Bulk Downloading
+* Solar Radiation API
+* Global Weather Alerts / Push notifications
+* Road Risk API
 
 ### Maven coordinates:
 

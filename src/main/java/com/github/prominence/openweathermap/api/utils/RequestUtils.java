@@ -23,8 +23,8 @@
 package com.github.prominence.openweathermap.api.utils;
 
 import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
-import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
+import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

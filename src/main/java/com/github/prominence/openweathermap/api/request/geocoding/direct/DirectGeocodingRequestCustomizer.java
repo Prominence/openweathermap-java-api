@@ -23,8 +23,6 @@
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.geocoding.reverse.ReverseGeocodingRequestAsyncTerminator;
-import com.github.prominence.openweathermap.api.request.geocoding.reverse.ReverseGeocodingRequestTerminator;
 
 import java.util.function.Function;
 

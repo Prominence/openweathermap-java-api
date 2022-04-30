@@ -31,7 +31,7 @@ import java.util.Objects;
  */
 public class Forecast {
     private Location location;
-    private List<WeatherForecast> weatherForecasts;
+    private List<? extends WeatherForecast> weatherForecasts;
 
     /**
      * Returns location information.
@@ -53,7 +53,7 @@ public class Forecast {
      * Returns list of weather forecasts for different timestamps.
      * @return list of forecast-per-timestamp information.
      */
-    public List<WeatherForecast> getWeatherForecasts() {
+    public List<? extends WeatherForecast> getWeatherForecasts() {
         return weatherForecasts;
     }
 
@@ -61,7 +61,7 @@ public class Forecast {
      * Sets list of weather forecasts for different timestamps.
      * @param weatherForecasts list of forecast information
      */
-    public void setWeatherForecasts(List<WeatherForecast> weatherForecasts) {
+    public void setWeatherForecasts(List<? extends WeatherForecast> weatherForecasts) {
         this.weatherForecasts = weatherForecasts;
     }
 

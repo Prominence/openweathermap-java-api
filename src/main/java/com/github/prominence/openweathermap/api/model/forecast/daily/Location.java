@@ -41,7 +41,7 @@ public class Location {
 
     private Long population;
 
-    private Location(int id, String name) {
+    protected Location(int id, String name) {
         this.id = id;
         this.name = name;
     }

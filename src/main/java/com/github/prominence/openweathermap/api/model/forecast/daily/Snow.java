@@ -32,16 +32,16 @@ public class Snow {
 
     private double level;
 
-    private Snow(double level) {
+    protected Snow(double level) {
         this.level = level;
     }
 
     /**
      * Creates {@link Snow} object with correctness check.
-     * @param threeHourLevel 3-hour snow level value
+     * @param threeHourLevel snow level value
      * @return snow object.
      */
-    public static Snow withThreeHourLevelValue(double threeHourLevel) {
+    public static Snow withValue(double threeHourLevel) {
         if (threeHourLevel < 0) {
             throw new IllegalArgumentException("Snow level value cannot be negative.");
         }
@@ -49,16 +49,16 @@ public class Snow {
     }
 
     /**
-     * Returns 3-hour snow level value.
-     * @return 3-hour snow level value
+     * Returns snow level value.
+     * @return snow level value
      */
     public double getLevel() {
         return level;
     }
 
     /**
-     * Sets 3-hour snow level value with correctness check.
-     * @param level 3-hour snow level value
+     * Sets snow level value with correctness check.
+     * @param level snow level value
      */
     public void setLevel(double level) {
         if (level < 0) {
@@ -68,7 +68,7 @@ public class Snow {
     }
 
     /**
-     * Returns snow level unit of measure. Currently is constant.
+     * Returns snow level unit of measure. Currently, is constant.
      * @return snow level unit of measure
      */
     public String getUnit() {
@@ -90,7 +90,7 @@ public class Snow {
 
     @Override
     public String toString() {
-        return "3-hour snow level: " +
+        return "Snow volume, mm: " +
                 level + ' ' +
                 getUnit();
     }

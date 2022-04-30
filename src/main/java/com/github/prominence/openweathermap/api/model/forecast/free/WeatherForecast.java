@@ -23,7 +23,6 @@
 package com.github.prominence.openweathermap.api.model.forecast.free;
 
 import com.github.prominence.openweathermap.api.model.*;
-import com.github.prominence.openweathermap.api.model.Wind;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

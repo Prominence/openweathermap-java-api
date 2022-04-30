@@ -33,7 +33,7 @@ public class AtmosphericPressure {
 
     private double seaLevelValue;
 
-    private AtmosphericPressure() {
+    protected AtmosphericPressure() {
     }
 
     /**

@@ -26,7 +26,10 @@ import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.onecall.*;
+import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.onecall.Rain;
+import com.github.prominence.openweathermap.api.model.onecall.Snow;
+import com.github.prominence.openweathermap.api.model.onecall.Temperature;
 
 import java.time.LocalDateTime;
 import java.util.List;

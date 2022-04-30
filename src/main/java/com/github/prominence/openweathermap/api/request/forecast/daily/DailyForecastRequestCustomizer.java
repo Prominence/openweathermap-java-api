@@ -50,7 +50,7 @@ class DailyForecastRequestCustomizer {
     public DailyForecastRequestCustomizer numberOfDays(int numberOfDays) {
         int days = numberOfDays;
         if (days > 16) {
-            logger.warn("Cannot use more than 16 days for this api request. Please, specify 16 or less days. !!! Requesting information for 16 days...");
+            logger.warn("Cannot use more than 16 days for this API request. Please, specify 16 or less days. !!! Requesting information for 16 days...");
             days = 16;
         }
         requestSettings.putRequestParameter("cnt", Integer.toString(days));

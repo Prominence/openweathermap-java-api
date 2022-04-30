@@ -29,6 +29,7 @@ import com.github.prominence.openweathermap.api.model.WeatherState;
 import com.github.prominence.openweathermap.api.model.Wind;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,12 +37,10 @@ import java.util.Objects;
  */
 public class WeatherForecast {
     private LocalDateTime forecastTime;
-
     private LocalDateTime sunriseTime;
-
     private LocalDateTime sunsetTime;
 
-    private WeatherState weatherState;
+    private List<WeatherState> weatherStates;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -50,6 +49,8 @@ public class WeatherForecast {
     private Rain rain;
     private Snow snow;
     private Clouds clouds;
+
+    private Double probabilityOfPrecipitation;
 
     /**
      * Gets forecast time.
@@ -69,22 +70,38 @@ public class WeatherForecast {
         this.forecastTime = forecastTime;
     }
 
+    public LocalDateTime getSunriseTime() {
+        return sunriseTime;
+    }
+
+    public void setSunriseTime(LocalDateTime sunriseTime) {
+        this.sunriseTime = sunriseTime;
+    }
+
+    public LocalDateTime getSunsetTime() {
+        return sunsetTime;
+    }
+
+    public void setSunsetTime(LocalDateTime sunsetTime) {
+        this.sunsetTime = sunsetTime;
+    }
+
     /**
      * Gets weather state.
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -213,25 +230,36 @@ public class WeatherForecast {
         this.clouds = clouds;
     }
 
+    public Double getProbabilityOfPrecipitation() {
+        return probabilityOfPrecipitation;
+    }
+
+    public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
+        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WeatherForecast that = (WeatherForecast) o;
         return Objects.equals(forecastTime, that.forecastTime) &&
-                Objects.equals(weatherState, that.weatherState) &&
+                Objects.equals(sunriseTime, that.sunriseTime) &&
+                Objects.equals(sunsetTime, that.sunsetTime) &&
+                Objects.equals(weatherStates, that.weatherStates) &&
                 Objects.equals(temperature, that.temperature) &&
                 Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
                 Objects.equals(humidity, that.humidity) &&
                 Objects.equals(wind, that.wind) &&
                 Objects.equals(rain, that.rain) &&
                 Objects.equals(snow, that.snow) &&
-                Objects.equals(clouds, that.clouds);
+                Objects.equals(clouds, that.clouds) &&
+                Objects.equals(probabilityOfPrecipitation, that.probabilityOfPrecipitation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, weatherState, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds);
+        return Objects.hash(forecastTime, sunriseTime, sunsetTime, weatherStates, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, probabilityOfPrecipitation);
     }
 
     @Override
@@ -239,9 +267,9 @@ public class WeatherForecast {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Timestamp: ");
         stringBuilder.append(forecastTime);
-        if (weatherState != null) {
+        if (weatherStates != null && weatherStates.size() > 0) {
             stringBuilder.append(", Weather: ");
-            stringBuilder.append(weatherState.getDescription());
+            stringBuilder.append(weatherStates.get(0).getDescription());
         }
         if (temperature != null) {
             stringBuilder.append(", Min temperature: ");
@@ -259,7 +287,7 @@ public class WeatherForecast {
         }
         if (clouds != null) {
             stringBuilder.append(", ");
-            stringBuilder.append(clouds.toString());
+            stringBuilder.append(clouds);
         }
         if (rain != null) {
             stringBuilder.append(", Rain: ");
