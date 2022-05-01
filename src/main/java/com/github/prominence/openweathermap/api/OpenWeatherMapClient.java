@@ -33,6 +33,7 @@ import com.github.prominence.openweathermap.api.request.forecast.hourly.FourDays
 import com.github.prominence.openweathermap.api.request.geocoding.GeocodingRequester;
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequester;
 import com.github.prominence.openweathermap.api.request.radiation.SolarRadiationRequester;
+import com.github.prominence.openweathermap.api.request.roadrisk.RoadRiskRequester;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 
 import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
@@ -123,6 +124,15 @@ public class OpenWeatherMapClient {
     @SubscriptionAvailability(plans = ALL)
     public FiveDayThreeHourStepForecastRequester forecast5Day3HourStep() {
         return new FiveDayThreeHourStepForecastRequester(new RequestSettings(apiKey, timeoutSettings));
+    }
+
+    /**
+     * Road Risk <a href="https://openweathermap.org/api/road-risk">API</a>.
+     * @return requester for retrieving road risk information.
+     */
+    @SubscriptionAvailability(plans = SPECIAL)
+    public RoadRiskRequester roadRisk() {
+        return new RoadRiskRequester(new RequestSettings(apiKey, timeoutSettings));
     }
 
     /**

@@ -26,8 +26,10 @@ import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RequestSettings {
@@ -40,6 +42,8 @@ public class RequestSettings {
     private final TimeoutSettings timeoutSettings;
 
     private final Map<String, String> requestParameters = new HashMap<>(8);
+
+    private final Map<String, Object> requestBody = new HashMap<>();
 
     private final StringBuilder urlAppenderBuilder = new StringBuilder();
 
@@ -106,5 +110,9 @@ public class RequestSettings {
 
     public StringBuilder getUrlAppender() {
         return urlAppenderBuilder;
+    }
+
+    public void addToRequestBody(String key, Object object) {
+        requestBody.put(key, object);
     }
 }

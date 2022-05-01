@@ -70,6 +70,7 @@ public final class RequestUtils {
      * @return response from the request in <code>String</code> representation.
      * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
      */
+    @Deprecated
     public static String getResponse(String url) {
         return getResponse(url, new TimeoutSettings());
     }

@@ -14,6 +14,7 @@ Paid:
 * Daily Forecast 16 days
 * Climatic 30 days
 * Solar Radiation API
+* Road Risk API
 
 Other:
 * Request timeout settings

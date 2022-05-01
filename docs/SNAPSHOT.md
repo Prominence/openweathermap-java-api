@@ -5,6 +5,7 @@
 * Daily forecast
 * Solar Radiation API
 * 5 day / 3-hour forecast
+* Road Risk API
 * Air Pollution
 * Geocoding API
 
