@@ -46,16 +46,19 @@ public class FiveDayThreeHourStepForecastRequester {
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
+    @Deprecated
     public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode) {
         requestSettings.putRequestParameter("q", cityName + "," + stateCode);
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
+    @Deprecated
     public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode, String countryCode) {
         requestSettings.putRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
+    @Deprecated
     public FiveDayThreeHourStepForecastRequestCustomizer byCityId(long cityId) {
         requestSettings.putRequestParameter("id", Long.toString(cityId));
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
@@ -67,11 +70,13 @@ public class FiveDayThreeHourStepForecastRequester {
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
+    @Deprecated
     public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
         requestSettings.putRequestParameter("zip", zipCode + "," + countryCode);
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
+    @Deprecated
     public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode) {
         requestSettings.putRequestParameter("zip", zipCode);
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);

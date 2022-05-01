@@ -54,7 +54,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());
@@ -106,7 +106,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());
@@ -158,7 +158,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());
@@ -209,7 +209,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());
@@ -260,7 +260,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());
@@ -311,7 +311,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());
@@ -362,7 +362,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
         for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherState());
+            assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
             assertNotNull(weatherForecast.getAtmosphericPressure());

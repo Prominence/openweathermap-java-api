@@ -25,6 +25,7 @@ package com.github.prominence.openweathermap.api.model.forecast.free;
 import com.github.prominence.openweathermap.api.model.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -33,7 +34,7 @@ import java.util.Objects;
 public class WeatherForecast {
     private LocalDateTime forecastTime;
 
-    private WeatherState weatherState;
+    private List<WeatherState> weatherStates;
     private Temperature temperature;
     private AtmosphericPressure atmosphericPressure;
     private Humidity humidity;
@@ -45,6 +46,9 @@ public class WeatherForecast {
 
     private String forecastTimeISO;
     private DayTime dayTime;
+
+    private Double visibilityInMetres;
+    private Double probabilityOfPrecipitation;
 
     /**
      * Gets forecast time.
@@ -69,17 +73,17 @@ public class WeatherForecast {
      *
      * @return the weather state
      */
-    public WeatherState getWeatherState() {
-        return weatherState;
+    public List<WeatherState> getWeatherStates() {
+        return weatherStates;
     }
 
     /**
      * Sets weather state.
      *
-     * @param weatherState the weather state
+     * @param weatherStates the weather state
      */
-    public void setWeatherState(WeatherState weatherState) {
-        this.weatherState = weatherState;
+    public void setWeatherStates(List<WeatherState> weatherStates) {
+        this.weatherStates = weatherStates;
     }
 
     /**
@@ -244,13 +248,29 @@ public class WeatherForecast {
         this.dayTime = dayTime;
     }
 
+    public Double getVisibilityInMetres() {
+        return visibilityInMetres;
+    }
+
+    public void setVisibilityInMetres(Double visibilityInMetres) {
+        this.visibilityInMetres = visibilityInMetres;
+    }
+
+    public Double getProbabilityOfPrecipitation() {
+        return probabilityOfPrecipitation;
+    }
+
+    public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
+        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WeatherForecast that = (WeatherForecast) o;
         return Objects.equals(forecastTime, that.forecastTime) &&
-                Objects.equals(weatherState, that.weatherState) &&
+                Objects.equals(weatherStates, that.weatherStates) &&
                 Objects.equals(temperature, that.temperature) &&
                 Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
                 Objects.equals(humidity, that.humidity) &&
@@ -259,12 +279,14 @@ public class WeatherForecast {
                 Objects.equals(snow, that.snow) &&
                 Objects.equals(clouds, that.clouds) &&
                 Objects.equals(forecastTimeISO, that.forecastTimeISO) &&
+                Objects.equals(visibilityInMetres, that.visibilityInMetres) &&
+                Objects.equals(probabilityOfPrecipitation, that.probabilityOfPrecipitation) &&
                 dayTime == that.dayTime;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(forecastTime, weatherState, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, dayTime);
+        return Objects.hash(forecastTime, weatherStates, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, visibilityInMetres, probabilityOfPrecipitation, dayTime);
     }
 
     @Override
@@ -272,9 +294,9 @@ public class WeatherForecast {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Timestamp: ");
         stringBuilder.append(forecastTimeISO);
-        if (weatherState != null) {
+        if (weatherStates != null && weatherStates.size() > 0) {
             stringBuilder.append(", Weather: ");
-            stringBuilder.append(weatherState.getDescription());
+            stringBuilder.append(weatherStates.get(0).getDescription());
         }
         if (temperature != null) {
             stringBuilder.append(", ");

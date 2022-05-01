@@ -56,7 +56,7 @@ public class FiveDayThreeHourStepForecastResponseMapperUnitTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        forecast.getWeatherForecasts().forEach(weatherForecast -> assertNull(weatherForecast.getWeatherState()));
+        forecast.getWeatherForecasts().forEach(weatherForecast -> assertNull(weatherForecast.getWeatherStates()));
     }
 
     @Test
