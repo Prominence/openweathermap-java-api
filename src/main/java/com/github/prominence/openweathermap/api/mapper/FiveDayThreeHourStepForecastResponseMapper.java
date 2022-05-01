@@ -207,7 +207,7 @@ public class FiveDayThreeHourStepForecastResponseMapper {
 
         final JsonNode coordNode = rootNode.get("coord");
         if (coordNode != null) {
-            location.setCoordinate(parseCoordinate(coordNode));
+            location.setCoordinates(parseCoordinate(coordNode));
         }
 
         final JsonNode populationNode = rootNode.get("population");

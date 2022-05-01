@@ -20,46 +20,29 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.enums;
+package com.github.prominence.openweathermap.api.request.radiation;
 
-/**
- * An enumeration with all available subscription plans.
- * More information <a href="https://openweathermap.org/price">at official website</a>.
- */
-public enum SubscriptionPlan {
-    /**
-     * An alias that represents any of paid plans: startup, developer, professional or enterprise.
-     */
-    PAID,
+import com.github.prominence.openweathermap.api.mapper.SolarRadiationResponseMapper;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-    /**
-     * Startup subscription plan.
-     */
-    STARTUP,
+class SolarRadiationRequestTerminator {
+    private final RequestSettings requestSettings;
 
-    /**
-     * Developer subscription plan.
-     */
-    DEVELOPER,
+    public SolarRadiationRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * Professional subscription plan.
-     */
-    PROFESSIONAL,
+    public SolarRadiation asJava() {
+        return new SolarRadiationResponseMapper().mapToObject(getRawResponse());
+    }
 
-    /**
-     * Enterprise subscription plan.
-     */
-    ENTERPRISE,
+    public String asJSON() {
+        return getRawResponse();
+    }
 
-    /**
-     * Special subscription plan. You should contact a manager to get an access.
-     */
-    SPECIAL,
-
-
-    /**
-     * All existing subscription plans.
-     */
-    ALL,
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

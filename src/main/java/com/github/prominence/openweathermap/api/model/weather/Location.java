@@ -174,7 +174,7 @@ public class Location {
      *
      * @return location coordinates.
      */
-    public Coordinates getCoordinate() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
@@ -183,7 +183,7 @@ public class Location {
      *
      * @param coordinates location coordinates
      */
-    public void setCoordinate(Coordinates coordinates) {
+    public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 

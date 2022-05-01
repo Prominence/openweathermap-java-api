@@ -74,7 +74,7 @@ public class HourlyForecastLocationDeserializer extends JsonDeserializer<Locatio
 
         final JsonNode coordNode = rootNode.get("coord");
         if (coordNode != null) {
-            location.setCoordinate(objectMapper.readValue(objectMapper.treeAsTokens(coordNode), Coordinates.class));
+            location.setCoordinates(objectMapper.readValue(objectMapper.treeAsTokens(coordNode), Coordinates.class));
         }
 
         return location;

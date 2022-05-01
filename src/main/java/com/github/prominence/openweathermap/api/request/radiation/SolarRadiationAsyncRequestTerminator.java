@@ -20,46 +20,31 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.enums;
+package com.github.prominence.openweathermap.api.request.radiation;
 
-/**
- * An enumeration with all available subscription plans.
- * More information <a href="https://openweathermap.org/price">at official website</a>.
- */
-public enum SubscriptionPlan {
-    /**
-     * An alias that represents any of paid plans: startup, developer, professional or enterprise.
-     */
-    PAID,
+import com.github.prominence.openweathermap.api.mapper.SolarRadiationResponseMapper;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
-    /**
-     * Startup subscription plan.
-     */
-    STARTUP,
+import java.util.concurrent.CompletableFuture;
 
-    /**
-     * Developer subscription plan.
-     */
-    DEVELOPER,
+class SolarRadiationAsyncRequestTerminator {
+    private final RequestSettings requestSettings;
 
-    /**
-     * Professional subscription plan.
-     */
-    PROFESSIONAL,
+    public SolarRadiationAsyncRequestTerminator(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
+    }
 
-    /**
-     * Enterprise subscription plan.
-     */
-    ENTERPRISE,
+    public CompletableFuture<SolarRadiation> asJava() {
+        return CompletableFuture.supplyAsync(() -> new SolarRadiationResponseMapper().mapToObject(getRawResponse()));
+    }
 
-    /**
-     * Special subscription plan. You should contact a manager to get an access.
-     */
-    SPECIAL,
+    public CompletableFuture<String> asJSON() {
+        return CompletableFuture.supplyAsync(this::getRawResponse);
+    }
 
-
-    /**
-     * All existing subscription plans.
-     */
-    ALL,
+    private String getRawResponse() {
+        return RequestUtils.getResponse(requestSettings);
+    }
 }

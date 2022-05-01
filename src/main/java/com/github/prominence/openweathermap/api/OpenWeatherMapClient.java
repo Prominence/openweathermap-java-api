@@ -32,6 +32,7 @@ import com.github.prominence.openweathermap.api.request.forecast.free.FiveDayThr
 import com.github.prominence.openweathermap.api.request.forecast.hourly.FourDaysHourlyForecastRequester;
 import com.github.prominence.openweathermap.api.request.geocoding.GeocodingRequester;
 import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRequester;
+import com.github.prominence.openweathermap.api.request.radiation.SolarRadiationRequester;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 
 import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.*;
@@ -104,6 +105,11 @@ public class OpenWeatherMapClient {
     @SubscriptionAvailability(plans = { DEVELOPER, PROFESSIONAL, ENTERPRISE })
     public ClimaticForecastRequester climaticForecast30Days() {
         return new ClimaticForecastRequester(new RequestSettings(apiKey, timeoutSettings));
+    }
+
+    @SubscriptionAvailability(plans = SPECIAL)
+    public SolarRadiationRequester solarRadiation() {
+        return new SolarRadiationRequester(new RequestSettings(apiKey, timeoutSettings));
     }
 
     /**

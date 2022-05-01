@@ -34,12 +34,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoricalWeatherDataUnitTest {
     @Test
-    public void getCoordinate() {
+    public void getCoordinates() {
         final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
         final Coordinates coordinates = Coordinates.of(11.2, 43.2);
-        historicalWeatherData.setCoordinate(coordinates);
+        historicalWeatherData.setCoordinates(coordinates);
 
-        assertEquals(coordinates, historicalWeatherData.getCoordinate());
+        assertEquals(coordinates, historicalWeatherData.getCoordinates());
     }
 
     @Test
@@ -95,11 +95,11 @@ public class HistoricalWeatherDataUnitTest {
 
         assertEquals(first, second);
 
-        first.setCoordinate(coordinates);
+        first.setCoordinates(coordinates);
 
         assertNotEquals(first, second);
 
-        second.setCoordinate(coordinates);
+        second.setCoordinates(coordinates);
 
         assertEquals(first, second);
 
@@ -143,7 +143,7 @@ public class HistoricalWeatherDataUnitTest {
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setCoordinate(Coordinates.of(11, 42));
+        first.setCoordinates(Coordinates.of(11, 42));
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }
@@ -151,7 +151,7 @@ public class HistoricalWeatherDataUnitTest {
     @Test
     public void getToString() {
         final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        historicalWeatherData.setCoordinate(Coordinates.of(32, 22));
+        historicalWeatherData.setCoordinates(Coordinates.of(32, 22));
 
         assertNotNull(historicalWeatherData.toString());
         assertNotEquals("", historicalWeatherData.toString());

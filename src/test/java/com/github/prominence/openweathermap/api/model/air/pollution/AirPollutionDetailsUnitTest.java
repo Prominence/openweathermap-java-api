@@ -35,12 +35,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class AirPollutionDetailsUnitTest {
     @Test
-    public void getCoordinate() {
+    public void getCoordinates() {
         final AirPollutionDetails airPollutionDetails = new AirPollutionDetails();
         final Coordinates coordinates = Coordinates.of(22.3, 44.2);
-        airPollutionDetails.setCoordinate(coordinates);
+        airPollutionDetails.setCoordinates(coordinates);
 
-        assertEquals(coordinates, airPollutionDetails.getCoordinate());
+        assertEquals(coordinates, airPollutionDetails.getCoordinates());
     }
 
     @Test
@@ -66,11 +66,11 @@ public class AirPollutionDetailsUnitTest {
 
         assertEquals(first, second);
 
-        first.setCoordinate(coordinates);
+        first.setCoordinates(coordinates);
 
         assertNotEquals(first, second);
 
-        second.setCoordinate(coordinates);
+        second.setCoordinates(coordinates);
 
         assertEquals(first, second);
 
@@ -91,7 +91,7 @@ public class AirPollutionDetailsUnitTest {
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setCoordinate(coordinates);
+        first.setCoordinates(coordinates);
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }

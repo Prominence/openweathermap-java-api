@@ -1096,7 +1096,7 @@ public class CurrentWeatherResponseMapperTest {
 
         Weather weather = mapper.mapToWeather(jsonString);
 
-        assertNotNull(weather.getLocation().getCoordinate());
+        assertNotNull(weather.getLocation().getCoordinates());
         assertNotNull(weather.getLocation().getCountryCode());
 
         // without coordinates and country code
@@ -1144,7 +1144,7 @@ public class CurrentWeatherResponseMapperTest {
                 }
                 """;
         weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinate());
+        assertNull(weather.getLocation().getCoordinates());
         assertNull(weather.getLocation().getCountryCode());
 
         // coordinates without latitude
@@ -1196,7 +1196,7 @@ public class CurrentWeatherResponseMapperTest {
                 }
                 """;
         weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinate());
+        assertNull(weather.getLocation().getCoordinates());
         assertNotNull(weather.getLocation().getCountryCode());
 
         // coordinates without longitude
@@ -1248,7 +1248,7 @@ public class CurrentWeatherResponseMapperTest {
                 }
                 """;
         weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinate());
+        assertNull(weather.getLocation().getCoordinates());
         assertNotNull(weather.getLocation().getCountryCode());
     }
 }

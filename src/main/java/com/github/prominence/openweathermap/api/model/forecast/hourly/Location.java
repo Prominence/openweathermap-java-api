@@ -160,7 +160,7 @@ public class Location {
      * Returns location coordinates.
      * @return location coordinates.
      */
-    public Coordinates getCoordinate() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
@@ -168,7 +168,7 @@ public class Location {
      * Sets location coordinates.
      * @param coordinates location coordinates
      */
-    public void setCoordinate(Coordinates coordinates) {
+    public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
     @Override

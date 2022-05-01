@@ -61,7 +61,7 @@ public class AirPollutionResponseMapper {
 
     private AirPollutionDetails mapToAirPollution(JsonNode rootNode) {
         final AirPollutionDetails airPollutionDetails = new AirPollutionDetails();
-        airPollutionDetails.setCoordinate(parseCoordinate(rootNode.get("coord")));
+        airPollutionDetails.setCoordinates(parseCoordinate(rootNode.get("coord")));
 
         final List<AirPollutionRecord> sampleList = new ArrayList<>();
         final JsonNode sampleListNode = rootNode.get("list");

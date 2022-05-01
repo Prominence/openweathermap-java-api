@@ -3,6 +3,7 @@
 * Hourly forecast
 * One Call API
 * Daily forecast
+* Solar Radiation API
 * 5 day / 3-hour forecast
 * Air Pollution
 * Geocoding API
@@ -344,7 +345,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 
 | Method                        | Description                                                                    |
 |-------------------------------|--------------------------------------------------------------------------------|
-| `getCoordinate()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.        |
+| `getCoordinates()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.        |
 | `getTimezone()`               | Returns location timezone object.                                              |
 | `getTimezoneOffset()`         | Returns zone offset.                                                           |
 | `getCurrent()`                | Returns `Current` object with current weather state if available.              |
@@ -432,7 +433,7 @@ You are able to set preferable options(via chain methods) and execute appropriat
 
 | Method                        | Description                                                                   |
 |-------------------------------|-------------------------------------------------------------------------------|
-| `getCoordinate()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.       |
+| `getCoordinates()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.       |
 | `getTimezone()`               | Returns location timezone object.                                             |
 | `getTimezoneOffset()`         | Returns zone offset.                                                          |
 | `getHistoricalWeather()`      | Returns `HistoricalWeather` object with historical weather state.             |
@@ -495,7 +496,7 @@ final AirPollutionDetails airPollutionDetails = openWeatherClient
 
 | Method                        | Description                                                               |
 |-------------------------------|---------------------------------------------------------------------------|
-| `getCoordinate()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.   |
+| `getCoordinates()`             | Returns `Coordinate` object. Available fields: `latitude`, `longitude`.   |
 | `getAirPollutionRecords()`    | Returns list of `AirPollutionRecord` objects.                             |
 
 `com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionRecord`'s useful public methods(setters are not listed):

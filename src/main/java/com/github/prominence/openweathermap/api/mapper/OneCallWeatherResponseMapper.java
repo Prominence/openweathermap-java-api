@@ -111,7 +111,7 @@ public class OneCallWeatherResponseMapper extends AbstractMapper {
 
     private CurrentWeatherData mapToCurrent(JsonNode rootNode) throws IOException {
         final CurrentWeatherData currentData = new CurrentWeatherData();
-        currentData.setCoordinate(objectMapper.readValue(objectMapper.treeAsTokens(rootNode), Coordinates.class));
+        currentData.setCoordinates(objectMapper.readValue(objectMapper.treeAsTokens(rootNode), Coordinates.class));
         currentData.setTimezone(parseZoneId(rootNode.get("timezone")));
         currentData.setTimezoneOffset(parseZoneOffset(rootNode.get("timezone_offset")));
 
@@ -261,7 +261,7 @@ public class OneCallWeatherResponseMapper extends AbstractMapper {
 
     private HistoricalWeatherData mapToHistorical(JsonNode rootNode) throws IOException {
         final HistoricalWeatherData historicalData = new HistoricalWeatherData();
-        historicalData.setCoordinate(Coordinates.of(rootNode.get("lat").asDouble(), rootNode.get("lon").asDouble()));
+        historicalData.setCoordinates(Coordinates.of(rootNode.get("lat").asDouble(), rootNode.get("lon").asDouble()));
         historicalData.setTimezone(parseZoneId(rootNode.get("timezone")));
         historicalData.setTimezoneOffset(parseZoneOffset(rootNode.get("timezone_offset")));
         historicalData.setHistoricalWeather(parseHistoricalWeather(rootNode.get("current")));

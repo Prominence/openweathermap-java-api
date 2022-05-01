@@ -45,7 +45,7 @@ public class HistoricalWeatherData {
      *
      * @return the coordinate
      */
-    public Coordinates getCoordinate() {
+    public Coordinates getCoordinates() {
         return coordinates;
     }
 
@@ -54,7 +54,7 @@ public class HistoricalWeatherData {
      *
      * @param coordinates the coordinate
      */
-    public void setCoordinate(Coordinates coordinates) {
+    public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 

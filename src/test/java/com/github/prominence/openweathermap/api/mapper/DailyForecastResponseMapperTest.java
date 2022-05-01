@@ -79,7 +79,7 @@ class DailyForecastResponseMapperTest {
 
         final Location location = forecast.getLocation();
         assertNotNull(location);
-        assertEquals(Coordinates.of(51.5085, -0.1258), location.getCoordinate());
+        assertEquals(Coordinates.of(51.5085, -0.1258), location.getCoordinates());
         assertEquals(2643743, location.getId());
         assertEquals("London", location.getName());
         assertEquals("GB", location.getCountryCode());

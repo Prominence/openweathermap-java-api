@@ -72,7 +72,7 @@ class ClimaticForecastResponseMapperTest {
 
         final Location location = forecast.getLocation();
         assertNotNull(location);
-        assertEquals(Coordinates.of(51.5073, -0.1277), location.getCoordinate());
+        assertEquals(Coordinates.of(51.5073, -0.1277), location.getCoordinates());
         assertEquals(2643743, location.getId());
         assertEquals("London", location.getName());
         assertEquals("GB", location.getCountryCode());

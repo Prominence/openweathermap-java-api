@@ -41,7 +41,7 @@ public class DailyForecastLocationDeserializer extends JsonDeserializer<Location
 
         final JsonNode coordNode = rootNode.get("coord");
         if (coordNode != null) {
-            location.setCoordinate(objectMapper.readValue(objectMapper.treeAsTokens(coordNode), Coordinates.class));
+            location.setCoordinates(objectMapper.readValue(objectMapper.treeAsTokens(coordNode), Coordinates.class));
         }
 
         final JsonNode populationNode = rootNode.get("population");

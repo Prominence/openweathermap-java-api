@@ -109,7 +109,7 @@ class HourlyForecastResponseMapperTest {
         final Location location = hourlyForecast.getLocation();
         assertEquals(2643743, location.getId());
         assertEquals("London", location.getName());
-        assertEquals(Coordinates.of(51.5085, -0.1258), location.getCoordinate());
+        assertEquals(Coordinates.of(51.5085, -0.1258), location.getCoordinates());
         assertEquals("GB", location.getCountryCode());
         assertEquals(ZoneOffset.ofTotalSeconds(0), location.getZoneOffset());
         assertEquals(LocalDateTime.ofInstant(Instant.ofEpochSecond(1568958164), TimeZone.getDefault().toZoneId()), location.getSunriseTime());

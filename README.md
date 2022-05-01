@@ -13,6 +13,7 @@ Paid:
 * Hourly Forecast 4 days
 * Daily Forecast 16 days
 * Climatic 30 days
+* Solar Radiation API
 
 Other:
 * Request timeout settings
