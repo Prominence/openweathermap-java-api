@@ -107,6 +107,10 @@ public class OpenWeatherMapClient {
         return new ClimaticForecastRequester(new RequestSettings(apiKey, timeoutSettings));
     }
 
+    /**
+     * Solar Radiation <a href="https://openweathermap.org/api/solar-radiation">API</a>.
+     * @return requester for retrieving solar radiation information.
+     */
     @SubscriptionAvailability(plans = SPECIAL)
     public SolarRadiationRequester solarRadiation() {
         return new SolarRadiationRequester(new RequestSettings(apiKey, timeoutSettings));
