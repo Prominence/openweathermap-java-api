@@ -22,10 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.radiation;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.mapper.SolarRadiationResponseMapper;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 class SolarRadiationRequestTerminator {
     private final RequestSettings requestSettings;
@@ -43,6 +43,6 @@ class SolarRadiationRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

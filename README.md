@@ -12,7 +12,7 @@ Free:
 Paid:
 * Hourly Forecast 4 days
 * Daily Forecast 16 days
-* Climatic 30 days
+* Climatic Forecast 30 days
 * Solar Radiation API
 * Road Risk API
 
@@ -26,11 +26,8 @@ Free:
 * Weather Triggers
   
 Paid:
-* Climatic Forecast 30 days
 * Bulk Downloading
-* Solar Radiation API
 * Global Weather Alerts / Push notifications
-* Road Risk API
 
 ### Maven coordinates:
 

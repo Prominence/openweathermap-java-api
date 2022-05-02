@@ -24,10 +24,10 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.mapper.AirPollutionResponseMapper;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
  * The type Air pollution request terminator.
@@ -53,6 +53,6 @@ public class AirPollutionRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

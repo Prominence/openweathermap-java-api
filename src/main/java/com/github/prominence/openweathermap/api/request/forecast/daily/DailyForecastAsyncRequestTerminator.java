@@ -22,11 +22,11 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.daily;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.mapper.DailyForecastResponseMapper;
 import com.github.prominence.openweathermap.api.model.forecast.daily.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -51,6 +51,6 @@ class DailyForecastAsyncRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

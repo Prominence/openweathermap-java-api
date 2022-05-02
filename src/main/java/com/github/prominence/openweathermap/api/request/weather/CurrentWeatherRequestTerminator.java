@@ -22,11 +22,11 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.mapper.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
  * The type Single result current weather request terminator.
@@ -62,6 +62,6 @@ public class CurrentWeatherRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

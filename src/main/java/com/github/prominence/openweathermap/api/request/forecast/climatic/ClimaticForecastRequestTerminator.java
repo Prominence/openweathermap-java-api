@@ -22,11 +22,11 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.mapper.ClimaticForecastResponseMapper;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.Forecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 class ClimaticForecastRequestTerminator {
     private final RequestSettings requestSettings;
@@ -49,6 +49,6 @@ class ClimaticForecastRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

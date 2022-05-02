@@ -22,10 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 /**
  * The type One call historical weather request terminator.
@@ -51,6 +51,6 @@ class OneCallHistoricalWeatherRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

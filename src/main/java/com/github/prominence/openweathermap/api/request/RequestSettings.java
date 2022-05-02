@@ -22,14 +22,14 @@
 
 package com.github.prominence.openweathermap.api.request;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
+import com.github.prominence.openweathermap.api.core.net.HttpClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RequestSettings {
@@ -43,9 +43,13 @@ public class RequestSettings {
 
     private final Map<String, String> requestParameters = new HashMap<>(8);
 
-    private final Map<String, Object> requestBody = new HashMap<>();
-
     private final StringBuilder urlAppenderBuilder = new StringBuilder();
+
+    private Object payloadObject;
+    private Class payloadClass;
+    private JsonSerializer payloadSerializer;
+
+    private HttpClient httpClient;
 
     private String subdomain = "api";
 
@@ -60,6 +64,14 @@ public class RequestSettings {
 
     public TimeoutSettings getTimeoutSettings() {
         return timeoutSettings;
+    }
+
+    public HttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
     }
 
     public String getSubdomain() {
@@ -112,7 +124,27 @@ public class RequestSettings {
         return urlAppenderBuilder;
     }
 
-    public void addToRequestBody(String key, Object object) {
-        requestBody.put(key, object);
+    public void setPayloadObject(Object payloadObject) {
+        this.payloadObject = payloadObject;
+    }
+
+    public Object getPayloadObject() {
+        return payloadObject;
+    }
+
+    public Class getPayloadClass() {
+        return payloadClass;
+    }
+
+    public void setPayloadClass(Class payloadClass) {
+        this.payloadClass = payloadClass;
+    }
+
+    public JsonSerializer getPayloadSerializer() {
+        return payloadSerializer;
+    }
+
+    public void setPayloadSerializer(JsonSerializer payloadSerializer) {
+        this.payloadSerializer = payloadSerializer;
     }
 }

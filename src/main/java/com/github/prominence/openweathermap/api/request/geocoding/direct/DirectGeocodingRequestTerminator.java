@@ -22,8 +22,8 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.function.Function;
 
@@ -45,6 +45,6 @@ public class DirectGeocodingRequestTerminator<R> {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

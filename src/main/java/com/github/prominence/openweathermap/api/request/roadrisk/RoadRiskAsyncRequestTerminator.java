@@ -22,11 +22,11 @@
 
 package com.github.prominence.openweathermap.api.request.roadrisk;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.mapper.RoadRiskResponseMapper;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskRecord;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -65,6 +65,6 @@ public class RoadRiskAsyncRequestTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

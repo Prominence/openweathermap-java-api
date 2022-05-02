@@ -22,10 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.reverse;
 
+import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.mapper.GeocodingResponseMapper;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingRecord;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.utils.RequestUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,6 +46,6 @@ public class ReverseGeocodingRequestAsyncTerminator {
     }
 
     private String getRawResponse() {
-        return RequestUtils.getResponse(requestSettings);
+        return new RequestExecutor(requestSettings).getResponse();
     }
 }

@@ -1,17 +1,31 @@
-package com.github.prominence.openweathermap.api.mapper;
+package com.github.prominence.openweathermap.api.request.roadrisk;
 
+import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.core.net.MockHttpClient;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskRecord;
+import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+public class RoadRiskIntegrationTest extends ApiTest {
+    private static final MockHttpClient httpClient = new MockHttpClient();
 
-class RoadRiskResponseMapperTest {
+    @BeforeAll
+    public static void setup() {
+        getClient().setHttpClient(httpClient);
+    }
 
     @Test
-    void mapToObjects() {
-        final String jsonResponse = """
+    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
+        final TrackPoint trackPoint = new TrackPoint();
+        trackPoint.setCoordinates(Coordinates.of(5, 5));
+        trackPoint.setRequestedTime(LocalDateTime.now());
+
+        final String responseOutput = """
                 [
                   {
                     "dt": 1602702000,
@@ -59,9 +73,15 @@ class RoadRiskResponseMapperTest {
                   }
                 ]
                 """;
+        httpClient.setResponseOutput(responseOutput);
 
-        final List<RoadRiskRecord> roadRiskRecords = new RoadRiskResponseMapper().mapToObjects(jsonResponse);
-        assertNotNull(roadRiskRecords);
+        final List<RoadRiskRecord> roadRiskRecords = getClient()
+                .roadRisk()
+                .byTrackPoints(List.of(trackPoint))
+                .retrieve()
+                .asJava();
 
+        System.out.println(roadRiskRecords);
     }
+
 }
