@@ -44,8 +44,8 @@ import java.util.List;
 /**
  * Official API response documentation:
  * <ul>
- *  <li></li><a href="https://openweathermap.org/api/one-call-api#parameter">https://openweathermap.org/api/one-call-api#parameter</a></li>
- *  <li></li><a href="https://openweathermap.org/api/one-call-api#hist_parameter">https://openweathermap.org/api/one-call-api#hist_parameter</a></li>
+ *  <li><a href="https://openweathermap.org/api/one-call-api#parameter">https://openweathermap.org/api/one-call-api#parameter</a></li>
+ *  <li><a href="https://openweathermap.org/api/one-call-api#hist_parameter">https://openweathermap.org/api/one-call-api#hist_parameter</a></li>
  * </ul>
  */
 public class OneCallWeatherResponseMapper extends AbstractMapper {
