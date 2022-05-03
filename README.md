@@ -27,7 +27,14 @@ Free:
   
 Paid:
 * Bulk Downloading
-* Global Weather Alerts / Push notifications
+* Historical Weather API
+* Historical Weather API 40 years by timestamp
+* Historical Weather API 40 years full archive
+* History Bulk
+* History Forecast Bulk
+* Statistical Weather Data API
+* Accumulated Parameters
+* Historical Weather Data by State for all ZIP codes, USA
 
 ### Maven coordinates:
 
