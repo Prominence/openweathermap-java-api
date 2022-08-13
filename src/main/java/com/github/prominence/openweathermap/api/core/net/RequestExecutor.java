@@ -67,7 +67,11 @@ public final class RequestExecutor {
     }
 
     private String buildRequestUrl() {
-        StringBuilder requestUrlBuilder = new StringBuilder(OWM_URL_BASE.replace("SUBDOMAIN", requestSettings.getSubdomain()));
+        String baseUrl = OWM_URL_BASE.replace("SUBDOMAIN", requestSettings.getSubdomain());
+        if (requestSettings.isUseInsecureConnection()) {
+            baseUrl = baseUrl.replace("https", "http");
+        }
+        StringBuilder requestUrlBuilder = new StringBuilder(baseUrl);
         requestUrlBuilder.append(requestSettings.getUrlAppender());
         requestUrlBuilder.append('?');
         String parameters = requestSettings.getRequestParameters().entrySet().stream()

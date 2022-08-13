@@ -354,7 +354,7 @@ public enum WeatherCondition {
      * @return the icon url
      */
     public static String getIconUrl(String iconId) {
-        return "http://openweathermap.org/img/w/" + iconId + ".png";
+        return "https://openweathermap.org/img/w/" + iconId + ".png";
     }
 
     /**

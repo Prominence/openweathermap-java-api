@@ -51,15 +51,18 @@ public class RequestSettings {
 
     private HttpClient httpClient;
 
+    private final boolean useInsecureConnection;
+
     private String subdomain = "api";
 
     private Language language = Language.ENGLISH;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
 
-    public RequestSettings(String apiKey, TimeoutSettings timeoutSettings) {
+    public RequestSettings(String apiKey, TimeoutSettings timeoutSettings, boolean useInsecureConnection) {
         this.putRequestParameter(API_KEY_PARAM_NAME, apiKey);
         // make a copy
         this.timeoutSettings = new TimeoutSettings(timeoutSettings);
+        this.useInsecureConnection = useInsecureConnection;
     }
 
     public TimeoutSettings getTimeoutSettings() {
@@ -72,6 +75,10 @@ public class RequestSettings {
 
     public void setHttpClient(HttpClient httpClient) {
         this.httpClient = httpClient;
+    }
+
+    public boolean isUseInsecureConnection() {
+        return useInsecureConnection;
     }
 
     public String getSubdomain() {

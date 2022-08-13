@@ -48,6 +48,8 @@ public class OpenWeatherMapClient {
     private final String apiKey;
     private final TimeoutSettings timeoutSettings = new TimeoutSettings();
 
+    private boolean useInsecureConnection = false;
+
     private HttpClient httpClient = new HttpURLConnectionBasedHttpClient();
 
     /**
@@ -64,6 +66,10 @@ public class OpenWeatherMapClient {
 
     public void setReadTimeout(int readTimeout) {
         timeoutSettings.setReadTimeout(readTimeout);
+    }
+
+    public void useInsecureConnection(boolean value) {
+        this.useInsecureConnection = value;
     }
 
     public void setHttpClient(HttpClient httpClient) {
@@ -159,7 +165,7 @@ public class OpenWeatherMapClient {
     }
 
     private RequestSettings getRequestSettings() {
-        final RequestSettings requestSettings = new RequestSettings(apiKey, timeoutSettings);
+        final RequestSettings requestSettings = new RequestSettings(apiKey, timeoutSettings, useInsecureConnection);
         requestSettings.setHttpClient(httpClient);
         return requestSettings;
     }
