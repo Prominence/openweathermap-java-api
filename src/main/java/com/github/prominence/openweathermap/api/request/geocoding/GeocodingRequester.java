@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@
 package com.github.prominence.openweathermap.api.request.geocoding;
 
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 import com.github.prominence.openweathermap.api.request.geocoding.direct.DirectGeocodingRequester;
 import com.github.prominence.openweathermap.api.request.geocoding.reverse.ReverseGeocodingRequester;
 
-public class GeocodingRequester {
-    private final RequestSettings requestSettings;
+public class GeocodingRequester extends GenericRequester<GeocodingRequester> {
 
     public GeocodingRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("geo/1.0");
     }
 

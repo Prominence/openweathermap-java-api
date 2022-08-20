@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,14 @@
 package com.github.prominence.openweathermap.api.request.onecall;
 
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequester;
 
 /**
  * The type One call weather requester.
  */
-public class OneCallWeatherRequester {
-    private final RequestSettings requestSettings;
+public class OneCallWeatherRequester extends GenericRequester<OneCallWeatherRequester> {
 
     /**
      * Instantiates a new One call weather requester.
@@ -38,8 +38,8 @@ public class OneCallWeatherRequester {
      * @param requestSettings request settings object.
      */
     public OneCallWeatherRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-        this.requestSettings.appendToURL("data/2.5/onecall");
+        super(requestSettings);
+        this.requestSettings.appendToURL("data/3.0/onecall");
     }
 
     public OneCallCurrentWeatherRequester current() {

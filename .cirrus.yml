@@ -1,5 +1,5 @@
 container:
-  image: gradle:jdk17
+  image: gradle:jdk8
 
 testCoverage_task:
   gradle_cache:

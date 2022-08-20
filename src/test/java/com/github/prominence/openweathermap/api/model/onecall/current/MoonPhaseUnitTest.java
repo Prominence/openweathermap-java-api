@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ import com.github.prominence.openweathermap.api.enums.MoonType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class MoonPhaseUnitTest {
 
@@ -65,36 +64,5 @@ public class MoonPhaseUnitTest {
 
         final MoonPhase waningCrescentMoon = new MoonPhase(0.9999d);
         assertEquals(MoonType.WANING_CRESCENT, waningCrescentMoon.getType());
-    }
-
-    @Test
-    public void getEquals() {
-        final MoonPhase phase1 = new MoonPhase(0d);
-        final MoonPhase phase2 = new MoonPhase(0.5d);
-
-        assertNotEquals(phase1, phase2);
-
-        final MoonPhase phase3 = new MoonPhase(0d);
-
-        assertEquals(phase1, phase3);
-    }
-
-    @Test
-    public void getHashCode() {
-        final MoonPhase phase1 = new MoonPhase(0d);
-        final MoonPhase phase2 = new MoonPhase(0.5d);
-
-        assertNotEquals(phase1.hashCode(), phase2.hashCode());
-
-        final MoonPhase phase3 = new MoonPhase(0d);
-
-        assertEquals(phase1.hashCode(), phase3.hashCode());
-    }
-
-    @Test
-    public void getToString() {
-        final MoonPhase phase2 = new MoonPhase(0.5d);
-
-        assertEquals("FULL_MOON(0.5)", phase2.toString());
     }
 }

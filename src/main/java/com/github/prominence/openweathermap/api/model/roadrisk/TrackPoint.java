@@ -1,48 +1,48 @@
+/*
+ * Copyright (c) 2021-present Alexey Zinchenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.github.prominence.openweathermap.api.model.roadrisk;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
+import com.github.prominence.openweathermap.api.serializer.EpochSecondsSerializer;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import java.time.OffsetDateTime;
 
-public class TrackPoint {
-    private Coordinates coordinates;
-    private LocalDateTime requestedTime;
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class TrackPoint extends Coordinates {
+    @JsonSerialize(using = EpochSecondsSerializer.class)
+    @JsonProperty("dt")
+    private OffsetDateTime requestedTime;
 
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public LocalDateTime getRequestedTime() {
-        return requestedTime;
-    }
-
-    public void setRequestedTime(LocalDateTime requestedTime) {
-        this.requestedTime = requestedTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TrackPoint that = (TrackPoint) o;
-        return Objects.equals(coordinates, that.coordinates) && Objects.equals(requestedTime, that.requestedTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(coordinates, requestedTime);
-    }
-
-    @Override
-    public String toString() {
-        return "TrackPoint{" +
-                "coordinates=" + coordinates +
-                ", requestedTime=" + requestedTime +
-                '}';
+    public TrackPoint(double latitude, double longitude) {
+        super(latitude, longitude);
     }
 }

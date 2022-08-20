@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,10 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Collections;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AlertUnitTest {
     @Test
@@ -50,7 +49,7 @@ public class AlertUnitTest {
     @Test
     public void getStartTime() {
         final Alert alert = new Alert();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         alert.setStartTime(now);
 
         assertEquals(now, alert.getStartTime());
@@ -59,7 +58,7 @@ public class AlertUnitTest {
     @Test
     public void getEndTime() {
         final Alert alert = new Alert();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         alert.setEndTime(now);
 
         assertEquals(now, alert.getEndTime());
@@ -73,77 +72,4 @@ public class AlertUnitTest {
         assertEquals("Description", alert.getDescription());
     }
 
-    @Test
-    public void getEquals() {
-        final Alert first = new Alert();
-        final Alert second = new Alert();
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        final String sender = "Sender";
-        final String event = "Event";
-        final String description = "Description";
-        final LocalDateTime now = LocalDateTime.now();
-
-        assertEquals(first, second);
-
-        first.setSenderName(sender);
-
-        assertNotEquals(first, second);
-
-        second.setSenderName(sender);
-
-        assertEquals(first, second);
-
-        first.setEventName(event);
-
-        assertNotEquals(first, second);
-
-        second.setEventName(event);
-
-        assertEquals(first, second);
-
-        first.setStartTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setStartTime(now);
-
-        assertEquals(first, second);
-
-        first.setEndTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setEndTime(now);
-
-        assertEquals(first, second);
-
-        first.setDescription(description);
-
-        assertNotEquals(first, second);
-
-        second.setDescription(description);
-
-        assertEquals(first, second);
-    }
-
-    @Test
-    public void getHashCode() {
-        final Alert event1 = new Alert("Sender", "Event1", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description1", Collections.emptyList());
-        final Alert event2 = new Alert("Sender", "Event2", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description2", Collections.emptyList());
-
-        assertEquals(event1.hashCode(), event1.hashCode());
-        assertNotEquals(event1.hashCode(), event2.hashCode());
-    }
-
-    @Test
-    public void getToString() {
-        final Alert alert = new Alert("Sender", "Event", LocalDateTime.now(), LocalDateTime.now().plus(2, ChronoUnit.HOURS), "Description", Collections.emptyList());
-
-        assertNotNull(alert.toString());
-        assertNotEquals("", alert.toString());
-    }
 }

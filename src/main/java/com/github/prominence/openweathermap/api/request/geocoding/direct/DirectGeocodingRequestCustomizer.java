@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,30 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
+import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
-import java.util.function.Function;
+import java.util.List;
 
-public class DirectGeocodingRequestCustomizer<R> {
+public class DirectGeocodingRequestCustomizer {
     private final RequestSettings requestSettings;
-    private final Function<String, R> mapperFunction;
 
-    DirectGeocodingRequestCustomizer(RequestSettings requestSettings, Function<String, R> mapperFunction) {
+    DirectGeocodingRequestCustomizer(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
-        this.mapperFunction = mapperFunction;
     }
 
-    public DirectGeocodingRequestCustomizer<R> limit(int locationsNumber) {
+    public DirectGeocodingRequestCustomizer limit(int locationsNumber) {
         requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
         return this;
     }
 
-    public DirectGeocodingRequestTerminator<R> retrieve() {
-        return new DirectGeocodingRequestTerminator<R>(requestSettings, mapperFunction);
+    public JsonApiTerminator<List<Geocoding>> retrieve() {
+        return new DirectGeocodingRequestTerminator(requestSettings);
     }
 
-    public DirectGeocodingRequestAsyncTerminator<R> retrieveAsync() {
-        return new DirectGeocodingRequestAsyncTerminator<R>(requestSettings, mapperFunction);
+    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
+        return new DirectGeocodingAsyncRequestTerminator(requestSettings);
     }
 }

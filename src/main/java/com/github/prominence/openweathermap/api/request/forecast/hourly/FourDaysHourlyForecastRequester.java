@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,22 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.hourly;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
-public class FourDaysHourlyForecastRequester {
-    private final RequestSettings requestSettings;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
 
+public class FourDaysHourlyForecastRequester extends GenericRequester<FourDaysHourlyForecastRequester> {
     public FourDaysHourlyForecastRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/forecast/hourly");
-        this.requestSettings.setSubdomain("pro");
     }
 
     public FourDaysHourlyForecastRequestCustomizer byCoordinates(Coordinates coordinates) {
-        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
-        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
+        requestSettings.putRequestParameter(LATITUDE_PARAM, String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter(LONGITUDE_PARAM, String.valueOf(coordinates.getLongitude()));
         return new FourDaysHourlyForecastRequestCustomizer(requestSettings);
     }
 }

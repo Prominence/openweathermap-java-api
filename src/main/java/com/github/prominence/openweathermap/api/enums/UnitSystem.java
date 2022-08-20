@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,29 +45,6 @@ public enum UnitSystem {
 
     UnitSystem(String value) {
         this.value = value;
-    }
-
-    /**
-     * Returns wind unit for current unit system.
-     * @return wind unit.
-     */
-    public String getWindUnit() {
-        return switch (this) {
-            case IMPERIAL -> "miles/hour";
-            case STANDARD, METRIC -> "meter/sec";
-        };
-    }
-
-    /**
-     * Returns temperature unit for current unit system.
-     * @return temperature unit.
-     */
-    public String getTemperatureUnit() {
-        return switch (this) {
-            case METRIC -> "°C";
-            case IMPERIAL -> "°F";
-            case STANDARD -> "K";
-        };
     }
 
     /**

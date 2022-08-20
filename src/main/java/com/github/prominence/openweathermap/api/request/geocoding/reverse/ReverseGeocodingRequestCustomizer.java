@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,12 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.reverse;
 
+import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+
+import java.util.List;
 
 public class ReverseGeocodingRequestCustomizer {
     private final RequestSettings requestSettings;
@@ -36,11 +41,11 @@ public class ReverseGeocodingRequestCustomizer {
         return this;
     }
 
-    public ReverseGeocodingRequestTerminator retrieve() {
+    public JsonApiTerminator<List<Geocoding>> retrieve() {
         return new ReverseGeocodingRequestTerminator(requestSettings);
     }
 
-    public ReverseGeocodingRequestAsyncTerminator retrieveAsync() {
-        return new ReverseGeocodingRequestAsyncTerminator(requestSettings);
+    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
+        return new ReverseGeocodingAsyncRequestTerminator(requestSettings);
     }
 }

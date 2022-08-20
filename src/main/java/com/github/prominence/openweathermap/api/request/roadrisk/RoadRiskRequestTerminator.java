@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,39 +23,34 @@
 package com.github.prominence.openweathermap.api.request.roadrisk;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.RoadRiskResponseMapper;
-import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskRecord;
+import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
+import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericListRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
 
 import java.util.List;
 
-public class RoadRiskRequestTerminator {
-    private final RequestSettings requestSettings;
-
+public class RoadRiskRequestTerminator
+        extends GenericListRequestTerminator<RoadRisk, RoadRiskModel>
+        implements UniversalFormatApiTerminator<List<RoadRisk>> {
     RoadRiskRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
     }
 
-    public List<RoadRiskRecord> asJava() {
-        return new RoadRiskResponseMapper().mapToObjects(asJSON());
+    @Override
+    protected String getRawResponse() {
+        return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE, RequestExecutor.Method.POST);
     }
 
-    public String asJSON() {
-        return getRawResponse();
+    @Override
+    protected Class<RoadRisk> getValueType() {
+        return RoadRisk.class;
     }
 
-    public String asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return getRawResponse();
-    }
-
-    public String asHTML() {
-        requestSettings.setResponseType(ResponseType.HTML);
-        return getRawResponse();
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse(RequestExecutor.Method.POST);
+    @Override
+    protected Class<RoadRiskModel> getInnerType() {
+        return RoadRiskModel.class;
     }
 }

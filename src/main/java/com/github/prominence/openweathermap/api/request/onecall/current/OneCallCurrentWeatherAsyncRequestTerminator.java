@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,18 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.current;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
-import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
+import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
+import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-
-import java.util.concurrent.CompletableFuture;
+import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The type One call current weather async request terminator.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator {
-    private final RequestSettings requestSettings;
+class OneCallCurrentWeatherAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
+        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
 
     /**
      * Instantiates a new One call current weather async request terminator.
@@ -41,18 +41,6 @@ class OneCallCurrentWeatherAsyncRequestTerminator {
      * @param requestSettings request settings object.
      */
     OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
-
-    public CompletableFuture<CurrentWeatherData> asJava() {
-        return CompletableFuture.supplyAsync(() -> new OneCallWeatherResponseMapper(requestSettings.getUnitSystem()).mapToCurrent(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,25 +23,27 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.ApiTest;
-import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
-import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.forecast.free.Forecast;
-import com.github.prominence.openweathermap.api.model.forecast.free.WeatherForecast;
+import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
+import com.github.prominence.openweathermap.api.model.forecast.free.ThreeHourWeather;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     @Test
     public void whenGetForecastByCityNameRequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        final FiveDaysThreeHoursForecast forecast = getClient()
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
@@ -53,7 +55,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -65,6 +67,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameRequestAsJSON_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
@@ -79,6 +82,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameRequestAsXML_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
@@ -93,9 +97,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        final FiveDaysThreeHoursForecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCityName("Minsk", "BY")
+                .byCityName("Minsk")
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -105,7 +110,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -117,9 +122,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAndCountryCodeRequestAsJSON_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCityName("Minsk", "by")
+                .byCityName("Minsk")
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -131,9 +137,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAndCountryCodeRequestAsXML_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCityName("Minsk", "by")
+                .byCityName("Minsk")
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -145,9 +152,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAndStateCodeAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        final FiveDaysThreeHoursForecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCityName("New York", "NY", "US")
+                .byCityName("New York")
                 .language(Language.CHINESE_TRADITIONAL)
                 .unitSystem(UnitSystem.STANDARD)
                 .count(15)
@@ -157,7 +165,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -169,9 +177,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAndStateCodeAndCountryCodeRequestAsJSON_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCityName("New York", "NY", "US")
+                .byCityName("New York")
                 .language(Language.SPANISH)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
@@ -183,60 +192,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAndStateCodeAndCountryCodeRequestAsXML_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCityName("New York", "NY", "US")
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asXML();
-
-        assertTrue(forecastXml.startsWith("<"));
-    }
-
-    @Test
-    public void whenGetForecastByCityIdRequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .count(15)
-                .retrieve()
-                .asJava();
-
-        assertNotNull(forecast);
-        assertNotNull(forecast.getLocation());
-        assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherStates());
-            assertNotNull(weatherForecast.getForecastTime());
-            assertNotNull(weatherForecast.getTemperature());
-            assertNotNull(weatherForecast.getAtmosphericPressure());
-            assertNotNull(weatherForecast.getHumidity());
-            assertNotNull(weatherForecast.getWind());
-        }
-    }
-
-    @Test
-    public void whenGetForecastByCityIdRequestAsJSON_thenReturnNotNull() {
-        final String forecastJson = getClient()
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
-                .language(Language.SPANISH)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .count(15)
-                .retrieve()
-                .asJSON();
-
-        assertTrue(forecastJson.startsWith("{"));
-    }
-
-    @Test
-    public void whenGetForecastByCityIdRequestAsXML_thenReturnNotNull() {
-        final String forecastXml = getClient()
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
+                .byCityName("New York")
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -247,9 +206,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCoordinatesRequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        final FiveDaysThreeHoursForecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -259,7 +219,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -271,9 +231,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCoordinatesRequestAsJSON_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .language(Language.SPANISH)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
@@ -285,111 +246,10 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCoordinatesRequestAsXML_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinates(Coordinates.of(5, 5))
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asXML();
-
-        assertTrue(forecastXml.startsWith("<"));
-    }
-
-    @Test
-    public void whenGetForecastByZipCodeInUSARequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
-                .forecast5Day3HourStep()
-                .byZipCodeInUSA("10005")
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .count(15)
-                .retrieve()
-                .asJava();
-
-        assertNotNull(forecast);
-        assertNotNull(forecast.getLocation());
-        assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherStates());
-            assertNotNull(weatherForecast.getForecastTime());
-            assertNotNull(weatherForecast.getTemperature());
-            assertNotNull(weatherForecast.getAtmosphericPressure());
-            assertNotNull(weatherForecast.getHumidity());
-            assertNotNull(weatherForecast.getWind());
-        }
-    }
-
-    @Test
-    public void whenGetForecastByZipCodeInUSARequestAsJSON_thenReturnNotNull() {
-        final String forecastJson = getClient()
-                .forecast5Day3HourStep()
-                .byZipCodeInUSA("10005")
-                .language(Language.SPANISH)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .count(15)
-                .retrieve()
-                .asJSON();
-
-        assertTrue(forecastJson.startsWith("{"));
-    }
-
-    @Test
-    public void whenGetForecastByZipCodeInUSARequestAsXML_thenReturnNotNull() {
-        final String forecastXml = getClient()
-                .forecast5Day3HourStep()
-                .byZipCodeInUSA("10005")
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asXML();
-
-        assertTrue(forecastXml.startsWith("<"));
-    }
-
-    @Test
-    public void whenGetForecastByZipCodeAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Forecast forecast = getClient()
-                .forecast5Day3HourStep()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .count(15)
-                .retrieve()
-                .asJava();
-
-        assertNotNull(forecast);
-        assertNotNull(forecast.getLocation());
-        assertNotNull(forecast.getWeatherForecasts());
-        for (WeatherForecast weatherForecast : forecast.getWeatherForecasts()) {
-            assertNotNull(weatherForecast.getWeatherStates());
-            assertNotNull(weatherForecast.getForecastTime());
-            assertNotNull(weatherForecast.getTemperature());
-            assertNotNull(weatherForecast.getAtmosphericPressure());
-            assertNotNull(weatherForecast.getHumidity());
-            assertNotNull(weatherForecast.getWind());
-        }
-    }
-
-    @Test
-    public void whenGetForecastByZipCodeAndCountryCodeRequestAsJSON_thenReturnNotNull() {
-        final String forecastJson = getClient()
-                .forecast5Day3HourStep()
-                .byZipCodeAndCountry("220015", "by")
-                .language(Language.SPANISH)
-                .unitSystem(UnitSystem.IMPERIAL)
-                .count(15)
-                .retrieve()
-                .asJSON();
-
-        assertTrue(forecastJson.startsWith("{"));
-    }
-
-    @Test
-    public void whenGetForecastByZipCodeAndCountryCodeRequestAsXML_thenReturnNotNull() {
-        final String forecastXml = getClient()
-                .forecast5Day3HourStep()
-                .byZipCodeAndCountry("220015", "by")
+                .byCoordinates(new Coordinates(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -400,7 +260,8 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetForecastByCityNameAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Forecast> forecastFuture = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        final CompletableFuture<FiveDaysThreeHoursForecast> forecastFuture = getClient()
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
@@ -414,49 +275,8 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     }
 
     @Test
-    public void whenGetForecastByCityNameAsyncRequestAsJSON_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> forecastFuture = getClient()
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .count(15)
-                .retrieveAsync()
-                .asJSON();
-
-        assertNotNull(forecastFuture);
-        System.out.println(forecastFuture.get());
-    }
-
-    @Test
-    public void whenGetForecastByCityNameAsyncRequestAsXML_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<String> forecastFuture = getClient()
-                .forecast5Day3HourStep()
-                .byCityId(350001514)
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .count(15)
-                .retrieveAsync()
-                .asXML();
-
-        assertNotNull(forecastFuture);
-        System.out.println(forecastFuture.get());
-    }
-
-    @Test
-    public void whenRequestCurrentWeatherWithInvalidApiKey_thenThrowAnException() {
-        OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
-        assertThrows(InvalidAuthTokenException.class, () ->
-                client
-                        .forecast5Day3HourStep()
-                        .byCityId(350001514)
-                        .retrieve()
-                        .asJSON()
-        );
-    }
-
-    @Test
     public void whenRequestCurrentWeatherForInvalidLocation_thenThrowAnException() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         assertThrows(NoDataFoundException.class, () ->
                 getClient()
                         .forecast5Day3HourStep()

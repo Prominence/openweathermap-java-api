@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,10 @@ package com.github.prominence.openweathermap.api.request.weather;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
 
 /**
  * The type Single result current weather request customizer.
@@ -51,11 +54,11 @@ public class CurrentWeatherRequestCustomizer {
         return this;
     }
 
-    public CurrentWeatherRequestTerminator retrieve() {
+    public UniversalFormatApiTerminator<CurrentWeather> retrieve() {
         return new CurrentWeatherRequestTerminator(requestSettings);
     }
 
-    public CurrentWeatherAsyncRequestTerminator retrieveAsync() {
+    public UniversalFormatAsyncApiTerminator<CurrentWeather> retrieveAsync() {
         return new CurrentWeatherAsyncRequestTerminator(requestSettings);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,310 +22,120 @@
 
 package com.github.prominence.openweathermap.api.model.forecast.free;
 
-import com.github.prominence.openweathermap.api.model.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.PercentageZeroToOneDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
+import com.github.prominence.openweathermap.api.enums.DayTime;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.forecast.MetaData;
+import com.github.prominence.openweathermap.api.model.generic.MainMetrics;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindModel;
+import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents weather forecast information for a particular timestamp.
  */
-public class WeatherForecast {
-    private LocalDateTime forecastTime;
+@Data
+@JsonIgnoreProperties(value = {"dt_txt"})
+public class WeatherForecast implements TimeAware, ThreeHourWeather, PrecipitationForecast {
 
-    private List<WeatherState> weatherStates;
-    private Temperature temperature;
-    private AtmosphericPressure atmosphericPressure;
-    private Humidity humidity;
-
-    private Wind wind;
-    private Rain rain;
-    private Snow snow;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("dt")
+    private OffsetDateTime forecastTime;
+    @JsonProperty("main")
+    private MainMetrics mainMetrics;
+    @JsonProperty("weather")
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
+    @JsonProperty("clouds")
     private Clouds clouds;
+    @JsonProperty("wind")
+    private WindModel windModel;
+    @JsonProperty("rain")
+    private Precipitation rainModel;
+    @JsonProperty("snow")
+    private Precipitation snowModel;
+    @JsonDeserialize(using = VisibilityDeserializer.class)
+    @JsonProperty("visibility")
+    private Visibility visibility;
+    @JsonDeserialize(using = PercentageZeroToOneDeserializer.class)
+    @JsonProperty("pop")
+    private Integer probabilityOfPrecipitation;
+    @JsonProperty("sys")
+    private MetaData sysMeta;
 
-    private String forecastTimeISO;
-    private DayTime dayTime;
-
-    private Double visibilityInMetres;
-    private Double probabilityOfPrecipitation;
-
-    /**
-     * Gets forecast time.
-     *
-     * @return the forecast time
-     */
-    public LocalDateTime getForecastTime() {
-        return forecastTime;
+    @Override
+    @JsonIgnore
+    public TemperatureWithRange getTemperature() {
+        return mainMetrics;
     }
 
-    /**
-     * Sets forecast time.
-     *
-     * @param forecastTime the forecast time
-     */
-    public void setForecastTime(LocalDateTime forecastTime) {
-        this.forecastTime = forecastTime;
-    }
-
-    /**
-     * Gets weather state.
-     *
-     * @return the weather state
-     */
-    public List<WeatherState> getWeatherStates() {
-        return weatherStates;
-    }
-
-    /**
-     * Sets weather state.
-     *
-     * @param weatherStates the weather state
-     */
-    public void setWeatherStates(List<WeatherState> weatherStates) {
-        this.weatherStates = weatherStates;
-    }
-
-    /**
-     * Gets temperature.
-     *
-     * @return the temperature
-     */
-    public Temperature getTemperature() {
-        return temperature;
-    }
-
-    /**
-     * Sets temperature.
-     *
-     * @param temperature the temperature
-     */
-    public void setTemperature(Temperature temperature) {
-        this.temperature = temperature;
-    }
-
-    /**
-     * Gets atmospheric pressure.
-     *
-     * @return the atmospheric pressure
-     */
-    public AtmosphericPressure getAtmosphericPressure() {
-        return atmosphericPressure;
-    }
-
-    /**
-     * Sets atmospheric pressure.
-     *
-     * @param atmosphericPressure the atmospheric pressure
-     */
-    public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
-        this.atmosphericPressure = atmosphericPressure;
-    }
-
-    /**
-     * Gets humidity.
-     *
-     * @return the humidity
-     */
+    @Override
+    @JsonIgnore
     public Humidity getHumidity() {
-        return humidity;
+        return mainMetrics;
     }
 
-    /**
-     * Sets humidity.
-     *
-     * @param humidity the humidity
-     */
-    public void setHumidity(Humidity humidity) {
-        this.humidity = humidity;
+    @Override
+    @JsonIgnore
+    public DetailedAtmosphericPressure getAtmosphericPressure() {
+        return mainMetrics;
     }
 
-    /**
-     * Gets wind.
-     *
-     * @return the wind
-     */
-    public Wind getWind() {
-        return wind;
+    @Override
+    @JsonIgnore
+    public DetailedWindInfo getWind() {
+        return windModel;
     }
 
-    /**
-     * Sets wind.
-     *
-     * @param wind the wind
-     */
-    public void setWind(Wind wind) {
-        this.wind = wind;
+    @Override
+    @JsonIgnore
+    public DayTime getPartOfDay() {
+        return Optional.ofNullable(sysMeta).map(MetaData::getPartOfDay).orElse(null);
     }
 
-    /**
-     * Gets rain.
-     *
-     * @return the rain
-     */
-    public Rain getRain() {
-        return rain;
+    @Override
+    @JsonIgnore
+    public PrecipitationForecast getThreeHoursPrecipitation() {
+        return this;
     }
 
-    /**
-     * Sets rain.
-     *
-     * @param rain the rain
-     */
-    public void setRain(Rain rain) {
-        this.rain = rain;
+    @Override
+    @JsonIgnore
+    public BigDecimal getRain() {
+        return Optional.ofNullable(rainModel)
+                .map(Precipitation::getThreeHourLevel)
+                .orElse(null);
     }
 
-    /**
-     * Gets snow.
-     *
-     * @return the snow
-     */
-    public Snow getSnow() {
-        return snow;
+    @Override
+    @JsonIgnore
+    public BigDecimal getSnow() {
+        return Optional.ofNullable(snowModel)
+                .map(Precipitation::getThreeHourLevel)
+                .orElse(null);
     }
 
-    /**
-     * Sets snow.
-     *
-     * @param snow the snow
-     */
-    public void setSnow(Snow snow) {
-        this.snow = snow;
-    }
-
-    /**
-     * Gets clouds.
-     *
-     * @return the clouds
-     */
-    public Clouds getClouds() {
+    @Override
+    public CloudCoverage getClouds() {
         return clouds;
-    }
-
-    /**
-     * Sets clouds.
-     *
-     * @param clouds the clouds
-     */
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
-    }
-
-    /**
-     * Gets forecast time iso.
-     *
-     * @return the forecast time iso
-     */
-    public String getForecastTimeISO() {
-        return forecastTimeISO;
-    }
-
-    /**
-     * Sets forecast time iso.
-     *
-     * @param forecastTimeISO the forecast time iso
-     */
-    public void setForecastTimeISO(String forecastTimeISO) {
-        this.forecastTimeISO = forecastTimeISO;
-    }
-
-    /**
-     * Gets day time.
-     *
-     * @return the day time
-     */
-    public DayTime getDayTime() {
-        return dayTime;
-    }
-
-    /**
-     * Sets day time.
-     *
-     * @param dayTime the day time
-     */
-    public void setDayTime(DayTime dayTime) {
-        this.dayTime = dayTime;
-    }
-
-    public Double getVisibilityInMetres() {
-        return visibilityInMetres;
-    }
-
-    public void setVisibilityInMetres(Double visibilityInMetres) {
-        this.visibilityInMetres = visibilityInMetres;
-    }
-
-    public Double getProbabilityOfPrecipitation() {
-        return probabilityOfPrecipitation;
-    }
-
-    public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
-        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WeatherForecast that = (WeatherForecast) o;
-        return Objects.equals(forecastTime, that.forecastTime) &&
-                Objects.equals(weatherStates, that.weatherStates) &&
-                Objects.equals(temperature, that.temperature) &&
-                Objects.equals(atmosphericPressure, that.atmosphericPressure) &&
-                Objects.equals(humidity, that.humidity) &&
-                Objects.equals(wind, that.wind) &&
-                Objects.equals(rain, that.rain) &&
-                Objects.equals(snow, that.snow) &&
-                Objects.equals(clouds, that.clouds) &&
-                Objects.equals(forecastTimeISO, that.forecastTimeISO) &&
-                Objects.equals(visibilityInMetres, that.visibilityInMetres) &&
-                Objects.equals(probabilityOfPrecipitation, that.probabilityOfPrecipitation) &&
-                dayTime == that.dayTime;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(forecastTime, weatherStates, temperature, atmosphericPressure, humidity, wind, rain, snow, clouds, forecastTimeISO, visibilityInMetres, probabilityOfPrecipitation, dayTime);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Timestamp: ");
-        stringBuilder.append(forecastTimeISO);
-        if (weatherStates != null && weatherStates.size() > 0) {
-            stringBuilder.append(", Weather: ");
-            stringBuilder.append(weatherStates.get(0).getDescription());
-        }
-        if (temperature != null) {
-            stringBuilder.append(", ");
-            stringBuilder.append(temperature.getValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(temperature.getUnit());
-        }
-        if (atmosphericPressure != null) {
-            stringBuilder.append(", ");
-            stringBuilder.append(atmosphericPressure.getValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(atmosphericPressure.getUnit());
-        }
-        if (clouds != null) {
-            stringBuilder.append(", ");
-            stringBuilder.append(clouds.toString());
-        }
-        if (rain != null) {
-            stringBuilder.append(", Rain: ");
-            stringBuilder.append(rain.getThreeHourLevel());
-            stringBuilder.append(' ');
-            stringBuilder.append(rain.getUnit());
-        }
-        if (snow != null) {
-            stringBuilder.append(", Snow: ");
-            stringBuilder.append(snow.getThreeHourLevel());
-            stringBuilder.append(' ');
-            stringBuilder.append(snow.getUnit());
-        }
-        return stringBuilder.toString();
     }
 }

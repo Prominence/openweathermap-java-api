@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,12 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
+
+import static com.github.prominence.openweathermap.api.request.RequestSettings.COUNT_PARAM;
 
 /**
  * The forecast request customizer.
@@ -52,15 +57,15 @@ class FiveDayThreeHourStepForecastRequestCustomizer {
     }
 
     public FiveDayThreeHourStepForecastRequestCustomizer count(int numberOfTimestamps) {
-        requestSettings.putRequestParameter("cnt", Integer.toString(numberOfTimestamps));
+        requestSettings.putRequestParameter(COUNT_PARAM, Integer.toString(numberOfTimestamps));
         return this;
     }
 
-    public FiveDayThreeHourStepForecastRequestTerminator retrieve() {
+    public JsonXmlApiTerminator<FiveDaysThreeHoursForecast> retrieve() {
         return new FiveDayThreeHourStepForecastRequestTerminator(requestSettings);
     }
 
-    public FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync() {
+    public JsonXmlAsyncApiTerminator<FiveDaysThreeHoursForecast> retrieveAsync() {
         return new FiveDayThreeHourStepForecastAsyncRequestTerminator(requestSettings);
     }
 }

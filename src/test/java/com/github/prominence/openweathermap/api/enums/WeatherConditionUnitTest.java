@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,82 +24,134 @@ package com.github.prominence.openweathermap.api.enums;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WeatherConditionUnitTest {
-    @Test
-    public void getId() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
 
-        assertNotEquals(0, weatherCondition.getId());
+    private static final int EXPECTED_ID = 762;
+    private static final String EXPECTED_NAME = "Ash";
+    private static final String EXPECTED_DESCRIPTION = "volcanic ash";
+    private static final String EXPECTED_ICON = "50";
+
+    @Test
+    public void testGetId_ShouldReturnPredefinedValue_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
+
+        //when
+        final int actual = underTest.getId();
+
+        //then
+        assertEquals(EXPECTED_ID, actual);
     }
 
     @Test
-    public void getName() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetName_ShouldReturnPredefinedValue_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.getName());
-        assertNotEquals("", weatherCondition.getName());
+        //when
+        final String actual = underTest.getName();
+
+        //then
+        assertEquals(EXPECTED_NAME, actual);
     }
 
     @Test
-    public void getDescription() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetDescription_ShouldReturnPredefinedValue_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.getDescription());
-        assertNotEquals("", weatherCondition.getDescription());
+        //when
+        final String actual = underTest.getDescription();
+
+        //then
+        assertEquals(EXPECTED_DESCRIPTION, actual);
     }
 
     @Test
-    public void getDayIconId() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetDayIconId_ShouldReturnDayVariantOfPredefinedIcon_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.getDayIconId());
-        assertNotEquals("", weatherCondition.getDayIconId());
+        //when
+        final String actual = underTest.getDayIconId();
+
+        //then
+        assertEquals(EXPECTED_ICON + "d", actual);
     }
 
     @Test
-    public void getNightIconId() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetNightIconId_ShouldReturnNightVariantOfPredefinedIcon_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.getNightIconId());
-        assertNotEquals("", weatherCondition.getNightIconId());
+        //when
+        final String actual = underTest.getNightIconId();
+
+        //then
+        assertEquals(EXPECTED_ICON + "n", actual);
     }
 
     @Test
-    public void getDayIconUrl() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetDayIconUrl_ShouldReturnUrlEndingWithDayVariantOfPredefinedIcon_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.getDayIconUrl());
-        assertNotEquals("", weatherCondition.getDayIconUrl());
+        //when
+        final String actual = underTest.getDayIconUrl(false);
+
+        //then
+        assertTrue(actual.endsWith(EXPECTED_ICON + "d.png"));
     }
 
     @Test
-    public void getNightIconUrl() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetNightIconUrl_ShouldReturnUrlEndingWithNightVariantOfPredefinedIcon_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.getNightIconUrl());
-        assertNotEquals("", weatherCondition.getNightIconUrl());
+        //when
+        final String actual = underTest.getNightIconUrl(true);
+
+        //then
+        assertTrue(actual.endsWith(EXPECTED_ICON + "n.png"));
     }
 
     @Test
-    public void getIconUrl() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetById_ShouldReturnMatchingEnum_WhenCalledWithKnownId() {
+        //given
 
-        assertNotNull(WeatherCondition.getIconUrl(weatherCondition.getNightIconId()));
-        assertNotEquals("", WeatherCondition.getIconUrl(weatherCondition.getNightIconId()));
+        //when
+        final WeatherCondition actual = WeatherCondition.getById(EXPECTED_ID);
+
+        //then
+        assertEquals(WeatherCondition.ASH, actual);
     }
 
     @Test
-    public void getById() {
-        assertEquals(WeatherCondition.ASH, WeatherCondition.getById(WeatherCondition.ASH.getId()));
+    public void testGetById_ShouldReturnNull_WhenCalledWithUnknownId() {
+        //given
+
+        //when
+        final WeatherCondition actual = WeatherCondition.getById(-EXPECTED_ID);
+
+        //then
+        assertNull(actual);
     }
 
     @Test
-    public void testToString() {
-        final WeatherCondition weatherCondition = WeatherCondition.ASH;
+    public void testGetById_ShouldReturnStringContainingIdNameDescription_WhenCalled() {
+        //given
+        final WeatherCondition underTest = WeatherCondition.ASH;
 
-        assertNotNull(weatherCondition.toString());
-        assertNotEquals("", weatherCondition.toString());
+        //when
+        final String actual = underTest.toString();
+
+        //then
+        assertTrue(actual.contains(String.valueOf(EXPECTED_ID)));
+        assertTrue(actual.contains(EXPECTED_NAME));
+        assertTrue(actual.contains(EXPECTED_DESCRIPTION));
     }
 }

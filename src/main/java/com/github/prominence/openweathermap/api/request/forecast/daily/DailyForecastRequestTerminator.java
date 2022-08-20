@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,33 @@
 package com.github.prominence.openweathermap.api.request.forecast.daily;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.DailyForecastResponseMapper;
-import com.github.prominence.openweathermap.api.model.forecast.daily.Forecast;
+import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecast;
+import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
 
-class DailyForecastRequestTerminator {
-    private final RequestSettings requestSettings;
+class DailyForecastRequestTerminator
+        extends GenericRequestTerminator<SixteenDaysDailyForecast, SixteenDaysDailyForecastModel>
+        implements JsonXmlApiTerminator<SixteenDaysDailyForecast> {
 
-        DailyForecastRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+    DailyForecastRequestTerminator(RequestSettings requestSettings) {
+        super(requestSettings);
     }
 
-    public Forecast asJava() {
-        return new DailyForecastResponseMapper(requestSettings.getUnitSystem()).mapToForecast(getRawResponse());
+    @Override
+    public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
+        throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
-    public String asJSON() {
-        return getRawResponse();
+    protected String getRawResponse() {
+        return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
 
-    public String asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return getRawResponse();
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+    @Override
+    protected Class<SixteenDaysDailyForecastModel> getValueType() {
+        return SixteenDaysDailyForecastModel.class;
     }
 }

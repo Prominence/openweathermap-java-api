@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,35 +22,18 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.ClimaticForecastResponseMapper;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.Forecast;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
-import java.util.concurrent.CompletableFuture;
-
-class ClimaticForecastAsyncRequestTerminator {
-    private final RequestSettings requestSettings;
+class ClimaticForecastAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<ThirtyDaysDailyForecast, ThirtyDaysDailyForecastModel>
+        implements JsonXmlAsyncApiTerminator<ThirtyDaysDailyForecast> {
 
     ClimaticForecastAsyncRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(new ClimaticForecastRequestTerminator(requestSettings));
     }
 
-    public CompletableFuture<Forecast> asJava() {
-        return CompletableFuture.supplyAsync(() -> new ClimaticForecastResponseMapper(requestSettings.getUnitSystem()).mapToForecast(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    public CompletableFuture<String> asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
-    }
 }

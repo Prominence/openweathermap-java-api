@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,79 +22,22 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 /**
- * The type Minutely.
+ * The type for minutely forecasts.
  */
-public class Minutely {
-    private LocalDateTime forecastTime;
-    private double precipitationVolume;
-
-    private Minutely() {
-    }
-
-    /**
-     * With value minutely.
-     *
-     * @param forecastTime        the forecast time
-     * @param precipitationVolume the precipitation volume
-     * @return the minutely
-     */
-    public static Minutely withValue(LocalDateTime forecastTime, double precipitationVolume) {
-        final Minutely minutely = new Minutely();
-        minutely.setForecastTime(forecastTime);
-        minutely.setPrecipitationVolume(precipitationVolume);
-
-        return minutely;
-    }
-
-    /**
-     * Gets forecast time.
-     *
-     * @return the forecast time
-     */
-    public LocalDateTime getForecastTime() {
-        return forecastTime;
-    }
-
-    private void setForecastTime(LocalDateTime forecastTime) {
-        Objects.requireNonNull(forecastTime);
-        this.forecastTime = forecastTime;
-    }
-
-    /**
-     * Gets precipitation volume.
-     *
-     * @return the precipitation volume
-     */
-    public double getPrecipitationVolume() {
-        return precipitationVolume;
-    }
-
-    private void setPrecipitationVolume(double precipitationVolume) {
-        if (precipitationVolume < 0) {
-            throw new IllegalArgumentException("Precipitation volume cannot be negative.");
-        }
-        this.precipitationVolume = precipitationVolume;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Minutely minutely = (Minutely) o;
-        return Double.compare(minutely.precipitationVolume, precipitationVolume) == 0 && Objects.equals(forecastTime, minutely.forecastTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(forecastTime, precipitationVolume);
-    }
-
-    @Override
-    public String toString() {
-        return "Time: " + forecastTime + ", precipitation volume: " + precipitationVolume;
-    }
+@Data
+public class Minutely implements OneCallMinutelyWeather {
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("dt")
+    private OffsetDateTime forecastTime;
+    @JsonProperty("precipitation")
+    private BigDecimal precipitationVolume;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,20 @@
 
 package com.github.prominence.openweathermap.api.request.roadrisk;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.RoadRiskResponseMapper;
-import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskRecord;
+import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
+import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericListAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * The type Single result current weather async request terminator.
  */
-public class RoadRiskAsyncRequestTerminator {
-    private final RequestSettings requestSettings;
+public class RoadRiskAsyncRequestTerminator
+        extends GenericListAsyncRequestTerminator<RoadRisk, RoadRiskModel>
+        implements UniversalFormatAsyncApiTerminator<List<RoadRisk>> {
 
     /**
      * Instantiates a new Single result current weather async request terminator.
@@ -43,28 +43,7 @@ public class RoadRiskAsyncRequestTerminator {
      * @param requestSettings request settings object.
      */
     RoadRiskAsyncRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(new RoadRiskRequestTerminator(requestSettings));
     }
 
-    public CompletableFuture<List<RoadRiskRecord>> asJava() {
-        return CompletableFuture.supplyAsync(() -> new RoadRiskResponseMapper().mapToObjects(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    public CompletableFuture<String> asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    public CompletableFuture<String> asHTML() {
-        requestSettings.setResponseType(ResponseType.HTML);
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
-    }
 }

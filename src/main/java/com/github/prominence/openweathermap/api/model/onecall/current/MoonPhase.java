@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,42 +22,31 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.MoonType;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
+@ToString
 public class MoonPhase {
     private final double value;
     private final MoonType type;
 
+    @JsonCreator
     public MoonPhase(Double value) {
         this.value = value;
         this.type = MoonType.valueOf(value);
     }
 
+    @JsonIgnore
     public Double getValue() {
         return value;
     }
 
+    @JsonIgnore
     public MoonType getType() {
         return type;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MoonPhase moonPhase = (MoonPhase) o;
-        return Double.compare(moonPhase.value, value) == 0 && type == moonPhase.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value, type);
-    }
-
-    @Override
-    public String toString() {
-        return type.name() + "(" + value + ")";
     }
 }
