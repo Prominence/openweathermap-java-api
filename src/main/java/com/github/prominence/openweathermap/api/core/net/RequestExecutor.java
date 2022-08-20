@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,14 @@
 package com.github.prominence.openweathermap.api.core.net;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.github.prominence.openweathermap.api.enums.ApiVariant;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 import java.net.URL;
 import java.util.stream.Collectors;
 
 public final class RequestExecutor {
-    private static final String OWM_URL_BASE = "https://SUBDOMAIN.openweathermap.org/";
 
     private final RequestSettings requestSettings;
 
@@ -39,12 +38,12 @@ public final class RequestExecutor {
         this.requestSettings = requestSettings;
     }
 
-    public String getResponse() {
-        return getResponse(Method.GET);
+    public String getResponse(ApiVariant variant) {
+        return getResponse(variant, Method.GET);
     }
 
-    public String getResponse(Method httpMethod) {
-        return getResponse(buildRequestUrl(), httpMethod);
+    public String getResponse(ApiVariant variant, Method httpMethod) {
+        return getResponse(selectRequestUrl(variant), httpMethod);
     }
 
     /**
@@ -56,7 +55,7 @@ public final class RequestExecutor {
      * @throws IllegalArgumentException in case if provided parameter isn't a valid url for {@link URL} instance.
      */
     private String getResponse(String url, Method httpMethod) {
-        final HttpClient httpClient = requestSettings.getHttpClient();
+        final HttpClient httpClient = requestSettings.getApiConfiguration().getHttpClient();
         httpClient.setTimeoutSettings(requestSettings.getTimeoutSettings());
 
         if (httpMethod == Method.GET) {
@@ -66,8 +65,8 @@ public final class RequestExecutor {
         }
     }
 
-    private String buildRequestUrl() {
-        StringBuilder requestUrlBuilder = new StringBuilder(OWM_URL_BASE.replace("SUBDOMAIN", requestSettings.getSubdomain()));
+    private String selectRequestUrl(ApiVariant variant) {
+        StringBuilder requestUrlBuilder = new StringBuilder(requestSettings.getApiConfiguration().getBaseUrls().get(variant));
         requestUrlBuilder.append(requestSettings.getUrlAppender());
         requestUrlBuilder.append('?');
         String parameters = requestSettings.getRequestParameters().entrySet().stream()
@@ -78,13 +77,9 @@ public final class RequestExecutor {
     }
 
     private String getSerializedPayload() {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final SimpleModule module = new SimpleModule();
-        module.addSerializer(requestSettings.getPayloadClass(), requestSettings.getPayloadSerializer());
-        objectMapper.registerModule(module);
-
+        final ObjectWriter objectWriter = requestSettings.getApiConfiguration().getObjectWriter();
         try {
-            return objectMapper.writeValueAsString(requestSettings.getPayloadObject());
+            return objectWriter.writeValueAsString(requestSettings.getPayloadObject());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

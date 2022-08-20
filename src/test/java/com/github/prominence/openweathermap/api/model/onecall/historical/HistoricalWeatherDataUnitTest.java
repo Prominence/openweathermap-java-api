@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,13 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class HistoricalWeatherDataUnitTest {
     @Test
     public void getCoordinates() {
         final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        final Coordinates coordinates = Coordinates.of(11.2, 43.2);
+        final Coordinates coordinates = new Coordinates(11.2, 43.2);
         historicalWeatherData.setCoordinates(coordinates);
 
         assertEquals(coordinates, historicalWeatherData.getCoordinates());
@@ -87,7 +87,7 @@ public class HistoricalWeatherDataUnitTest {
         assertNotEquals(first, null);
         assertNotEquals(first, new Object());
 
-        final Coordinates coordinates = Coordinates.of(11, 12);
+        final Coordinates coordinates = new Coordinates(11, 12);
         final ZoneId timeZone = ZoneId.of("GMT");
         final ZoneOffset offset = ZoneOffset.UTC;
         final HistoricalWeather historicalWeather = new HistoricalWeather();
@@ -143,7 +143,7 @@ public class HistoricalWeatherDataUnitTest {
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setCoordinates(Coordinates.of(11, 42));
+        first.setCoordinates(new Coordinates(11, 42));
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }
@@ -151,7 +151,7 @@ public class HistoricalWeatherDataUnitTest {
     @Test
     public void getToString() {
         final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        historicalWeatherData.setCoordinates(Coordinates.of(32, 22));
+        historicalWeatherData.setCoordinates(new Coordinates(32, 22));
 
         assertNotNull(historicalWeatherData.toString());
         assertNotEquals("", historicalWeatherData.toString());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,21 +29,24 @@ import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
+import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
     @Test
     public void whenRetrieveCurrentOneCallResponseAsJava_thenOk() {
-        final CurrentWeatherData currentWeatherData = getClient()
+        final CurrentWeather currentWeatherData = getClient()
                 .oneCall()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -57,7 +60,7 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
         final String responseJson = getClient()
                 .oneCall()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -70,10 +73,10 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallResponseWithExclusionAsJava_thenOk() {
-        final CurrentWeatherData currentWeatherData = getClient()
+        final CurrentWeather currentWeatherData = getClient()
                 .oneCall()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .exclude(OneCallResultOptions.CURRENT, OneCallResultOptions.MINUTELY)
@@ -87,10 +90,10 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
-        final CompletableFuture<CurrentWeatherData> currentWeatherDataFuture = getClient()
+        final CompletableFuture<CurrentWeather> currentWeatherDataFuture = getClient()
                 .oneCall()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
@@ -105,7 +108,7 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
         final CompletableFuture<String> responseJsonFuture = getClient()
                 .oneCall()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
@@ -124,7 +127,7 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 client
                         .oneCall()
                         .current()
-                        .byCoordinates(Coordinates.of(53.54, 27.34))
+                        .byCoordinates(new Coordinates(53.54, 27.34))
                         .language(Language.ENGLISH)
                         .unitSystem(UnitSystem.METRIC)
                         .retrieve()

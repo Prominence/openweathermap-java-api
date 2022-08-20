@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,122 +22,13 @@
 
 package com.github.prominence.openweathermap.api.model.onecall;
 
-import java.util.Objects;
+import com.github.prominence.openweathermap.api.model.BaseTemperature;
+import com.github.prominence.openweathermap.api.model.TemperatureValue;
 
 /**
  * Represents temperature values and unit.
  */
-public class Temperature {
-    private double value;
-    private Double feelsLike;
-    private Double dewPoint;
-    private String unit;
+public interface Temperature extends BaseTemperature {
 
-    private Temperature() {
-    }
-
-    /**
-     * Creates {@link Temperature} object with correctness check.
-     * @param value temperature value
-     * @param unit temperature unit
-     * @return temperature object
-     */
-    public static Temperature withValue(double value, String unit) {
-        final Temperature temperature = new Temperature();
-        temperature.setValue(value);
-        temperature.setUnit(unit);
-        return temperature;
-    }
-
-    /**
-     * Returns temperature value.
-     * @return value
-     */
-    public double getValue() {
-        return value;
-    }
-
-    /**
-     * Sets temperature value.
-     * @param value temperature
-     */
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    /**
-     * Returns 'feels like' temperature value.
-     * @return 'feels like' temperature value
-     */
-    public Double getFeelsLike() {
-        return feelsLike;
-    }
-
-    /**
-     * Sets 'feels like' temperature value.
-     * @param feelsLike 'feels like' temperature
-     */
-    public void setFeelsLike(Double feelsLike) {
-        this.feelsLike = feelsLike;
-    }
-
-    public Double getDewPoint() {
-        return dewPoint;
-    }
-
-    public void setDewPoint(Double dewPoint) {
-        this.dewPoint = dewPoint;
-    }
-
-    /**
-     * Returns temperature unit.
-     * @return unit
-     */
-    public String getUnit() {
-        return unit;
-    }
-
-    /**
-     * Sets temperature unit with correctness check.
-     * @param unit temperature unit
-     */
-    public void setUnit(String unit) {
-        if (unit == null) {
-            throw new IllegalArgumentException("Unit must be set.");
-        }
-        this.unit = unit;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Temperature)) return false;
-        Temperature that = (Temperature) o;
-        return Double.compare(that.value, value) == 0 &&
-                Objects.equals(feelsLike, that.feelsLike) &&
-                Objects.equals(dewPoint, that.dewPoint) &&
-                Objects.equals(unit, that.unit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value, feelsLike, dewPoint, unit);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Temperature: ");
-        stringBuilder.append(value);
-        stringBuilder.append(' ');
-        stringBuilder.append(unit);
-        if (feelsLike != null) {
-            stringBuilder.append(", Feels like: ");
-            stringBuilder.append(feelsLike);
-            stringBuilder.append(' ');
-            stringBuilder.append(unit);
-        }
-
-        return stringBuilder.toString();
-    }
+    TemperatureValue getDewPoint();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,9 @@ import java.time.ZoneOffset;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     @Test
@@ -44,7 +46,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final HistoricalWeatherData historicalWeatherData = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -58,7 +60,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final String responseJson = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
@@ -74,7 +76,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final CompletableFuture<HistoricalWeatherData> historicalWeatherDataFuture = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
@@ -89,7 +91,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
         final CompletableFuture<String> responseJsonFuture = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
@@ -108,7 +110,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 client
                         .oneCall()
                         .historical()
-                        .byCoordinateAndTimestamp(Coordinates.of(53.54, 27.34), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                        .byCoordinateAndTimestamp(new Coordinates(53.54, 27.34), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                         .language(Language.ENGLISH)
                         .unitSystem(UnitSystem.METRIC)
                         .retrieve()

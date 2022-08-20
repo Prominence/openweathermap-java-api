@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,17 +22,15 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.CurrentWeatherResponseMapper;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
+import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 
 /**
  * The type Single result current weather request terminator.
  */
-public class CurrentWeatherRequestTerminator {
-    private final RequestSettings requestSettings;
+public class CurrentWeatherRequestTerminator extends GenericRequestTerminator<Weather, WeatherModel> {
 
     /**
      * Instantiates a new Single result current weather request terminator.
@@ -40,28 +38,7 @@ public class CurrentWeatherRequestTerminator {
      * @param requestSettings request settings object.
      */
     CurrentWeatherRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
     }
 
-    public Weather asJava() {
-        return new CurrentWeatherResponseMapper(requestSettings.getUnitSystem()).mapToWeather(asJSON());
-    }
-
-    public String asJSON() {
-        return getRawResponse();
-    }
-
-    public String asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return getRawResponse();
-    }
-
-    public String asHTML() {
-        requestSettings.setResponseType(ResponseType.HTML);
-        return getRawResponse();
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
-    }
 }

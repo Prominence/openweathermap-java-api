@@ -3,21 +3,20 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'jacoco'
+    id 'io.freefair.lombok' version '6.5.0.3'
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-    testImplementation 'org.junit.platform:junit-platform-runner:1.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.platform:junit-platform-runner:1.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
 }
 

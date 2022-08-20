@@ -1,25 +1,23 @@
 /*
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
- *  * Copyright (c) 2021 Alexey Zinchenko
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in all
- *  * copies or substantial portions of the Software.
- *  *
- *  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *  * SOFTWARE.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
@@ -40,7 +38,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieve()
                 .asJava();
 
@@ -56,7 +54,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final String jsonString = getClient()
                 .airPollution()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieve()
                 .asJSON();
 
@@ -69,7 +67,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieveAsync()
                 .asJava();
 
@@ -82,7 +80,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .current()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieveAsync()
                 .asJSON();
 
@@ -97,7 +95,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieve()
                 .asJava();
 
@@ -113,7 +111,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final String jsonString = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieve()
                 .asJSON();
 
@@ -126,7 +124,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieveAsync()
                 .asJava();
 
@@ -139,7 +137,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .forecast()
-                .byCoordinates(Coordinates.of(53.54, 27.34))
+                .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieveAsync()
                 .asJSON();
 
@@ -154,7 +152,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 1606223802, 1606482999)
                 .retrieve()
                 .asJava();
 
@@ -170,7 +168,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final String jsonString = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 1606223802, 1606482999)
                 .retrieve()
                 .asJSON();
 
@@ -183,7 +181,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 1606223802, 1606482999)
                 .retrieveAsync()
                 .asJava();
 
@@ -196,7 +194,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .historical()
-                .byCoordinateAndPeriod(Coordinates.of(53.54, 27.34), 1606223802, 1606482999)
+                .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 1606223802, 1606482999)
                 .retrieveAsync()
                 .asJSON();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,35 @@
 
 package com.github.prominence.openweathermap.api.model.onecall;
 
-import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.WindModel;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class WindUnitTest {
     @Test
     public void withInvalidValue_noUnit() {
-        assertThrows(IllegalArgumentException.class, () -> Wind.withValue(20, null));
+        assertThrows(IllegalArgumentException.class, () -> WindModel.withValue(20, null));
     }
 
     @Test
     public void withInvalidValue_negative() {
-        assertThrows(IllegalArgumentException.class, () -> Wind.withValue(-20, "m/s"));
+        assertThrows(IllegalArgumentException.class, () -> WindModel.withValue(-20, "m/s"));
     }
 
     @Test
     public void getSpeed() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
 
         assertEquals(20.0, wind.getSpeed(), 0.00001);
     }
 
     @Test
     public void getGust() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
         wind.setGust(40);
 
         assertEquals(40.0, wind.getGust(), 0.00001);
@@ -55,14 +58,14 @@ public class WindUnitTest {
 
     @Test
     public void setGust_negative() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
 
         assertThrows(IllegalArgumentException.class, () -> wind.setGust(-20));
     }
 
     @Test
     public void getDegrees() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
         wind.setDegrees(180);
 
         assertEquals(180.0, wind.getDegrees(), 0.00001);
@@ -70,29 +73,29 @@ public class WindUnitTest {
 
     @Test
     public void setDegrees_lessThanZero() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
 
         assertThrows(IllegalArgumentException.class, () -> wind.setDegrees(-20));
     }
 
     @Test
     public void setDegrees_moreThan360() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
 
         assertThrows(IllegalArgumentException.class, () -> wind.setDegrees(420));
     }
 
     @Test
     public void getUnit() {
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
 
         assertEquals("m/s", wind.getUnit());
     }
 
     @Test
     public void testEquals() {
-        final Wind first = Wind.withValue(40, "m/s");
-        final Wind second = Wind.withValue(40, "m/s");
+        final WindModel first = WindModel.withValue(40, "m/s");
+        final WindModel second = WindModel.withValue(40, "m/s");
 
         assertEquals(first, first);
         assertNotEquals(first, null);
@@ -131,8 +134,8 @@ public class WindUnitTest {
 
     @Test
     public void testHashCode() {
-        final Wind first = Wind.withValue(40, "m/s");
-        final Wind second = Wind.withValue(40, "m/s");
+        final WindModel first = WindModel.withValue(40, "m/s");
+        final WindModel second = WindModel.withValue(40, "m/s");
 
         assertEquals(first.hashCode(), second.hashCode());
 
@@ -143,7 +146,7 @@ public class WindUnitTest {
 
     @Test
     public void testToString() {
-        final Wind wind = Wind.withValue(40, "m/s");
+        final WindModel wind = WindModel.withValue(40, "m/s");
 
         assertNotNull(wind.toString());
         assertNotEquals("", wind.toString());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,13 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.reverse;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.GeocodingResponseMapper;
-import com.github.prominence.openweathermap.api.model.geocoding.GeocodingRecord;
+import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericListAsyncRequestTerminator;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
-public class ReverseGeocodingRequestAsyncTerminator {
-    private final RequestSettings requestSettings;
-
+public class ReverseGeocodingRequestAsyncTerminator extends GenericListAsyncRequestTerminator<Geocoding, GeocodingModel> {
     ReverseGeocodingRequestAsyncTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
-
-    public CompletableFuture<List<GeocodingRecord>> asJava() {
-        return CompletableFuture.supplyAsync(() -> new GeocodingResponseMapper().mapGeocodingResponse(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+        super(new ReverseGeocodingRequestTerminator(requestSettings));
     }
 }

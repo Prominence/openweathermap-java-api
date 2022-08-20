@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,14 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class AlertUnitTest {
     @Test
@@ -50,7 +54,7 @@ public class AlertUnitTest {
     @Test
     public void getStartTime() {
         final Alert alert = new Alert();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         alert.setStartTime(now);
 
         assertEquals(now, alert.getStartTime());
@@ -59,7 +63,7 @@ public class AlertUnitTest {
     @Test
     public void getEndTime() {
         final Alert alert = new Alert();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         alert.setEndTime(now);
 
         assertEquals(now, alert.getEndTime());
@@ -85,7 +89,7 @@ public class AlertUnitTest {
         final String sender = "Sender";
         final String event = "Event";
         final String description = "Description";
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
 
         assertEquals(first, second);
 

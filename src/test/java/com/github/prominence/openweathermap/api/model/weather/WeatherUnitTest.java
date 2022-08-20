@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,36 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import com.github.prominence.openweathermap.api.model.*;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.Clouds;
+import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.MainMetrics;
+import com.github.prominence.openweathermap.api.model.Temperature;
+import com.github.prominence.openweathermap.api.model.WindModel;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class WeatherUnitTest {
     @Test
     public void whenSetRequestedOn_thenValueIsSet() {
-        final Weather weather = new Weather();
-        final LocalDateTime now = LocalDateTime.now();
+        final WeatherModel weather = new WeatherModel();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         weather.setCalculationTime(now);
 
-        assertEquals(now, weather.getCalculationTime());
+        assertEquals(now, weather.getForecastTime());
     }
 
     @Test
     public void whenSetTemperature_thenValueIsSet() {
-        final Weather weather = new Weather();
+        final WeatherModel weather = new WeatherModel();
         final Temperature temperature = Temperature.withValue(22.3, "a");
         weather.setTemperature(temperature);
 
@@ -51,8 +60,8 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetPressure_thenValueIsSet() {
-        final Weather weather = new Weather();
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.2);
+        final WeatherModel weather = new WeatherModel();
+        final MainMetrics atmosphericPressure = MainMetrics.withValue(33.2);
         weather.setAtmosphericPressure(atmosphericPressure);
 
         assertEquals(atmosphericPressure, weather.getAtmosphericPressure());
@@ -60,7 +69,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetHumidity_thenValueIsSet() {
-        final Weather weather = new Weather();
+        final WeatherModel weather = new WeatherModel();
         final Humidity humidity = Humidity.withValue((byte) 44);
         weather.setHumidity(humidity);
 
@@ -69,8 +78,8 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetWind_thenValueIsSet() {
-        final Weather weather = new Weather();
-        final Wind wind = Wind.withValue(22.2, "a");
+        final WeatherModel weather = new WeatherModel();
+        final WindModel wind = WindModel.withValue(22.2, "a");
         weather.setWind(wind);
 
         assertEquals(wind, weather.getWind());
@@ -78,7 +87,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetRain_thenValueIsSet() {
-        final Weather weather = new Weather();
+        final WeatherModel weather = new WeatherModel();
         final Rain rain = Rain.withValues(0, 0);
         weather.setRain(rain);
 
@@ -87,7 +96,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetSnow_thenValueIsSet() {
-        final Weather weather = new Weather();
+        final WeatherModel weather = new WeatherModel();
         final Snow snow = Snow.withValues(0, 0);
         weather.setSnow(snow);
 
@@ -96,7 +105,7 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetClouds_thenValueIsSet() {
-        final Weather weather = new Weather();
+        final WeatherModel weather = new WeatherModel();
         final Clouds clouds = Clouds.withValue((byte) 33);
         weather.setClouds(clouds);
 
@@ -105,8 +114,8 @@ public class WeatherUnitTest {
 
     @Test
     public void whenSetLocation_thenValueIsSet() {
-        final Weather weather = new Weather();
-        final Location location = Location.withValues(22, "asd");
+        final WeatherModel weather = new WeatherModel();
+        final City location = City.withValues(22, "asd");
         weather.setLocation(location);
 
         assertEquals(location, weather.getLocation());
@@ -114,10 +123,10 @@ public class WeatherUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Weather weather = new Weather();
-        final Location location = Location.withValues(12312, "asd");
+        final WeatherModel weather = new WeatherModel();
+        final City location = City.withValues(12312, "asd");
         final Temperature temperature = Temperature.withValue(33.2, "asd");
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(44.4);
+        final MainMetrics atmosphericPressure = MainMetrics.withValue(44.4);
         final Clouds clouds = Clouds.withValue((byte) 55);
         final Rain rain = Rain.withOneHourLevelValue(33.2);
         final Snow snow = Snow.withOneHourLevelValue(33.1);
@@ -164,8 +173,8 @@ public class WeatherUnitTest {
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Weather one = new Weather();
-        final Weather two = new Weather();
+        final WeatherModel one = new WeatherModel();
+        final WeatherModel two = new WeatherModel();
 
         assertEquals(one.hashCode(), two.hashCode());
 
@@ -176,14 +185,14 @@ public class WeatherUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Weather one = new Weather();
-        final Weather two = new Weather();
+        final WeatherModel one = new WeatherModel();
+        final WeatherModel two = new WeatherModel();
 
         assertEquals(one, one);
         assertNotEquals(one, new Object());
         assertEquals(one, two);
 
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         one.setCalculationTime(now);
 
         assertNotEquals(one, two);
@@ -201,7 +210,7 @@ public class WeatherUnitTest {
 
         assertEquals(one, two);
 
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
         one.setWeatherStates(Collections.singletonList(weatherState));
 
         assertNotEquals(one, two);
@@ -210,7 +219,7 @@ public class WeatherUnitTest {
 
         assertEquals(one, two);
 
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(33.33);
+        final MainMetrics atmosphericPressure = MainMetrics.withValue(33.33);
         one.setAtmosphericPressure(atmosphericPressure);
 
         assertNotEquals(one, two);
@@ -228,7 +237,7 @@ public class WeatherUnitTest {
 
         assertEquals(one, two);
 
-        final Wind wind = Wind.withValue(33.6, "asd");
+        final WindModel wind = WindModel.withValue(33.6, "asd");
         one.setWind(wind);
 
         assertNotEquals(one, two);
@@ -264,7 +273,7 @@ public class WeatherUnitTest {
 
         assertEquals(one, two);
 
-        final Location location = Location.withValues(231, "asda");
+        final City location = City.withValues(231, "asda");
         one.setLocation(location);
 
         assertNotEquals(one, two);

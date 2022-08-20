@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,35 +22,32 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
+import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 
 /**
  * The type One call historical weather request terminator.
  */
-class OneCallHistoricalWeatherRequestTerminator {
-    private final RequestSettings requestSettings;
+class OneCallHistoricalWeatherRequestTerminator extends GenericRequestTerminator<HistoricalWeather, HistoricalWeather> {
 
     /**
      * Instantiates a new One call historical weather request terminator.
      *
      * @param requestSettings request settings object.
      */
-    public OneCallHistoricalWeatherRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+    OneCallHistoricalWeatherRequestTerminator(RequestSettings requestSettings) {
+        super(requestSettings);
     }
 
-    public HistoricalWeatherData asJava() {
-        return new OneCallWeatherResponseMapper(requestSettings.getUnitSystem()).mapToHistorical(getRawResponse());
+    @Override
+    public String asXML() {
+        throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
-    public String asJSON() {
-        return getRawResponse();
+    @Override
+    public String asHTML() {
+        throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
-    }
 }

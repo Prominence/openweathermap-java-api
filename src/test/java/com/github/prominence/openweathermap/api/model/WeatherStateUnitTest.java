@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,102 +25,53 @@ package com.github.prominence.openweathermap.api.model;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class WeatherStateUnitTest {
     @Test
     public void getId() {
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
         assertEquals(800, weatherState.getId());
     }
 
     @Test
     public void getName() {
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
         assertEquals("Clear", weatherState.getName());
     }
 
     @Test
     public void getDescription() {
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
         assertEquals("clear sky", weatherState.getDescription());
     }
 
     @Test
     public void getIconId() {
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        weatherState.setIconId("04d");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
-        assertEquals("04d", weatherState.getIconId());
+        assertEquals("04d", weatherState.getDayIconId());
     }
 
     @Test
     public void getWeatherConditionEnum() {
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
-        assertEquals(WeatherCondition.CLEAR, weatherState.getWeatherConditionEnum());
+        assertEquals(WeatherCondition.CLEAR, weatherState);
     }
 
     @Test
     public void getWeatherIconUrl() {
-        WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
-        String weatherIconUrl = weatherState.getWeatherIconUrl();
-
-        assertNotNull(weatherIconUrl);
-        assertNotEquals("", weatherIconUrl);
-
-        weatherState.setIconId("04n");
-        weatherIconUrl = weatherState.getWeatherIconUrl();
+        String weatherIconUrl = weatherState.getDayIconUrl();
 
         assertNotNull(weatherIconUrl);
-        assertNotEquals("", weatherIconUrl);
-
-        weatherState = new WeatherState(0, "Unknown", "unknown");
-        weatherIconUrl = weatherState.getWeatherIconUrl();
-
-        assertNull(weatherIconUrl);
-    }
-
-    @Test
-    public void testEquals() {
-        final WeatherState first = new WeatherState(800, "Clear", "clear sky");
-        final WeatherState second = new WeatherState(800, "Clear", "clear sky");
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        assertEquals(first, second);
-
-        assertNotEquals(new WeatherState(800, "Clear", "clear sky"), new WeatherState(801, "Clear", "clear sky"));
-        assertNotEquals(new WeatherState(800, "Clear", "clear sky"), new WeatherState(800, "Clear1", "clear sky"));
-        assertNotEquals(new WeatherState(800, "Clear", "clear sky"), new WeatherState(800, "Clear", "clear sky1"));
-
-        first.setIconId("50d");
-
-        assertNotEquals(first, second);
-    }
-
-    @Test
-    public void testHashCode() {
-        final WeatherState first = new WeatherState(800, "Clear", "clear sky");
-        final WeatherState second = new WeatherState(800, "Clear", "clear sky");
-        final WeatherState third = new WeatherState(0, "Unknown", "unknown");
-
-        assertEquals(first.hashCode(), second.hashCode());
-        assertNotEquals(first.hashCode(), third.hashCode());
-        assertNotEquals(second.hashCode(), third.hashCode());
-    }
-
-    @Test
-    public void testToString() {
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-
-        assertNotNull(weatherState.toString());
-        assertNotEquals("", weatherState.toString());
+        assertNotEquals("https://openweathermap.org/img/w/01.png", weatherIconUrl);
     }
 }

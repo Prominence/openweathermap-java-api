@@ -1,25 +1,23 @@
 /*
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
- *  * Copyright (c) 2021 Alexey Zinchenko
- *  *
- *  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  * of this software and associated documentation files (the "Software"), to deal
- *  * in the Software without restriction, including without limitation the rights
- *  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  * copies of the Software, and to permit persons to whom the Software is
- *  * furnished to do so, subject to the following conditions:
- *  *
- *  * The above copyright notice and this permission notice shall be included in all
- *  * copies or substantial portions of the Software.
- *  *
- *  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *  * SOFTWARE.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 package com.github.prominence.openweathermap.api.model.air.pollution;
@@ -27,61 +25,21 @@ package com.github.prominence.openweathermap.api.model.air.pollution;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
- * The type Air pollution.
+ * Interface of air pollution overview.
  */
-public class AirPollutionDetails {
-    private Coordinates coordinates;
-    private List<AirPollutionRecord> airPollutionRecords;
+public interface AirPollutionDetails {
+    /**
+     * The coordinates of the measurement.
+     *
+     * @return coordinates
+     */
+    Coordinates getCoordinates();
 
     /**
-     * Gets coordinate.
-     *
-     * @return the coordinate
+     * The pollution details.
+     * @return pollution
      */
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    /**
-     * Sets coordinate.
-     *
-     * @param coordinates the coordinate
-     */
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    /**
-     * Gets air pollution details.
-     *
-     * @return the air pollution details
-     */
-    public List<AirPollutionRecord> getAirPollutionRecords() {
-        return airPollutionRecords;
-    }
-
-    /**
-     * Sets air pollution details.
-     *
-     * @param airPollutionRecords the air pollution details
-     */
-    public void setAirPollutionRecords(List<AirPollutionRecord> airPollutionRecords) {
-        this.airPollutionRecords = airPollutionRecords;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AirPollutionDetails that = (AirPollutionDetails) o;
-        return Objects.equals(coordinates, that.coordinates) && Objects.equals(airPollutionRecords, that.airPollutionRecords);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(coordinates, airPollutionRecords);
-    }
+    List<AirPollutionConcentration> getAirPollutionConcentration();
 }

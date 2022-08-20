@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,17 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
+import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.*;
-import com.github.prominence.openweathermap.api.model.forecast.hourly.*;
+import com.github.prominence.openweathermap.api.model.Clouds;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.Location;
+import com.github.prominence.openweathermap.api.model.MainMetrics;
+import com.github.prominence.openweathermap.api.model.Temperature;
+import com.github.prominence.openweathermap.api.model.WindModel;
+import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecastModel;
+import com.github.prominence.openweathermap.api.model.forecast.hourly.WeatherForecast;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -103,13 +111,13 @@ class HourlyForecastResponseMapperTest {
                 }
                 """;
 
-        final HourlyForecast hourlyForecast = new HourlyForecastResponseMapper(UnitSystem.METRIC).mapToForecast(jsonResponse);
+        final HourlyForecastModel hourlyForecast = new HourlyForecastResponseMapper(UnitSystem.METRIC).mapToForecast(jsonResponse);
         assertNotNull(hourlyForecast);
 
         final Location location = hourlyForecast.getLocation();
         assertEquals(2643743, location.getId());
         assertEquals("London", location.getName());
-        assertEquals(Coordinates.of(51.5085, -0.1258), location.getCoordinates());
+        assertEquals(new Coordinates(51.5085, -0.1258), location.getCoordinates());
         assertEquals("GB", location.getCountryCode());
         assertEquals(ZoneOffset.ofTotalSeconds(0), location.getZoneOffset());
         assertEquals(LocalDateTime.ofInstant(Instant.ofEpochSecond(1568958164), TimeZone.getDefault().toZoneId()), location.getSunriseTime());
@@ -128,7 +136,7 @@ class HourlyForecastResponseMapperTest {
         assertEquals(289.16, temperature.getMinTemperature());
         assertEquals(289.16, temperature.getMaxTemperature());
 
-        final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
+        final MainMetrics pressure = weatherForecast.getAtmosphericPressure();
         assertEquals(1013, pressure.getValue());
         assertEquals(1013, pressure.getSeaLevelValue());
         assertEquals(1010, pressure.getGroundLevelValue());
@@ -145,7 +153,7 @@ class HourlyForecastResponseMapperTest {
         final Clouds clouds = weatherForecast.getClouds();
         assertEquals(100, clouds.getValue());
 
-        final Wind wind = weatherForecast.getWind();
+        final WindModel wind = weatherForecast.getWind();
         assertEquals(2.03, wind.getSpeed());
         assertEquals(252, wind.getDegrees());
         assertEquals(5.46, wind.getGust());

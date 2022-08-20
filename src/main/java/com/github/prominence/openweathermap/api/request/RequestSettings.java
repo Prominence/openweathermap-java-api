@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,64 +22,53 @@
 
 package com.github.prominence.openweathermap.api.request;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
-import com.github.prominence.openweathermap.api.core.net.HttpClient;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class RequestSettings {
 
-    private static final String LANG_PARAM = "lang";
-    private static final String UNITS_PARAM = "units";
-    private static final String MODE_PARAM = "mode";
-    private static final String API_KEY_PARAM_NAME = "appid";
+    public static final String LANG_PARAM = "lang";
+    public static final String UNITS_PARAM = "units";
+    public static final String MODE_PARAM = "mode";
+    public static final String API_KEY_PARAM_NAME = "appid";
+    public static final String LATITUDE_PARAM = "lat";
+    public static final String LONGITUDE_PARAM = "lon";
+    public static final String START_PARAM = "start";
+    public static final String END_PARAM = "end";
+    public static final String DATE_TIME_PARAM = "dt";
+    public static final String QUERY_VALUE_PARAM = "q";
+    public static final String ZIP_PARAM = "zip";
+    public static final String COUNT_PARAM = "cnt";
 
     private final TimeoutSettings timeoutSettings;
 
     private final Map<String, String> requestParameters = new HashMap<>(8);
 
     private final StringBuilder urlAppenderBuilder = new StringBuilder();
-
-    private Object payloadObject;
-    private Class payloadClass;
-    private JsonSerializer payloadSerializer;
-
-    private HttpClient httpClient;
-
-    private String subdomain = "api";
+    private final ApiConfiguration apiConfiguration;
 
     private Language language = Language.ENGLISH;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
+    private Object requestPayload;
 
-    public RequestSettings(String apiKey, TimeoutSettings timeoutSettings) {
-        this.putRequestParameter(API_KEY_PARAM_NAME, apiKey);
+    public RequestSettings(ApiConfiguration apiConfiguration, TimeoutSettings timeoutSettings) {
+        this.apiConfiguration = apiConfiguration;
+        this.putRequestParameter(API_KEY_PARAM_NAME, apiConfiguration.getApiKey());
         // make a copy
-        this.timeoutSettings = new TimeoutSettings(timeoutSettings);
+        final TimeoutSettings defaultTimeoutSettings = apiConfiguration.getDefaultTimeoutSettings();
+        final TimeoutSettings nonNullTimeoutSettings = Optional.ofNullable(timeoutSettings).orElse(defaultTimeoutSettings);
+        this.timeoutSettings = new TimeoutSettings(nonNullTimeoutSettings);
     }
 
     public TimeoutSettings getTimeoutSettings() {
         return timeoutSettings;
-    }
-
-    public HttpClient getHttpClient() {
-        return httpClient;
-    }
-
-    public void setHttpClient(HttpClient httpClient) {
-        this.httpClient = httpClient;
-    }
-
-    public String getSubdomain() {
-        return subdomain;
-    }
-
-    public void setSubdomain(String subdomain) {
-        this.subdomain = subdomain;
     }
 
     public UnitSystem getUnitSystem() {
@@ -124,27 +113,15 @@ public class RequestSettings {
         return urlAppenderBuilder;
     }
 
-    public void setPayloadObject(Object payloadObject) {
-        this.payloadObject = payloadObject;
+    public ApiConfiguration getApiConfiguration() {
+        return apiConfiguration;
     }
 
     public Object getPayloadObject() {
-        return payloadObject;
+        return requestPayload;
     }
 
-    public Class getPayloadClass() {
-        return payloadClass;
-    }
-
-    public void setPayloadClass(Class payloadClass) {
-        this.payloadClass = payloadClass;
-    }
-
-    public JsonSerializer getPayloadSerializer() {
-        return payloadSerializer;
-    }
-
-    public void setPayloadSerializer(JsonSerializer payloadSerializer) {
-        this.payloadSerializer = payloadSerializer;
+    public void setPayloadObject(Object payload) {
+        this.requestPayload = payload;
     }
 }

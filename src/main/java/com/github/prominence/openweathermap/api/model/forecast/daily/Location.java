@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,174 +25,16 @@ package com.github.prominence.openweathermap.api.model.forecast.daily;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 
 import java.time.ZoneOffset;
-import java.util.Objects;
 
-/**
- * Represents location information.
- */
-public class Location {
-    private int id;
-    private String name;
-    private String countryCode;
+public interface Location {
 
-    private ZoneOffset zoneOffset;
+    Coordinates getCoordinates();
 
-    private Coordinates coordinates;
+    ZoneOffset getTimeZone();
 
-    private Long population;
+    long getCityId();
 
-    protected Location(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    String getCityName();
 
-    /**
-     * Creates {@link Location} object with correctness check.
-     * @param id location id
-     * @param name location name
-     * @return location object
-     */
-    public static Location withValues(int id, String name) {
-        if (name == null) {
-            throw new IllegalArgumentException("Name must be set.");
-        }
-        return new Location(id, name);
-    }
-
-    /**
-     * Returns ID.
-     * @return location ID
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Sets location ID.
-     * @param id location id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Returns location name.
-     * @return location name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets location name.
-     * @param name location name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Returns country code.
-     * @return location country code
-     */
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    /**
-     * Sets location country code.
-     * @param countryCode location country code
-     */
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    /**
-     * Returns location timezone offset.
-     * @return timezone offset
-     */
-    public ZoneOffset getZoneOffset() {
-        return zoneOffset;
-    }
-
-    /**
-     * Sets location timezone offset.
-     * @param zoneOffset timezone offset
-     */
-    public void setZoneOffset(ZoneOffset zoneOffset) {
-        this.zoneOffset = zoneOffset;
-    }
-
-    /**
-     * Returns location coordinates.
-     * @return location coordinates.
-     */
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    /**
-     * Sets location coordinates.
-     * @param coordinates location coordinates
-     */
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    /**
-     * Sets location population.
-     * @return location population
-     */
-    public Long getPopulation() {
-        return population;
-    }
-
-    /**
-     * Sets location population.
-     * @param population location population
-     */
-    public void setPopulation(Long population) {
-        this.population = population;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Location)) return false;
-        Location location = (Location) o;
-        return id == location.id &&
-                Objects.equals(name, location.name) &&
-                Objects.equals(countryCode, location.countryCode) &&
-                Objects.equals(zoneOffset, location.zoneOffset) &&
-                Objects.equals(coordinates, location.coordinates) &&
-                Objects.equals(population, location.population);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, countryCode, zoneOffset, coordinates, population);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        if (coordinates != null) {
-            stringBuilder.append(coordinates);
-            stringBuilder.append(". ");
-        }
-        stringBuilder.append("ID: ");
-        stringBuilder.append(id);
-        stringBuilder.append(", Name: ");
-        stringBuilder.append(name);
-        if (countryCode != null) {
-            stringBuilder.append('(');
-            stringBuilder.append(countryCode);
-            stringBuilder.append(')');
-        }
-        if (population != null) {
-            stringBuilder.append(", Population: ");
-            stringBuilder.append(population);
-        }
-        return stringBuilder.toString();
-    }
+    String getCountryCode();
 }

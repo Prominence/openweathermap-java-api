@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,30 +22,13 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
+import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericListAsyncRequestTerminator;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
-
-public class DirectGeocodingRequestAsyncTerminator<R> {
-    private final RequestSettings requestSettings;
-    private final Function<String, R> mapperFunction;
-
-    DirectGeocodingRequestAsyncTerminator(RequestSettings requestSettings, Function<String, R> mapperFunction) {
-        this.requestSettings = requestSettings;
-        this.mapperFunction = mapperFunction;
-    }
-
-    public CompletableFuture<R> asJava() {
-        return CompletableFuture.supplyAsync(() -> mapperFunction.apply(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+public class DirectGeocodingRequestAsyncTerminator extends GenericListAsyncRequestTerminator<Geocoding, GeocodingModel> {
+    DirectGeocodingRequestAsyncTerminator(RequestSettings requestSettings) {
+        super(new DirectGeocodingRequestTerminator(requestSettings));
     }
 }

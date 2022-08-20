@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,24 @@
 package com.github.prominence.openweathermap.api.request.forecast.hourly;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.HourlyForecastResponseMapper;
+import com.github.prominence.openweathermap.api.enums.ApiVariant;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecast;
+import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 
-class FourDaysHourlyForecastRequestTerminator {
-    private final RequestSettings requestSettings;
-
-        FourDaysHourlyForecastRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+class FourDaysHourlyForecastRequestTerminator extends GenericRequestTerminator<HourlyForecast, HourlyForecastModel> {
+    FourDaysHourlyForecastRequestTerminator(RequestSettings requestSettings) {
+        super(requestSettings);
     }
 
-    public HourlyForecast asJava() {
-        return new HourlyForecastResponseMapper(requestSettings.getUnitSystem()).mapToForecast(getRawResponse());
+    @Override
+    public String asHTML() {
+        throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
-    public String asJSON() {
-        return getRawResponse();
-    }
-
-    public String asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return getRawResponse();
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+    @Override
+    protected String getRawResponse() {
+        return new RequestExecutor(requestSettings).getResponse(ApiVariant.PRO);
     }
 }

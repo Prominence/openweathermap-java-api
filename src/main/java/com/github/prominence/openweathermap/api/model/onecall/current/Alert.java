@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,165 +22,32 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import lombok.Data;
+
+import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * The type Alert.
  */
+@Data
 public class Alert {
+
+    @JsonProperty("sender_name")
     private String senderName;
+    @JsonProperty("event")
     private String eventName;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("start")
+    private OffsetDateTime startTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("end")
+    private OffsetDateTime endTime;
+    @JsonProperty("description")
     private String description;
-
+    @JsonProperty("tags")
     private List<String> tags;
-
-    /**
-     * Instantiates a new Alert.
-     */
-    public Alert() {
-    }
-
-    /**
-     * Instantiates a new Alert.
-     *
-     * @param senderName  the sender name
-     * @param eventName   the event name
-     * @param startTime   the start time
-     * @param endTime     the end time
-     * @param description the description
-     * @param tags        the tags
-     */
-    public Alert(String senderName, String eventName, LocalDateTime startTime, LocalDateTime endTime, String description, List<String> tags) {
-        this.senderName = senderName;
-        this.eventName = eventName;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.description = description;
-        this.tags = tags;
-    }
-
-    /**
-     * Gets sender name.
-     *
-     * @return the sender name
-     */
-    public String getSenderName() {
-        return senderName;
-    }
-
-    /**
-     * Sets sender name.
-     *
-     * @param senderName the sender name
-     */
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
-    }
-
-    /**
-     * Gets event name.
-     *
-     * @return the event name
-     */
-    public String getEventName() {
-        return eventName;
-    }
-
-    /**
-     * Sets event name.
-     *
-     * @param eventName the event name
-     */
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    /**
-     * Gets start time.
-     *
-     * @return the start time
-     */
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    /**
-     * Sets start time.
-     *
-     * @param startTime the start time
-     */
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
-     * Gets end time.
-     *
-     * @return the end time
-     */
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    /**
-     * Sets end time.
-     *
-     * @param endTime the end time
-     */
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    /**
-     * Gets description.
-     *
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets description.
-     *
-     * @param description the description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Alert alert = (Alert) o;
-        return Objects.equals(senderName, alert.senderName) &&
-                Objects.equals(eventName, alert.eventName) &&
-                Objects.equals(startTime, alert.startTime) &&
-                Objects.equals(endTime, alert.endTime) &&
-                Objects.equals(description, alert.description) &&
-                Objects.equals(tags, alert.tags);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(senderName, eventName, startTime, endTime, description, tags);
-    }
-
-    @Override
-    public String toString() {
-        return senderName + " - " + eventName + "(" + startTime + " - " + endTime + "): " + description;
-    }
 }

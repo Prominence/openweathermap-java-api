@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
 package com.github.prominence.openweathermap.api.mapper;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.geocoding.GeocodingRecord;
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingRecord;
+import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
+import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -172,7 +172,7 @@ class GeocodingResponseMapperTest {
                 ]
                 """;
 
-        List<GeocodingRecord> geocodingRecords = new GeocodingResponseMapper().mapGeocodingResponse(jsonResponse);
+        List<GeocodingModel> geocodingRecords = new GeocodingResponseMapper().mapGeocodingResponse(jsonResponse);
 
         assertNotNull(geocodingRecords);
         assertEquals(5, geocodingRecords.size());
@@ -189,12 +189,12 @@ class GeocodingResponseMapperTest {
                 }
                 """;
 
-        ZipCodeGeocodingRecord zipCodeGeocodingRecord = new GeocodingResponseMapper().mapZipCodeGeocodingResponse(jsonResponse);
+        ZipCodeGeocodingModel zipCodeGeocodingRecord = new GeocodingResponseMapper().mapZipCodeGeocodingResponse(jsonResponse);
 
         assertNotNull(zipCodeGeocodingRecord);
         assertEquals("90210", zipCodeGeocodingRecord.getZip());
         assertEquals("Beverly Hills", zipCodeGeocodingRecord.getName());
         assertEquals("US", zipCodeGeocodingRecord.getCountryCode());
-        assertEquals(Coordinates.of(34.0901, -118.4065), zipCodeGeocodingRecord.getCoordinates());
+        assertEquals(new Coordinates(34.0901, -118.4065), zipCodeGeocodingRecord.getCoordinates());
     }
 }

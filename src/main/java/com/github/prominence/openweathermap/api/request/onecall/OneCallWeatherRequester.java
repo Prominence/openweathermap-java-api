@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ public class OneCallWeatherRequester {
      */
     public OneCallWeatherRequester(RequestSettings requestSettings) {
         this.requestSettings = requestSettings;
-        this.requestSettings.appendToURL("data/2.5/onecall");
+        this.requestSettings.appendToURL("data/3.0/onecall");
     }
 
     public OneCallCurrentWeatherRequester current() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.Current;
+import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
@@ -31,13 +31,15 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CurrentWeatherDataUnitTest {
     @Test
     public void getCoordinates() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-        final Coordinates coordinates = Coordinates.of(11.2, 43.2);
+        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final Coordinates coordinates = new Coordinates(11.2, 43.2);
         currentWeatherData.setCoordinates(coordinates);
 
         assertEquals(coordinates, currentWeatherData.getCoordinates());
@@ -45,7 +47,7 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getTimezone() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
         final ZoneId timeZone = ZoneId.of("GMT");
         currentWeatherData.setTimezone(timeZone);
 
@@ -54,7 +56,7 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getTimezoneOffset() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
         final ZoneOffset offset = ZoneOffset.UTC;
         currentWeatherData.setTimezoneOffset(offset);
 
@@ -63,8 +65,8 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getCurrent() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-        final Current current = new Current();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final BaseMeasurement current = new BaseMeasurement();
         currentWeatherData.setCurrent(current);
 
         assertEquals(current, currentWeatherData.getCurrent());
@@ -72,7 +74,7 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getMinutelyList() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
         final List<Minutely> minutelyList = new ArrayList<>();
         currentWeatherData.setMinutelyList(minutelyList);
 
@@ -81,7 +83,7 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getHourlyList() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
         final List<Hourly> hourlyList = new ArrayList<>();
         currentWeatherData.setHourlyList(hourlyList);
 
@@ -90,7 +92,7 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getDailyList() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
         final List<Daily> dailyList = new ArrayList<>();
         currentWeatherData.setDailyList(dailyList);
 
@@ -99,7 +101,7 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getAlerts() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
+        final CurrentWeather currentWeatherData = new CurrentWeather();
         final List<Alert> alerts = new ArrayList<>();
         currentWeatherData.setAlerts(alerts);
 
@@ -108,17 +110,17 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getEquals() {
-        final CurrentWeatherData first = new CurrentWeatherData();
-        final CurrentWeatherData second = new CurrentWeatherData();
+        final CurrentWeather first = new CurrentWeather();
+        final CurrentWeather second = new CurrentWeather();
 
         assertEquals(first, first);
         assertNotEquals(first, null);
         assertNotEquals(first, new Object());
 
-        final Coordinates coordinates = Coordinates.of(11, 12);
+        final Coordinates coordinates = new Coordinates(11, 12);
         final ZoneId timeZone = ZoneId.of("GMT");
         final ZoneOffset offset = ZoneOffset.UTC;
-        final Current current = new Current();
+        final BaseMeasurement current = new BaseMeasurement();
         final List<Minutely> minutelyList = new ArrayList<>();
         final List<Hourly> hourlyList = new ArrayList<>();
         final List<Daily> dailyList = new ArrayList<>();
@@ -193,20 +195,20 @@ public class CurrentWeatherDataUnitTest {
 
     @Test
     public void getHashCode() {
-        final CurrentWeatherData first = new CurrentWeatherData();
-        final CurrentWeatherData second = new CurrentWeatherData();
+        final CurrentWeather first = new CurrentWeather();
+        final CurrentWeather second = new CurrentWeather();
 
         assertEquals(first.hashCode(), second.hashCode());
 
-        first.setCoordinates(Coordinates.of(11, 42));
+        first.setCoordinates(new Coordinates(11, 42));
 
         assertNotEquals(first.hashCode(), second.hashCode());
     }
 
     @Test
     public void getToString() {
-        final CurrentWeatherData currentWeatherData = new CurrentWeatherData();
-        currentWeatherData.setCoordinates(Coordinates.of(32, 22));
+        final CurrentWeather currentWeatherData = new CurrentWeather();
+        currentWeatherData.setCoordinates(new Coordinates(32, 22));
 
         assertNotNull(currentWeatherData.toString());
         assertNotEquals("", currentWeatherData.toString());

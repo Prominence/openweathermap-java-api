@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,10 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.QUERY_VALUE_PARAM;
+
 /**
  * The forecast requester.
  */
@@ -42,43 +46,13 @@ public class FiveDayThreeHourStepForecastRequester {
     }
 
     public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName) {
-        requestSettings.putRequestParameter("q", cityName);
-        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
-    }
-
-    @Deprecated
-    public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode) {
-        requestSettings.putRequestParameter("q", cityName + "," + stateCode);
-        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
-    }
-
-    @Deprecated
-    public FiveDayThreeHourStepForecastRequestCustomizer byCityName(String cityName, String stateCode, String countryCode) {
-        requestSettings.putRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
-        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
-    }
-
-    @Deprecated
-    public FiveDayThreeHourStepForecastRequestCustomizer byCityId(long cityId) {
-        requestSettings.putRequestParameter("id", Long.toString(cityId));
+        requestSettings.putRequestParameter(QUERY_VALUE_PARAM, cityName);
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 
     public FiveDayThreeHourStepForecastRequestCustomizer byCoordinates(Coordinates coordinates) {
-        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
-        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
-        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
-    }
-
-    @Deprecated
-    public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeAndCountry(String zipCode, String countryCode) {
-        requestSettings.putRequestParameter("zip", zipCode + "," + countryCode);
-        return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
-    }
-
-    @Deprecated
-    public FiveDayThreeHourStepForecastRequestCustomizer byZipCodeInUSA(String zipCode) {
-        requestSettings.putRequestParameter("zip", zipCode);
+        requestSettings.putRequestParameter(LATITUDE_PARAM, String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter(LONGITUDE_PARAM, String.valueOf(coordinates.getLongitude()));
         return new FiveDayThreeHourStepForecastRequestCustomizer(requestSettings);
     }
 }

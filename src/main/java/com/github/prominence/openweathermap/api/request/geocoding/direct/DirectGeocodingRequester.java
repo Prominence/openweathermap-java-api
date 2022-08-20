@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
-import com.github.prominence.openweathermap.api.mapper.GeocodingResponseMapper;
-import com.github.prominence.openweathermap.api.model.geocoding.GeocodingRecord;
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingRecord;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
-import java.util.List;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.QUERY_VALUE_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.ZIP_PARAM;
 
 public class DirectGeocodingRequester {
     private final RequestSettings requestSettings;
@@ -36,15 +34,15 @@ public class DirectGeocodingRequester {
         this.requestSettings = requestSettings;
     }
 
-    public DirectGeocodingRequestCustomizer<List<GeocodingRecord>> byLocationName(String cityName, String stateCode, String countryCode) {
+    public DirectGeocodingRequestCustomizer byLocationName(String cityName, String stateCode, String countryCode) {
         requestSettings.appendToURL("direct");
-        requestSettings.putRequestParameter("q", cityName + "," + stateCode + "," + countryCode);
-        return new DirectGeocodingRequestCustomizer<>(requestSettings, (String json) -> new GeocodingResponseMapper().mapGeocodingResponse(json));
+        requestSettings.putRequestParameter(QUERY_VALUE_PARAM, cityName + "," + stateCode + "," + countryCode);
+        return new DirectGeocodingRequestCustomizer(requestSettings);
     }
 
-    public DirectGeocodingRequestCustomizer<ZipCodeGeocodingRecord> byZipCode(String zipCode, String countryCode) {
+    public ZipCodeGeocodingRequestCustomizer byZipCode(String zipCode, String countryCode) {
         requestSettings.appendToURL("zip");
-        requestSettings.putRequestParameter("zip", zipCode + "," + countryCode);
-        return new DirectGeocodingRequestCustomizer<>(requestSettings, (String json) -> new GeocodingResponseMapper().mapZipCodeGeocodingResponse(json));
+        requestSettings.putRequestParameter(ZIP_PARAM, zipCode + "," + countryCode);
+        return new ZipCodeGeocodingRequestCustomizer(requestSettings);
     }
 }

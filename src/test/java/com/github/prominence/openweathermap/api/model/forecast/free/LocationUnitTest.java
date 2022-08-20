@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,12 @@
 
 package com.github.prominence.openweathermap.api.model.forecast.free;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LocationUnitTest {
     @Test
@@ -68,7 +67,7 @@ public class LocationUnitTest {
     @Test
     public void whenSetSunrise_thenValueIsSet() {
         final Location location = Location.withValues(33, "test");
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         location.setSunriseTime(now);
 
         assertEquals(now, location.getSunriseTime());
@@ -77,7 +76,7 @@ public class LocationUnitTest {
     @Test
     public void whenSetSunset_thenValueIsSet() {
         final Location location = Location.withValues(33, "test");
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         location.setSunsetTime(now);
 
         assertEquals(now, location.getSunsetTime());
@@ -92,131 +91,4 @@ public class LocationUnitTest {
         assertEquals(offset, location.getZoneOffset());
     }
 
-    @Test
-    public void whenSetCoordinate_thenValueIsSet() {
-        final Location location = Location.withValues(33, "test");
-        final Coordinates coordinates = Coordinates.of(33.2, 64.2);
-        location.setCoordinates(coordinates);
-
-        assertEquals(coordinates, location.getCoordinates());
-    }
-
-    @Test
-    public void whenSetPopulation_thenValueIsSet() {
-        final Location location = Location.withValues(33, "test");
-        location.setPopulation(3444L);
-
-        assertEquals(3444L, location.getPopulation().longValue());
-    }
-
-    @Test
-    public void whenCallToString_thenAllIsFine() {
-        final Location location = Location.withValues(44, "test");
-
-        assertNotEquals("", location.toString());
-
-        location.setCoordinates(Coordinates.of(33.2, 56.3));
-
-        assertNotEquals("", location.toString());
-
-        location.setCountryCode("TN");
-
-        assertNotEquals("", location.toString());
-        assertNotNull(location.toString());
-
-        location.setPopulation(34343L);
-        assertNotEquals("", location.toString());
-        assertNotNull(location.toString());
-    }
-
-    @Test
-    public void whenCallHashCode_thenAllIsFine() {
-        final Location one = Location.withValues(44, "test");
-        final Location two = Location.withValues(44, "test");
-
-        assertEquals(one.hashCode(), two.hashCode());
-
-        two.setName("112");
-
-        assertNotEquals(one.hashCode(), two.hashCode());
-    }
-
-    @Test
-    public void whenCheckEquality_thenAllIsFine() {
-        final Location one = Location.withValues(44, "test");
-        final Location two = Location.withValues(44, "test");
-
-        assertEquals(one, one);
-        assertNotEquals(one, new Object());
-
-        assertEquals(one, two);
-
-        two.setId(23);
-
-        assertNotEquals(one, two);
-
-        one.setId(23);
-
-        assertEquals(one, two);
-
-        one.setName("23");
-
-        assertNotEquals(one, two);
-
-        two.setName("23");
-
-        assertEquals(one, two);
-
-        one.setCountryCode("11");
-
-        assertNotEquals(one, two);
-
-        two.setCountryCode("11");
-
-        assertEquals(one, two);
-
-        final LocalDateTime now = LocalDateTime.now();
-
-        one.setSunriseTime(now);
-
-        assertNotEquals(one, two);
-
-        two.setSunriseTime(now);
-
-        assertEquals(one, two);
-
-        one.setSunsetTime(now);
-
-        assertNotEquals(one, two);
-
-        two.setSunsetTime(now);
-
-        assertEquals(one, two);
-
-        one.setZoneOffset(ZoneOffset.UTC);
-
-        assertNotEquals(one, two);
-
-        two.setZoneOffset(ZoneOffset.UTC);
-
-        assertEquals(one, two);
-
-        final Coordinates coordinates = Coordinates.of(33.5, -22.4);
-
-        one.setCoordinates(coordinates);
-
-        assertNotEquals(one, two);
-
-        two.setCoordinates(coordinates);
-
-        assertEquals(one, two);
-
-        one.setPopulation(20000L);
-
-        assertNotEquals(one, two);
-
-        two.setPopulation(20000L);
-
-        assertEquals(one, two);
-    }
 }

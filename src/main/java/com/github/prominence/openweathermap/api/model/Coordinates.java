@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,104 +23,20 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents some location by its latitude and longitude.
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Coordinates {
     @JsonProperty("lat")
     private double latitude;
     @JsonProperty("lon")
     private double longitude;
 
-    private Coordinates() {
-
-    }
-
-    /**
-     * Method for {@link Coordinates} creation with correctness check.
-     *
-     * @param latitude  latitude
-     * @param longitude longitude
-     * @return coordinate object.
-     */
-    public static Coordinates of(double latitude, double longitude) {
-        final Coordinates coordinates = new Coordinates();
-        coordinates.setLatitude(latitude);
-        coordinates.setLongitude(longitude);
-        return coordinates;
-    }
-
-    /**
-     * Sets latitude with checks.
-     *
-     * @param latitude latitude value
-     */
-    public void setLatitude(double latitude) {
-        if (latitude < -90 || latitude > 90) {
-            throw new IllegalArgumentException("Latitude value must be in the next range: [-90.0; 90.0].");
-        }
-        this.latitude = latitude;
-    }
-
-    /**
-     * Sets longitude with checks.
-     *
-     * @param longitude longitude value
-     */
-    public void setLongitude(double longitude) {
-        if (longitude < -180 || longitude > 180) {
-            throw new IllegalArgumentException("Longitude value must be in the next range: [-180.0; 180.0].");
-        }
-        this.longitude = longitude;
-    }
-
-    /**
-     * Returns latitude.
-     *
-     * @return latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Returns longitude.
-     *
-     * @return longitude
-     */
-    public double getLongitude() {
-        return longitude;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Coordinates)) return false;
-        Coordinates that = (Coordinates) o;
-        return Double.compare(that.latitude, latitude) == 0 &&
-                Double.compare(that.longitude, longitude) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(latitude, longitude);
-    }
-
-    @Override
-    public String toString() {
-        return formatAsDegree(latitude) +
-                ", " + formatAsDegree(longitude);
-    }
-
-    private String formatAsDegree(double value) {
-        int degrees = (int) value;
-        double secondsDouble = value % 1 * 60;
-        int minutes = (int) secondsDouble;
-        int seconds = (int) (secondsDouble % 1 * 60);
-
-        return String.format("%s° %s′ %s″", degrees, minutes, seconds);
-    }
 }

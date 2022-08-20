@@ -1,9 +1,31 @@
+/*
+ * Copyright (c) 2021-present Alexey Zinchenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.github.prominence.openweathermap.api.mapper;
 
+import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
-import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationRecord;
-import com.github.prominence.openweathermap.api.utils.TestMappingUtils;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationMeasurement;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -37,15 +59,15 @@ class SolarRadiationResponseMapperTest {
                 }
                 """;
 
-        final SolarRadiation solarRadiation = new SolarRadiationResponseMapper().mapToObject(jsonResponse);
+        final SolarRadiationModel solarRadiation = new SolarRadiationResponseMapper().mapToObject(jsonResponse);
         assertNotNull(solarRadiation);
 
-        assertEquals(Coordinates.of(32.7243, -114.6244), solarRadiation.getCoordinates());
+        assertEquals(new Coordinates(32.7243, -114.6244), solarRadiation.getCoordinates());
 
-        final List<SolarRadiationRecord> records = solarRadiation.getSolarRadiationRecords();
+        final List<SolarRadiationMeasurement> records = solarRadiation.getSolarRadiationRecords();
         assertEquals(1, records.size());
 
-        final SolarRadiationRecord record = records.get(0);
+        final SolarRadiationMeasurement record = records.get(0);
         assertEquals(TestMappingUtils.parseDateTime(1618232400), record.getMeasurementTime());
         assertEquals(206.68, record.getCloudSkyGlobalHorizontalIrradiance());
         assertEquals(2.27, record.getCloudSkyDirectNormalIrradiance());

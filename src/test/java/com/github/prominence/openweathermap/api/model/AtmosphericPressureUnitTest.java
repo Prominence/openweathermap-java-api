@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,23 +24,26 @@ package com.github.prominence.openweathermap.api.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AtmosphericPressureUnitTest {
     @Test
     public void whenCreatePressureWithArgs_thenValueIsSet() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(100);
+        MainMetrics atmosphericPressure = MainMetrics.withValue(100);
         assertEquals(100, atmosphericPressure.getValue(), 0.00001);
 
-        assertEquals(0, AtmosphericPressure.withValue(0).getValue(), 0.00001);
-        assertEquals(100, AtmosphericPressure.withValue(100).getValue(), 0.00001);
-        assertEquals(55, AtmosphericPressure.withValue(55).getValue(), 0.00001);
+        assertEquals(0, MainMetrics.withValue(0).getValue(), 0.00001);
+        assertEquals(100, MainMetrics.withValue(100).getValue(), 0.00001);
+        assertEquals(55, MainMetrics.withValue(55).getValue(), 0.00001);
     }
 
     @Test
     public void whenCreateTwoIdenticalInstances_thenWheyAreEquals() {
-        AtmosphericPressure one = AtmosphericPressure.withValue(22);
-        AtmosphericPressure two = AtmosphericPressure.withValue(22);
+        MainMetrics one = MainMetrics.withValue(22);
+        MainMetrics two = MainMetrics.withValue(22);
 
         assertEquals(one, two);
         assertEquals(one, one);
@@ -59,17 +62,17 @@ public class AtmosphericPressureUnitTest {
 
     @Test
     public void whenCreateTwoDifferentInstances_thenWheyAreNotEquals() {
-        AtmosphericPressure one = AtmosphericPressure.withValue(5);
-        AtmosphericPressure two = AtmosphericPressure.withValue(88);
+        MainMetrics one = MainMetrics.withValue(5);
+        MainMetrics two = MainMetrics.withValue(88);
 
         assertNotEquals(one, two);
         assertNotEquals(two, one);
         assertNotEquals(one, new Object());
         assertNotEquals(one.hashCode(), two.hashCode());
 
-        one = AtmosphericPressure.withValue(44);
+        one = MainMetrics.withValue(44);
         one.setSeaLevelValue(44);
-        two = AtmosphericPressure.withValue(44);
+        two = MainMetrics.withValue(44);
         two.setGroundLevelValue(22);
 
         assertNotEquals(one, two);
@@ -83,7 +86,7 @@ public class AtmosphericPressureUnitTest {
 
     @Test
     public void whenSetValidValues_thenAllIsFine() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(14);
+        MainMetrics atmosphericPressure = MainMetrics.withValue(14);
         atmosphericPressure.setValue(0);
         atmosphericPressure.setValue(15);
         atmosphericPressure.setValue(100);
@@ -97,33 +100,33 @@ public class AtmosphericPressureUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final String pressureString = AtmosphericPressure.withValue(44).toString();
+        final String pressureString = MainMetrics.withValue(44).toString();
         assertNotNull(pressureString);
         assertNotEquals("", pressureString);
     }
 
     @Test
     public void whenCreatePressureByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> AtmosphericPressure.withValue(-33));
+        assertThrows(IllegalArgumentException.class, () -> MainMetrics.withValue(-33));
     }
 
     @Test
     public void whenCreatePressureAndSetInvalidDataNegative_thenThrowAnException() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
+        MainMetrics atmosphericPressure = MainMetrics.withValue(88);
 
         assertThrows(IllegalArgumentException.class, () -> atmosphericPressure.setValue(-89));
     }
 
     @Test
     public void whenSetInvalidSeaLevelPressure_thenThrowAnException() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
+        MainMetrics atmosphericPressure = MainMetrics.withValue(88);
 
         assertThrows(IllegalArgumentException.class, () -> atmosphericPressure.setSeaLevelValue(-89));
     }
 
     @Test
     public void whenSetInvalidGroundLevelPressure_thenThrowAnException() {
-        AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(88);
+        MainMetrics atmosphericPressure = MainMetrics.withValue(88);
 
         assertThrows(IllegalArgumentException.class, () -> atmosphericPressure.setGroundLevelValue(-223));
     }

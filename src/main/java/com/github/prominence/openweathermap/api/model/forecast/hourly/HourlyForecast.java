@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,63 +22,13 @@
 
 package com.github.prominence.openweathermap.api.model.forecast.hourly;
 
+import com.github.prominence.openweathermap.api.model.Location;
+
 import java.util.List;
-import java.util.Objects;
 
-/**
- * Represents information about forecast for different timestamps.
- */
-public class HourlyForecast {
-    private Location location;
-    private List<WeatherForecast> weatherForecasts;
+public interface HourlyForecast {
 
-    /**
-     * Returns location information.
-     * @return location
-     */
-    public Location getLocation() {
-        return location;
-    }
+    Location getLocation();
 
-    /**
-     * Sets forecast location.
-     * @param location forecast location
-     */
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    /**
-     * Returns list of weather forecasts for different timestamps.
-     * @return list of forecast-per-timestamp information.
-     */
-    public List<WeatherForecast> getWeatherForecasts() {
-        return weatherForecasts;
-    }
-
-    /**
-     * Sets list of weather forecasts for different timestamps.
-     * @param weatherForecasts list of forecast information
-     */
-    public void setWeatherForecasts(List<WeatherForecast> weatherForecasts) {
-        this.weatherForecasts = weatherForecasts;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HourlyForecast hourlyForecast = (HourlyForecast) o;
-        return Objects.equals(location, hourlyForecast.location) && Objects.equals(weatherForecasts, hourlyForecast.weatherForecasts);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(location, weatherForecasts);
-    }
-
-    @Override
-    public String toString() {
-        return "A forecast for " + location.getName() + " with " + weatherForecasts.size() + " timestamps.";
-    }
+    List<Weather> getWeatherForecasts();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,13 +25,18 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MinutelyUnitTest {
     @Test
     public void withValue() {
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         final Minutely minutely = Minutely.withValue(now, 10.0);
 
         assertEquals(now, minutely.getForecastTime());
@@ -46,7 +51,7 @@ public class MinutelyUnitTest {
 
     @Test
     public void testEquals() {
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         final Minutely first = Minutely.withValue(now, 10.0);
         final Minutely firstCopy = Minutely.withValue(now, 10.0);
         final Minutely second = Minutely.withValue(now, 11.0);
@@ -65,7 +70,7 @@ public class MinutelyUnitTest {
 
     @Test
     public void testHashCode() {
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         final Minutely first = Minutely.withValue(now, 10.0);
         final Minutely firstCopy = Minutely.withValue(now, 10.0);
         final Minutely second = Minutely.withValue(now.plusMinutes(2), 11.0);

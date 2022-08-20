@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,17 +22,20 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeatherData;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
+import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class OneCallWeatherResponseMapperTest {
 
     @Test
-    void mapToCurrent() {
+    void mapToCurrent() throws JsonProcessingException {
         final String jsonResponse = """
                 {
                    "lat": 33.44,
@@ -152,7 +155,7 @@ class OneCallWeatherResponseMapperTest {
                  }
                 """;
 
-        final CurrentWeatherData weatherData = new OneCallWeatherResponseMapper(UnitSystem.METRIC).mapToCurrent(jsonResponse);
+        final CurrentWeather weatherData = new ObjectMapper().readValue(jsonResponse, CurrentWeather.class);
 
         assertNotNull(weatherData);
         assertNotEquals(0, weatherData.getDailyList().size());
@@ -160,7 +163,7 @@ class OneCallWeatherResponseMapperTest {
     }
 
     @Test
-    void mapToHistorical() {
+    void mapToHistorical() throws JsonProcessingException {
         final String jsonResponse = """
                 {
                   "lat": 60.99,
@@ -214,10 +217,10 @@ class OneCallWeatherResponseMapperTest {
                 }
                 """;
 
-        final HistoricalWeatherData weatherData = new OneCallWeatherResponseMapper(UnitSystem.METRIC).mapToHistorical(jsonResponse);
+        final HistoricalWeather weatherData = new ObjectMapper().readValue(jsonResponse, HistoricalWeather.class);
 
         assertNotNull(weatherData);
-        assertNotNull(weatherData.getHistoricalWeather());
-        assertNotEquals(0, weatherData.getHourlyList().size());
+        assertNotNull(weatherData.getData());
+        assertNotEquals(0, weatherData.getData().size());
     }
 }

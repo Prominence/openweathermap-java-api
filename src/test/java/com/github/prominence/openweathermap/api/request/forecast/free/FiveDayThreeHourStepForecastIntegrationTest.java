@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,9 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     @Test
@@ -249,7 +251,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJava_thenReturnNotNull() {
         final Forecast forecast = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .count(15)
@@ -273,7 +275,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsJSON_thenReturnNotNull() {
         final String forecastJson = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .language(Language.SPANISH)
                 .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
@@ -287,7 +289,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
     public void whenGetForecastByCoordinatesRequestAsXML_thenReturnNotNull() {
         final String forecastXml = getClient()
                 .forecast5Day3HourStep()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()

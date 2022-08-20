@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,24 @@
 package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.enums.ResponseType;
-import com.github.prominence.openweathermap.api.mapper.ClimaticForecastResponseMapper;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.Forecast;
+import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 
-class ClimaticForecastRequestTerminator {
-    private final RequestSettings requestSettings;
+class ClimaticForecastRequestTerminator extends GenericRequestTerminator<ThirtyDaysDailyForecast, ThirtyDaysDailyForecastModel> {
 
-    ClimaticForecastRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+    ClimaticForecastRequestTerminator(RequestSettings requestSettings)  {
+        super(requestSettings);
     }
 
-    public Forecast asJava() {
-        return new ClimaticForecastResponseMapper(requestSettings.getUnitSystem()).mapToForecast(getRawResponse());
+    @Override
+    public String asHTML() {
+        throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
-    public String asJSON() {
-        return getRawResponse();
-    }
-
-    public String asXML() {
-        requestSettings.setResponseType(ResponseType.XML);
-        return getRawResponse();
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+    protected String getRawResponse() {
+        return new RequestExecutor(requestSettings).getResponse(ApiVariant.PRO);
     }
 }

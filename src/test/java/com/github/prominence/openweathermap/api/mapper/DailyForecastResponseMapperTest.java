@@ -1,11 +1,37 @@
+/*
+ * Copyright (c) 2021-present Alexey Zinchenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.github.prominence.openweathermap.api.mapper;
 
+import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.*;
-import com.github.prominence.openweathermap.api.model.forecast.daily.AtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.Clouds;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.LocationExtended;
+import com.github.prominence.openweathermap.api.model.WindModel;
 import com.github.prominence.openweathermap.api.model.forecast.daily.Temperature;
-import com.github.prominence.openweathermap.api.model.forecast.daily.*;
-import com.github.prominence.openweathermap.api.utils.TestMappingUtils;
+import com.github.prominence.openweathermap.api.model.forecast.daily.WeatherForecast;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneOffset;
@@ -77,9 +103,9 @@ class DailyForecastResponseMapperTest {
         final Forecast forecast = new DailyForecastResponseMapper(UnitSystem.METRIC).mapToForecast(jsonResponse);
         assertNotNull(forecast);
 
-        final Location location = forecast.getLocation();
+        final LocationExtended location = forecast.getLocation();
         assertNotNull(location);
-        assertEquals(Coordinates.of(51.5085, -0.1258), location.getCoordinates());
+        assertEquals(new Coordinates(51.5085, -0.1258), location.getCoordinates());
         assertEquals(2643743, location.getId());
         assertEquals("London", location.getName());
         assertEquals("GB", location.getCountryCode());
@@ -111,7 +137,7 @@ class DailyForecastResponseMapperTest {
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(42, humidity.getValue());
 
-        final Wind wind = weatherForecast.getWind();
+        final WindModel wind = weatherForecast.getWind();
         assertEquals(4.66, wind.getSpeed());
         assertEquals(102, wind.getDegrees());
         assertEquals(5.3, wind.getGust());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,8 @@ import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.github.prominence.openweathermap.api.request.RequestSettings.COUNT_PARAM;
+
 class DailyForecastRequestCustomizer {
     private static final Logger logger = LoggerFactory.getLogger(DailyForecastRequestCustomizer.class);
 
@@ -53,7 +55,7 @@ class DailyForecastRequestCustomizer {
             logger.warn("Cannot use more than 16 days for this API request. Please, specify 16 or less days. !!! Requesting information for 16 days...");
             days = 16;
         }
-        requestSettings.putRequestParameter("cnt", Integer.toString(days));
+        requestSettings.putRequestParameter(COUNT_PARAM, Integer.toString(days));
         return this;
     }
 

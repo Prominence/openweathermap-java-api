@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,38 +24,41 @@ package com.github.prominence.openweathermap.api.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CoordinatesUnitTest {
 
     @Test
     public void whenCreateCoordinateWithValidValues_thenObjectCreated() {
-        Coordinates.of(44, 53);
+        new Coordinates(44, 53);
     }
 
     @Test
     public void whenCreateCoordinateWithInvalidLatitudeBelowMinus90_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> Coordinates.of(-333, 44));
+        assertThrows(IllegalArgumentException.class, () -> new Coordinates(-333, 44));
     }
 
     @Test
     public void whenCreateCoordinateWithInvalidLatitudeAbove90_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> Coordinates.of(223, 44));
+        assertThrows(IllegalArgumentException.class, () -> new Coordinates(223, 44));
     }
 
     @Test
     public void whenCreateCoordinateWithInvalidLongitudeBelowMinus180_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> Coordinates.of(33, -999));
+        assertThrows(IllegalArgumentException.class, () -> new Coordinates(33, -999));
     }
 
     @Test
     public void whenCreateCoordinateWithInvalidLongitudeAbove180_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> Coordinates.of(33, 999));
+        assertThrows(IllegalArgumentException.class, () -> new Coordinates(33, 999));
     }
 
     @Test
     public void whenSetValidCoordinates_thenAllIsFine() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
 
         coordinates.setLatitude(-90);
         assertEquals(-90, coordinates.getLatitude(), 0.00001);
@@ -74,31 +77,31 @@ public class CoordinatesUnitTest {
 
     @Test
     public void whenSetInvalidLatitudeBelowMinus90_thenThrowAnException() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertThrows(IllegalArgumentException.class, () -> coordinates.setLatitude(-91));
     }
 
     @Test
     public void whenSetInvalidLatitudeAbove90_thenThrowAnException() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertThrows(IllegalArgumentException.class, () -> coordinates.setLatitude(92));
     }
 
     @Test
     public void whenSetInvalidLongitudeBelowMinus180_thenThrowAnException() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertThrows(IllegalArgumentException.class, () -> coordinates.setLongitude(-194));
     }
 
     @Test
     public void whenSetInvalidLongitudeAbove180_thenThrowAnException() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertThrows(IllegalArgumentException.class, () -> coordinates.setLongitude(444));
     }
 
     @Test
     public void whenGetLatitude_thenAllIsFine() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertEquals(0, coordinates.getLatitude(), 0.00001);
 
         coordinates.setLatitude(45);
@@ -108,7 +111,7 @@ public class CoordinatesUnitTest {
 
     @Test
     public void whenGetLongitude_thenAllIsFine() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertEquals(0, coordinates.getLongitude(), 0.00001);
 
         coordinates.setLongitude(33);
@@ -118,15 +121,15 @@ public class CoordinatesUnitTest {
 
     @Test
     public void whenCallToString_thenAllIsFine() {
-        final Coordinates coordinates = Coordinates.of(0, 0);
+        final Coordinates coordinates = new Coordinates(0, 0);
         assertNotNull(coordinates.toString());
         assertNotEquals("", coordinates.toString());
     }
 
     @Test
     public void whenCallHashCode_thenAllIsFine() {
-        final Coordinates first = Coordinates.of(22, 66);
-        final Coordinates second = Coordinates.of(22, 44);
+        final Coordinates first = new Coordinates(22, 66);
+        final Coordinates second = new Coordinates(22, 44);
 
         assertNotEquals(first.hashCode(), second.hashCode());
 
@@ -145,8 +148,8 @@ public class CoordinatesUnitTest {
 
     @Test
     public void whenCheckEquality_thenAllIsFine() {
-        final Coordinates first = Coordinates.of(11, 99);
-        final Coordinates second = Coordinates.of(11, 99);
+        final Coordinates first = new Coordinates(11, 99);
+        final Coordinates second = new Coordinates(11, 99);
 
         assertEquals(first, second);
         assertEquals(first, first);

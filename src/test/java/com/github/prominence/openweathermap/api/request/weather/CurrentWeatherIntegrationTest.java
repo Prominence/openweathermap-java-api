@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
+import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -39,16 +39,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -61,7 +61,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsJSON_thenReturnNotNull() {
         final String weatherJson = getClient()
                 .currentWeather()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJSON();
@@ -73,7 +73,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsXML_thenReturnNotNull() {
         final String weatherXml = getClient()
                 .currentWeather()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asXML();
@@ -85,7 +85,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsHTML_thenReturnNotNull() {
         final String weatherHtml = getClient()
                 .currentWeather()
-                .byCoordinates(Coordinates.of(5, 5))
+                .byCoordinates(new Coordinates(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asHTML();
@@ -96,7 +96,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetSingleCurrentWeatherByCityNameRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
                 .byCityName("Minsk")
                 .language(Language.RUSSIAN)
@@ -106,7 +106,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -160,7 +160,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetSingleCurrentWeatherByCityNameAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
                 .byCityName("Minsk", "BY")
                 .language(Language.RUSSIAN)
@@ -170,7 +170,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -224,7 +224,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetSingleCurrentWeatherByCityNameAndStateCodeAndCountryCodeRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
                 .byCityName("New York", "ny", "us")
                 .language(Language.SLOVAK)
@@ -234,7 +234,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -288,7 +288,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetSingleCurrentWeatherByCityIdRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
                 .byCityId(350001514)
                 .language(Language.GERMAN)
@@ -297,7 +297,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -348,7 +348,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetSingleCurrentWeatherByZipCodeAndCountryRequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.ENGLISH)
@@ -358,7 +358,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -412,7 +412,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetSingleCurrentWeatherByZipCodeInUSARequestAsJava_thenReturnNotNull() {
-        final Weather weather = getClient()
+        final WeatherModel weather = getClient()
                 .currentWeather()
                 .byZipCodeInUSA("10006")
                 .language(Language.ENGLISH)
@@ -422,7 +422,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
         assertNotNull(weather);
         assertNotNull(weather.getWeatherStates());
-        assertNotNull(weather.getCalculationTime());
+        assertNotNull(weather.getForecastTime());
         assertNotNull(weather.getTemperature());
         assertNotNull(weather.getLocation());
         assertNotNull(weather.getAtmosphericPressure());
@@ -476,7 +476,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     @Disabled
     public void whenGetAnySingleCurrentWeatherAsyncRequestAsJava_thenReturnNotNull() throws ExecutionException, InterruptedException {
-        final CompletableFuture<Weather> weatherFuture = getClient()
+        final CompletableFuture<WeatherModel> weatherFuture = getClient()
                 .currentWeather()
                 .byZipCodeAndCountry("220015", "by")
                 .language(Language.RUSSIAN)

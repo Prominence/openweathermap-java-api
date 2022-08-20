@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,25 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.onecall.Rain;
-import com.github.prominence.openweathermap.api.model.onecall.Snow;
-import com.github.prominence.openweathermap.api.model.onecall.Temperature;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.BasePrecipitation;
+import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.WindSpeed;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HourlyUnitTest {
     @Test
     public void getForecastTime() {
         final Hourly hourly = new Hourly();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         hourly.setForecastTime(now);
 
         assertEquals(now, hourly.getForecastTime());
@@ -50,7 +49,7 @@ public class HourlyUnitTest {
     @Test
     public void getWeatherState() {
         final Hourly hourly = new Hourly();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
         hourly.setWeatherStates(List.of(weatherState));
 
         assertEquals(weatherState, hourly.getWeatherStates().get(0));
@@ -59,7 +58,7 @@ public class HourlyUnitTest {
     @Test
     public void getTemperature() {
         final Hourly hourly = new Hourly();
-        final Temperature temperature = Temperature.withValue(10, "K");
+        final TemperatureValue temperature = new TemperatureValue(new BigDecimal("10"));
         hourly.setTemperature(temperature);
 
         assertEquals(temperature, hourly.getTemperature());
@@ -68,90 +67,77 @@ public class HourlyUnitTest {
     @Test
     public void getAtmosphericPressure() {
         final Hourly hourly = new Hourly();
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(100);
-        hourly.setAtmosphericPressure(atmosphericPressure);
+        final BigDecimal atmosphericPressure = new BigDecimal("100");
+        hourly.setAtmosphericPressureSeaLevel(atmosphericPressure);
 
-        assertEquals(atmosphericPressure, hourly.getAtmosphericPressure());
+        assertEquals(atmosphericPressure, hourly.getAtmosphericPressureSeaLevel());
     }
 
     @Test
     public void getHumidity() {
         final Hourly hourly = new Hourly();
-        final Humidity humidity = Humidity.withValue((byte) 20);
-        hourly.setHumidity(humidity);
+        final int humidity = 20;
+        hourly.setHumidityPercentage(humidity);
 
-        assertEquals(humidity, hourly.getHumidity());
+        assertEquals(humidity, hourly.getHumidityPercentage());
     }
 
     @Test
     public void getUvIndex() {
         final Hourly hourly = new Hourly();
-        final double uvIndex = 20.0;
+        final BigDecimal uvIndex = new BigDecimal("20.0");
         hourly.setUvIndex(uvIndex);
 
-        assertEquals(uvIndex, hourly.getUvIndex(), 0.00001);
+        assertEquals(uvIndex, hourly.getUvIndex());
     }
 
     @Test
     public void getClouds() {
         final Hourly hourly = new Hourly();
-        final Clouds clouds = Clouds.withValue((byte) 60);
-        hourly.setClouds(clouds);
+        final int clouds = 60;
+        hourly.setCloudsPercentage(clouds);
 
-        assertEquals(clouds, hourly.getClouds());
+        assertEquals(clouds, hourly.getCloudsPercentage());
     }
 
     @Test
     public void getVisibilityInMetres() {
         final Hourly hourly = new Hourly();
-        final double vim = 40.0;
-        hourly.setVisibilityInMetres(vim);
+        final Visibility vim = new Visibility(new BigDecimal("40.0"));
+        hourly.setVisibility(vim);
 
-        assertEquals(vim, hourly.getVisibilityInMetres(), 0.00001);
+        assertEquals(vim, hourly.getVisibility());
     }
 
     @Test
     public void getWind() {
         final Hourly hourly = new Hourly();
-        final Wind wind = Wind.withValue(200, "m/s");
-        hourly.setWind(wind);
+        final WindSpeed windSpeed = new WindSpeed(new BigDecimal("13.2"));
+        final WindSpeed windSpeedGust = new WindSpeed(new BigDecimal("15.2"));
+        final Integer windDirection = 123;
+        hourly.setWindSpeed(windSpeed);
+        hourly.setWindSpeedGust(windSpeedGust);
+        hourly.setWindDirectionDegrees(windDirection);
 
-        assertEquals(wind, hourly.getWind());
+        assertEquals(windSpeed, hourly.getWindSpeed());
+        assertEquals(windSpeedGust, hourly.getWindSpeedGust());
+        assertEquals(windDirection, hourly.getWindDirectionDegrees());
     }
 
     @Test
     public void getProbabilityOfPrecipitation() {
         final Hourly hourly = new Hourly();
-        final double pop = 0.84;
+        final BigDecimal pop = new BigDecimal("0.84");
         hourly.setProbabilityOfPrecipitation(pop);
 
-        assertEquals(pop, hourly.getProbabilityOfPrecipitation(), 0.00001);
-        assertEquals((byte) 84, hourly.getProbabilityOfPrecipitationPercentage());
-
-        hourly.setProbabilityOfPrecipitation(null);
-
-        assertNull(hourly.getProbabilityOfPrecipitation());
-        assertNull(hourly.getProbabilityOfPrecipitationPercentage());
+        assertEquals(pop, hourly.getProbabilityOfPrecipitation());
     }
 
-    @Test
-    public void getIllegalProbabilityOfPrecipitationValue_negative() {
-        final Hourly daily = new Hourly();
-
-        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(-20.0));
-    }
-
-    @Test
-    public void getIllegalProbabilityOfPrecipitationValue_tooBig() {
-        final Hourly daily = new Hourly();
-
-        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(120.0));
-    }
 
     @Test
     public void getRain() {
         final Hourly hourly = new Hourly();
-        final Rain rain = Rain.withOneHourLevelValue(100);
+        final BasePrecipitation rain = new BasePrecipitation(new BigDecimal("20.2"));
         hourly.setRain(rain);
 
         assertEquals(rain, hourly.getRain());
@@ -160,151 +146,10 @@ public class HourlyUnitTest {
     @Test
     public void getSnow() {
         final Hourly hourly = new Hourly();
-        final Snow snow = Snow.withOneHourLevelValue(29);
+        final BasePrecipitation snow = new BasePrecipitation(new BigDecimal("25.0"));
         hourly.setSnow(snow);
 
         assertEquals(snow, hourly.getSnow());
     }
 
-    @Test
-    public void testEquals() {
-        final Hourly first = new Hourly();
-        final Hourly second = new Hourly();
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        final LocalDateTime forecastTime = LocalDateTime.now();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        final Temperature temperature = Temperature.withValue(10, "K");
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(200);
-        final Humidity humidity = Humidity.withValue((byte) 13);
-        final double uvIndex = 10.0;
-        final Clouds clouds = Clouds.withValue((byte) 20);
-        final double vim = 20;
-        final Wind wind = Wind.withValue(20, "m/s");
-        final double pop = 30;
-        final Rain rain = Rain.withOneHourLevelValue(40);
-        final Snow snow = Snow.withOneHourLevelValue(11);
-
-        assertEquals(first, second);
-
-        first.setForecastTime(forecastTime);
-
-        assertNotEquals(first, second);
-
-        second.setForecastTime(forecastTime);
-
-        assertEquals(first, second);
-
-        first.setWeatherStates(List.of(weatherState));
-
-        assertNotEquals(first, second);
-
-        second.setWeatherStates(List.of(weatherState));
-
-        assertEquals(first, second);
-
-        first.setTemperature(temperature);
-
-        assertNotEquals(first, second);
-
-        second.setTemperature(temperature);
-
-        assertEquals(first, second);
-
-        first.setAtmosphericPressure(atmosphericPressure);
-
-        assertNotEquals(first, second);
-
-        second.setAtmosphericPressure(atmosphericPressure);
-
-        assertEquals(first, second);
-
-        first.setHumidity(humidity);
-
-        assertNotEquals(first, second);
-
-        second.setHumidity(humidity);
-
-        assertEquals(first, second);
-
-        first.setUvIndex(uvIndex);
-
-        assertNotEquals(first, second);
-
-        second.setUvIndex(uvIndex);
-
-        assertEquals(first, second);
-
-        first.setClouds(clouds);
-
-        assertNotEquals(first, second);
-
-        second.setClouds(clouds);
-
-        assertEquals(first, second);
-
-        first.setVisibilityInMetres(vim);
-
-        assertNotEquals(first, second);
-
-        second.setVisibilityInMetres(vim);
-
-        assertEquals(first, second);
-
-        first.setWind(wind);
-
-        assertNotEquals(first, second);
-
-        second.setWind(wind);
-
-        assertEquals(first, second);
-
-        first.setProbabilityOfPrecipitation(pop);
-
-        assertNotEquals(first, second);
-
-        second.setProbabilityOfPrecipitation(pop);
-
-        assertEquals(first, second);
-
-        first.setRain(rain);
-
-        assertNotEquals(first, second);
-
-        second.setRain(rain);
-
-        assertEquals(first, second);
-
-        first.setSnow(snow);
-
-        assertNotEquals(first, second);
-
-        second.setSnow(snow);
-
-        assertEquals(first, second);
-    }
-
-    @Test
-    public void testHashCode() {
-        final Hourly first = new Hourly();
-        final Hourly second = new Hourly();
-
-        assertEquals(first.hashCode(), second.hashCode());
-
-        first.setForecastTime(LocalDateTime.now());
-
-        assertNotEquals(first.hashCode(), second.hashCode());
-    }
-
-    @Test
-    public void testToString() {
-        final Hourly hourly = new Hourly();
-        hourly.setForecastTime(LocalDateTime.now());
-
-        assertNotNull(hourly.toString());
-        assertNotEquals("", hourly.toString());
-    }
 }

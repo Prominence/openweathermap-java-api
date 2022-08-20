@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,10 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.WindModel;
 import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.onecall.Rain;
 import com.github.prominence.openweathermap.api.model.onecall.Snow;
@@ -33,15 +33,21 @@ import com.github.prominence.openweathermap.api.model.onecall.Temperature;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HistoricalWeatherUnitTest {
     @Test
     public void getForecastTime() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         historicalWeather.setForecastTime(now);
 
         assertEquals(now, historicalWeather.getForecastTime());
@@ -50,7 +56,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getSunriseTime() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         historicalWeather.setSunriseTime(now);
 
         assertEquals(now, historicalWeather.getSunriseTime());
@@ -59,7 +65,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getSunsetTime() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         historicalWeather.setSunsetTime(now);
 
         assertEquals(now, historicalWeather.getSunsetTime());
@@ -68,7 +74,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getWeatherState() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
         historicalWeather.setWeatherStates(List.of(weatherState));
 
         assertEquals(weatherState, historicalWeather.getWeatherStates().get(0));
@@ -105,7 +111,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getWind() {
         final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Wind wind = Wind.withValue(13.2, "m/s");
+        final WindModel wind = WindModel.withValue(13.2, "m/s");
         historicalWeather.setWind(wind);
 
         assertEquals(wind, historicalWeather.getWind());
@@ -180,7 +186,7 @@ public class HistoricalWeatherUnitTest {
 
     @Test
     public void getEquals() {
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         final HistoricalWeather first = new HistoricalWeather();
 
         assertEquals(first, first);
@@ -215,7 +221,7 @@ public class HistoricalWeatherUnitTest {
 
         assertEquals(first, second);
 
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
 
         first.setWeatherStates(List.of(weatherState));
 
@@ -255,7 +261,7 @@ public class HistoricalWeatherUnitTest {
 
         assertEquals(first, second);
 
-        final Wind wind = Wind.withValue(13.2, "m/s");
+        final WindModel wind = WindModel.withValue(13.2, "m/s");
 
         first.setWind(wind);
 
@@ -330,7 +336,7 @@ public class HistoricalWeatherUnitTest {
 
     @Test
     public void getToString() {
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         final HistoricalWeather historicalWeather = new HistoricalWeather();
 
         historicalWeather.setForecastTime(now);

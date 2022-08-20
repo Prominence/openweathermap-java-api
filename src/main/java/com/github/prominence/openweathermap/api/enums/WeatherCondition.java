@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,9 @@
  */
 
 package com.github.prominence.openweathermap.api.enums;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -311,13 +314,24 @@ public enum WeatherCondition {
         return description;
     }
 
+
+    /**
+     * Gets icon id based on part of day.
+     *
+     * @param partOfDay The part of day we need the icon for.
+     * @return the icon id
+     */
+    public String getIconId(DayTime partOfDay) {
+        return iconId + partOfDay.getValue();
+    }
+
     /**
      * Gets day icon id.
      *
      * @return the day icon id
      */
     public String getDayIconId() {
-        return iconId + 'd';
+        return getIconId(DayTime.DAY);
     }
 
     /**
@@ -326,7 +340,7 @@ public enum WeatherCondition {
      * @return the night icon id
      */
     public String getNightIconId() {
-        return iconId + 'n';
+        return getIconId(DayTime.NIGHT);
     }
 
     /**
@@ -354,7 +368,7 @@ public enum WeatherCondition {
      * @return the icon url
      */
     public static String getIconUrl(String iconId) {
-        return "http://openweathermap.org/img/w/" + iconId + ".png";
+        return "https://openweathermap.org/img/w/" + iconId + ".png";
     }
 
     /**
@@ -363,8 +377,10 @@ public enum WeatherCondition {
      * @param id the id
      * @return the by id
      */
-    public static WeatherCondition getById(int id) {
-        final Optional<WeatherCondition> optionalWeatherCondition = Arrays.stream(values()).filter(weatherCondition -> weatherCondition.getId() == id).findFirst();
+    @JsonCreator
+    public static WeatherCondition getById(@JsonProperty("id") int id) {
+        final Optional<WeatherCondition> optionalWeatherCondition =
+                Arrays.stream(values()).filter(weatherCondition -> weatherCondition.getId() == id).findFirst();
         return optionalWeatherCondition.orElse(null);
     }
 

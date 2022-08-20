@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,10 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
+import static com.github.prominence.openweathermap.api.request.RequestSettings.DATE_TIME_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
+
 /**
  * The type One call historical weather requester.
  */
@@ -42,9 +46,9 @@ public class OneCallHistoricalWeatherRequester {
     }
 
     public OneCallHistoricalWeatherRequestCustomizer byCoordinateAndTimestamp(Coordinates coordinates, long unixTime) {
-        requestSettings.putRequestParameter("lat", Double.toString(coordinates.getLatitude()));
-        requestSettings.putRequestParameter("lon", Double.toString(coordinates.getLongitude()));
-        requestSettings.putRequestParameter("dt", Long.toString(unixTime));
+        requestSettings.putRequestParameter(LATITUDE_PARAM, String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter(LONGITUDE_PARAM, String.valueOf(coordinates.getLongitude()));
+        requestSettings.putRequestParameter(DATE_TIME_PARAM, Long.toString(unixTime));
         return new OneCallHistoricalWeatherRequestCustomizer(requestSettings);
     }
 }

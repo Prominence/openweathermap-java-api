@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,10 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.WindModel;
 import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.onecall.Rain;
 import com.github.prominence.openweathermap.api.model.onecall.Snow;
@@ -33,15 +33,17 @@ import com.github.prominence.openweathermap.api.model.onecall.Temperature;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class HourlyHistoricalUnitTest {
     @Test
     public void getForecastTime() {
         final HourlyHistorical hourlyHistorical = new HourlyHistorical();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         hourlyHistorical.setForecastTime(now);
 
         assertEquals(now, hourlyHistorical.getForecastTime());
@@ -50,7 +52,7 @@ public class HourlyHistoricalUnitTest {
     @Test
     public void getWeatherState() {
         final HourlyHistorical hourlyHistorical = new HourlyHistorical();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
         hourlyHistorical.setWeatherStates(List.of(weatherState));
 
         assertEquals(weatherState, hourlyHistorical.getWeatherStates().get(0));
@@ -104,7 +106,7 @@ public class HourlyHistoricalUnitTest {
     @Test
     public void getWind() {
         final HourlyHistorical hourlyHistorical = new HourlyHistorical();
-        final Wind wind = Wind.withValue(200, "m/s");
+        final WindModel wind = WindModel.withValue(200, "m/s");
         hourlyHistorical.setWind(wind);
 
         assertEquals(wind, hourlyHistorical.getWind());
@@ -138,13 +140,13 @@ public class HourlyHistoricalUnitTest {
         assertNotEquals(first, new Object());
 
         final LocalDateTime forecastTime = LocalDateTime.now();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
         final Temperature temperature = Temperature.withValue(10, "K");
         final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(200);
         final Humidity humidity = Humidity.withValue((byte) 13);
         final Clouds clouds = Clouds.withValue((byte) 20);
         final double vim = 20;
-        final Wind wind = Wind.withValue(20, "m/s");
+        final WindModel wind = WindModel.withValue(20, "m/s");
         final Rain rain = Rain.withOneHourLevelValue(40);
         final Snow snow = Snow.withOneHourLevelValue(11);
 

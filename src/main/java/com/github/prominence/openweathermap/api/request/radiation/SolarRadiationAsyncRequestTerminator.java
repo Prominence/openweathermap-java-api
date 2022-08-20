@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,13 @@
 
 package com.github.prominence.openweathermap.api.request.radiation;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.SolarRadiationResponseMapper;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
 
-import java.util.concurrent.CompletableFuture;
-
-class SolarRadiationAsyncRequestTerminator {
-    private final RequestSettings requestSettings;
-
+class SolarRadiationAsyncRequestTerminator extends GenericAsyncRequestTerminator<SolarRadiation, SolarRadiationModel> {
     public SolarRadiationAsyncRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
-
-    public CompletableFuture<SolarRadiation> asJava() {
-        return CompletableFuture.supplyAsync(() -> new SolarRadiationResponseMapper().mapToObject(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+        super(new SolarRadiationRequestTerminator(requestSettings));
     }
 }

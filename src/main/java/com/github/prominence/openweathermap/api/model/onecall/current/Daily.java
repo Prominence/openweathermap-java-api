@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,418 +22,77 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.WindSpeed;
+import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * The type Daily.
+ * The daily weather forecast type.
  */
-public class Daily {
-    private LocalDateTime forecastTime;
-    private LocalDateTime sunriseTime;
-    private LocalDateTime sunsetTime;
+@Data
+public class Daily implements TimeAware {
 
-    private LocalDateTime moonriseTime;
-    private LocalDateTime moonsetTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("dt")
+    private OffsetDateTime forecastTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunrise")
+    private OffsetDateTime sunriseTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunset")
+    private OffsetDateTime sunsetTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("moonrise")
+    private OffsetDateTime moonriseTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("moonset")
+    private OffsetDateTime moonsetTime;
+    @JsonProperty("moon_phase")
     private MoonPhase moonPhase;
+    @JsonProperty("temp")
+    private TemperatureDailyExtended temperature;
+    @JsonProperty("feels_like")
+    private TemperatureDaily feelsLike;
+    @JsonProperty("pressure")
+    private BigDecimal atmosphericPressureSeaLevel;
+    @JsonDeserialize(using = RequiredPercentageDeserializer.class)
+    @JsonProperty("humidity")
+    private int humidityPercentage;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("dew_point")
+    private TemperatureValue dewPoint;
+    @JsonDeserialize(using = WindSpeedDeserializer.class)
+    @JsonProperty("wind_speed")
+    private WindSpeed windSpeed;
+    @JsonProperty("wind_deg")
+    private Integer windDirectionDegrees;
+    @JsonDeserialize(using = WindSpeedDeserializer.class)
+    @JsonProperty("wind_gust")
+    private WindSpeed windSpeedGust;
+    @JsonDeserialize(using = RequiredPercentageDeserializer.class)
+    @JsonProperty("clouds")
+    private int cloudsPercentage;
+    @JsonProperty("uvi")
+    private BigDecimal uvIndex;
+    @JsonProperty("pop")
+    private BigDecimal probabilityOfPrecipitation;
+    @JsonProperty("rain")
+    private BigDecimal rain;
+    @JsonProperty("snow")
+    private BigDecimal snow;
+    @JsonProperty("weather")
+    private List<WeatherCondition> weatherStates;
 
-    private List<WeatherState> weatherStates;
-    private DailyTemperature temperature;
-    private AtmosphericPressure atmosphericPressure;
-    private Humidity humidity;
-    private Wind wind;
-    private Clouds clouds;
-    private Double uvIndex;
-    private Double probabilityOfPrecipitation;
-    private DailyRain rain;
-    private DailySnow snow;
-
-    /**
-     * Gets forecast time.
-     *
-     * @return the forecast time
-     */
-    public LocalDateTime getForecastTime() {
-        return forecastTime;
-    }
-
-    /**
-     * Sets forecast time.
-     *
-     * @param forecastTime the forecast time
-     */
-    public void setForecastTime(LocalDateTime forecastTime) {
-        this.forecastTime = forecastTime;
-    }
-
-    /**
-     * Gets sunrise time.
-     *
-     * @return the sunrise time
-     */
-    public LocalDateTime getSunriseTime() {
-        return sunriseTime;
-    }
-
-    /**
-     * Sets sunrise time.
-     *
-     * @param sunriseTime the sunrise time
-     */
-    public void setSunriseTime(LocalDateTime sunriseTime) {
-        this.sunriseTime = sunriseTime;
-    }
-
-    /**
-     * Gets sunset time.
-     *
-     * @return the sunset time
-     */
-    public LocalDateTime getSunsetTime() {
-        return sunsetTime;
-    }
-
-    /**
-     * Sets sunset time.
-     *
-     * @param sunsetTime the sunset time
-     */
-    public void setSunsetTime(LocalDateTime sunsetTime) {
-        this.sunsetTime = sunsetTime;
-    }
-
-    /**
-     * Gets moonrise time.
-     *
-     * @return the moonrise time
-     */
-    public LocalDateTime getMoonriseTime() {
-        return moonriseTime;
-    }
-
-    /**
-     * Sets moonrise time.
-     *
-     * @param moonriseTime the moonrise time
-     */
-    public void setMoonriseTime(LocalDateTime moonriseTime) {
-        this.moonriseTime = moonriseTime;
-    }
-
-    /**
-     * Gets moonset time.
-     *
-     * @return the moonset time
-     */
-    public LocalDateTime getMoonsetTime() {
-        return moonsetTime;
-    }
-
-    /**
-     * Sets moonset time.
-     *
-     * @param moonsetTime the moonset time
-     */
-    public void setMoonsetTime(LocalDateTime moonsetTime) {
-        this.moonsetTime = moonsetTime;
-    }
-
-    /**
-     * Gets moon phase.
-     *
-     * @return the moon phase
-     */
-    public MoonPhase getMoonPhase() {
-        return moonPhase;
-    }
-
-    /**
-     * Sets moon phase.
-     *
-     * @param moonPhase the moon phase
-     */
-    public void setMoonPhase(MoonPhase moonPhase) {
-        this.moonPhase = moonPhase;
-    }
-
-    /**
-     * Gets weather state.
-     *
-     * @return the weather state
-     */
-    public List<WeatherState> getWeatherStates() {
-        return weatherStates;
-    }
-
-    /**
-     * Sets weather state.
-     *
-     * @param weatherStates the weather state
-     */
-    public void setWeatherStates(List<WeatherState> weatherStates) {
-        this.weatherStates = weatherStates;
-    }
-
-    /**
-     * Gets temperature.
-     *
-     * @return the temperature
-     */
-    public DailyTemperature getTemperature() {
-        return temperature;
-    }
-
-    /**
-     * Sets temperature.
-     *
-     * @param temperature the temperature
-     */
-    public void setTemperature(DailyTemperature temperature) {
-        this.temperature = temperature;
-    }
-
-    /**
-     * Gets atmospheric pressure.
-     *
-     * @return the atmospheric pressure
-     */
-    public AtmosphericPressure getAtmosphericPressure() {
-        return atmosphericPressure;
-    }
-
-    /**
-     * Sets atmospheric pressure.
-     *
-     * @param atmosphericPressure the atmospheric pressure
-     */
-    public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
-        this.atmosphericPressure = atmosphericPressure;
-    }
-
-    /**
-     * Gets humidity.
-     *
-     * @return the humidity
-     */
-    public Humidity getHumidity() {
-        return humidity;
-    }
-
-    /**
-     * Sets humidity.
-     *
-     * @param humidity the humidity
-     */
-    public void setHumidity(Humidity humidity) {
-        this.humidity = humidity;
-    }
-
-    /**
-     * Gets wind.
-     *
-     * @return the wind
-     */
-    public Wind getWind() {
-        return wind;
-    }
-
-    /**
-     * Sets wind.
-     *
-     * @param wind the wind
-     */
-    public void setWind(Wind wind) {
-        this.wind = wind;
-    }
-
-    /**
-     * Gets clouds.
-     *
-     * @return the clouds
-     */
-    public Clouds getClouds() {
-        return clouds;
-    }
-
-    /**
-     * Sets clouds.
-     *
-     * @param clouds the clouds
-     */
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
-    }
-
-    /**
-     * Gets uv index.
-     *
-     * @return the uv index
-     */
-    public Double getUvIndex() {
-        return uvIndex;
-    }
-
-    /**
-     * Sets uv index.
-     *
-     * @param uvIndex the uv index
-     */
-    public void setUvIndex(Double uvIndex) {
-        if (uvIndex != null && uvIndex < 0) {
-            throw new IllegalArgumentException("UV index must not be negative.");
-        }
-        this.uvIndex = uvIndex;
-    }
-
-    /**
-     * Gets probability of precipitation.
-     *
-     * @return the probability of precipitation
-     */
-    public Double getProbabilityOfPrecipitation() {
-        return probabilityOfPrecipitation;
-    }
-
-    /**
-     * Sets probability of precipitation.
-     *
-     * @param probabilityOfPrecipitation the probability of precipitation
-     */
-    public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
-        if (probabilityOfPrecipitation != null && (probabilityOfPrecipitation < 0 || probabilityOfPrecipitation > 100))  {
-            throw new IllegalArgumentException("Probability of precipitation value must be in [0, 100] range.");
-        }
-        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
-    }
-
-    /**
-     * Gets probability of precipitation percentage.
-     *
-     * @return the probability of precipitation percentage
-     */
-    public Byte getProbabilityOfPrecipitationPercentage() {
-        if (probabilityOfPrecipitation != null) {
-            return (byte)(probabilityOfPrecipitation * 100);
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets rain.
-     *
-     * @return the rain
-     */
-    public DailyRain getRain() {
-        return rain;
-    }
-
-    /**
-     * Sets rain.
-     *
-     * @param rain the rain
-     */
-    public void setRain(DailyRain rain) {
-        this.rain = rain;
-    }
-
-    /**
-     * Gets snow.
-     *
-     * @return the snow
-     */
-    public DailySnow getSnow() {
-        return snow;
-    }
-
-    /**
-     * Sets snow.
-     *
-     * @param snow the snow
-     */
-    public void setSnow(DailySnow snow) {
-        this.snow = snow;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Daily daily = (Daily) o;
-        return Objects.equals(forecastTime, daily.forecastTime) &&
-                Objects.equals(sunriseTime, daily.sunriseTime) &&
-                Objects.equals(sunsetTime, daily.sunsetTime) &&
-                Objects.equals(moonriseTime, daily.moonriseTime) &&
-                Objects.equals(moonsetTime, daily.moonsetTime) &&
-                Objects.equals(moonPhase, daily.moonPhase) &&
-                Objects.equals(weatherStates, daily.weatherStates) &&
-                Objects.equals(temperature, daily.temperature) &&
-                Objects.equals(atmosphericPressure, daily.atmosphericPressure) &&
-                Objects.equals(humidity, daily.humidity) &&
-                Objects.equals(wind, daily.wind) &&
-                Objects.equals(clouds, daily.clouds) &&
-                Objects.equals(uvIndex, daily.uvIndex) &&
-                Objects.equals(probabilityOfPrecipitation, daily.probabilityOfPrecipitation) &&
-                Objects.equals(rain, daily.rain) &&
-                Objects.equals(snow, daily.snow);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(forecastTime, sunriseTime, sunsetTime, moonriseTime, moonsetTime, moonPhase, weatherStates, temperature, atmosphericPressure, humidity, wind, clouds, uvIndex, probabilityOfPrecipitation, rain, snow);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Weather on ");
-        stringBuilder.append(forecastTime);
-        stringBuilder.append(".");
-        if (weatherStates != null && weatherStates.size() > 0) {
-            stringBuilder.append(" Weather: ");
-            stringBuilder.append(weatherStates.get(0).getDescription());
-            stringBuilder.append('.');
-        }
-        if (temperature != null) {
-            stringBuilder.append(" Temperature(day): ");
-            stringBuilder.append(temperature.getDay());
-            stringBuilder.append(' ');
-            stringBuilder.append(temperature.getUnit());
-            stringBuilder.append('.');
-        }
-        if (atmosphericPressure != null) {
-            stringBuilder.append(" Atmospheric pressure: ");
-            stringBuilder.append(atmosphericPressure.getSeaLevelValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(atmosphericPressure.getUnit());
-            stringBuilder.append('.');
-        }
-        if (clouds != null) {
-            stringBuilder.append(" Clouds: ");
-            stringBuilder.append(clouds);
-            stringBuilder.append('.');
-        }
-        if (rain != null) {
-            stringBuilder.append(" Rain: ");
-            stringBuilder.append(rain.getValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(rain.getUnit());
-            stringBuilder.append('.');
-        }
-        if (snow != null) {
-            stringBuilder.append(". Snow: ");
-            stringBuilder.append(snow.getValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(snow.getUnit());
-            stringBuilder.append('.');
-        }
-        return stringBuilder.toString();
-    }
 }

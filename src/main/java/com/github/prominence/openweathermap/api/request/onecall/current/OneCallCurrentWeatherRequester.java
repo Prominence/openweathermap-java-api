@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,9 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
+import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
+
 /**
  * The type One call current weather requester.
  */
@@ -41,8 +44,8 @@ public class OneCallCurrentWeatherRequester {
     }
 
     public OneCallCurrentWeatherRequestCustomizer byCoordinates(Coordinates coordinates) {
-        requestSettings.putRequestParameter("lat", String.valueOf(coordinates.getLatitude()));
-        requestSettings.putRequestParameter("lon", String.valueOf(coordinates.getLongitude()));
+        requestSettings.putRequestParameter(LATITUDE_PARAM, String.valueOf(coordinates.getLatitude()));
+        requestSettings.putRequestParameter(LONGITUDE_PARAM, String.valueOf(coordinates.getLongitude()));
         return new OneCallCurrentWeatherRequestCustomizer(requestSettings);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,15 @@
 
 package com.github.prominence.openweathermap.api.request.radiation;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.SolarRadiationResponseMapper;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 
-class SolarRadiationRequestTerminator {
-    private final RequestSettings requestSettings;
+class SolarRadiationRequestTerminator extends GenericRequestTerminator<SolarRadiation, SolarRadiationModel> {
 
     public SolarRadiationRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
     }
 
-    public SolarRadiation asJava() {
-        return new SolarRadiationResponseMapper().mapToObject(getRawResponse());
-    }
-
-    public String asJSON() {
-        return getRawResponse();
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
-    }
 }
