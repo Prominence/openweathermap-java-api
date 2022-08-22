@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
@@ -57,7 +58,7 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallResponseAsJSON_thenOk() {
-        final String responseJson = getClient()
+        final String responseJson = new OpenWeatherMapClient(ApiConfiguration.builder().apiKey(System.getenv("OPENWEATHER_API_KEY")).build())
                 .oneCall()
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
@@ -122,7 +123,7 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRequestOnecallWithInvalidApiKey_thenThrowAnException() {
-        OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
+        OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder().apiKey("invalidKey").build());
         assertThrows(InvalidAuthTokenException.class, () ->
                 client
                         .oneCall()

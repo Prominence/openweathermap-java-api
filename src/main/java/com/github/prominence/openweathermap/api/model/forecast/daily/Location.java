@@ -22,19 +22,9 @@
 
 package com.github.prominence.openweathermap.api.model.forecast.daily;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.BaseLocation;
 
-import java.time.ZoneOffset;
+public interface Location extends BaseLocation {
 
-public interface Location {
-
-    Coordinates getCoordinates();
-
-    ZoneOffset getTimeZone();
-
-    long getCityId();
-
-    String getCityName();
-
-    String getCountryCode();
+    Long getPopulation();
 }

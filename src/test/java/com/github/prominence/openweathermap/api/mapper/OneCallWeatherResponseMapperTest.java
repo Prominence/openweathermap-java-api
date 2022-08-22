@@ -25,7 +25,6 @@ package com.github.prominence.openweathermap.api.mapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -160,67 +159,5 @@ class OneCallWeatherResponseMapperTest {
         assertNotNull(weatherData);
         assertNotEquals(0, weatherData.getDailyList().size());
         assertEquals(1, weatherData.getAlerts().get(0).getTags().size());
-    }
-
-    @Test
-    void mapToHistorical() throws JsonProcessingException {
-        final String jsonResponse = """
-                {
-                  "lat": 60.99,
-                  "lon": 30.9,
-                  "timezone": "Europe/Moscow",
-                  "timezone_offset": 10800,
-                  "current": {
-                    "dt": 1586468027,
-                    "sunrise": 1586487424,
-                    "sunset": 1586538297,
-                    "temp": 274.31,
-                    "feels_like": 269.79,
-                    "pressure": 1006,
-                    "humidity": 72,
-                    "dew_point": 270.21,
-                    "clouds": 0,
-                    "visibility": 10000,
-                    "wind_speed": 3,
-                    "wind_deg": 260,
-                    "weather": [
-                      {
-                        "id": 800,
-                        "main": "Clear",
-                        "description": "clear sky",
-                        "icon": "01n"
-                      }
-                    ]
-                  },
-                  "hourly": [
-                    {
-                      "dt": 1586390400,
-                      "temp": 278.41,
-                      "feels_like": 269.43,
-                      "pressure": 1006,
-                      "humidity": 65,
-                      "dew_point": 272.46,
-                      "clouds": 0,
-                      "wind_speed": 9.83,
-                      "wind_deg": 60,
-                      "wind_gust": 15.65,
-                      "weather": [
-                        {
-                          "id": 800,
-                          "main": "Clear",
-                          "description": "clear sky",
-                          "icon": "01n"
-                        }
-                      ]
-                    }
-                  ]
-                }
-                """;
-
-        final HistoricalWeather weatherData = new ObjectMapper().readValue(jsonResponse, HistoricalWeather.class);
-
-        assertNotNull(weatherData);
-        assertNotNull(weatherData.getData());
-        assertNotEquals(0, weatherData.getData().size());
     }
 }

@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.forecast.daily;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
@@ -34,8 +35,9 @@ import java.time.ZoneOffset;
  * Represents location information.
  */
 @Data
+@JsonIgnoreProperties(value = {})
 public class LocationModel implements Location {
-    @JsonProperty("geoname_id")
+    @JsonProperty("id")
     private long cityId;
     @JsonProperty("name")
     private String cityName;

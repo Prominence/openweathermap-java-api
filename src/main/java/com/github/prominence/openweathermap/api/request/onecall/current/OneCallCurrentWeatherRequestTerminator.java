@@ -50,4 +50,9 @@ class OneCallCurrentWeatherRequestTerminator extends GenericRequestTerminator<Cu
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
+    @Override
+    protected Class<CurrentWeather> getValueType() {
+        return CurrentWeather.class;
+    }
+
 }

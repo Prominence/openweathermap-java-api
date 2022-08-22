@@ -22,6 +22,9 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
@@ -35,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class GeocodingResponseMapperTest {
 
     @Test
-    public void reverseGeocodingResponseMappingTest() {
+    public void reverseGeocodingResponseMappingTest() throws JsonProcessingException {
         String jsonResponse = """
                 [
                   {
@@ -172,13 +175,15 @@ class GeocodingResponseMapperTest {
                 ]
                 """;
 
-        List<GeocodingModel> geocodingRecords = new GeocodingResponseMapper().mapGeocodingResponse(jsonResponse);
+        List<GeocodingModel> geocodingRecords = new ObjectMapper().readerFor(new TypeReference<List<GeocodingModel>>() {
+        }).readValue(jsonResponse);
 
         assertNotNull(geocodingRecords);
         assertEquals(5, geocodingRecords.size());
     }
 
-    public void zipGeocodingInfoResponseMappingTest() {
+    @Test
+    public void zipGeocodingInfoResponseMappingTest() throws JsonProcessingException {
         String jsonResponse = """
                 {
                   "zip": "90210",
@@ -189,10 +194,10 @@ class GeocodingResponseMapperTest {
                 }
                 """;
 
-        ZipCodeGeocodingModel zipCodeGeocodingRecord = new GeocodingResponseMapper().mapZipCodeGeocodingResponse(jsonResponse);
+        ZipCodeGeocodingModel zipCodeGeocodingRecord = new ObjectMapper().readValue(jsonResponse, ZipCodeGeocodingModel.class);
 
         assertNotNull(zipCodeGeocodingRecord);
-        assertEquals("90210", zipCodeGeocodingRecord.getZip());
+        assertEquals("90210", zipCodeGeocodingRecord.getZipCode());
         assertEquals("Beverly Hills", zipCodeGeocodingRecord.getName());
         assertEquals("US", zipCodeGeocodingRecord.getCountryCode());
         assertEquals(new Coordinates(34.0901, -118.4065), zipCodeGeocodingRecord.getCoordinates());

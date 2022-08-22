@@ -43,4 +43,9 @@ class DailyForecastRequestTerminator extends GenericRequestTerminator<SixteenDay
     protected String getRawResponse() {
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
+
+    @Override
+    protected Class<SixteenDaysDailyForecastModel> getValueType() {
+        return SixteenDaysDailyForecastModel.class;
+    }
 }

@@ -22,14 +22,14 @@
 
 package com.github.prominence.openweathermap.api.request.generic;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ApiVariant;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.exception.FetchException;
+import com.github.prominence.openweathermap.api.exception.WeatherParseException;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-
-import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Generic implementation of the request termination logic.
@@ -37,6 +37,7 @@ import java.io.IOException;
  * @param <T> Type of the response object
  * @param <I> Type of the internal type we map the raw response to
  */
+@Slf4j
 public abstract class GenericRequestTerminator<T, I extends T> {
     protected final RequestSettings requestSettings;
 
@@ -66,17 +67,22 @@ public abstract class GenericRequestTerminator<T, I extends T> {
     }
 
     protected String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
+        try {
+            return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
+        } catch (Exception e) {
+            log.error("Failed to fetch data.", e);
+            throw new FetchException("Cannot fetch response", e);
+        }
     }
 
     private I mapToWeather(String json) {
         try {
-            return requestSettings.getApiConfiguration().getObjectReader().forType(new InnerTypeReference<T, I>()).readValue(json);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot parse Weather response", e);
+            return requestSettings.getApiConfiguration().getObjectReader().readValue(json, getValueType());
+        } catch (Exception e) {
+            log.error("Failed to map JSON: {}", json, e);
+            throw new WeatherParseException("Cannot parse Weather response", e);
         }
     }
 
-    private static class InnerTypeReference<T, I extends T> extends TypeReference<I> {
-    }
+    protected abstract Class<I> getValueType();
 }

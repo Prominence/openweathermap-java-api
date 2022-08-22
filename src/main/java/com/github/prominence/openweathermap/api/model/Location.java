@@ -23,19 +23,8 @@
 package com.github.prominence.openweathermap.api.model;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
-public interface Location {
-
-    Coordinates getCoordinates();
-
-    ZoneOffset getTimeZone();
-
-    long getCityId();
-
-    String getCityName();
-
-    String getCountryCode();
+public interface Location extends BaseLocation {
 
     OffsetDateTime getSunriseTime();
 

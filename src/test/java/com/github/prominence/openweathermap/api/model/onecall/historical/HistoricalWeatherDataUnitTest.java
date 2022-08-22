@@ -23,28 +23,29 @@
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoricalWeatherDataUnitTest {
     @Test
     public void getCoordinates() {
-        final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
+        final HistoricalWeather historicalWeatherData = new HistoricalWeather();
         final Coordinates coordinates = new Coordinates(11.2, 43.2);
-        historicalWeatherData.setCoordinates(coordinates);
+        historicalWeatherData.setLatitude(coordinates.getLatitude());
+        historicalWeatherData.setLongitude(coordinates.getLongitude());
 
         assertEquals(coordinates, historicalWeatherData.getCoordinates());
     }
 
     @Test
     public void getTimezone() {
-        final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
+        final HistoricalWeather historicalWeatherData = new HistoricalWeather();
         final ZoneId timeZone = ZoneId.of("GMT");
         historicalWeatherData.setTimezone(timeZone);
 
@@ -53,7 +54,7 @@ public class HistoricalWeatherDataUnitTest {
 
     @Test
     public void getTimezoneOffset() {
-        final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
+        final HistoricalWeather historicalWeatherData = new HistoricalWeather();
         final ZoneOffset offset = ZoneOffset.UTC;
         historicalWeatherData.setTimezoneOffset(offset);
 
@@ -62,98 +63,10 @@ public class HistoricalWeatherDataUnitTest {
 
     @Test
     public void getHistoricalWeather() {
-        final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        historicalWeatherData.setHistoricalWeather(historicalWeather);
+        final HistoricalWeather historicalWeatherData = new HistoricalWeather();
+        final List<BaseMeasurement> historicalWeather = List.of(new BaseMeasurement());
+        historicalWeatherData.setData(historicalWeather);
 
-        assertEquals(historicalWeather, historicalWeatherData.getHistoricalWeather());
-    }
-
-    @Test
-    public void getHourlyList() {
-        final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        final List<HourlyHistorical> hourlyList = new ArrayList<>();
-        historicalWeatherData.setHourlyList(hourlyList);
-
-        assertEquals(hourlyList, historicalWeatherData.getHourlyList());
-    }
-
-    @Test
-    public void getEquals() {
-        final HistoricalWeatherData first = new HistoricalWeatherData();
-        final HistoricalWeatherData second = new HistoricalWeatherData();
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        final Coordinates coordinates = new Coordinates(11, 12);
-        final ZoneId timeZone = ZoneId.of("GMT");
-        final ZoneOffset offset = ZoneOffset.UTC;
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final List<HourlyHistorical> hourlyList = new ArrayList<>();
-
-        assertEquals(first, second);
-
-        first.setCoordinates(coordinates);
-
-        assertNotEquals(first, second);
-
-        second.setCoordinates(coordinates);
-
-        assertEquals(first, second);
-
-        first.setTimezone(timeZone);
-
-        assertNotEquals(first, second);
-
-        second.setTimezone(timeZone);
-
-        assertEquals(first, second);
-
-        first.setTimezoneOffset(offset);
-
-        assertNotEquals(first, second);
-
-        second.setTimezoneOffset(offset);
-
-        assertEquals(first, second);
-
-        first.setHistoricalWeather(historicalWeather);
-
-        assertNotEquals(first, second);
-
-        second.setHistoricalWeather(historicalWeather);
-
-        assertEquals(first, second);
-
-        first.setHourlyList(hourlyList);
-
-        assertNotEquals(first, second);
-
-        second.setHourlyList(hourlyList);
-
-        assertEquals(first, second);
-    }
-
-    @Test
-    public void getHashCode() {
-        final HistoricalWeatherData first = new HistoricalWeatherData();
-        final HistoricalWeatherData second = new HistoricalWeatherData();
-
-        assertEquals(first.hashCode(), second.hashCode());
-
-        first.setCoordinates(new Coordinates(11, 42));
-
-        assertNotEquals(first.hashCode(), second.hashCode());
-    }
-
-    @Test
-    public void getToString() {
-        final HistoricalWeatherData historicalWeatherData = new HistoricalWeatherData();
-        historicalWeatherData.setCoordinates(new Coordinates(32, 22));
-
-        assertNotNull(historicalWeatherData.toString());
-        assertNotEquals("", historicalWeatherData.toString());
+        assertEquals(historicalWeather, historicalWeatherData.getData());
     }
 }

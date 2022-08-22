@@ -25,12 +25,12 @@ package com.github.prominence.openweathermap.api.request.roadrisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.GenericListAsyncRequestTerminator;
 
 /**
  * The type Single result current weather async request terminator.
  */
-public class RoadRiskAsyncRequestTerminator extends GenericAsyncRequestTerminator<RoadRisk, RoadRiskModel> {
+public class RoadRiskAsyncRequestTerminator extends GenericListAsyncRequestTerminator<RoadRisk, RoadRiskModel> {
     /**
      * Instantiates a new Single result current weather async request terminator.
      *

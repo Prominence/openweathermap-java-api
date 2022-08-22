@@ -41,4 +41,9 @@ public class CurrentWeatherRequestTerminator extends GenericRequestTerminator<We
         super(requestSettings);
     }
 
+    @Override
+    protected Class<WeatherModel> getValueType() {
+        return WeatherModel.class;
+    }
+
 }

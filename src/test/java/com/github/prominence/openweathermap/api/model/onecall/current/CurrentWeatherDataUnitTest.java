@@ -32,15 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CurrentWeatherDataUnitTest {
     @Test
     public void getCoordinates() {
         final CurrentWeather currentWeatherData = new CurrentWeather();
         final Coordinates coordinates = new Coordinates(11.2, 43.2);
-        currentWeatherData.setCoordinates(coordinates);
+        currentWeatherData.setLatitude(coordinates.getLatitude());
+        currentWeatherData.setLongitude(coordinates.getLongitude());
 
         assertEquals(coordinates, currentWeatherData.getCoordinates());
     }
@@ -108,109 +107,4 @@ public class CurrentWeatherDataUnitTest {
         assertEquals(alerts, currentWeatherData.getAlerts());
     }
 
-    @Test
-    public void getEquals() {
-        final CurrentWeather first = new CurrentWeather();
-        final CurrentWeather second = new CurrentWeather();
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        final Coordinates coordinates = new Coordinates(11, 12);
-        final ZoneId timeZone = ZoneId.of("GMT");
-        final ZoneOffset offset = ZoneOffset.UTC;
-        final BaseMeasurement current = new BaseMeasurement();
-        final List<Minutely> minutelyList = new ArrayList<>();
-        final List<Hourly> hourlyList = new ArrayList<>();
-        final List<Daily> dailyList = new ArrayList<>();
-        final List<Alert> alerts = new ArrayList<>();
-
-        assertEquals(first, second);
-
-        first.setCoordinates(coordinates);
-
-        assertNotEquals(first, second);
-
-        second.setCoordinates(coordinates);
-
-        assertEquals(first, second);
-
-        first.setTimezone(timeZone);
-
-        assertNotEquals(first, second);
-
-        second.setTimezone(timeZone);
-
-        assertEquals(first, second);
-
-        first.setTimezoneOffset(offset);
-
-        assertNotEquals(first, second);
-
-        second.setTimezoneOffset(offset);
-
-        assertEquals(first, second);
-
-        first.setCurrent(current);
-
-        assertNotEquals(first, second);
-
-        second.setCurrent(current);
-
-        assertEquals(first, second);
-
-        first.setMinutelyList(minutelyList);
-
-        assertNotEquals(first, second);
-
-        second.setMinutelyList(minutelyList);
-
-        assertEquals(first, second);
-
-        first.setHourlyList(hourlyList);
-
-        assertNotEquals(first, second);
-
-        second.setHourlyList(hourlyList);
-
-        assertEquals(first, second);
-
-        first.setDailyList(dailyList);
-
-        assertNotEquals(first, second);
-
-        second.setDailyList(dailyList);
-
-        assertEquals(first, second);
-
-        first.setAlerts(alerts);
-
-        assertNotEquals(first, second);
-
-        second.setAlerts(alerts);
-
-        assertEquals(first, second);
-    }
-
-    @Test
-    public void getHashCode() {
-        final CurrentWeather first = new CurrentWeather();
-        final CurrentWeather second = new CurrentWeather();
-
-        assertEquals(first.hashCode(), second.hashCode());
-
-        first.setCoordinates(new Coordinates(11, 42));
-
-        assertNotEquals(first.hashCode(), second.hashCode());
-    }
-
-    @Test
-    public void getToString() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
-        currentWeatherData.setCoordinates(new Coordinates(32, 22));
-
-        assertNotNull(currentWeatherData.toString());
-        assertNotEquals("", currentWeatherData.toString());
-    }
 }

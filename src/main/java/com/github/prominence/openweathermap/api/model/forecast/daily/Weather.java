@@ -30,6 +30,7 @@ import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Wind;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface Weather extends TimeAware {
@@ -52,4 +53,8 @@ public interface Weather extends TimeAware {
 
     @JsonIgnore
     DailyPrecipitation getPrecipitation();
+
+    OffsetDateTime getSunriseTime();
+
+    OffsetDateTime getSunsetTime();
 }

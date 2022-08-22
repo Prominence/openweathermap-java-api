@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api;
 
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 
 public class ApiTest {
@@ -30,7 +31,7 @@ public class ApiTest {
     @BeforeAll
     public static void retrieveApiKey() {
         String apiKey = System.getenv("OPENWEATHER_API_KEY");
-        client = new OpenWeatherMapClient(apiKey);
+        client = new OpenWeatherMapClient(ApiConfiguration.builder().apiKey(apiKey).build());
     }
 
     protected static OpenWeatherMapClient getClient() {

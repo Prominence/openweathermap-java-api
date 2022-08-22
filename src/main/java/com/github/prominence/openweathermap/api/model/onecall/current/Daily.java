@@ -36,6 +36,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,6 +94,6 @@ public class Daily implements TimeAware {
     @JsonProperty("snow")
     private BigDecimal snow;
     @JsonProperty("weather")
-    private List<WeatherCondition> weatherStates;
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
 
 }

@@ -22,6 +22,9 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class RoadRiskResponseMapperTest {
 
     @Test
-    void mapToObjects() {
+    void mapToObjects() throws JsonProcessingException {
         final String jsonResponse = """
                 [
                   {
@@ -82,7 +85,8 @@ class RoadRiskResponseMapperTest {
                 ]
                 """;
 
-        final List<RoadRiskModel> roadRiskRecords = new RoadRiskResponseMapper().mapToObjects(jsonResponse);
+        final List<RoadRiskModel> roadRiskRecords = new ObjectMapper().reader().forType(new TypeReference<List<RoadRiskModel>>() {
+        }).readValue(jsonResponse);
         assertNotNull(roadRiskRecords);
 
     }

@@ -22,12 +22,14 @@
 
 package com.github.prominence.openweathermap.api.request.generic;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,14 +77,15 @@ public abstract class GenericListRequestTerminator<T, I extends T> {
 
     protected abstract Class<T> getValueType();
 
+    protected abstract Class<I> getInnerType();
+
     private List<I> mapToWeather(String json) {
         try {
-            return requestSettings.getApiConfiguration().getObjectReader().forType(new ListTypeReference<T, I>()).readValue(json);
+            final ObjectReader objectReader = requestSettings.getApiConfiguration().getObjectReader();
+            final CollectionType listType = objectReader.getTypeFactory().constructCollectionType(ArrayList.class, getInnerType());
+            return objectReader.forType(listType).readValue(json);
         } catch (IOException e) {
             throw new RuntimeException("Cannot parse Weather response", e);
         }
-    }
-
-    private static class ListTypeReference<T, I extends T> extends TypeReference<List<I>> {
     }
 }

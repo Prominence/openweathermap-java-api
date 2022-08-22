@@ -50,4 +50,9 @@ class OneCallHistoricalWeatherRequestTerminator extends GenericRequestTerminator
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
+    @Override
+    protected Class<HistoricalWeather> getValueType() {
+        return HistoricalWeather.class;
+    }
+
 }

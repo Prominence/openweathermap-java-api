@@ -23,26 +23,21 @@
 package com.github.prominence.openweathermap.api.model.forecast.hourly;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
-import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.Location;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
  * Represents information about forecast for different timestamps.
  */
 @Data
-public class HourlyForecastModel implements Location, HourlyForecast {
+@JsonIgnoreProperties(value = {"cnt"})
+public class HourlyForecastModel implements HourlyForecast {
 
     @JsonProperty("cod")
     private long cod;
@@ -52,22 +47,11 @@ public class HourlyForecastModel implements Location, HourlyForecast {
     private List<WeatherForecast> forecasts;
     @JsonProperty("city")
     private LocationModel locationModel;
-    @JsonProperty("country")
-    private String countryCode;
-    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
-    @JsonProperty("timezone")
-    private ZoneOffset timeZone;
-    @JsonDeserialize(using = EpochSecondsDeserializer.class)
-    @JsonProperty("sunrise")
-    private OffsetDateTime sunriseTime;
-    @JsonDeserialize(using = EpochSecondsDeserializer.class)
-    @JsonProperty("sunset")
-    private OffsetDateTime sunsetTime;
 
     @Override
     @JsonIgnore
     public Location getLocation() {
-        return this;
+        return locationModel;
     }
 
     @Override
@@ -76,21 +60,4 @@ public class HourlyForecastModel implements Location, HourlyForecast {
         return forecasts.stream().map(Weather.class::cast).collect(Collectors.toList());
     }
 
-    @Override
-    @JsonIgnore
-    public Coordinates getCoordinates() {
-        return Optional.ofNullable(locationModel).map(LocationModel::getCoordinates).orElse(null);
-    }
-
-    @Override
-    @JsonIgnore
-    public long getCityId() {
-        return Optional.ofNullable(locationModel).map(LocationModel::getId).orElse(-1);
-    }
-
-    @Override
-    @JsonIgnore
-    public String getCityName() {
-        return Optional.ofNullable(locationModel).map(LocationModel::getName).orElse(null);
-    }
 }

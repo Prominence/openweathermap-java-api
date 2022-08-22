@@ -43,6 +43,7 @@ import lombok.Data;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +56,7 @@ public class WeatherModel implements Location, Weather {
     @JsonProperty("coord")
     private Coordinates coordinates;
     @JsonProperty("weather")
-    private List<WeatherCondition> weatherStates;
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
     @JsonProperty("base")
     private String base;
     @JsonProperty("main")
@@ -110,6 +111,7 @@ public class WeatherModel implements Location, Weather {
         return this;
     }
 
+    @JsonIgnore
     public Wind getWind() {
         return windModel;
     }

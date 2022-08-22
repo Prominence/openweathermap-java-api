@@ -56,4 +56,9 @@ public class AirPollutionRequestTerminator extends GenericRequestTerminator<AirP
     protected String getRawResponse() {
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
+
+    @Override
+    protected Class<AirPollutionDetailsModel> getValueType() {
+        return AirPollutionDetailsModel.class;
+    }
 }

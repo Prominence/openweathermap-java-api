@@ -52,4 +52,9 @@ class FiveDayThreeHourStepForecastRequestTerminator
     protected String getRawResponse() {
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
+
+    @Override
+    protected Class<FiveDaysThreeHoursForecastModel> getValueType() {
+        return FiveDaysThreeHoursForecastModel.class;
+    }
 }

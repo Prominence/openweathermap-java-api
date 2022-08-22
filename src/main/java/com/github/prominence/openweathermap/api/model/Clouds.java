@@ -23,8 +23,6 @@
 package com.github.prominence.openweathermap.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,8 +35,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Clouds {
-    @JsonDeserialize(using = RequiredPercentageDeserializer.class)
     @JsonProperty("all")
-    private int valuePercentage;
+    private Integer valuePercentage;
 
 }

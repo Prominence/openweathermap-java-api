@@ -53,6 +53,6 @@ public class WeatherModel {
     private Visibility visibility;
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
     @JsonProperty("dew_point")
-    private Double dewPoint;
+    private TemperatureValue dewPoint;
 
 }

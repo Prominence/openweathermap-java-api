@@ -43,7 +43,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .asJava();
 
         assertNotNull(airPollutionDetails);
-        airPollutionDetails.getAirPollutionRecords().forEach(airPollutionRecord -> {
+        airPollutionDetails.getAirPollutionConcentration().forEach(airPollutionRecord -> {
             assertNotNull(airPollutionRecord);
             System.out.println(airPollutionRecord);
         });
@@ -100,7 +100,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .asJava();
 
         assertNotNull(airPollutionDetails);
-        airPollutionDetails.getAirPollutionRecords().forEach(airPollutionRecord -> {
+        airPollutionDetails.getAirPollutionConcentration().forEach(airPollutionRecord -> {
             assertNotNull(airPollutionRecord);
             System.out.println(airPollutionRecord);
         });
@@ -157,7 +157,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .asJava();
 
         assertNotNull(airPollutionDetails);
-        airPollutionDetails.getAirPollutionRecords().forEach(airPollutionRecord -> {
+        airPollutionDetails.getAirPollutionConcentration().forEach(airPollutionRecord -> {
             assertNotNull(airPollutionRecord);
             System.out.println(airPollutionRecord);
         });

@@ -55,7 +55,7 @@ public class WeatherStateUnitTest {
     public void getIconId() {
         final WeatherCondition weatherState = WeatherCondition.getById(800);
 
-        assertEquals("04d", weatherState.getDayIconId());
+        assertEquals("01d", weatherState.getDayIconId());
     }
 
     @Test

@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.roadrisk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
@@ -37,11 +38,17 @@ public class RoadRiskModel implements RoadRisk {
     @JsonProperty("dt")
     private OffsetDateTime forecastTime;
     @JsonProperty("coord")
-    private Coordinates coordinates;
+    private List<Double> coord;
     @JsonProperty("weather")
     private WeatherModel weather;
     @JsonProperty("road")
     private RoadDetails roadDetails;
     @JsonProperty("alerts")
     private List<Alert> alerts;
+
+    @JsonIgnore
+    @Override
+    public Coordinates getCoordinates() {
+        return new Coordinates(coord.get(0), coord.get(1));
+    }
 }

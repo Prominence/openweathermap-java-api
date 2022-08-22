@@ -116,16 +116,16 @@ class ClimaticForecastResponseMapperTest {
         assertEquals(TestMappingUtils.parseDateTime(1594412149), weatherForecast.getSunsetTime());
 
         final Temperature temperature = weatherForecast.getTemperature();
-        assertEquals(new BigDecimal("286.98"), temperature.getDay().asKelvin());
-        assertEquals(new BigDecimal("285.22"), temperature.getMin().asKelvin());
-        assertEquals(new BigDecimal("287.97"), temperature.getMax().asKelvin());
-        assertEquals(new BigDecimal("285.22"), temperature.getNight().asKelvin());
-        assertEquals(new BigDecimal("287.97"), temperature.getEve().asKelvin());
-        assertEquals(new BigDecimal("287.29"), temperature.getMorning().asKelvin());
-        assertEquals(new BigDecimal("282.61"), temperature.getDayFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("283.19"), temperature.getNightFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("284.98"), temperature.getEveFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("282.68"), temperature.getMorningFeelsLike().asKelvin());
+        assertEquals(new BigDecimal("287"), temperature.getDay().asKelvin());
+        assertEquals(new BigDecimal("285"), temperature.getMin().asKelvin());
+        assertEquals(new BigDecimal("288"), temperature.getMax().asKelvin());
+        assertEquals(new BigDecimal("285"), temperature.getNight().asKelvin());
+        assertEquals(new BigDecimal("288"), temperature.getEve().asKelvin());
+        assertEquals(new BigDecimal("287"), temperature.getMorning().asKelvin());
+        assertEquals(new BigDecimal("283"), temperature.getDayFeelsLike().asKelvin());
+        assertEquals(new BigDecimal("283"), temperature.getNightFeelsLike().asKelvin());
+        assertEquals(new BigDecimal("285"), temperature.getEveFeelsLike().asKelvin());
+        assertEquals(new BigDecimal("283"), temperature.getMorningFeelsLike().asKelvin());
 
         final BaseAtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
         assertEquals(new BigDecimal("1016"), pressure.getPressure());

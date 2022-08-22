@@ -24,10 +24,9 @@ package com.github.prominence.openweathermap.api.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -144,7 +143,7 @@ public class CurrentWeatherResponseMapperTest {
                 }
                 """;
 
-        final WeatherModel weather = deserialize(jsonString);
+        final Weather weather = deserialize(jsonString);
 
         assertNotNull(weather);
     }
@@ -200,7 +199,7 @@ public class CurrentWeatherResponseMapperTest {
                   "cod": 200
                 }
                 """;
-        assertThrows(RuntimeException.class, () -> deserialize(jsonString));
+        assertThrows(MismatchedInputException.class, () -> deserialize(jsonString));
     }
 
     @Test
@@ -260,55 +259,6 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     @Test
-    @Disabled
-    public void mapToWeather_withoutWeatherNode() throws JsonProcessingException {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-
-        final Weather weather = deserialize(jsonString);
-
-        assertNotNull(weather);
-        assertNull(weather.getWeatherStates());
-    }
-
-    @Test
     public void mapToWeather_withTemperatureVariations() throws JsonProcessingException {
         String jsonString = """
                 {
@@ -361,10 +311,10 @@ public class CurrentWeatherResponseMapperTest {
         Weather weather = deserialize(jsonString);
 
         assertNotNull(weather);
-        assertEquals(new BigDecimal("1.8"), weather.getTemperature().getTemperature().asKelvin());
-        assertEquals(new BigDecimal("-0.3"), weather.getTemperature().getFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("1.7"), weather.getTemperature().getMin().asKelvin());
-        assertEquals(new BigDecimal("2.0"), weather.getTemperature().getMax().asKelvin());
+        assertEquals(new BigDecimal("2"), weather.getTemperature().getTemperature().asKelvin());
+        assertEquals(new BigDecimal("0"), weather.getTemperature().getFeelsLike().asKelvin());
+        assertEquals(new BigDecimal("2"), weather.getTemperature().getMin().asKelvin());
+        assertEquals(new BigDecimal("2"), weather.getTemperature().getMax().asKelvin());
 
         // without feels like node
         jsonString = """
@@ -853,30 +803,30 @@ public class CurrentWeatherResponseMapperTest {
                 }
                 """;
 
-        final Weather weather = deserialize(jsonWith1Hr);
+        Weather weather = deserialize(jsonWith1Hr);
 
         // with 1h level only
         assertNotNull(weather.getRain());
-        assertEquals(0.1, weather.getRain().getOneHourLevel(), 0.00001);
+        assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
         assertNull(weather.getRain().getThreeHourLevel());
 
-        weather = mapper.mapToWeather(jsonWith3Hr);
+        weather = deserialize(jsonWith3Hr);
 
         // with 3h level only
         assertNotNull(weather.getRain());
         assertNull(weather.getRain().getOneHourLevel());
-        assertEquals(0.3, weather.getRain().getThreeHourLevel(), 0.00001);
+        assertEquals(new BigDecimal("0.3"), weather.getRain().getThreeHourLevel());
 
-        weather = mapper.mapToWeather(jsonWithBoth);
+        weather = deserialize(jsonWithBoth);
 
         // with both levels
         assertNotNull(weather.getRain());
-        assertEquals(0.1, weather.getRain().getOneHourLevel(), 0.00001);
-        assertEquals(0.3, weather.getRain().getThreeHourLevel(), 0.00001);
+        assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
+        assertEquals(new BigDecimal("0.3"), weather.getRain().getThreeHourLevel());
     }
 
     @Test
-    public void mapToWeather_withSnowVariations() {
+    public void mapToWeather_withSnowVariations() throws JsonProcessingException {
         final String jsonWith1Hr = """
                 {
                   "coord": {
@@ -1023,31 +973,30 @@ public class CurrentWeatherResponseMapperTest {
                 }
                 """;
 
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
-        WeatherModel weather = mapper.mapToWeather(jsonWith1Hr);
+        Weather weather = deserialize(jsonWith1Hr);
 
         // with 1h level only
         assertNotNull(weather.getSnow());
-        assertEquals(0.1, weather.getSnow().getOneHourLevel(), 0.00001);
+        assertEquals(new BigDecimal("0.1"), weather.getSnow().getOneHourLevel());
         assertNull(weather.getSnow().getThreeHourLevel());
 
-        weather = mapper.mapToWeather(jsonWith3Hr);
+        weather = deserialize(jsonWith3Hr);
 
         // with 3h level only
         assertNotNull(weather.getSnow());
         assertNull(weather.getSnow().getOneHourLevel());
-        assertEquals(0.3, weather.getSnow().getThreeHourLevel(), 0.00001);
+        assertEquals(new BigDecimal("0.3"), weather.getSnow().getThreeHourLevel());
 
-        weather = mapper.mapToWeather(jsonWithBoth);
+        weather = deserialize(jsonWithBoth);
 
         // with both levels
         assertNotNull(weather.getSnow());
-        assertEquals(0.1, weather.getSnow().getOneHourLevel(), 0.00001);
-        assertEquals(0.3, weather.getSnow().getThreeHourLevel(), 0.00001);
+        assertEquals(new BigDecimal("0.1"), weather.getSnow().getOneHourLevel());
+        assertEquals(new BigDecimal("0.3"), weather.getSnow().getThreeHourLevel());
     }
 
     @Test
-    public void mapToWeather_withLocationVariations() {
+    public void mapToWeather_withLocationVariations() throws JsonProcessingException {
         String jsonString = """
                 {
                   "coord": {
@@ -1096,9 +1045,7 @@ public class CurrentWeatherResponseMapperTest {
                   "cod": 200
                 }
                 """;
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
-
-        WeatherModel weather = mapper.mapToWeather(jsonString);
+        Weather weather = deserialize(jsonString);
 
         assertNotNull(weather.getLocation().getCoordinates());
         assertNotNull(weather.getLocation().getCountryCode());
@@ -1147,113 +1094,9 @@ public class CurrentWeatherResponseMapperTest {
                   "cod": 200
                 }
                 """;
-        weather = mapper.mapToWeather(jsonString);
+        weather = deserialize(jsonString);
         assertNull(weather.getLocation().getCoordinates());
         assertNull(weather.getLocation().getCountryCode());
-
-        // coordinates without latitude
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinates());
-        assertNotNull(weather.getLocation().getCountryCode());
-
-        // coordinates without longitude
-        jsonString = """
-                {
-                  "coord": {
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinates());
-        assertNotNull(weather.getLocation().getCountryCode());
     }
 
     private static Weather deserialize(final String jsonString) throws JsonProcessingException {

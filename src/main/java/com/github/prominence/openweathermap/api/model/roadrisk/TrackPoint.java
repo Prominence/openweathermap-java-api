@@ -26,17 +26,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.serializer.EpochSecondsSerializer;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.OffsetDateTime;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class TrackPoint extends Coordinates {
     @JsonSerialize(using = EpochSecondsSerializer.class)
     @JsonProperty("dt")
     private OffsetDateTime requestedTime;
+
+    public TrackPoint(double latitude, double longitude) {
+        super(latitude, longitude);
+    }
 }

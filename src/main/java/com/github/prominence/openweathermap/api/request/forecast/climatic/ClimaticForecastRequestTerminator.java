@@ -43,4 +43,9 @@ class ClimaticForecastRequestTerminator extends GenericRequestTerminator<ThirtyD
     protected String getRawResponse() {
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.PRO);
     }
+
+    @Override
+    protected Class<ThirtyDaysDailyForecastModel> getValueType() {
+        return ThirtyDaysDailyForecastModel.class;
+    }
 }

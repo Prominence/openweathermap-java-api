@@ -32,6 +32,6 @@ public class Alert {
     private String senderName;
     @JsonProperty("event")
     private String event;
-    @JsonProperty("sender_level")
+    @JsonProperty("event_level")
     private EventLevel eventLevel;
 }

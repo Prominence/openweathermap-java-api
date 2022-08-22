@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.model.forecast.free;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
@@ -43,6 +44,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +52,7 @@ import java.util.Optional;
  * Represents weather forecast information for a particular timestamp.
  */
 @Data
+@JsonIgnoreProperties(value = {"dt_txt"})
 public class WeatherForecast implements TimeAware, Weather {
 
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
@@ -58,7 +61,7 @@ public class WeatherForecast implements TimeAware, Weather {
     @JsonProperty("main")
     private MainMetrics mainMetrics;
     @JsonProperty("weather")
-    private List<WeatherCondition> weatherStates;
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
     @JsonProperty("clouds")
     private Clouds clouds;
     @JsonProperty("wind")

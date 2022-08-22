@@ -53,6 +53,7 @@ public interface Weather extends WeatherQueryResponse {
 
     Visibility getVisibility();
 
+    @JsonIgnore
     Wind getWind();
 
     Clouds getClouds();

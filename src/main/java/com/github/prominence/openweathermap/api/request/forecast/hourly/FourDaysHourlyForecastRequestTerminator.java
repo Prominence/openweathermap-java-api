@@ -43,4 +43,9 @@ class FourDaysHourlyForecastRequestTerminator extends GenericRequestTerminator<H
     protected String getRawResponse() {
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.PRO);
     }
+
+    @Override
+    protected Class<HourlyForecastModel> getValueType() {
+        return HourlyForecastModel.class;
+    }
 }

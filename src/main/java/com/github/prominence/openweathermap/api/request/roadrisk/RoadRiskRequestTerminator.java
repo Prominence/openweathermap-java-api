@@ -27,9 +27,9 @@ import com.github.prominence.openweathermap.api.enums.ApiVariant;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.GenericListRequestTerminator;
 
-public class RoadRiskRequestTerminator extends GenericRequestTerminator<RoadRisk, RoadRiskModel> {
+public class RoadRiskRequestTerminator extends GenericListRequestTerminator<RoadRisk, RoadRiskModel> {
     RoadRiskRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
     }
@@ -39,4 +39,13 @@ public class RoadRiskRequestTerminator extends GenericRequestTerminator<RoadRisk
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE, RequestExecutor.Method.POST);
     }
 
+    @Override
+    protected Class<RoadRisk> getValueType() {
+        return RoadRisk.class;
+    }
+
+    @Override
+    protected Class<RoadRiskModel> getInnerType() {
+        return RoadRiskModel.class;
+    }
 }

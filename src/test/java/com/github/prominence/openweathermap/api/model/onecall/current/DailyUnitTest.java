@@ -90,7 +90,7 @@ public class DailyUnitTest {
 
         daily.setFeelsLike(dailyTemperature);
 
-        assertEquals(dailyTemperature, daily.getTemperature());
+        assertEquals(dailyTemperature, daily.getFeelsLike());
     }
 
     @Test

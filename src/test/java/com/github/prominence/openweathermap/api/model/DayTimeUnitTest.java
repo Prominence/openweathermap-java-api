@@ -25,6 +25,8 @@ package com.github.prominence.openweathermap.api.model;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class DayTimeUnitTest {
     @Test
     public void whenGetValue_thenValueIsPresentAndValid() {

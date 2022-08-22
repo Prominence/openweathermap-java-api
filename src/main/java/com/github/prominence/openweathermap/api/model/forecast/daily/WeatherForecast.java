@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
-import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
@@ -43,6 +42,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +59,7 @@ public class WeatherForecast implements Weather, Temperature, BaseAtmosphericPre
     @JsonProperty("feels_like")
     private TemperatureDaily feelsLike;
     @JsonProperty("weather")
-    private List<WeatherCondition> weatherStates;
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
     @JsonDeserialize(using = RequiredPercentageDeserializer.class)
     @JsonProperty("humidity")
     private int humidityPercentage;
@@ -80,9 +80,14 @@ public class WeatherForecast implements Weather, Temperature, BaseAtmosphericPre
     private BigDecimal rain;
     @JsonProperty("snow")
     private BigDecimal snow;
-    @JsonDeserialize(using = VisibilityDeserializer.class)
     @JsonProperty("pop")
     private BigDecimal probabilityOfPrecipitation;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunrise")
+    private OffsetDateTime sunriseTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunset")
+    private OffsetDateTime sunsetTime;
 
     @Override
     @JsonIgnore

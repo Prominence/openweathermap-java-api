@@ -52,4 +52,9 @@ public class DirectGeocodingRequestTerminator extends GenericListRequestTerminat
     protected Class<Geocoding> getValueType() {
         return Geocoding.class;
     }
+
+    @Override
+    protected Class<GeocodingModel> getInnerType() {
+        return GeocodingModel.class;
+    }
 }

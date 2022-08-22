@@ -33,4 +33,9 @@ class SolarRadiationRequestTerminator extends GenericRequestTerminator<SolarRadi
         super(requestSettings);
     }
 
+    @Override
+    protected Class<SolarRadiationModel> getValueType() {
+        return SolarRadiationModel.class;
+    }
+
 }

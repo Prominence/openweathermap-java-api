@@ -41,6 +41,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,7 +94,7 @@ public class BaseMeasurement implements TimeAware, Wind {
     @JsonProperty("snow")
     private BasePrecipitation snow;
     @JsonProperty("weather")
-    private List<WeatherCondition> weatherStates;
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
 
     @JsonIgnore
     @Override

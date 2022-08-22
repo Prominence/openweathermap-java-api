@@ -20,31 +20,20 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.direct;
+package com.github.prominence.openweathermap.api.model;
 
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding;
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import java.time.ZoneOffset;
 
-public class ZipCodeGeocodingRequestTerminator extends GenericRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel> {
-    ZipCodeGeocodingRequestTerminator(RequestSettings requestSettings) {
-        super(requestSettings);
-    }
+public interface BaseLocation {
 
-    @Override
-    public String asXML() {
-        throw new UnsupportedOperationException("XML format not supported for this API.");
-    }
+    Coordinates getCoordinates();
 
-    @Override
-    public String asHTML() {
-        throw new UnsupportedOperationException("HTML format not supported for this API.");
-    }
+    ZoneOffset getTimeZone();
 
-    @Override
-    protected Class<ZipCodeGeocodingModel> getValueType() {
-        return ZipCodeGeocodingModel.class;
-    }
+    long getCityId();
+
+    String getCityName();
+
+    String getCountryCode();
 
 }

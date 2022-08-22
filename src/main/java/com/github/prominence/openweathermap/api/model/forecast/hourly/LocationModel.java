@@ -23,18 +23,36 @@
 package com.github.prominence.openweathermap.api.model.forecast.hourly;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
 import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.Location;
 import lombok.Data;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 /**
  * Represents location information.
  */
 @Data
-public class LocationModel {
+public class LocationModel implements Location {
     @JsonProperty("id")
-    private int id;
+    private long cityId;
     @JsonProperty("name")
-    private String name;
+    private String cityName;
     @JsonProperty("coord")
     private Coordinates coordinates;
+    @JsonProperty("country")
+    private String countryCode;
+    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
+    @JsonProperty("timezone")
+    private ZoneOffset timeZone;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunrise")
+    private OffsetDateTime sunriseTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunset")
+    private OffsetDateTime sunsetTime;
 }

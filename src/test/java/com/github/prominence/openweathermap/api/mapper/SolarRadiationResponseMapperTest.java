@@ -22,9 +22,12 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationMeasurement;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationEntry;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class SolarRadiationResponseMapperTest {
 
     @Test
-    void mapToObject() {
+    void mapToObject() throws JsonProcessingException {
         final String jsonResponse = """
                 {
                   "coord": {
@@ -59,21 +62,21 @@ class SolarRadiationResponseMapperTest {
                 }
                 """;
 
-        final SolarRadiationModel solarRadiation = new SolarRadiationResponseMapper().mapToObject(jsonResponse);
+        final SolarRadiation solarRadiation = new ObjectMapper().readValue(jsonResponse, SolarRadiationModel.class);
         assertNotNull(solarRadiation);
 
         assertEquals(new Coordinates(32.7243, -114.6244), solarRadiation.getCoordinates());
 
-        final List<SolarRadiationMeasurement> records = solarRadiation.getSolarRadiationRecords();
+        final List<SolarRadiationEntry> records = solarRadiation.getSolarRadiationRecords();
         assertEquals(1, records.size());
 
-        final SolarRadiationMeasurement record = records.get(0);
+        final SolarRadiationEntry record = records.get(0);
         assertEquals(TestMappingUtils.parseDateTime(1618232400), record.getMeasurementTime());
-        assertEquals(206.68, record.getCloudSkyGlobalHorizontalIrradiance());
-        assertEquals(2.27, record.getCloudSkyDirectNormalIrradiance());
-        assertEquals(204.83, record.getCloudSkyDiffuseHorizontalIrradiance());
-        assertEquals(826.71, record.getClearSkyGlobalHorizontalIrradiance());
-        assertEquals(885.47, record.getClearSkyDirectNormalIrradiance());
-        assertEquals(114.93, record.getClearSkyDiffuseHorizontalIrradiance());
+        assertEquals(206.68, record.getSolarRadiationMeasurement().getGlobalHorizontalIrradiance());
+        assertEquals(2.27, record.getSolarRadiationMeasurement().getDirectNormalIrradiance());
+        assertEquals(204.83, record.getSolarRadiationMeasurement().getDiffuseHorizontalIrradiance());
+        assertEquals(826.71, record.getSolarRadiationMeasurement().getGlobalHorizontalIrradianceClearSky());
+        assertEquals(885.47, record.getSolarRadiationMeasurement().getDirectNormalIrradianceClearSky());
+        assertEquals(114.93, record.getSolarRadiationMeasurement().getDiffuseHorizontalIrradianceClearSky());
     }
 }

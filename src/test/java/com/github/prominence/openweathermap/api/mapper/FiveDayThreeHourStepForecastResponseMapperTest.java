@@ -183,10 +183,10 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
 
         final Temperature temperature = weatherForecast.getTemperature();
         assertNotNull(temperature);
-        assertEquals(new BigDecimal("286.88"), temperature.getTemperature().asKelvin());
-        assertEquals(new BigDecimal("285.93"), temperature.getFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("286.74"), temperature.getMin().asKelvin());
-        assertEquals(new BigDecimal("286.88"), temperature.getMax().asKelvin());
+        assertEquals(new BigDecimal("287"), temperature.getTemperature().asKelvin());
+        assertEquals(new BigDecimal("286"), temperature.getFeelsLike().asKelvin());
+        assertEquals(new BigDecimal("287"), temperature.getMin().asKelvin());
+        assertEquals(new BigDecimal("287"), temperature.getMax().asKelvin());
 
         final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
         assertEquals(new BigDecimal("1021"), pressure.getPressure());
@@ -209,7 +209,7 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         final WeatherCondition weatherState = weatherForecast.getWeatherStates().get(0);
         assertEquals(804, weatherState.getId());
         assertEquals("Clouds", weatherState.getName());
-        assertEquals("overcast clouds", weatherState.getDescription());
+        assertEquals("overcast clouds: 85-100%", weatherState.getDescription());
         assertEquals("04d", weatherState.getIconId(weatherForecast.getPartOfDay()));
 
         final Precipitation rain = weatherForecast.getRain();

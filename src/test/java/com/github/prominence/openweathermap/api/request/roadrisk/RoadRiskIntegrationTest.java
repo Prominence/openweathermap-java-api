@@ -23,29 +23,24 @@
 package com.github.prominence.openweathermap.api.request.roadrisk;
 
 import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.core.net.MockHttpClient;
-import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
+import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 public class RoadRiskIntegrationTest extends ApiTest {
     private static final MockHttpClient httpClient = new MockHttpClient();
 
-    @BeforeAll
-    public static void setup() {
-        getClient().setHttpClient(httpClient);
-    }
-
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
-        final TrackPoint trackPoint = new TrackPoint();
-        trackPoint.setCoordinates(new Coordinates(5, 5));
-        trackPoint.setRequestedTime(LocalDateTime.now());
+        final TrackPoint trackPoint = new TrackPoint(5, 5);
+        trackPoint.setRequestedTime(OffsetDateTime.now(ZoneOffset.UTC));
 
         final String responseOutput = """
                 [
@@ -96,8 +91,10 @@ public class RoadRiskIntegrationTest extends ApiTest {
                 ]
                 """;
         httpClient.setResponseOutput(responseOutput);
+        final OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder()
+                .httpClient(httpClient).apiKey("").build());
 
-        final List<RoadRiskModel> roadRiskRecords = getClient()
+        final List<RoadRisk> roadRiskRecords = client
                 .roadRisk()
                 .byTrackPoints(List.of(trackPoint))
                 .retrieve()

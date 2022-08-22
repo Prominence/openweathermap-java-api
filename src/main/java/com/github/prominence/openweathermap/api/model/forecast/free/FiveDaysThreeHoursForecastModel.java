@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.model.forecast.free;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.prominence.openweathermap.api.model.LocationExtended;
 import lombok.Data;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
  * Represents information about forecast for different timestamps.
  */
 @Data
+@JsonIgnoreProperties(value = {"cnt"})
 public class FiveDaysThreeHoursForecastModel implements FiveDaysThreeHoursForecast {
 
     @JsonProperty("cod")

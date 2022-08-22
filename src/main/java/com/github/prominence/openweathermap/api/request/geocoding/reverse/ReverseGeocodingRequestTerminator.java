@@ -52,4 +52,9 @@ public class ReverseGeocodingRequestTerminator extends GenericListRequestTermina
     protected Class<Geocoding> getValueType() {
         return Geocoding.class;
     }
+
+    @Override
+    protected Class<GeocodingModel> getInnerType() {
+        return GeocodingModel.class;
+    }
 }

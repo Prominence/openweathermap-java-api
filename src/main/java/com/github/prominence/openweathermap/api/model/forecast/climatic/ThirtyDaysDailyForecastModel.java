@@ -25,8 +25,6 @@ package com.github.prominence.openweathermap.api.model.forecast.climatic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -44,7 +42,6 @@ public class ThirtyDaysDailyForecastModel implements ThirtyDaysDailyForecast {
     private BigDecimal message;
     @JsonProperty("city")
     private LocationModel locationModel;
-    @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("list")
     private List<WeatherForecast> forecasts;
 

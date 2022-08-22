@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
@@ -34,6 +35,7 @@ import java.math.BigDecimal;
  * Contains Temperature and AtmosphericPressure.
  */
 @Data
+@JsonIgnoreProperties(value = {"temp_kf"})
 public class MainMetrics implements Temperature, Humidity, AtmosphericPressure {
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
     @JsonProperty("temp")
