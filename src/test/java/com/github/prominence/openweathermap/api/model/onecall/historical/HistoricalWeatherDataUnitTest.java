@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -64,7 +65,7 @@ public class HistoricalWeatherDataUnitTest {
     @Test
     public void getHistoricalWeather() {
         final HistoricalWeather historicalWeatherData = new HistoricalWeather();
-        final List<BaseMeasurement> historicalWeather = List.of(new BaseMeasurement());
+        final List<BaseMeasurement> historicalWeather = Collections.singletonList(new BaseMeasurement());
         historicalWeatherData.setData(historicalWeather);
 
         assertEquals(historicalWeather, historicalWeatherData.getData());

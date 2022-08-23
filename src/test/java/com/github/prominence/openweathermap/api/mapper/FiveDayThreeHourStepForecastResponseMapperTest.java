@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.DayTime;
@@ -38,9 +37,12 @@ import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThre
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.free.Precipitation;
 import com.github.prominence.openweathermap.api.model.forecast.free.Weather;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -51,107 +53,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class FiveDayThreeHourStepForecastResponseMapperTest {
 
     @Test
-    void mapToForecast() throws JsonProcessingException {
-        final String jsonResponse = """
-                {
-                  "cod": "200",
-                  "message": 0,
-                  "cnt": 40,
-                  "list": [
-                    {
-                      "dt": 1647345600,
-                      "main": {
-                        "temp": 286.88,
-                        "feels_like": 285.93,
-                        "temp_min": 286.74,
-                        "temp_max": 286.88,
-                        "pressure": 1021,
-                        "sea_level": 1021,
-                        "grnd_level": 1018,
-                        "humidity": 62,
-                        "temp_kf": 0.14
-                      },
-                      "weather": [
-                        {
-                          "id": 804,
-                          "main": "Clouds",
-                          "description": "overcast clouds",
-                          "icon": "04d"
-                        }
-                      ],
-                      "clouds": {
-                        "all": 85
-                      },
-                      "wind": {
-                        "speed": 3.25,
-                        "deg": 134,
-                        "gust": 4.45
-                      },
-                      "visibility": 10000,
-                      "pop": 0,
-                      "sys": {
-                        "pod": "d"
-                      },
-                      "rain": {
-                        "3h": 22.1
-                      },
-                      "snow": {
-                        "3h": 13.6
-                      },
-                      "dt_txt": "2022-03-15 12:00:00"
-                    },
-                    {
-                      "dt": 1647356400,
-                      "main": {
-                        "temp": 286.71,
-                        "feels_like": 285.77,
-                        "temp_min": 286.38,
-                        "temp_max": 286.71,
-                        "pressure": 1021,
-                        "sea_level": 1021,
-                        "grnd_level": 1017,
-                        "humidity": 63,
-                        "temp_kf": 0.33
-                      },
-                      "weather": [
-                        {
-                          "id": 804,
-                          "main": "Clouds",
-                          "description": "overcast clouds",
-                          "icon": "04d"
-                        }
-                      ],
-                      "clouds": {
-                        "all": 90
-                      },
-                      "wind": {
-                        "speed": 3.34,
-                        "deg": 172,
-                        "gust": 4.03
-                      },
-                      "visibility": 10000,
-                      "pop": 0,
-                      "sys": {
-                        "pod": "d"
-                      },
-                      "dt_txt": "2022-03-15 15:00:00"
-                    }
-                  ],
-                  "city": {
-                    "id": 2643743,
-                    "name": "London",
-                    "coord": {
-                      "lat": 51.5073,
-                      "lon": -0.1277
-                    },
-                    "country": "GB",
-                    "population": 1000000,
-                    "timezone": 0,
-                    "sunrise": 1647324903,
-                    "sunset": 1647367441
-                  }
-                }
-                """;
+    void mapToForecast() throws IOException {
+        final String jsonResponse = IOUtils.resourceToString("/responses/valid/5days3hours.json", StandardCharsets.UTF_8);
 
         final FiveDaysThreeHoursForecast forecast = new ObjectMapper().readValue(jsonResponse, FiveDaysThreeHoursForecastModel.class);
         assertNotNull(forecast);

@@ -25,6 +25,7 @@ package com.github.prominence.openweathermap.api.request.air.pollution;
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class AirPollutionIntegrationTest extends ApiTest {
     @Test
     public void whenRetrieveCurrentAirPollutionResponseAsJava_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .current()
@@ -51,6 +53,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentAirPollutionResponseAsJSON_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String jsonString = getClient()
                 .airPollution()
                 .current()
@@ -64,6 +67,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentAirPollutionAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .current()
@@ -77,6 +81,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentAirPollutionAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .current()
@@ -92,6 +97,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveForecastAirPollutionResponseAsJava_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .forecast()
@@ -108,6 +114,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveForecastAirPollutionResponseAsJSON_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String jsonString = getClient()
                 .airPollution()
                 .forecast()
@@ -121,6 +128,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveForecastAirPollutionAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .forecast()
@@ -134,6 +142,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveForecastAirPollutionAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .forecast()
@@ -149,6 +158,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalAirPollutionResponseAsJava_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final AirPollutionDetails airPollutionDetails = getClient()
                 .airPollution()
                 .historical()
@@ -165,6 +175,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalAirPollutionResponseAsJSON_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String jsonString = getClient()
                 .airPollution()
                 .historical()
@@ -178,6 +189,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalAirPollutionAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final CompletableFuture<AirPollutionDetails> pollutionDetailsFuture = getClient()
                 .airPollution()
                 .historical()
@@ -191,6 +203,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalAirPollutionAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final CompletableFuture<String> jsonStringFuture = getClient()
                 .airPollution()
                 .historical()

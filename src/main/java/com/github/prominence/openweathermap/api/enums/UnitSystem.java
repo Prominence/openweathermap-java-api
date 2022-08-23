@@ -48,29 +48,6 @@ public enum UnitSystem {
     }
 
     /**
-     * Returns wind unit for current unit system.
-     * @return wind unit.
-     */
-    public String getWindUnit() {
-        return switch (this) {
-            case IMPERIAL -> "miles/hour";
-            case STANDARD, METRIC -> "meter/sec";
-        };
-    }
-
-    /**
-     * Returns temperature unit for current unit system.
-     * @return temperature unit.
-     */
-    public String getTemperatureUnit() {
-        return switch (this) {
-            case METRIC -> "°C";
-            case IMPERIAL -> "°F";
-            case STANDARD -> "K";
-        };
-    }
-
-    /**
      * Returns unit system value.
      * @return value unit system.
      */

@@ -31,6 +31,7 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
@@ -44,6 +45,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
     @Test
     public void whenRetrieveCurrentOneCallResponseAsJava_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CurrentWeather currentWeatherData = getClient()
                 .oneCall()
                 .current()
@@ -58,7 +61,9 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallResponseAsJSON_thenOk() {
-        final String responseJson = new OpenWeatherMapClient(ApiConfiguration.builder().apiKey(System.getenv("OPENWEATHER_API_KEY")).build())
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
+        final String responseJson = getClient()
                 .oneCall()
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
@@ -74,6 +79,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallResponseWithExclusionAsJava_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CurrentWeather currentWeatherData = getClient()
                 .oneCall()
                 .current()
@@ -91,6 +98,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CompletableFuture<CurrentWeather> currentWeatherDataFuture = getClient()
                 .oneCall()
                 .current()
@@ -106,6 +115,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveCurrentOneCallAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CompletableFuture<String> responseJsonFuture = getClient()
                 .oneCall()
                 .current()

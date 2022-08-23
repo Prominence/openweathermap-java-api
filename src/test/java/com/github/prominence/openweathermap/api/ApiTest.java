@@ -25,12 +25,17 @@ package com.github.prominence.openweathermap.api;
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.util.Optional;
+
 public class ApiTest {
+    public static final String OPENWEATHER_API_KEY = "OPENWEATHER_API_KEY";
+    public static final String RUN_ONE_CALL = "RUN_ONE_CALL";
     private static OpenWeatherMapClient client;
 
     @BeforeAll
     public static void retrieveApiKey() {
-        String apiKey = System.getenv("OPENWEATHER_API_KEY");
+        String apiKey = Optional.ofNullable(System.getenv(OPENWEATHER_API_KEY))
+                .orElse("PLEASE SET OPENWEATHER_API_KEY ENV VAR!");
         client = new OpenWeatherMapClient(ApiConfiguration.builder().apiKey(apiKey).build());
     }
 

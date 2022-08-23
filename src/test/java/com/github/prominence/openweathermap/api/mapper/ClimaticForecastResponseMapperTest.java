@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
@@ -36,9 +35,12 @@ import com.github.prominence.openweathermap.api.model.forecast.climatic.Temperat
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.Weather;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -46,58 +48,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ClimaticForecastResponseMapperTest {
 
     @Test
-    public void mapToForecast() throws JsonProcessingException {
-        final String jsonResponse = """
-                {
-                  "cod": "200",
-                  "city": {
-                    "id": 2643743,
-                    "name": "London",
-                    "coord": {
-                      "lon": -0.1277,
-                      "lat": 51.5073
-                    },
-                    "country": "GB"
-                  },
-                  "message": 0.353472054,
-                  "list": [
-                    {
-                      "dt": 1594382400,
-                      "sunrise": 1594353335,
-                      "sunset": 1594412149,
-                      "temp": {
-                        "day": 286.98,
-                        "min": 285.22,
-                        "max": 287.97,
-                        "night": 285.22,
-                        "eve": 287.97,
-                        "morn": 287.29
-                      },
-                      "feels_like": {
-                        "day": 282.61,
-                        "night": 283.19,
-                        "eve": 284.98,
-                        "morn": 282.68
-                      },
-                      "pressure": 1016,
-                      "humidity": 84,
-                      "weather": [
-                        {
-                          "id": 500,
-                          "main": "Rain",
-                          "description": "light rain",
-                          "icon": "10d"
-                        }
-                      ],
-                      "speed": 6.78,
-                      "deg": 320,
-                      "clouds": 81,
-                      "rain": 1.96,
-                      "snow": 2.21
-                    }
-                  ]
-                }
-                """;
+    public void mapToForecast() throws IOException {
+        final String jsonResponse = IOUtils.resourceToString("/responses/valid/climatic.json", StandardCharsets.UTF_8);
 
         final ThirtyDaysDailyForecast forecast = new ObjectMapper().readValue(jsonResponse, ThirtyDaysDailyForecastModel.class);
         assertNotNull(forecast);

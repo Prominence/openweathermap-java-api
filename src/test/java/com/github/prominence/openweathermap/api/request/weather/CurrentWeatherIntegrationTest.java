@@ -26,6 +26,7 @@ import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CurrentWeatherIntegrationTest extends ApiTest {
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final Weather weather = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))
@@ -54,6 +56,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsJSON_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String weatherJson = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))
@@ -66,6 +69,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsXML_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String weatherXml = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))
@@ -78,6 +82,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
 
     @Test
     public void whenGetSingleCurrentWeatherByCoordinateRequestAsHTML_thenReturnNotNull() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final String weatherHtml = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))

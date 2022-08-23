@@ -22,15 +22,17 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationEntry;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,28 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class SolarRadiationResponseMapperTest {
 
     @Test
-    void mapToObject() throws JsonProcessingException {
-        final String jsonResponse = """
-                {
-                  "coord": {
-                    "lon": -114.6244,
-                    "lat": 32.7243
-                  },
-                  "list": [
-                    {
-                      "radiation": {
-                        "ghi": 206.68,
-                        "dni": 2.27,
-                        "dhi": 204.83,
-                        "ghi_cs": 826.71,
-                        "dni_cs": 885.47,
-                        "dhi_cs": 114.93
-                      },
-                      "dt": 1618232400
-                    }
-                  ]
-                }
-                """;
+    void mapToObject() throws IOException {
+        final String jsonResponse = IOUtils.resourceToString("/responses/valid/solar-radiation.json", StandardCharsets.UTF_8);
 
         final SolarRadiation solarRadiation = new ObjectMapper().readValue(jsonResponse, SolarRadiationModel.class);
         assertNotNull(solarRadiation);

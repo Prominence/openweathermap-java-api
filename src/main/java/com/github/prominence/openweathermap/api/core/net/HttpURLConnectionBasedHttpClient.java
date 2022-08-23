@@ -76,12 +76,17 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
     }
 
     private static InputStream evaluateResponse(HttpURLConnection connection) throws IOException {
-        return switch (connection.getResponseCode()) {
-            case HttpURLConnection.HTTP_OK -> connection.getInputStream();
-            case HttpURLConnection.HTTP_UNAUTHORIZED -> throw new InvalidAuthTokenException();
-            case HttpURLConnection.HTTP_NOT_FOUND, HttpURLConnection.HTTP_BAD_REQUEST -> throw new NoDataFoundException();
-            default -> throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
-        };
+        switch (connection.getResponseCode()) {
+            case HttpURLConnection.HTTP_OK:
+                return connection.getInputStream();
+            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                throw new InvalidAuthTokenException();
+            case HttpURLConnection.HTTP_NOT_FOUND:
+            case HttpURLConnection.HTTP_BAD_REQUEST:
+                throw new NoDataFoundException();
+            default:
+                throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
+        }
     }
 
     private void configureTimeouts(HttpURLConnection connection) {

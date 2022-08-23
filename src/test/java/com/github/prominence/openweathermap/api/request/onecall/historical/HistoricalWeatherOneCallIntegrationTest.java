@@ -30,6 +30,7 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -44,6 +45,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     @Test
     public void whenRetrieveHistoricalOneCallResponseAsJava_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final HistoricalWeather historicalWeatherData = getClient()
                 .oneCall()
                 .historical()
@@ -58,6 +61,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalOneCallResponseAsJSON_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final String responseJson = getClient()
                 .oneCall()
                 .historical()
@@ -74,6 +79,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CompletableFuture<HistoricalWeather> historicalWeatherDataFuture = getClient()
                 .oneCall()
                 .historical()
@@ -89,6 +96,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalOneCallAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CompletableFuture<String> responseJsonFuture = getClient()
                 .oneCall()
                 .historical()

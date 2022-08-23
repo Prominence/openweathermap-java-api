@@ -26,7 +26,6 @@ import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ApiVariant;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.exception.FetchException;
 import com.github.prominence.openweathermap.api.exception.WeatherParseException;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import lombok.extern.slf4j.Slf4j;
@@ -67,12 +66,7 @@ public abstract class GenericRequestTerminator<T, I extends T> {
     }
 
     protected String getRawResponse() {
-        try {
-            return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
-        } catch (Exception e) {
-            log.error("Failed to fetch data.", e);
-            throw new FetchException("Cannot fetch response", e);
-        }
+        return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
 
     private I mapToWeather(String json) {

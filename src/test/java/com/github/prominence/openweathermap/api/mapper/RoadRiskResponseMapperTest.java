@@ -22,12 +22,14 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -35,59 +37,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class RoadRiskResponseMapperTest {
 
     @Test
-    void mapToObjects() throws JsonProcessingException {
-        final String jsonResponse = """
-                [
-                  {
-                    "dt": 1602702000,
-                    "coord": [
-                      7.27,
-                      44.04
-                    ],
-                    "weather": {
-                      "temp": 278.44,
-                      "wind_speed": 2.27,
-                      "wind_deg": 7,
-                      "precipitation_intensity": 0.38,
-                      "dew_point": 276.13
-                    },
-                    "road": {
-                      "state": 2,
-                      "temp": 293.85
-                    },
-                    "alerts": [
-                      {
-                        "sender_name": "METEO-FRANCE",
-                        "event": "Moderate thunderstorm warning",
-                        "event_level": 2
-                      }
-                    ]
-                  },
-                  {
-                    "dt": 1602702400,
-                    "coord": [
-                      7.37,
-                      45.04
-                    ],
-                    "weather": {
-                      "temp": 282.44,
-                      "wind_speed": 1.84,
-                      "wind_deg": 316,
-                      "dew_point": 275.99
-                    },
-                    "road": {
-                      "state": 1,
-                      "temp": 293.85
-                    },
-                    "alerts": [
-                    ]
-                  }
-                ]
-                """;
+    void mapToObjects() throws IOException {
+        final String jsonResponse = IOUtils.resourceToString("/responses/valid/road-risk.json", StandardCharsets.UTF_8);
 
         final List<RoadRiskModel> roadRiskRecords = new ObjectMapper().reader().forType(new TypeReference<List<RoadRiskModel>>() {
         }).readValue(jsonResponse);
         assertNotNull(roadRiskRecords);
-
     }
 }

@@ -24,12 +24,14 @@ package com.github.prominence.openweathermap.api.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -39,53 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CurrentWeatherResponseMapperTest {
 
     @Test
-    public void mapToWeatherOfficialJsonExample() throws JsonProcessingException {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": -122.08,
-                    "lat": 37.39
-                  },
-                  "weather": [
-                    {
-                      "id": 800,
-                      "main": "Clear",
-                      "description": "clear sky",
-                      "icon": "01d"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 282.55,
-                    "feels_like": 281.86,
-                    "temp_min": 280.37,
-                    "temp_max": 284.26,
-                    "pressure": 1023,
-                    "humidity": 100
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 1.5,
-                    "deg": 350
-                  },
-                  "clouds": {
-                    "all": 1
-                  },
-                  "dt": 1560350645,
-                  "sys": {
-                    "type": 1,
-                    "id": 5122,
-                    "message": 0.0139,
-                    "country": "US",
-                    "sunrise": 1560343627,
-                    "sunset": 1560396563
-                  },
-                  "timezone": -25200,
-                  "id": 420006353,
-                  "name": "Mountain View",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeatherOfficialJsonExample() throws IOException {
+        final String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-official.json", StandardCharsets.UTF_8);
 
         final Weather weather = deserialize(jsonString);
 
@@ -93,55 +50,8 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     @Test
-    public void mapToWeather() throws JsonProcessingException {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather() throws IOException {
+        final String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
 
         final Weather weather = deserialize(jsonString);
 
@@ -149,108 +59,14 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     @Test
-    public void mapToWeather_withDamagedJSON() {
-        final String jsonString = """
-                {
-                  "coord": "lon"
-                  :
-                  27.5667,
-                  "lat": 53.9
-                },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        assertThrows(MismatchedInputException.class, () -> deserialize(jsonString));
+    public void mapToWeather_withDamagedJSON() throws IOException {
+        final String jsonString = IOUtils.resourceToString("/responses/invalid/current-weather-minsk-invalid.json", StandardCharsets.UTF_8);
+        assertThrows(JsonProcessingException.class, () -> deserialize(jsonString));
     }
 
     @Test
-    public void mapToWeather_withoutDt() throws JsonProcessingException {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather_withoutDt() throws IOException {
+        final String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-dt.json", StandardCharsets.UTF_8);
 
         final Weather weather = deserialize(jsonString);
 
@@ -259,55 +75,8 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     @Test
-    public void mapToWeather_withTemperatureVariations() throws JsonProcessingException {
-        String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather_withTemperatureVariations() throws IOException {
+        String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
         Weather weather = deserialize(jsonString);
 
         assertNotNull(weather);
@@ -317,53 +86,7 @@ public class CurrentWeatherResponseMapperTest {
         assertEquals(new BigDecimal("2"), weather.getTemperature().getMax().asKelvin());
 
         // without feels like node
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-feelslike.json", StandardCharsets.UTF_8);
         weather = deserialize(jsonString);
 
         assertNotNull(weather);
@@ -373,53 +96,7 @@ public class CurrentWeatherResponseMapperTest {
         assertNotNull(weather.getTemperature().getMax());
 
         // without min temperature node
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-mintemp.json", StandardCharsets.UTF_8);
         weather = deserialize(jsonString);
 
         assertNotNull(weather);
@@ -429,53 +106,7 @@ public class CurrentWeatherResponseMapperTest {
         assertNotNull(weather.getTemperature().getMax());
 
         // without max temperature node
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-maxtemp.json", StandardCharsets.UTF_8);
         weather = deserialize(jsonString);
 
         assertNotNull(weather);
@@ -486,55 +117,8 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     @Test
-    public void mapToWeather_withWindVariations() throws JsonProcessingException {
-        String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather_withWindVariations() throws IOException {
+        String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
 
         Weather weather = deserialize(jsonString);
 
@@ -544,53 +128,7 @@ public class CurrentWeatherResponseMapperTest {
         assertNull(weather.getWind().getGust());
 
         // without degrees
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-wind-direction.json", StandardCharsets.UTF_8);
         weather = deserialize(jsonString);
 
         assertNotNull(weather);
@@ -598,55 +136,7 @@ public class CurrentWeatherResponseMapperTest {
         assertNull(weather.getWind().getDirectionDegrees());
 
         // with gust
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250,
-                    "gust": 2.44
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-with-gust.json", StandardCharsets.UTF_8);
         weather = deserialize(jsonString);
 
         assertNotNull(weather);
@@ -656,152 +146,10 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     @Test
-    public void mapToWeather_withRainVariations() throws JsonProcessingException {
-        final String jsonWith1Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "rain": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWith3Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "rain": {
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWithBoth = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "rain": {
-                    "1h": 0.1,
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather_withRainVariations() throws IOException {
+        final String jsonWith1Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-3h.json", StandardCharsets.UTF_8);;
+        final String jsonWith3Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-1h.json", StandardCharsets.UTF_8);;
+        final String jsonWithBoth = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
 
         Weather weather = deserialize(jsonWith1Hr);
 
@@ -815,169 +163,27 @@ public class CurrentWeatherResponseMapperTest {
         // with 3h level only
         assertNotNull(weather.getRain());
         assertNull(weather.getRain().getOneHourLevel());
-        assertEquals(new BigDecimal("0.3"), weather.getRain().getThreeHourLevel());
+        assertEquals(new BigDecimal("0.6"), weather.getRain().getThreeHourLevel());
 
         weather = deserialize(jsonWithBoth);
 
         // with both levels
         assertNotNull(weather.getRain());
         assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
-        assertEquals(new BigDecimal("0.3"), weather.getRain().getThreeHourLevel());
+        assertEquals(new BigDecimal("0.6"), weather.getRain().getThreeHourLevel());
     }
 
     @Test
-    public void mapToWeather_withSnowVariations() throws JsonProcessingException {
-        final String jsonWith1Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWith3Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWithBoth = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1,
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather_withSnowVariations() throws IOException {
+        final String jsonWith1Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-3h.json", StandardCharsets.UTF_8);;
+        final String jsonWith3Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-1h.json", StandardCharsets.UTF_8);;
+        final String jsonWithBoth = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
 
         Weather weather = deserialize(jsonWith1Hr);
 
         // with 1h level only
         assertNotNull(weather.getSnow());
-        assertEquals(new BigDecimal("0.1"), weather.getSnow().getOneHourLevel());
+        assertEquals(new BigDecimal("0.2"), weather.getSnow().getOneHourLevel());
         assertNull(weather.getSnow().getThreeHourLevel());
 
         weather = deserialize(jsonWith3Hr);
@@ -985,115 +191,26 @@ public class CurrentWeatherResponseMapperTest {
         // with 3h level only
         assertNotNull(weather.getSnow());
         assertNull(weather.getSnow().getOneHourLevel());
-        assertEquals(new BigDecimal("0.3"), weather.getSnow().getThreeHourLevel());
+        assertEquals(new BigDecimal("0.7"), weather.getSnow().getThreeHourLevel());
 
         weather = deserialize(jsonWithBoth);
 
         // with both levels
         assertNotNull(weather.getSnow());
-        assertEquals(new BigDecimal("0.1"), weather.getSnow().getOneHourLevel());
-        assertEquals(new BigDecimal("0.3"), weather.getSnow().getThreeHourLevel());
+        assertEquals(new BigDecimal("0.2"), weather.getSnow().getOneHourLevel());
+        assertEquals(new BigDecimal("0.7"), weather.getSnow().getThreeHourLevel());
     }
 
     @Test
-    public void mapToWeather_withLocationVariations() throws JsonProcessingException {
-        String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void mapToWeather_withLocationVariations() throws IOException {
+        String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
         Weather weather = deserialize(jsonString);
 
         assertNotNull(weather.getLocation().getCoordinates());
         assertNotNull(weather.getLocation().getCountryCode());
 
         // without coordinates and country code
-        jsonString = """
-                {
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-coord-and-country.json", StandardCharsets.UTF_8);
         weather = deserialize(jsonString);
         assertNull(weather.getLocation().getCoordinates());
         assertNull(weather.getLocation().getCountryCode());

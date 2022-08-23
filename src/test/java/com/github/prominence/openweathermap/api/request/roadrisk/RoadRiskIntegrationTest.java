@@ -28,75 +28,32 @@ import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.core.net.MockHttpClient;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
 
 public class RoadRiskIntegrationTest extends ApiTest {
     private static final MockHttpClient httpClient = new MockHttpClient();
 
     @Test
-    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() {
+    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() throws IOException {
         final TrackPoint trackPoint = new TrackPoint(5, 5);
         trackPoint.setRequestedTime(OffsetDateTime.now(ZoneOffset.UTC));
 
-        final String responseOutput = """
-                [
-                  {
-                    "dt": 1602702000,
-                    "coord": [
-                      7.27,
-                      44.04
-                    ],
-                    "weather": {
-                      "temp": 278.44,
-                      "wind_speed": 2.27,
-                      "wind_deg": 7,
-                      "precipitation_intensity": 0.38,
-                      "dew_point": 276.13
-                    },
-                    "road": {
-                      "state": 2,
-                      "temp": 293.85
-                    },
-                    "alerts": [
-                      {
-                        "sender_name": "METEO-FRANCE",
-                        "event": "Moderate thunderstorm warning",
-                        "event_level": 2
-                      }
-                    ]
-                  },
-                  {
-                    "dt": 1602702400,
-                    "coord": [
-                      7.37,
-                      45.04
-                    ],
-                    "weather": {
-                      "temp": 282.44,
-                      "wind_speed": 1.84,
-                      "wind_deg": 316,
-                      "dew_point": 275.99
-                    },
-                    "road": {
-                      "state": 1,
-                      "temp": 293.85
-                    },
-                    "alerts": [
-                    ]
-                  }
-                ]
-                """;
+        final String responseOutput = IOUtils.resourceToString("/responses/valid/road-risk.json", StandardCharsets.UTF_8);
         httpClient.setResponseOutput(responseOutput);
         final OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder()
                 .httpClient(httpClient).apiKey("").build());
 
         final List<RoadRisk> roadRiskRecords = client
                 .roadRisk()
-                .byTrackPoints(List.of(trackPoint))
+                .byTrackPoints(Collections.singletonList(trackPoint))
                 .retrieve()
                 .asJava();
 

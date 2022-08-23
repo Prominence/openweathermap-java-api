@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -66,7 +66,7 @@ public class DailyUnitTest {
     public void getWeatherState() {
         final Daily daily = new Daily();
         final WeatherCondition weatherState = WeatherCondition.getById(800);
-        daily.setWeatherStates(List.of(weatherState));
+        daily.setWeatherStates(Collections.singletonList(weatherState));
 
         assertEquals(weatherState, daily.getWeatherStates().get(0));
     }

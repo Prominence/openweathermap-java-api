@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -68,7 +68,7 @@ public class CurrentUnitTest {
     public void getWeatherState() {
         final BaseMeasurement current = new BaseMeasurement();
         final WeatherCondition weatherState = WeatherCondition.getById(800);
-        current.setWeatherStates(List.of(weatherState));
+        current.setWeatherStates(Collections.singletonList(weatherState));
 
         assertEquals(weatherState, current.getWeatherStates().get(0));
     }
