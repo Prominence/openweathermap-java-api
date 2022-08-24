@@ -22,14 +22,20 @@
 
 package com.github.prominence.openweathermap.api.request.roadrisk;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
-import com.github.prominence.openweathermap.api.core.net.MockHttpClient;
+import com.github.prominence.openweathermap.api.core.net.HttpClient;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
+import com.github.prominence.openweathermap.api.request.roadrisk.model.RoadRiskRequestPayload;
 import org.apache.commons.io.IOUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -38,26 +44,53 @@ import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class RoadRiskIntegrationTest extends ApiTest {
-    private static final MockHttpClient httpClient = new MockHttpClient();
+    @Mock
+    private HttpClient httpClient;
+    private AutoCloseable openMocks;
+
+    @BeforeEach
+    void setUp() {
+        openMocks = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        if (openMocks != null) {
+            openMocks.close();
+        }
+    }
 
     @Test
-    public void whenGetSingleCurrentWeatherByCoordinateRequestAsJava_thenReturnNotNull() throws IOException {
+    public void testAsJavaTerminator_ShouldReturnRoadRiskData_WhenCalledWithValidRoadRiskRequest() throws IOException {
+        //given
         final TrackPoint trackPoint = new TrackPoint(5, 5);
         trackPoint.setRequestedTime(OffsetDateTime.now(ZoneOffset.UTC));
+        final String body = new ObjectMapper().writeValueAsString(new RoadRiskRequestPayload(Collections.singletonList(trackPoint)));
 
         final String responseOutput = IOUtils.resourceToString("/responses/valid/road-risk.json", StandardCharsets.UTF_8);
-        httpClient.setResponseOutput(responseOutput);
+        when(httpClient.executePostRequest(anyString(), eq(body))).thenReturn(responseOutput);
         final OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder()
                 .httpClient(httpClient).apiKey("").build());
 
+        //when
         final List<RoadRisk> roadRiskRecords = client
                 .roadRisk()
                 .byTrackPoints(Collections.singletonList(trackPoint))
                 .retrieve()
                 .asJava();
 
-        System.out.println(roadRiskRecords);
+        //then
+        verify(httpClient).executePostRequest(anyString(), eq(body));
+        assertNotNull(roadRiskRecords);
+        assertEquals(2, roadRiskRecords.size());
     }
 
 }

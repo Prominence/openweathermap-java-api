@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
@@ -37,26 +36,29 @@ import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThre
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.free.Precipitation;
 import com.github.prominence.openweathermap.api.model.forecast.free.Weather;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FiveDayThreeHourStepForecastResponseMapperTest {
 
     @Test
-    void mapToForecast() throws IOException {
-        final String jsonResponse = IOUtils.resourceToString("/responses/valid/5days3hours.json", StandardCharsets.UTF_8);
+    void testDeserialize_ShouldSucceed_WhenCalledWithFullyPopulatedJson() throws IOException {
+        //given
+        final String resource = "/responses/valid/5days3hours.json";
 
-        final FiveDaysThreeHoursForecast forecast = new ObjectMapper().readValue(jsonResponse, FiveDaysThreeHoursForecastModel.class);
+        //when
+        final FiveDaysThreeHoursForecast forecast = loadDeserializedResourceAs(resource, FiveDaysThreeHoursForecastModel.class);
+
+        //then
         assertNotNull(forecast);
 
         final LocationExtended location = forecast.getLocation();

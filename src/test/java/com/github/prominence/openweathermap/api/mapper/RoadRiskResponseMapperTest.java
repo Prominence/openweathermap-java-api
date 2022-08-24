@@ -22,26 +22,27 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAsList;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class RoadRiskResponseMapperTest {
 
     @Test
-    void mapToObjects() throws IOException {
-        final String jsonResponse = IOUtils.resourceToString("/responses/valid/road-risk.json", StandardCharsets.UTF_8);
+    void testDeserialize_ShouldSucceed_WhenCalledWithOfficialExample() throws IOException {
+        //given
+        final String resource = "/responses/valid/road-risk.json";
 
-        final List<RoadRiskModel> roadRiskRecords = new ObjectMapper().reader().forType(new TypeReference<List<RoadRiskModel>>() {
-        }).readValue(jsonResponse);
+        //when
+        final List<RoadRiskModel> roadRiskRecords = loadDeserializedResourceAsList(resource, RoadRiskModel.class);
+
+        //then
         assertNotNull(roadRiskRecords);
+        //TODO: verify more fields
     }
 }

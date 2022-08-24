@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.exception.WeatherParseException;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 import java.io.IOException;
@@ -85,7 +86,7 @@ public abstract class GenericListRequestTerminator<T, I extends T> {
             final CollectionType listType = objectReader.getTypeFactory().constructCollectionType(ArrayList.class, getInnerType());
             return objectReader.forType(listType).readValue(json);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot parse Weather response", e);
+            throw new WeatherParseException("Cannot parse Weather response", e);
         }
     }
 }

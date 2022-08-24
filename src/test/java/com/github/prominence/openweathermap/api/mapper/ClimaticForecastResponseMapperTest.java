@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
@@ -35,23 +34,26 @@ import com.github.prominence.openweathermap.api.model.forecast.climatic.Temperat
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.Weather;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ClimaticForecastResponseMapperTest {
 
     @Test
-    public void mapToForecast() throws IOException {
-        final String jsonResponse = IOUtils.resourceToString("/responses/valid/climatic.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldSucceed_WhenCalledWithFullyPopulatedJson() throws IOException {
+        //given
+        final String resource = "/responses/valid/climatic.json";
 
-        final ThirtyDaysDailyForecast forecast = new ObjectMapper().readValue(jsonResponse, ThirtyDaysDailyForecastModel.class);
+        //when
+        final ThirtyDaysDailyForecast forecast = loadDeserializedResourceAs(resource, ThirtyDaysDailyForecastModel.class);
+
+        //then
         assertNotNull(forecast);
 
         final Location location = forecast.getLocation();

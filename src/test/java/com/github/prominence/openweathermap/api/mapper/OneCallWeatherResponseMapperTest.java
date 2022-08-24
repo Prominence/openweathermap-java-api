@@ -22,14 +22,12 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -37,13 +35,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class OneCallWeatherResponseMapperTest {
 
     @Test
-    void mapToCurrent() throws IOException {
-        String jsonResponse = IOUtils.resourceToString("/responses/valid/onecall-current.json", StandardCharsets.UTF_8);
+    void testDeserialize_ShouldSucceed_WhenCalledWithOfficialExample() throws IOException {
+        //given
+        final String resource = "/responses/valid/onecall-current.json";
 
-        final CurrentWeather weatherData = new ObjectMapper().readValue(jsonResponse, CurrentWeather.class);
+        //when
+        final CurrentWeather weatherData = loadDeserializedResourceAs(resource, CurrentWeather.class);
 
+        //then
         assertNotNull(weatherData);
         assertNotEquals(0, weatherData.getDailyList().size());
         assertEquals(1, weatherData.getAlerts().get(0).getTags().size());
+        //TODO: verify more fields
     }
 }

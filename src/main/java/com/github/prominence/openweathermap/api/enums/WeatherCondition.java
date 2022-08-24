@@ -280,7 +280,7 @@ public enum WeatherCondition {
     private final String description;
     private final String iconId;
 
-    private WeatherCondition(int id, String name, String description, String iconId) {
+    WeatherCondition(int id, String name, String description, String iconId) {
         this.id = id;
         this.name = name;
         this.description = description;

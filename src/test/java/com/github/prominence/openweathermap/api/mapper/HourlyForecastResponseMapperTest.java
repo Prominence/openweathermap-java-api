@@ -22,7 +22,6 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
@@ -36,26 +35,29 @@ import com.github.prominence.openweathermap.api.model.Wind;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.Weather;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class HourlyForecastResponseMapperTest {
 
     @Test
-    void forecastMappingTestWithOfficialExample() throws IOException {
-        final String jsonResponse = IOUtils.resourceToString("/responses/valid/hourly-forecast.json", StandardCharsets.UTF_8);
+    void testDeserialize_ShouldSucceed_WhenCalledWithOfficialExample() throws IOException {
+        //given
+        final String resource = "/responses/valid/hourly-forecast.json";
 
-        final HourlyForecast hourlyForecast = new ObjectMapper().readValue(jsonResponse, HourlyForecastModel.class);
+        //when
+        final HourlyForecast hourlyForecast = loadDeserializedResourceAs(resource, HourlyForecastModel.class);
+
+        //then
         assertNotNull(hourlyForecast);
 
         final Location location = hourlyForecast.getLocation();

@@ -23,16 +23,13 @@
 package com.github.prominence.openweathermap.api.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -41,182 +38,250 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class CurrentWeatherResponseMapperTest {
 
     @Test
-    public void mapToWeatherOfficialJsonExample() throws IOException {
-        final String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-official.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldSucceed_WhenCalledWithOfficialJsonExample() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-official.json";
 
-        final Weather weather = deserialize(jsonString);
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
 
+        //then
         assertNotNull(weather);
     }
 
     @Test
-    public void mapToWeather() throws IOException {
-        final String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldSucceed_WhenCalledWithFullyPopulatedExample() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk.json";
 
-        final Weather weather = deserialize(jsonString);
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
 
+        //then
         assertNotNull(weather);
+
+        assertLatitudeSet(weather);
+        assertLongitudeSet(weather);
+        assertCountryCodeSet(weather);
+
+        assertTemperatureSet(weather);
+        assertFeelsLikeSet(weather);
+        assertMinTempSet(weather);
+        assertMaxTempSet(weather);
+
+        assertWindSpeedSet(weather);
+        assertWindDirectionSet(weather);
+        assertWindSpeedGustSet(weather);
+
+        assert1HrRainSet(weather);
+        assert3HrRainSet(weather);
+        assert1HrSnowSet(weather);
+        assert3HrSnowSet(weather);
     }
 
     @Test
-    public void mapToWeather_withDamagedJSON() throws IOException {
-        final String jsonString = IOUtils.resourceToString("/responses/invalid/current-weather-minsk-invalid.json", StandardCharsets.UTF_8);
-        assertThrows(JsonProcessingException.class, () -> deserialize(jsonString));
+    public void testDeserialize_ShouldThrowException_WhenCalledWithInvalidJson() {
+        //given
+        final String resource = "/responses/invalid/current-weather-minsk-invalid.json";
+
+        //when
+        assertThrows(JsonProcessingException.class, () -> loadDeserializedResourceAs(resource, WeatherModel.class));
+
+        //then + exception
     }
 
     @Test
-    public void mapToWeather_withoutDt() throws IOException {
-        final String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-dt.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldLeaveOutForecastTime_WhenCalledWithJsonWithoutDt() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-dt.json";
 
-        final Weather weather = deserialize(jsonString);
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
 
+        //then
         assertNotNull(weather);
         assertNull(weather.getForecastTime());
     }
 
+
     @Test
-    public void mapToWeather_withTemperatureVariations() throws IOException {
-        String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
-        Weather weather = deserialize(jsonString);
+    public void testDeserialize_ShouldLeaveOutFeelsLike_WhenCalledWithJsonWithoutFeelsLike() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-feelslike.json";
 
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+
+        //then
         assertNotNull(weather);
-        assertEquals(new BigDecimal("2"), weather.getTemperature().getTemperature().asKelvin());
-        assertEquals(new BigDecimal("0"), weather.getTemperature().getFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("2"), weather.getTemperature().getMin().asKelvin());
-        assertEquals(new BigDecimal("2"), weather.getTemperature().getMax().asKelvin());
-
-        // without feels like node
-        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-feelslike.json", StandardCharsets.UTF_8);
-        weather = deserialize(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getTemperature());
+        assertTemperatureSet(weather);
         assertNull(weather.getTemperature().getFeelsLike());
-        assertNotNull(weather.getTemperature().getMin());
-        assertNotNull(weather.getTemperature().getMax());
+        assertMinTempSet(weather);
+        assertMaxTempSet(weather);
+    }
 
-        // without min temperature node
-        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-mintemp.json", StandardCharsets.UTF_8);
-        weather = deserialize(jsonString);
+    @Test
+    public void testDeserialize_ShouldLeaveOutMinTemp_WhenCalledWithJsonWithoutMinTemp() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-mintemp.json";
 
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+
+        //then
         assertNotNull(weather);
-        assertNotNull(weather.getTemperature());
-        assertNotNull(weather.getTemperature().getFeelsLike());
+        assertTemperatureSet(weather);
+        assertFeelsLikeSet(weather);
         assertNull(weather.getTemperature().getMin());
-        assertNotNull(weather.getTemperature().getMax());
+        assertMaxTempSet(weather);
+    }
 
-        // without max temperature node
-        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-maxtemp.json", StandardCharsets.UTF_8);
-        weather = deserialize(jsonString);
+    @Test
+    public void testDeserialize_ShouldLeaveOutMaxTemp_WhenCalledWithJsonWithoutMaxTemp() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-maxtemp.json";
 
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+
+        //then
         assertNotNull(weather);
-        assertNotNull(weather.getTemperature());
-        assertNotNull(weather.getTemperature().getFeelsLike());
-        assertNotNull(weather.getTemperature().getMin());
+        assertTemperatureSet(weather);
+        assertFeelsLikeSet(weather);
+        assertMinTempSet(weather);
         assertNull(weather.getTemperature().getMax());
     }
 
     @Test
-    public void mapToWeather_withWindVariations() throws IOException {
-        String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldLeaveOutWindDirection_WhenCalledWithJsonWithoutWindDirection() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-wind-direction.json";
 
-        Weather weather = deserialize(jsonString);
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
 
+        //then
         assertNotNull(weather);
-        assertEquals(new BigDecimal("2.00"), weather.getWind().getSpeed().asMetersPerSecond());
-        assertEquals(250, weather.getWind().getDirectionDegrees());
-        assertNull(weather.getWind().getGust());
-
-        // without degrees
-        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-wind-direction.json", StandardCharsets.UTF_8);
-        weather = deserialize(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getWind());
+        assertWindSpeedSet(weather);
         assertNull(weather.getWind().getDirectionDegrees());
-
-        // with gust
-        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-with-gust.json", StandardCharsets.UTF_8);
-        weather = deserialize(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getWind());
-        assertNotNull(weather.getWind().getDirectionDegrees());
-        assertEquals(new BigDecimal("2.44"), weather.getWind().getGust().asMetersPerSecond());
+        assertWindSpeedGustSet(weather);
     }
 
     @Test
-    public void mapToWeather_withRainVariations() throws IOException {
-        final String jsonWith1Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-3h.json", StandardCharsets.UTF_8);;
-        final String jsonWith3Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-1h.json", StandardCharsets.UTF_8);;
-        final String jsonWithBoth = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldLeaveOutWindSpeedGust_WhenCalledWithJsonWithoutWindSpeedGust() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-gust.json";
 
-        Weather weather = deserialize(jsonWith1Hr);
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
 
-        // with 1h level only
-        assertNotNull(weather.getRain());
-        assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
-        assertNull(weather.getRain().getThreeHourLevel());
+        //then
+        assertNotNull(weather);
+        assertWindSpeedSet(weather);
+        assertWindDirectionSet(weather);
+        assertNull(weather.getWind().getGust());
+    }
 
-        weather = deserialize(jsonWith3Hr);
+    @Test
+    public void testDeserialize_ShouldLeaveOut1HrPrecipitation_WhenCalledWithJsonWithout1HrPrecipitation() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-1h.json";
 
-        // with 3h level only
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+
+        //then
         assertNotNull(weather.getRain());
         assertNull(weather.getRain().getOneHourLevel());
-        assertEquals(new BigDecimal("0.6"), weather.getRain().getThreeHourLevel());
-
-        weather = deserialize(jsonWithBoth);
-
-        // with both levels
-        assertNotNull(weather.getRain());
-        assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
-        assertEquals(new BigDecimal("0.6"), weather.getRain().getThreeHourLevel());
-    }
-
-    @Test
-    public void mapToWeather_withSnowVariations() throws IOException {
-        final String jsonWith1Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-3h.json", StandardCharsets.UTF_8);;
-        final String jsonWith3Hr = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-1h.json", StandardCharsets.UTF_8);;
-        final String jsonWithBoth = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
-
-        Weather weather = deserialize(jsonWith1Hr);
-
-        // with 1h level only
-        assertNotNull(weather.getSnow());
-        assertEquals(new BigDecimal("0.2"), weather.getSnow().getOneHourLevel());
-        assertNull(weather.getSnow().getThreeHourLevel());
-
-        weather = deserialize(jsonWith3Hr);
-
-        // with 3h level only
-        assertNotNull(weather.getSnow());
+        assert3HrRainSet(weather);
         assertNull(weather.getSnow().getOneHourLevel());
-        assertEquals(new BigDecimal("0.7"), weather.getSnow().getThreeHourLevel());
-
-        weather = deserialize(jsonWithBoth);
-
-        // with both levels
-        assertNotNull(weather.getSnow());
-        assertEquals(new BigDecimal("0.2"), weather.getSnow().getOneHourLevel());
-        assertEquals(new BigDecimal("0.7"), weather.getSnow().getThreeHourLevel());
+        assert3HrSnowSet(weather);
     }
 
     @Test
-    public void mapToWeather_withLocationVariations() throws IOException {
-        String jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk.json", StandardCharsets.UTF_8);
-        Weather weather = deserialize(jsonString);
+    public void testDeserialize_ShouldLeaveOut3HrPrecipitation_WhenCalledWithJsonWithout3HrPrecipitation() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-3h.json";
 
-        assertNotNull(weather.getLocation().getCoordinates());
-        assertNotNull(weather.getLocation().getCountryCode());
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
 
-        // without coordinates and country code
-        jsonString = IOUtils.resourceToString("/responses/valid/current-weather-minsk-missing-coord-and-country.json", StandardCharsets.UTF_8);
-        weather = deserialize(jsonString);
+        //then
+        assertNotNull(weather.getRain());
+        assert1HrRainSet(weather);
+        assertNull(weather.getRain().getThreeHourLevel());
+        assert1HrSnowSet(weather);
+        assertNull(weather.getSnow().getThreeHourLevel());
+    }
+
+    @Test
+    public void testDeserialize_ShouldLeaveOutCoordinatesAndCountry_WhenCalledWithJsonWithoutCoordinatesAndCountryCode()
+            throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-coord-and-country.json";
+
+        //when
+        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+
+        //then
         assertNull(weather.getLocation().getCoordinates());
         assertNull(weather.getLocation().getCountryCode());
     }
 
-    private static Weather deserialize(final String jsonString) throws JsonProcessingException {
-        return new ObjectMapper().readValue(jsonString, WeatherModel.class);
+    private void assertCountryCodeSet(Weather weather) {
+        assertEquals("BY", weather.getLocation().getCountryCode());
+    }
+
+    private void assertLongitudeSet(Weather weather) {
+        assertEquals(27.5667D, weather.getLocation().getCoordinates().getLongitude());
+    }
+
+    private void assertLatitudeSet(Weather weather) {
+        assertEquals(53.9D, weather.getLocation().getCoordinates().getLatitude());
+    }
+
+
+    private void assertMaxTempSet(Weather weather) {
+        assertEquals(new BigDecimal("2"), weather.getTemperature().getMax().asKelvin());
+    }
+
+    private void assertMinTempSet(Weather weather) {
+        assertEquals(new BigDecimal("2"), weather.getTemperature().getMin().asKelvin());
+    }
+
+    private void assertFeelsLikeSet(Weather weather) {
+        assertEquals(new BigDecimal("0"), weather.getTemperature().getFeelsLike().asKelvin());
+    }
+
+    private void assertTemperatureSet(Weather weather) {
+        assertEquals(new BigDecimal("2"), weather.getTemperature().getTemperature().asKelvin());
+    }
+
+    private void assertWindSpeedGustSet(Weather weather) {
+        assertEquals(new BigDecimal("2.44"), weather.getWind().getGust().asMetersPerSecond());
+    }
+
+    private void assertWindDirectionSet(Weather weather) {
+        assertEquals(250, weather.getWind().getDirectionDegrees());
+    }
+
+    private void assertWindSpeedSet(Weather weather) {
+        assertEquals(new BigDecimal("2.00"), weather.getWind().getSpeed().asMetersPerSecond());
+    }
+
+    private void assert1HrRainSet(Weather weather) {
+        assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
+    }
+
+    private void assert3HrRainSet(Weather weather) {
+        assertEquals(new BigDecimal("0.6"), weather.getRain().getThreeHourLevel());
+    }
+
+    private void assert1HrSnowSet(Weather weather) {
+        assertEquals(new BigDecimal("0.2"), weather.getSnow().getOneHourLevel());
+    }
+
+    private void assert3HrSnowSet(Weather weather) {
+        assertEquals(new BigDecimal("0.7"), weather.getSnow().getThreeHourLevel());
     }
 }

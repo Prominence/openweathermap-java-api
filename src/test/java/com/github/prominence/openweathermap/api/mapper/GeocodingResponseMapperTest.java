@@ -22,40 +22,43 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAsList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class GeocodingResponseMapperTest {
 
     @Test
-    public void reverseGeocodingResponseMappingTest() throws IOException {
-        String jsonResponse = IOUtils.resourceToString("/responses/valid/geocoding-reverse.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldSucceed_WhenCalledWithValidReverseGeocodingJson() throws IOException {
+        //given
+        final String resource = "/responses/valid/geocoding-reverse.json";
 
-        List<GeocodingModel> geocodingRecords = new ObjectMapper().readerFor(new TypeReference<List<GeocodingModel>>() {
-        }).readValue(jsonResponse);
+        //when
+        List<GeocodingModel> geocodingRecords = loadDeserializedResourceAsList(resource, GeocodingModel.class);
 
+        //then
         assertNotNull(geocodingRecords);
         assertEquals(5, geocodingRecords.size());
     }
 
     @Test
-    public void zipGeocodingInfoResponseMappingTest() throws IOException {
-        String jsonResponse = IOUtils.resourceToString("/responses/valid/geocoding-zipcode.json", StandardCharsets.UTF_8);
+    public void testDeserialize_ShouldSucceed_WhenCalledWithValidZipCodeGeocodingJson() throws IOException {
+        //given
+        final String resource = "/responses/valid/geocoding-zipcode.json";
 
-        ZipCodeGeocodingModel zipCodeGeocodingRecord = new ObjectMapper().readValue(jsonResponse, ZipCodeGeocodingModel.class);
+        //when
+        ZipCodeGeocodingModel zipCodeGeocodingRecord = loadDeserializedResourceAs(resource, ZipCodeGeocodingModel.class);
 
+        //then
         assertNotNull(zipCodeGeocodingRecord);
         assertEquals("90210", zipCodeGeocodingRecord.getZipCode());
         assertEquals("Beverly Hills", zipCodeGeocodingRecord.getName());

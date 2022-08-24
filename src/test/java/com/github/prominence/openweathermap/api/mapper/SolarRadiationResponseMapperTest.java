@@ -22,31 +22,33 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationEntry;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SolarRadiationResponseMapperTest {
 
+
     @Test
-    void mapToObject() throws IOException {
-        final String jsonResponse = IOUtils.resourceToString("/responses/valid/solar-radiation.json", StandardCharsets.UTF_8);
+    void testDeserialize_ShouldSucceed_WhenCalledWithOfficialExample() throws IOException {
+        //given
+        final String resource = "/responses/valid/solar-radiation.json";
 
-        final SolarRadiation solarRadiation = new ObjectMapper().readValue(jsonResponse, SolarRadiationModel.class);
+        //when
+        final SolarRadiation solarRadiation = loadDeserializedResourceAs(resource, SolarRadiationModel.class);
+
+        //then
         assertNotNull(solarRadiation);
-
         assertEquals(new Coordinates(32.7243, -114.6244), solarRadiation.getCoordinates());
 
         final List<SolarRadiationEntry> records = solarRadiation.getSolarRadiationRecords();
