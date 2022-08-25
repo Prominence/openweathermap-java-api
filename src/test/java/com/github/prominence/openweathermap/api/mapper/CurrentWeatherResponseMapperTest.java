@@ -43,10 +43,11 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-official.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
+        assertNotNull(actual);
+        //TODO: Consider adding more assertions
     }
 
     @Test
@@ -55,28 +56,28 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
+        assertNotNull(actual);
 
-        assertLatitudeSet(weather);
-        assertLongitudeSet(weather);
-        assertCountryCodeSet(weather);
+        assertLatitudeSet(actual);
+        assertLongitudeSet(actual);
+        assertCountryCodeSet(actual);
 
-        assertTemperatureSet(weather);
-        assertFeelsLikeSet(weather);
-        assertMinTempSet(weather);
-        assertMaxTempSet(weather);
+        assertTemperatureSet(actual);
+        assertFeelsLikeSet(actual);
+        assertMinTempSet(actual);
+        assertMaxTempSet(actual);
 
-        assertWindSpeedSet(weather);
-        assertWindDirectionSet(weather);
-        assertWindSpeedGustSet(weather);
+        assertWindSpeedSet(actual);
+        assertWindDirectionSet(actual);
+        assertWindSpeedGustSet(actual);
 
-        assert1HrRainSet(weather);
-        assert3HrRainSet(weather);
-        assert1HrSnowSet(weather);
-        assert3HrSnowSet(weather);
+        assert1HrRainSet(actual);
+        assert3HrRainSet(actual);
+        assert1HrSnowSet(actual);
+        assert3HrSnowSet(actual);
     }
 
     @Test
@@ -96,11 +97,11 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-dt.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
-        assertNull(weather.getForecastTime());
+        assertNotNull(actual);
+        assertNull(actual.getForecastTime());
     }
 
 
@@ -110,14 +111,14 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-feelslike.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
-        assertTemperatureSet(weather);
-        assertNull(weather.getTemperature().getFeelsLike());
-        assertMinTempSet(weather);
-        assertMaxTempSet(weather);
+        assertNotNull(actual);
+        assertTemperatureSet(actual);
+        assertNull(actual.getTemperature().getFeelsLike());
+        assertMinTempSet(actual);
+        assertMaxTempSet(actual);
     }
 
     @Test
@@ -126,14 +127,14 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-mintemp.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
-        assertTemperatureSet(weather);
-        assertFeelsLikeSet(weather);
-        assertNull(weather.getTemperature().getMin());
-        assertMaxTempSet(weather);
+        assertNotNull(actual);
+        assertTemperatureSet(actual);
+        assertFeelsLikeSet(actual);
+        assertNull(actual.getTemperature().getMin());
+        assertMaxTempSet(actual);
     }
 
     @Test
@@ -142,14 +143,14 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-maxtemp.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
-        assertTemperatureSet(weather);
-        assertFeelsLikeSet(weather);
-        assertMinTempSet(weather);
-        assertNull(weather.getTemperature().getMax());
+        assertNotNull(actual);
+        assertTemperatureSet(actual);
+        assertFeelsLikeSet(actual);
+        assertMinTempSet(actual);
+        assertNull(actual.getTemperature().getMax());
     }
 
     @Test
@@ -158,13 +159,13 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-wind-direction.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
-        assertWindSpeedSet(weather);
-        assertNull(weather.getWind().getDirectionDegrees());
-        assertWindSpeedGustSet(weather);
+        assertNotNull(actual);
+        assertWindSpeedSet(actual);
+        assertNull(actual.getWind().getDirectionDegrees());
+        assertWindSpeedGustSet(actual);
     }
 
     @Test
@@ -173,13 +174,13 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-gust.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather);
-        assertWindSpeedSet(weather);
-        assertWindDirectionSet(weather);
-        assertNull(weather.getWind().getGust());
+        assertNotNull(actual);
+        assertWindSpeedSet(actual);
+        assertWindDirectionSet(actual);
+        assertNull(actual.getWind().getGust());
     }
 
     @Test
@@ -188,14 +189,14 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-1h.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather.getRain());
-        assertNull(weather.getRain().getOneHourLevel());
-        assert3HrRainSet(weather);
-        assertNull(weather.getSnow().getOneHourLevel());
-        assert3HrSnowSet(weather);
+        assertNotNull(actual.getRain());
+        assertNull(actual.getRain().getOneHourLevel());
+        assert3HrRainSet(actual);
+        assertNull(actual.getSnow().getOneHourLevel());
+        assert3HrSnowSet(actual);
     }
 
     @Test
@@ -204,14 +205,14 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-3h.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNotNull(weather.getRain());
-        assert1HrRainSet(weather);
-        assertNull(weather.getRain().getThreeHourLevel());
-        assert1HrSnowSet(weather);
-        assertNull(weather.getSnow().getThreeHourLevel());
+        assertNotNull(actual.getRain());
+        assert1HrRainSet(actual);
+        assertNull(actual.getRain().getThreeHourLevel());
+        assert1HrSnowSet(actual);
+        assertNull(actual.getSnow().getThreeHourLevel());
     }
 
     @Test
@@ -221,11 +222,11 @@ public class CurrentWeatherResponseMapperTest {
         final String resource = "/responses/valid/current-weather-minsk-missing-coord-and-country.json";
 
         //when
-        final Weather weather = loadDeserializedResourceAs(resource, WeatherModel.class);
+        final Weather actual = loadDeserializedResourceAs(resource, WeatherModel.class);
 
         //then
-        assertNull(weather.getLocation().getCoordinates());
-        assertNull(weather.getLocation().getCountryCode());
+        assertNull(actual.getLocation().getCoordinates());
+        assertNull(actual.getLocation().getCountryCode());
     }
 
     private void assertCountryCodeSet(Weather weather) {

@@ -54,12 +54,12 @@ class DailyForecastResponseMapperTest {
         final String resource = "/responses/valid/16days-daily.json";
 
         //when
-        final SixteenDaysDailyForecast forecast = loadDeserializedResourceAs(resource, SixteenDaysDailyForecastModel.class);
+        final SixteenDaysDailyForecast actual = loadDeserializedResourceAs(resource, SixteenDaysDailyForecastModel.class);
 
         //then
-        assertNotNull(forecast);
+        assertNotNull(actual);
 
-        final Location location = forecast.getLocation();
+        final Location location = actual.getLocation();
         assertNotNull(location);
         assertEquals(new Coordinates(51.5085, -0.1258), location.getCoordinates());
         assertEquals(2643743, location.getCityId());
@@ -68,8 +68,8 @@ class DailyForecastResponseMapperTest {
         assertEquals(0, location.getPopulation());
         assertEquals(ZoneOffset.ofTotalSeconds(3600), location.getTimeZone());
 
-        assertEquals(1, forecast.getWeatherForecasts().size());
-        final Weather weatherForecast = forecast.getWeatherForecasts().get(0);
+        assertEquals(1, actual.getWeatherForecasts().size());
+        final Weather weatherForecast = actual.getWeatherForecasts().get(0);
         assertEquals(TestMappingUtils.parseDateTime(1568977200), weatherForecast.getForecastTime());
         // TODO: Does the API provide the sunrise and sunset info??? It is not officially described in the API but present in the example.
         assertEquals(TestMappingUtils.parseDateTime(1568958164), weatherForecast.getSunriseTime());

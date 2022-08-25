@@ -39,10 +39,10 @@ class RoadRiskResponseMapperTest {
         final String resource = "/responses/valid/road-risk.json";
 
         //when
-        final List<RoadRiskModel> roadRiskRecords = loadDeserializedResourceAsList(resource, RoadRiskModel.class);
+        final List<RoadRiskModel> actual = loadDeserializedResourceAsList(resource, RoadRiskModel.class);
 
         //then
-        assertNotNull(roadRiskRecords);
+        assertNotNull(actual);
         //TODO: verify more fields
     }
 }

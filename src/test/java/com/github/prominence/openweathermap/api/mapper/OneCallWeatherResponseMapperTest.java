@@ -40,12 +40,12 @@ class OneCallWeatherResponseMapperTest {
         final String resource = "/responses/valid/onecall-current.json";
 
         //when
-        final CurrentWeather weatherData = loadDeserializedResourceAs(resource, CurrentWeather.class);
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeather.class);
 
         //then
-        assertNotNull(weatherData);
-        assertNotEquals(0, weatherData.getDailyList().size());
-        assertEquals(1, weatherData.getAlerts().get(0).getTags().size());
+        assertNotNull(actual);
+        assertNotEquals(0, actual.getDailyList().size());
+        assertEquals(1, actual.getAlerts().get(0).getTags().size());
         //TODO: verify more fields
     }
 }

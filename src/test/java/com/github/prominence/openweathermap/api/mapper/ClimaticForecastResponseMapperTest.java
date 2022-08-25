@@ -51,20 +51,20 @@ class ClimaticForecastResponseMapperTest {
         final String resource = "/responses/valid/climatic.json";
 
         //when
-        final ThirtyDaysDailyForecast forecast = loadDeserializedResourceAs(resource, ThirtyDaysDailyForecastModel.class);
+        final ThirtyDaysDailyForecast actual = loadDeserializedResourceAs(resource, ThirtyDaysDailyForecastModel.class);
 
         //then
-        assertNotNull(forecast);
+        assertNotNull(actual);
 
-        final Location location = forecast.getLocation();
+        final Location location = actual.getLocation();
         assertNotNull(location);
         assertEquals(new Coordinates(51.5073, -0.1277), location.getCoordinates());
         assertEquals(2643743, location.getCityId());
         assertEquals("London", location.getCityName());
         assertEquals("GB", location.getCountryCode());
 
-        assertEquals(1, forecast.getWeatherForecasts().size());
-        final Weather weatherForecast = forecast.getWeatherForecasts().get(0);
+        assertEquals(1, actual.getWeatherForecasts().size());
+        final Weather weatherForecast = actual.getWeatherForecasts().get(0);
         assertEquals(TestMappingUtils.parseDateTime(1594382400), weatherForecast.getForecastTime());
         assertEquals(TestMappingUtils.parseDateTime(1594353335), weatherForecast.getSunriseTime());
         assertEquals(TestMappingUtils.parseDateTime(1594412149), weatherForecast.getSunsetTime());

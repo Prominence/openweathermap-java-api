@@ -56,12 +56,12 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         final String resource = "/responses/valid/5days3hours.json";
 
         //when
-        final FiveDaysThreeHoursForecast forecast = loadDeserializedResourceAs(resource, FiveDaysThreeHoursForecastModel.class);
+        final FiveDaysThreeHoursForecast actual = loadDeserializedResourceAs(resource, FiveDaysThreeHoursForecastModel.class);
 
         //then
-        assertNotNull(forecast);
+        assertNotNull(actual);
 
-        final LocationExtended location = forecast.getLocation();
+        final LocationExtended location = actual.getLocation();
         assertNotNull(location);
         assertEquals(new Coordinates(51.5073, -0.1277), location.getCoordinates());
         assertEquals(2643743, location.getCityId());
@@ -73,7 +73,7 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         assertEquals(ZoneOffset.ofTotalSeconds(0), location.getTimeZone());
 
 
-        final List<Weather> weatherForecastList = forecast.getWeatherForecasts();
+        final List<Weather> weatherForecastList = actual.getWeatherForecasts();
         assertEquals(2, weatherForecastList.size());
 
         final Weather weatherForecast = weatherForecastList.get(0);

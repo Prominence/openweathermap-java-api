@@ -55,12 +55,12 @@ class HourlyForecastResponseMapperTest {
         final String resource = "/responses/valid/hourly-forecast.json";
 
         //when
-        final HourlyForecast hourlyForecast = loadDeserializedResourceAs(resource, HourlyForecastModel.class);
+        final HourlyForecast actual = loadDeserializedResourceAs(resource, HourlyForecastModel.class);
 
         //then
-        assertNotNull(hourlyForecast);
+        assertNotNull(actual);
 
-        final Location location = hourlyForecast.getLocation();
+        final Location location = actual.getLocation();
         assertEquals(2643743, location.getCityId());
         assertEquals("London", location.getCityName());
         assertEquals(new Coordinates(51.5085, -0.1258), location.getCoordinates());
@@ -69,7 +69,7 @@ class HourlyForecastResponseMapperTest {
         assertEquals(OffsetDateTime.ofInstant(Instant.ofEpochSecond(1568958164), ZoneOffset.UTC), location.getSunriseTime());
         assertEquals(OffsetDateTime.ofInstant(Instant.ofEpochSecond(1569002733), ZoneOffset.UTC), location.getSunsetTime());
 
-        final Weather weatherForecast = hourlyForecast.getWeatherForecasts().get(0);
+        final Weather weatherForecast = actual.getWeatherForecasts().get(0);
         assertEquals(OffsetDateTime.ofInstant(Instant.ofEpochSecond(1596632400), ZoneOffset.UTC), weatherForecast.getForecastTime());
         assertEquals(DayTime.NIGHT, weatherForecast.getPartOfDay());
         assertEquals(new BigDecimal("10000.00"), weatherForecast.getVisibility().asMeters());

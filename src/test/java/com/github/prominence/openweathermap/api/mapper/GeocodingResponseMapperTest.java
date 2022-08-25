@@ -43,11 +43,11 @@ class GeocodingResponseMapperTest {
         final String resource = "/responses/valid/geocoding-reverse.json";
 
         //when
-        List<GeocodingModel> geocodingRecords = loadDeserializedResourceAsList(resource, GeocodingModel.class);
+        List<GeocodingModel> actual = loadDeserializedResourceAsList(resource, GeocodingModel.class);
 
         //then
-        assertNotNull(geocodingRecords);
-        assertEquals(5, geocodingRecords.size());
+        assertNotNull(actual);
+        assertEquals(5, actual.size());
     }
 
     @Test
@@ -56,13 +56,13 @@ class GeocodingResponseMapperTest {
         final String resource = "/responses/valid/geocoding-zipcode.json";
 
         //when
-        ZipCodeGeocodingModel zipCodeGeocodingRecord = loadDeserializedResourceAs(resource, ZipCodeGeocodingModel.class);
+        ZipCodeGeocodingModel actual = loadDeserializedResourceAs(resource, ZipCodeGeocodingModel.class);
 
         //then
-        assertNotNull(zipCodeGeocodingRecord);
-        assertEquals("90210", zipCodeGeocodingRecord.getZipCode());
-        assertEquals("Beverly Hills", zipCodeGeocodingRecord.getName());
-        assertEquals("US", zipCodeGeocodingRecord.getCountryCode());
-        assertEquals(new Coordinates(34.0901, -118.4065), zipCodeGeocodingRecord.getCoordinates());
+        assertNotNull(actual);
+        assertEquals("90210", actual.getZipCode());
+        assertEquals("Beverly Hills", actual.getName());
+        assertEquals("US", actual.getCountryCode());
+        assertEquals(new Coordinates(34.0901, -118.4065), actual.getCoordinates());
     }
 }

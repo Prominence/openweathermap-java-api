@@ -25,6 +25,8 @@ package com.github.prominence.openweathermap.api.model.air.pollution;
 import com.github.prominence.openweathermap.api.enums.AirQualityIndex;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
@@ -32,19 +34,161 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AirPollutionRecordUnitTest {
     @Test
-    public void getForecastTime() {
-        final AirPollutionRecord airPollutionRecord = new AirPollutionRecord();
+    public void testGetForecastTime_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
         final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
-        airPollutionRecord.setMeasurementTime(now);
+        underTest.setMeasurementTime(now);
 
-        assertEquals(now, airPollutionRecord.getMeasurementTime());
+        //when
+        final OffsetDateTime actual = underTest.getMeasurementTime();
+
+        //then
+        assertEquals(now, actual);
     }
 
     @Test
-    public void getAirQualityIndex() {
-        final AirPollutionRecord airPollutionRecord = new AirPollutionRecord();
-        airPollutionRecord.setAirQualityIndex(AirQualityIndex.FAIR);
+    public void testGetAirQualityIndex_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        underTest.setAirQualityIndex(AirQualityIndex.FAIR);
 
-        assertEquals(AirQualityIndex.FAIR, airPollutionRecord.getAirQualityIndex());
+        //when
+        final AirQualityIndex actual = underTest.getAirQualityIndex();
+
+        //then
+        assertEquals(AirQualityIndex.FAIR, actual);
+    }
+
+    @Test
+    public void testGetAmmonia_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("0.12369127571582794");
+        components.setAmmonia(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getAmmonia();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetOzone_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("68.66455078125");
+        components.setOzone(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getOzone();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetCarbonMonoxide_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("201.94053649902344");
+        components.setCarbonMonoxide(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getCarbonMonoxide();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetNitrogenMonoxide_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("0.01877197064459324");
+        components.setNitrogenMonoxide(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getNitrogenMonoxide();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetNitrogenDioxide_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("0.7711350917816162");
+        components.setNitrogenDioxide(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getNitrogenDioxide();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetSulphurDioxide_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("0.6407499313354492");
+        components.setSulphurDioxide(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getSulphurDioxide();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetFineParticlesMatter_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("0.5");
+        components.setFineParticlesMatter(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getFineParticlesMatter();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    @Test
+    public void testGetCoarseParticulateMatter_ShouldReturnPreviouslySetValue_WhenCalled() {
+        //given
+        final AirPollutionRecord underTest = new AirPollutionRecord();
+        final AirPollutionMeasurements components = new AirPollutionMeasurements();
+        final BigDecimal expected = new BigDecimal("0.540438711643219");
+        components.setCoarseParticulateMatter(new Concentration(expected));
+        underTest.setComponents(components);
+
+        //when
+        final Concentration actual = underTest.getCoarseParticulateMatter();
+
+        //then
+        assertEquals(round(expected), actual.asMicrogramsPerCubicMeters());
+    }
+
+    private static BigDecimal round(BigDecimal expected) {
+        return expected.setScale(10, RoundingMode.HALF_EVEN);
     }
 }

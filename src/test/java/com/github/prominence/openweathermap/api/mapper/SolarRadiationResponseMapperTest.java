@@ -45,13 +45,13 @@ class SolarRadiationResponseMapperTest {
         final String resource = "/responses/valid/solar-radiation.json";
 
         //when
-        final SolarRadiation solarRadiation = loadDeserializedResourceAs(resource, SolarRadiationModel.class);
+        final SolarRadiation actual = loadDeserializedResourceAs(resource, SolarRadiationModel.class);
 
         //then
-        assertNotNull(solarRadiation);
-        assertEquals(new Coordinates(32.7243, -114.6244), solarRadiation.getCoordinates());
+        assertNotNull(actual);
+        assertEquals(new Coordinates(32.7243, -114.6244), actual.getCoordinates());
 
-        final List<SolarRadiationEntry> records = solarRadiation.getSolarRadiationRecords();
+        final List<SolarRadiationEntry> records = actual.getSolarRadiationRecords();
         assertEquals(1, records.size());
 
         final SolarRadiationEntry record = records.get(0);
