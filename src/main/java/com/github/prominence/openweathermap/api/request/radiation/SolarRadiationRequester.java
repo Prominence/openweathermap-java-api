@@ -23,12 +23,12 @@
 package com.github.prominence.openweathermap.api.request.radiation;
 
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
-public class SolarRadiationRequester {
-    private final RequestSettings requestSettings;
+public class SolarRadiationRequester extends GenericRequester<SolarRadiationRequester> {
 
     public SolarRadiationRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/solar_radiation");
     }
 

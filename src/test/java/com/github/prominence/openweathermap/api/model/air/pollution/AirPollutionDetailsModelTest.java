@@ -39,7 +39,7 @@ class AirPollutionDetailsModelTest {
         //given
         final AirPollutionDetailsModel underTest = new AirPollutionDetailsModel();
         final AirPollutionMeasurements components = new AirPollutionMeasurements();
-        components.setCoarseParticulateMatter(new Concentration(new BigDecimal("0.54")));
+        components.setCoarseParticulateMatter(new Concentration(BigDecimal.valueOf(0.54)));
         final AirPollutionRecord expected = new AirPollutionRecord();
         expected.setComponents(components);
         underTest.setAirPollutionRecords(Collections.singletonList(expected));

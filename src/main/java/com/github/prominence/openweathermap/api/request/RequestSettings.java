@@ -27,10 +27,10 @@ import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.ResponseType;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class RequestSettings {
 
@@ -47,7 +47,7 @@ public class RequestSettings {
     public static final String ZIP_PARAM = "zip";
     public static final String COUNT_PARAM = "cnt";
 
-    private final TimeoutSettings timeoutSettings;
+    private TimeoutSettings timeoutSettings;
 
     private final Map<String, String> requestParameters = new HashMap<>(8);
 
@@ -58,17 +58,19 @@ public class RequestSettings {
     private UnitSystem unitSystem = UnitSystem.STANDARD;
     private Object requestPayload;
 
-    public RequestSettings(ApiConfiguration apiConfiguration, TimeoutSettings timeoutSettings) {
+    public RequestSettings(ApiConfiguration apiConfiguration) {
         this.apiConfiguration = apiConfiguration;
         this.putRequestParameter(API_KEY_PARAM_NAME, apiConfiguration.getApiKey());
         // make a copy
-        final TimeoutSettings defaultTimeoutSettings = apiConfiguration.getDefaultTimeoutSettings();
-        final TimeoutSettings nonNullTimeoutSettings = Optional.ofNullable(timeoutSettings).orElse(defaultTimeoutSettings);
-        this.timeoutSettings = new TimeoutSettings(nonNullTimeoutSettings);
+        this.timeoutSettings = new TimeoutSettings(apiConfiguration.getDefaultTimeoutSettings());
     }
 
     public TimeoutSettings getTimeoutSettings() {
         return timeoutSettings;
+    }
+
+    public void setTimeoutSettings(@NonNull TimeoutSettings timeoutSettings) {
+        this.timeoutSettings = timeoutSettings;
     }
 
     public UnitSystem getUnitSystem() {

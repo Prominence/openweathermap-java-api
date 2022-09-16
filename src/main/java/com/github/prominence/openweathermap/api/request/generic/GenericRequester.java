@@ -20,22 +20,24 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.free;
+package com.github.prominence.openweathermap.api.request.generic;
 
-import com.github.prominence.openweathermap.api.model.forecast.free.Precipitation;
-import org.junit.jupiter.api.Test;
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
+import com.github.prominence.openweathermap.api.request.RequestSettings;
+import lombok.NonNull;
 
-import java.math.BigDecimal;
+public abstract class GenericRequester<T extends GenericRequester<T>> {
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+    protected final RequestSettings requestSettings;
 
-public class RainUnitTest {
-
-    @Test
-    public void getOneHourRainLevel() {
-        final Precipitation rain = new Precipitation();
-        rain.setThreeHourLevel(BigDecimal.valueOf(220.0));
-
-        assertEquals(BigDecimal.valueOf(220.0), rain.getThreeHourLevel());
+    public GenericRequester(RequestSettings requestSettings) {
+        this.requestSettings = requestSettings;
     }
+
+    @SuppressWarnings("unchecked")
+    public T withTimeoutSettings(@NonNull TimeoutSettings timeoutSettings) {
+        requestSettings.setTimeoutSettings(timeoutSettings);
+        return (T) this;
+    }
+
 }

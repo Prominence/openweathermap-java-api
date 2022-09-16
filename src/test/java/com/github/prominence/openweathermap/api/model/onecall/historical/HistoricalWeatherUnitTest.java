@@ -77,7 +77,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getTemperature() {
         final BaseMeasurement historicalWeather = new BaseMeasurement();
-        final TemperatureValue temperature = new TemperatureValue(new BigDecimal("10.0"));
+        final TemperatureValue temperature = new TemperatureValue(BigDecimal.valueOf(10.0));
         historicalWeather.setTemperature(temperature);
 
         assertEquals(temperature, historicalWeather.getTemperature());
@@ -86,7 +86,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getAtmosphericPressure() {
         final BaseMeasurement historicalWeather = new BaseMeasurement();
-        final BigDecimal atmosphericPressure = new BigDecimal("22.3");
+        final BigDecimal atmosphericPressure = BigDecimal.valueOf(22.3);
         historicalWeather.setAtmosphericPressureSeaLevel(atmosphericPressure);
 
         assertEquals(atmosphericPressure, historicalWeather.getAtmosphericPressureSeaLevel());
@@ -104,8 +104,8 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getWind() {
         final BaseMeasurement historicalWeather = new BaseMeasurement();
-        WindSpeed windSpeed = new WindSpeed(new BigDecimal("13.2"));
-        WindSpeed windSpeedGust = new WindSpeed(new BigDecimal("12.0"));
+        WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
+        WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(12.0));
         int direction = 50;
         historicalWeather.setWindSpeed(windSpeed);
         historicalWeather.setWindSpeedGust(windSpeedGust);
@@ -128,7 +128,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getUvIndex() {
         final BaseMeasurement historicalWeather = new BaseMeasurement();
-        final BigDecimal uvIndex = new BigDecimal("22.4");
+        final BigDecimal uvIndex = BigDecimal.valueOf(22.4);
         historicalWeather.setUvIndex(uvIndex);
 
         assertEquals(uvIndex, historicalWeather.getUvIndex());
@@ -146,7 +146,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getRain() {
         final BaseMeasurement historicalWeather = new BaseMeasurement();
-        final BasePrecipitation rain = new BasePrecipitation(new BigDecimal("20.2"));
+        final BasePrecipitation rain = new BasePrecipitation(BigDecimal.valueOf(20.2));
         historicalWeather.setRain(rain);
 
         assertEquals(rain, historicalWeather.getRain());
@@ -155,7 +155,7 @@ public class HistoricalWeatherUnitTest {
     @Test
     public void getSnow() {
         final BaseMeasurement historicalWeather = new BaseMeasurement();
-        final BasePrecipitation snow = new BasePrecipitation(new BigDecimal("25.0"));
+        final BasePrecipitation snow = new BasePrecipitation(BigDecimal.valueOf(25.0));
         historicalWeather.setSnow(snow);
 
         assertEquals(snow, historicalWeather.getSnow());

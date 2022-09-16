@@ -49,10 +49,10 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
 
     @Override
     public String executeGetRequest(String url) {
-        return doExecute(url, "GET", null);
+        return doExecute(url, RequestExecutor.Method.GET, null);
     }
 
-    private String doExecute(String url, String method, String body) {
+    private String doExecute(String url, RequestExecutor.Method method, String body) {
         InputStream resultStream = null;
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -101,8 +101,8 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
         }
     }
 
-    private void configureConnection(HttpURLConnection connection, String method, String body) throws IOException {
-        connection.setRequestMethod(method);
+    private void configureConnection(HttpURLConnection connection, RequestExecutor.Method method, String body) throws IOException {
+        connection.setRequestMethod(method.name());
         connection.setRequestProperty("Content-Type", "application/json; utf-8");
         connection.setRequestProperty("Accept", "application/json");
         addOptionalBodyContent(connection, body);
@@ -110,7 +110,7 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
 
     @Override
     public String executePostRequest(String url, String body) {
-        return doExecute(url, "POST", body);
+        return doExecute(url, RequestExecutor.Method.POST, body);
     }
 
     private void addOptionalBodyContent(HttpURLConnection connection, String body) throws IOException {

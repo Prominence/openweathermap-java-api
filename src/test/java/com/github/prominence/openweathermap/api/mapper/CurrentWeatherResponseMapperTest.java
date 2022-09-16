@@ -243,23 +243,23 @@ public class CurrentWeatherResponseMapperTest {
 
 
     private void assertMaxTempSet(Weather weather) {
-        assertEquals(new BigDecimal("2"), weather.getTemperature().getMax().asKelvin());
+        assertEquals(BigDecimal.valueOf(2), weather.getTemperature().getMax().asKelvin());
     }
 
     private void assertMinTempSet(Weather weather) {
-        assertEquals(new BigDecimal("2"), weather.getTemperature().getMin().asKelvin());
+        assertEquals(BigDecimal.valueOf(2), weather.getTemperature().getMin().asKelvin());
     }
 
     private void assertFeelsLikeSet(Weather weather) {
-        assertEquals(new BigDecimal("0"), weather.getTemperature().getFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(0), weather.getTemperature().getFeelsLike().asKelvin());
     }
 
     private void assertTemperatureSet(Weather weather) {
-        assertEquals(new BigDecimal("2"), weather.getTemperature().getTemperature().asKelvin());
+        assertEquals(BigDecimal.valueOf(2), weather.getTemperature().getTemperature().asKelvin());
     }
 
     private void assertWindSpeedGustSet(Weather weather) {
-        assertEquals(new BigDecimal("2.44"), weather.getWind().getGust().asMetersPerSecond());
+        assertEquals(BigDecimal.valueOf(2.44), weather.getWind().getGust().asMetersPerSecond());
     }
 
     private void assertWindDirectionSet(Weather weather) {
@@ -271,18 +271,18 @@ public class CurrentWeatherResponseMapperTest {
     }
 
     private void assert1HrRainSet(Weather weather) {
-        assertEquals(new BigDecimal("0.1"), weather.getRain().getOneHourLevel());
+        assertEquals(BigDecimal.valueOf(0.1), weather.getRain().getOneHourLevel());
     }
 
     private void assert3HrRainSet(Weather weather) {
-        assertEquals(new BigDecimal("0.6"), weather.getRain().getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(0.6), weather.getRain().getThreeHourLevel());
     }
 
     private void assert1HrSnowSet(Weather weather) {
-        assertEquals(new BigDecimal("0.2"), weather.getSnow().getOneHourLevel());
+        assertEquals(BigDecimal.valueOf(0.2), weather.getSnow().getOneHourLevel());
     }
 
     private void assert3HrSnowSet(Weather weather) {
-        assertEquals(new BigDecimal("0.7"), weather.getSnow().getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(0.7), weather.getSnow().getThreeHourLevel());
     }
 }

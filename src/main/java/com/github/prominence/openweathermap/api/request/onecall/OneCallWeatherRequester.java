@@ -23,14 +23,14 @@
 package com.github.prominence.openweathermap.api.request.onecall;
 
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 import com.github.prominence.openweathermap.api.request.onecall.current.OneCallCurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.onecall.historical.OneCallHistoricalWeatherRequester;
 
 /**
  * The type One call weather requester.
  */
-public class OneCallWeatherRequester {
-    private final RequestSettings requestSettings;
+public class OneCallWeatherRequester extends GenericRequester<OneCallWeatherRequester> {
 
     /**
      * Instantiates a new One call weather requester.
@@ -38,7 +38,7 @@ public class OneCallWeatherRequester {
      * @param requestSettings request settings object.
      */
     public OneCallWeatherRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/3.0/onecall");
     }
 

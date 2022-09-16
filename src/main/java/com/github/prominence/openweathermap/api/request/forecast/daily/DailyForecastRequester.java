@@ -24,15 +24,15 @@ package com.github.prominence.openweathermap.api.request.forecast.daily;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
 
-public class DailyForecastRequester {
-    private final RequestSettings requestSettings;
+public class DailyForecastRequester extends GenericRequester<DailyForecastRequester> {
 
     public DailyForecastRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/forecast/daily");
     }
 

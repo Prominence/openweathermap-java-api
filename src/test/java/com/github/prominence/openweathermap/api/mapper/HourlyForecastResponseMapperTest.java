@@ -73,18 +73,18 @@ class HourlyForecastResponseMapperTest {
         assertEquals(OffsetDateTime.ofInstant(Instant.ofEpochSecond(1596632400), ZoneOffset.UTC), weatherForecast.getForecastTime());
         assertEquals(DayTime.NIGHT, weatherForecast.getPartOfDay());
         assertEquals(new BigDecimal("10000.00"), weatherForecast.getVisibility().asMeters());
-        assertEquals(new BigDecimal("0.04"), weatherForecast.getProbabilityOfPrecipitation());
+        assertEquals(BigDecimal.valueOf(0.04), weatherForecast.getProbabilityOfPrecipitation());
 
         final Temperature temperature = weatherForecast.getTemperature();
-        assertEquals(new BigDecimal("289"), temperature.getTemperature().asKelvin());
-        assertEquals(new BigDecimal("288"), temperature.getFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("289"), temperature.getMin().asKelvin());
-        assertEquals(new BigDecimal("289"), temperature.getMax().asKelvin());
+        assertEquals(BigDecimal.valueOf(289), temperature.getTemperature().asKelvin());
+        assertEquals(BigDecimal.valueOf(288), temperature.getFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(289), temperature.getMin().asKelvin());
+        assertEquals(BigDecimal.valueOf(289), temperature.getMax().asKelvin());
 
         final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
-        assertEquals(new BigDecimal("1013"), pressure.getPressure());
-        assertEquals(new BigDecimal("1013"), pressure.getSeaLevel());
-        assertEquals(new BigDecimal("1010"), pressure.getGroundLevel());
+        assertEquals(BigDecimal.valueOf(1013), pressure.getPressure());
+        assertEquals(BigDecimal.valueOf(1013), pressure.getSeaLevel());
+        assertEquals(BigDecimal.valueOf(1010), pressure.getGroundLevel());
 
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(78, humidity.getHumidityPercentage());
@@ -99,14 +99,14 @@ class HourlyForecastResponseMapperTest {
         assertEquals(100, clouds.getValuePercentage());
 
         final Wind wind = weatherForecast.getWind();
-        assertEquals(new BigDecimal("2.03"), wind.getSpeed().asMetersPerSecond());
+        assertEquals(BigDecimal.valueOf(2.03), wind.getSpeed().asMetersPerSecond());
         assertEquals(252, wind.getDirectionDegrees());
-        assertEquals(new BigDecimal("5.46"), wind.getGust().asMetersPerSecond());
+        assertEquals(BigDecimal.valueOf(5.46), wind.getGust().asMetersPerSecond());
 
         final BasePrecipitation rain = weatherForecast.getRain();
-        assertEquals(new BigDecimal("23.3"), rain.getOneHourLevel());
+        assertEquals(BigDecimal.valueOf(23.3), rain.getOneHourLevel());
 
         final BasePrecipitation snow = weatherForecast.getSnow();
-        assertEquals(new BigDecimal("27.945"), snow.getOneHourLevel());
+        assertEquals(BigDecimal.valueOf(27.945), snow.getOneHourLevel());
     }
 }

@@ -24,15 +24,15 @@ package com.github.prominence.openweathermap.api.request.roadrisk;
 
 import com.github.prominence.openweathermap.api.model.roadrisk.TrackPoint;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 import com.github.prominence.openweathermap.api.request.roadrisk.model.RoadRiskRequestPayload;
 
 import java.util.List;
 
-public class RoadRiskRequester {
-    private final RequestSettings requestSettings;
+public class RoadRiskRequester extends GenericRequester<RoadRiskRequester> {
 
     public RoadRiskRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/roadrisk");
     }
 

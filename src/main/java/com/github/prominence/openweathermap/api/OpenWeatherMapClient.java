@@ -23,7 +23,6 @@
 package com.github.prominence.openweathermap.api;
 
 import com.github.prominence.openweathermap.api.annotation.SubscriptionAvailability;
-import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.context.ApiConfigurationHolder;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
@@ -73,12 +72,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = ALL)
     public CurrentWeatherRequester currentWeather() {
-        return currentWeather(null);
-    }
-
-    @SubscriptionAvailability(plans = ALL)
-    public CurrentWeatherRequester currentWeather(TimeoutSettings timeoutSettings) {
-        return new CurrentWeatherRequester(getRequestSettings(timeoutSettings));
+        return new CurrentWeatherRequester(getRequestSettings());
     }
 
     /**
@@ -88,12 +82,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = {DEVELOPER, PROFESSIONAL, ENTERPRISE})
     public FourDaysHourlyForecastRequester forecastHourly4Days() {
-        return forecastHourly4Days(null);
-    }
-
-    @SubscriptionAvailability(plans = {DEVELOPER, PROFESSIONAL, ENTERPRISE})
-    public FourDaysHourlyForecastRequester forecastHourly4Days(TimeoutSettings timeoutSettings) {
-        return new FourDaysHourlyForecastRequester(getRequestSettings(timeoutSettings));
+        return new FourDaysHourlyForecastRequester(getRequestSettings());
     }
 
     /**
@@ -104,12 +93,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = ALL)
     public OneCallWeatherRequester oneCall() {
-        return oneCall(null);
-    }
-
-    @SubscriptionAvailability(plans = ALL)
-    public OneCallWeatherRequester oneCall(TimeoutSettings timeoutSettings) {
-        return new OneCallWeatherRequester(getRequestSettings(timeoutSettings));
+        return new OneCallWeatherRequester(getRequestSettings());
     }
 
     /**
@@ -119,12 +103,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = PAID)
     public DailyForecastRequester forecastDaily16Days() {
-        return forecastDaily16Days(null);
-    }
-
-    @SubscriptionAvailability(plans = PAID)
-    public DailyForecastRequester forecastDaily16Days(TimeoutSettings timeoutSettings) {
-        return new DailyForecastRequester(getRequestSettings(timeoutSettings));
+        return new DailyForecastRequester(getRequestSettings());
     }
 
     /**
@@ -134,12 +113,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = {DEVELOPER, PROFESSIONAL, ENTERPRISE})
     public ClimaticForecastRequester climaticForecast30Days() {
-        return climaticForecast30Days(null);
-    }
-
-    @SubscriptionAvailability(plans = {DEVELOPER, PROFESSIONAL, ENTERPRISE})
-    public ClimaticForecastRequester climaticForecast30Days(TimeoutSettings timeoutSettings) {
-        return new ClimaticForecastRequester(getRequestSettings(timeoutSettings));
+        return new ClimaticForecastRequester(getRequestSettings());
     }
 
     /**
@@ -149,12 +123,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = SPECIAL)
     public SolarRadiationRequester solarRadiation() {
-        return solarRadiation(null);
-    }
-
-    @SubscriptionAvailability(plans = SPECIAL)
-    public SolarRadiationRequester solarRadiation(TimeoutSettings timeoutSettings) {
-        return new SolarRadiationRequester(getRequestSettings(timeoutSettings));
+        return new SolarRadiationRequester(getRequestSettings());
     }
 
     /**
@@ -164,12 +133,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = ALL)
     public FiveDayThreeHourStepForecastRequester forecast5Day3HourStep() {
-        return forecast5Day3HourStep(null);
-    }
-
-    @SubscriptionAvailability(plans = ALL)
-    public FiveDayThreeHourStepForecastRequester forecast5Day3HourStep(TimeoutSettings timeoutSettings) {
-        return new FiveDayThreeHourStepForecastRequester(getRequestSettings(timeoutSettings));
+        return new FiveDayThreeHourStepForecastRequester(getRequestSettings());
     }
 
     /**
@@ -179,12 +143,7 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = SPECIAL)
     public RoadRiskRequester roadRisk() {
-        return roadRisk(null);
-    }
-
-    @SubscriptionAvailability(plans = SPECIAL)
-    public RoadRiskRequester roadRisk(TimeoutSettings timeoutSettings) {
-        return new RoadRiskRequester(getRequestSettings(timeoutSettings));
+        return new RoadRiskRequester(getRequestSettings());
     }
 
     /**
@@ -195,25 +154,15 @@ public class OpenWeatherMapClient {
      */
     @SubscriptionAvailability(plans = ALL)
     public AirPollutionRequester airPollution() {
-        return airPollution(null);
-    }
-
-    @SubscriptionAvailability(plans = ALL)
-    public AirPollutionRequester airPollution(TimeoutSettings timeoutSettings) {
-        return new AirPollutionRequester(getRequestSettings(timeoutSettings));
+        return new AirPollutionRequester(getRequestSettings());
     }
 
     @SubscriptionAvailability(plans = ALL)
     public GeocodingRequester geocoding() {
-        return geocoding(null);
+        return new GeocodingRequester(getRequestSettings());
     }
 
-    @SubscriptionAvailability(plans = ALL)
-    public GeocodingRequester geocoding(TimeoutSettings timeoutSettings) {
-        return new GeocodingRequester(getRequestSettings(timeoutSettings));
-    }
-
-    private RequestSettings getRequestSettings(TimeoutSettings timeoutSettings) {
-        return new RequestSettings(apiConfiguration, timeoutSettings);
+    private RequestSettings getRequestSettings() {
+        return new RequestSettings(apiConfiguration);
     }
 }

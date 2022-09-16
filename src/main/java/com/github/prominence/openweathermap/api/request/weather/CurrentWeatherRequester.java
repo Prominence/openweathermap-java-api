@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.request.weather;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
@@ -31,8 +32,7 @@ import static com.github.prominence.openweathermap.api.request.RequestSettings.L
 /**
  * The type Single location current weather requester.
  */
-public class CurrentWeatherRequester {
-    private final RequestSettings requestSettings;
+public class CurrentWeatherRequester extends GenericRequester<CurrentWeatherRequester> {
 
     /**
      * Instantiates a new Single location current weather requester.
@@ -40,7 +40,7 @@ public class CurrentWeatherRequester {
      * @param requestSettings request settings object.
      */
     public CurrentWeatherRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/weather");
     }
 

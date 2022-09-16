@@ -36,9 +36,9 @@ import java.math.RoundingMode;
 @AllArgsConstructor
 public class Visibility {
 
-    private static final BigDecimal METER_TO_MILES_SCALE = new BigDecimal("1.00000000")
-            .divide(new BigDecimal("1609.34"), RoundingMode.HALF_EVEN);
-    private static final BigDecimal METER_TO_KILOMETER_SCALE = new BigDecimal("0.001");
+    private static final BigDecimal METER_TO_MILES_SCALE = BigDecimal.ONE.setScale(8, RoundingMode.HALF_EVEN)
+            .divide(BigDecimal.valueOf(1609.34d), RoundingMode.HALF_EVEN);
+    private static final BigDecimal METER_TO_KILOMETER_SCALE = BigDecimal.valueOf(0.001);
     private static final int DECIMAL_PLACES = 2;
     @NonNull
     private final BigDecimal value;

@@ -88,15 +88,15 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
 
         final Temperature temperature = weatherForecast.getTemperature();
         assertNotNull(temperature);
-        assertEquals(new BigDecimal("287"), temperature.getTemperature().asKelvin());
-        assertEquals(new BigDecimal("286"), temperature.getFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("287"), temperature.getMin().asKelvin());
-        assertEquals(new BigDecimal("287"), temperature.getMax().asKelvin());
+        assertEquals(BigDecimal.valueOf(287), temperature.getTemperature().asKelvin());
+        assertEquals(BigDecimal.valueOf(286), temperature.getFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(287), temperature.getMin().asKelvin());
+        assertEquals(BigDecimal.valueOf(287), temperature.getMax().asKelvin());
 
         final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
-        assertEquals(new BigDecimal("1021"), pressure.getPressure());
-        assertEquals(new BigDecimal("1021"), pressure.getSeaLevel());
-        assertEquals(new BigDecimal("1018"), pressure.getGroundLevel());
+        assertEquals(BigDecimal.valueOf(1021), pressure.getPressure());
+        assertEquals(BigDecimal.valueOf(1021), pressure.getSeaLevel());
+        assertEquals(BigDecimal.valueOf(1018), pressure.getGroundLevel());
 
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(62, humidity.getHumidityPercentage());
@@ -105,9 +105,9 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         assertEquals(85, clouds.getValuePercentage());
 
         final Wind wind = weatherForecast.getWind();
-        assertEquals(new BigDecimal("3.25"), wind.getSpeed().asMetersPerSecond());
+        assertEquals(BigDecimal.valueOf(3.25), wind.getSpeed().asMetersPerSecond());
         assertEquals(134, wind.getDirectionDegrees());
-        assertEquals(new BigDecimal("4.45"), wind.getGust().asMetersPerSecond());
+        assertEquals(BigDecimal.valueOf(4.45), wind.getGust().asMetersPerSecond());
 
         assertEquals(1, weatherForecast.getWeatherStates().size());
 
@@ -118,9 +118,9 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         assertEquals("04d", weatherState.getIconId(weatherForecast.getPartOfDay()));
 
         final Precipitation rain = weatherForecast.getRain();
-        assertEquals(new BigDecimal("22.1"), rain.getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(22.1), rain.getThreeHourLevel());
 
         final Precipitation snow = weatherForecast.getSnow();
-        assertEquals(new BigDecimal("13.6"), snow.getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(13.6), snow.getThreeHourLevel());
     }
 }

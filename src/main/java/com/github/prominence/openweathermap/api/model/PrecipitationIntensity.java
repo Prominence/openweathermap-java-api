@@ -36,8 +36,7 @@ import java.math.RoundingMode;
 @AllArgsConstructor
 public class PrecipitationIntensity {
 
-    private static final BigDecimal MILLIMETER_PER_HOUR_TO_MILLIMETER_PER_MINUTE_SCALE = new BigDecimal("60.0")
-            .divide(new BigDecimal("1.0"), RoundingMode.HALF_EVEN);
+    private static final BigDecimal MILLIMETER_PER_HOUR_TO_MILLIMETER_PER_MINUTE_SCALE = BigDecimal.valueOf(60.0);
     private static final int DECIMAL_PLACES = 1;
     @NonNull
     private final BigDecimal value;

@@ -36,9 +36,9 @@ import java.math.RoundingMode;
 @AllArgsConstructor
 public class TemperatureValue {
 
-    private static final BigDecimal KELVIN_TO_CELSIUS_OFFSET = new BigDecimal("273.15");
-    private static final BigDecimal CELSIUS_TO_FAHRENHEIT_OFFSET = new BigDecimal("32");
-    private static final BigDecimal CELSIUS_TO_FAHRENHEIT_SCALE = new BigDecimal("1.8");
+    private static final BigDecimal KELVIN_TO_CELSIUS_OFFSET = BigDecimal.valueOf(273.15);
+    private static final BigDecimal CELSIUS_TO_FAHRENHEIT_OFFSET = BigDecimal.valueOf(32);
+    private static final BigDecimal CELSIUS_TO_FAHRENHEIT_SCALE = BigDecimal.valueOf(1.8);
     private static final int DECIMAL_PLACES = 0;
     @NonNull
     private final BigDecimal value;

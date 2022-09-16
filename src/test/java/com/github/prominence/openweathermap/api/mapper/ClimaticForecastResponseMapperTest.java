@@ -70,25 +70,25 @@ class ClimaticForecastResponseMapperTest {
         assertEquals(TestMappingUtils.parseDateTime(1594412149), weatherForecast.getSunsetTime());
 
         final Temperature temperature = weatherForecast.getTemperature();
-        assertEquals(new BigDecimal("287"), temperature.getDay().asKelvin());
-        assertEquals(new BigDecimal("285"), temperature.getMin().asKelvin());
-        assertEquals(new BigDecimal("288"), temperature.getMax().asKelvin());
-        assertEquals(new BigDecimal("285"), temperature.getNight().asKelvin());
-        assertEquals(new BigDecimal("288"), temperature.getEve().asKelvin());
-        assertEquals(new BigDecimal("287"), temperature.getMorning().asKelvin());
-        assertEquals(new BigDecimal("283"), temperature.getDayFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("283"), temperature.getNightFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("285"), temperature.getEveFeelsLike().asKelvin());
-        assertEquals(new BigDecimal("283"), temperature.getMorningFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(287), temperature.getDay().asKelvin());
+        assertEquals(BigDecimal.valueOf(285), temperature.getMin().asKelvin());
+        assertEquals(BigDecimal.valueOf(288), temperature.getMax().asKelvin());
+        assertEquals(BigDecimal.valueOf(285), temperature.getNight().asKelvin());
+        assertEquals(BigDecimal.valueOf(288), temperature.getEve().asKelvin());
+        assertEquals(BigDecimal.valueOf(287), temperature.getMorning().asKelvin());
+        assertEquals(BigDecimal.valueOf(283), temperature.getDayFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(283), temperature.getNightFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(285), temperature.getEveFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(283), temperature.getMorningFeelsLike().asKelvin());
 
         final BaseAtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
-        assertEquals(new BigDecimal("1016"), pressure.getPressure());
+        assertEquals(BigDecimal.valueOf(1016), pressure.getPressure());
 
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(84, humidity.getHumidityPercentage());
 
         final BaseWind wind = weatherForecast.getWind();
-        assertEquals(new BigDecimal("6.78"), wind.getSpeed().asMetersPerSecond());
+        assertEquals(BigDecimal.valueOf(6.78), wind.getSpeed().asMetersPerSecond());
         assertEquals(320, wind.getDirectionDegrees());
 
         final Clouds clouds = weatherForecast.getCloudCoverage();
@@ -102,9 +102,9 @@ class ClimaticForecastResponseMapperTest {
         assertEquals("10d", weatherState.getDayIconId());
 
         final BigDecimal rain = weatherForecast.getPrecipitation().getRain();
-        assertEquals(new BigDecimal("1.96"), rain);
+        assertEquals(BigDecimal.valueOf(1.96), rain);
 
         final BigDecimal snow = weatherForecast.getPrecipitation().getSnow();
-        assertEquals(new BigDecimal("2.21"), snow);
+        assertEquals(BigDecimal.valueOf(2.21), snow);
     }
 }

@@ -50,7 +50,7 @@ public abstract class GenericListRequestTerminator<T, I extends T> {
     public List<T> asJava() {
         requestSettings.setUnitSystem(UnitSystem.STANDARD);
         requestSettings.setResponseType(ResponseType.JSON);
-        return castInternalToModel(mapToWeather(getRawResponse()));
+        return castInternalToModel(mapToObject(getRawResponse()));
     }
 
     public String asJSON() {
@@ -80,7 +80,7 @@ public abstract class GenericListRequestTerminator<T, I extends T> {
 
     protected abstract Class<I> getInnerType();
 
-    private List<I> mapToWeather(String json) {
+    private List<I> mapToObject(String json) {
         try {
             final ObjectReader objectReader = requestSettings.getApiConfiguration().getObjectReader();
             final CollectionType listType = objectReader.getTypeFactory().constructCollectionType(ArrayList.class, getInnerType());

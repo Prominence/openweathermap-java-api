@@ -24,15 +24,15 @@ package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
 
-public class ClimaticForecastRequester {
-    private final RequestSettings requestSettings;
+public class ClimaticForecastRequester extends GenericRequester<ClimaticForecastRequester> {
 
     public ClimaticForecastRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/forecast/climate");
     }
 

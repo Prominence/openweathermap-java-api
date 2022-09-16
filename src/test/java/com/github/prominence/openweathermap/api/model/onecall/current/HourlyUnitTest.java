@@ -58,7 +58,7 @@ public class HourlyUnitTest {
     @Test
     public void getTemperature() {
         final Hourly hourly = new Hourly();
-        final TemperatureValue temperature = new TemperatureValue(new BigDecimal("10"));
+        final TemperatureValue temperature = new TemperatureValue(BigDecimal.valueOf(10));
         hourly.setTemperature(temperature);
 
         assertEquals(temperature, hourly.getTemperature());
@@ -67,7 +67,7 @@ public class HourlyUnitTest {
     @Test
     public void getAtmosphericPressure() {
         final Hourly hourly = new Hourly();
-        final BigDecimal atmosphericPressure = new BigDecimal("100");
+        final BigDecimal atmosphericPressure = BigDecimal.valueOf(100);
         hourly.setAtmosphericPressureSeaLevel(atmosphericPressure);
 
         assertEquals(atmosphericPressure, hourly.getAtmosphericPressureSeaLevel());
@@ -85,7 +85,7 @@ public class HourlyUnitTest {
     @Test
     public void getUvIndex() {
         final Hourly hourly = new Hourly();
-        final BigDecimal uvIndex = new BigDecimal("20.0");
+        final BigDecimal uvIndex = BigDecimal.valueOf(20.0);
         hourly.setUvIndex(uvIndex);
 
         assertEquals(uvIndex, hourly.getUvIndex());
@@ -103,7 +103,7 @@ public class HourlyUnitTest {
     @Test
     public void getVisibilityInMetres() {
         final Hourly hourly = new Hourly();
-        final Visibility vim = new Visibility(new BigDecimal("40.0"));
+        final Visibility vim = new Visibility(BigDecimal.valueOf(40.0));
         hourly.setVisibility(vim);
 
         assertEquals(vim, hourly.getVisibility());
@@ -112,8 +112,8 @@ public class HourlyUnitTest {
     @Test
     public void getWind() {
         final Hourly hourly = new Hourly();
-        final WindSpeed windSpeed = new WindSpeed(new BigDecimal("13.2"));
-        final WindSpeed windSpeedGust = new WindSpeed(new BigDecimal("15.2"));
+        final WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
+        final WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(15.2));
         final Integer windDirection = 123;
         hourly.setWindSpeed(windSpeed);
         hourly.setWindSpeedGust(windSpeedGust);
@@ -127,7 +127,7 @@ public class HourlyUnitTest {
     @Test
     public void getProbabilityOfPrecipitation() {
         final Hourly hourly = new Hourly();
-        final BigDecimal pop = new BigDecimal("0.84");
+        final BigDecimal pop = BigDecimal.valueOf(0.84);
         hourly.setProbabilityOfPrecipitation(pop);
 
         assertEquals(pop, hourly.getProbabilityOfPrecipitation());
@@ -137,7 +137,7 @@ public class HourlyUnitTest {
     @Test
     public void getRain() {
         final Hourly hourly = new Hourly();
-        final BasePrecipitation rain = new BasePrecipitation(new BigDecimal("20.2"));
+        final BasePrecipitation rain = new BasePrecipitation(BigDecimal.valueOf(20.2));
         hourly.setRain(rain);
 
         assertEquals(rain, hourly.getRain());
@@ -146,7 +146,7 @@ public class HourlyUnitTest {
     @Test
     public void getSnow() {
         final Hourly hourly = new Hourly();
-        final BasePrecipitation snow = new BasePrecipitation(new BigDecimal("25.0"));
+        final BasePrecipitation snow = new BasePrecipitation(BigDecimal.valueOf(25.0));
         hourly.setSnow(snow);
 
         assertEquals(snow, hourly.getSnow());

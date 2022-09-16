@@ -107,7 +107,7 @@ public class FiveDayThreeHourStepForecastResponseMapperUnitTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        assertEquals(new BigDecimal("2.44"), forecast.getWeatherForecasts().get(0).getRain().getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(2.44), forecast.getWeatherForecasts().get(0).getRain().getThreeHourLevel());
         forecast.getWeatherForecasts().stream().skip(1)
                 .forEach(weatherForecast -> assertNull(Optional.ofNullable(weatherForecast.getRain())
                         .map(Precipitation::getThreeHourLevel).orElse(null)));
@@ -121,7 +121,7 @@ public class FiveDayThreeHourStepForecastResponseMapperUnitTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        assertEquals(new BigDecimal("2.44"), forecast.getWeatherForecasts().get(0).getSnow().getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(2.44), forecast.getWeatherForecasts().get(0).getSnow().getThreeHourLevel());
         forecast.getWeatherForecasts().stream().skip(1)
                 .forEach(weatherForecast -> assertNull(Optional.ofNullable(weatherForecast.getSnow())
                         .map(Precipitation::getThreeHourLevel).orElse(null)));

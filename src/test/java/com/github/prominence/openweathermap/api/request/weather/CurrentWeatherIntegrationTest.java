@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.weather;
 
 import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.weather.Weather;
@@ -38,6 +39,7 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
         Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         final Weather weather = getClient()
                 .currentWeather()
+                .withTimeoutSettings(new TimeoutSettings(3000, 3000))
                 .byCoordinates(new Coordinates(5, 5))
                 .unitSystem(UnitSystem.METRIC)
                 .retrieve()

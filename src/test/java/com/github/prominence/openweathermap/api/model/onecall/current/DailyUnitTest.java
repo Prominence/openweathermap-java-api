@@ -75,7 +75,7 @@ public class DailyUnitTest {
     public void getTemperature() {
         final Daily daily = new Daily();
         final TemperatureDailyExtended dailyTemperature = new TemperatureDailyExtended();
-        dailyTemperature.setDay(new TemperatureValue(new BigDecimal("10.0")));
+        dailyTemperature.setDay(new TemperatureValue(BigDecimal.valueOf(10.0)));
 
         daily.setTemperature(dailyTemperature);
 
@@ -86,7 +86,7 @@ public class DailyUnitTest {
     public void getTemperatureFeelsLike() {
         final Daily daily = new Daily();
         final TemperatureDaily dailyTemperature = new TemperatureDaily();
-        dailyTemperature.setEve(new TemperatureValue(new BigDecimal("44.2")));
+        dailyTemperature.setEve(new TemperatureValue(BigDecimal.valueOf(44.2)));
 
         daily.setFeelsLike(dailyTemperature);
 
@@ -96,7 +96,7 @@ public class DailyUnitTest {
     @Test
     public void getAtmosphericPressure() {
         final Daily daily = new Daily();
-        final BigDecimal atmosphericPressure = new BigDecimal("22.3");
+        final BigDecimal atmosphericPressure = BigDecimal.valueOf(22.3);
         daily.setAtmosphericPressureSeaLevel(atmosphericPressure);
 
         assertEquals(atmosphericPressure, daily.getAtmosphericPressureSeaLevel());
@@ -114,8 +114,8 @@ public class DailyUnitTest {
     @Test
     public void getWind() {
         final Daily daily = new Daily();
-        final WindSpeed windSpeed = new WindSpeed(new BigDecimal("13.2"));
-        final WindSpeed windSpeedGust = new WindSpeed(new BigDecimal("15.2"));
+        final WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
+        final WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(15.2));
         final Integer windDirection = 123;
         daily.setWindSpeed(windSpeed);
         daily.setWindSpeedGust(windSpeedGust);
@@ -138,7 +138,7 @@ public class DailyUnitTest {
     @Test
     public void getUvIndex() {
         final Daily daily = new Daily();
-        final BigDecimal uvIndex = new BigDecimal("22.4");
+        final BigDecimal uvIndex = BigDecimal.valueOf(22.4);
         daily.setUvIndex(uvIndex);
 
         assertEquals(uvIndex, daily.getUvIndex());
@@ -147,7 +147,7 @@ public class DailyUnitTest {
     @Test
     public void getProbabilityOfPrecipitation() {
         final Daily daily = new Daily();
-        final BigDecimal pop = new BigDecimal("0.84");
+        final BigDecimal pop = BigDecimal.valueOf(0.84);
         daily.setProbabilityOfPrecipitation(pop);
 
         assertEquals(pop, daily.getProbabilityOfPrecipitation());
@@ -156,7 +156,7 @@ public class DailyUnitTest {
     @Test
     public void getRain() {
         final Daily daily = new Daily();
-        final BigDecimal rain = new BigDecimal("20.2");
+        final BigDecimal rain = BigDecimal.valueOf(20.2);
         daily.setRain(rain);
 
         assertEquals(rain, daily.getRain());
@@ -165,7 +165,7 @@ public class DailyUnitTest {
     @Test
     public void getSnow() {
         final Daily daily = new Daily();
-        final BigDecimal snow = new BigDecimal("25.0");
+        final BigDecimal snow = BigDecimal.valueOf(25.0);
         daily.setSnow(snow);
 
         assertEquals(snow, daily.getSnow());

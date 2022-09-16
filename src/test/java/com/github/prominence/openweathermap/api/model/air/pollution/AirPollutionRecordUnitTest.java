@@ -161,7 +161,7 @@ public class AirPollutionRecordUnitTest {
         //given
         final AirPollutionRecord underTest = new AirPollutionRecord();
         final AirPollutionMeasurements components = new AirPollutionMeasurements();
-        final BigDecimal expected = new BigDecimal("0.5");
+        final BigDecimal expected = BigDecimal.valueOf(0.5);
         components.setFineParticlesMatter(new Concentration(expected));
         underTest.setComponents(components);
 

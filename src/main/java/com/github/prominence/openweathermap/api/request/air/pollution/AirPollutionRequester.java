@@ -23,20 +23,19 @@
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
 /**
  * The type Air pollution requester.
  */
-public class AirPollutionRequester {
-    private final RequestSettings requestSettings;
-
+public class AirPollutionRequester extends GenericRequester<AirPollutionRequester> {
     /**
      * Instantiates a new Air pollution requester.
      *
      * @param requestSettings request settings object.
      */
     public AirPollutionRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         requestSettings.appendToURL("data/2.5/air_pollution");
     }
 

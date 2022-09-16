@@ -76,8 +76,8 @@ public class CurrentUnitTest {
     @Test
     public void getTemperature() {
         final BaseMeasurement current = new BaseMeasurement();
-        final TemperatureValue temperature = new TemperatureValue(new BigDecimal("10"));
-        final TemperatureValue temperatureFeelsLike = new TemperatureValue(new BigDecimal("100"));
+        final TemperatureValue temperature = new TemperatureValue(BigDecimal.valueOf(10));
+        final TemperatureValue temperatureFeelsLike = new TemperatureValue(BigDecimal.valueOf(100));
         current.setTemperature(temperature);
         current.setTemperatureFeelsLike(temperatureFeelsLike);
 
@@ -88,7 +88,7 @@ public class CurrentUnitTest {
     @Test
     public void getAtmosphericPressure() {
         final BaseMeasurement current = new BaseMeasurement();
-        final BigDecimal atmosphericPressure = new BigDecimal("22.3");
+        final BigDecimal atmosphericPressure = BigDecimal.valueOf(22.3);
         current.setAtmosphericPressureSeaLevel(atmosphericPressure);
 
         assertEquals(atmosphericPressure, current.getAtmosphericPressureSeaLevel());
@@ -106,8 +106,8 @@ public class CurrentUnitTest {
     @Test
     public void getWind() {
         final BaseMeasurement current = new BaseMeasurement();
-        final WindSpeed windSpeed = new WindSpeed(new BigDecimal("13.2"));
-        final WindSpeed windSpeedGust = new WindSpeed(new BigDecimal("15.2"));
+        final WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
+        final WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(15.2));
         final Integer windDirection = 123;
         current.setWindSpeed(windSpeed);
         current.setWindSpeedGust(windSpeedGust);
@@ -130,7 +130,7 @@ public class CurrentUnitTest {
     @Test
     public void getUvIndex() {
         final BaseMeasurement current = new BaseMeasurement();
-        final BigDecimal uvIndex = new BigDecimal("22.4");
+        final BigDecimal uvIndex = BigDecimal.valueOf(22.4);
         current.setUvIndex(uvIndex);
 
         assertEquals(uvIndex, current.getUvIndex());
@@ -143,7 +143,7 @@ public class CurrentUnitTest {
     @Test
     public void getRain() {
         final BaseMeasurement current = new BaseMeasurement();
-        final BasePrecipitation rain = new BasePrecipitation(new BigDecimal("20.2"));
+        final BasePrecipitation rain = new BasePrecipitation(BigDecimal.valueOf(20.2));
         current.setRain(rain);
 
         assertEquals(rain, current.getRain());
@@ -152,7 +152,7 @@ public class CurrentUnitTest {
     @Test
     public void getSnow() {
         final BaseMeasurement current = new BaseMeasurement();
-        final BasePrecipitation snow = new BasePrecipitation(new BigDecimal("25.0"));
+        final BasePrecipitation snow = new BasePrecipitation(BigDecimal.valueOf(25.0));
         current.setSnow(snow);
 
         assertEquals(snow, current.getSnow());

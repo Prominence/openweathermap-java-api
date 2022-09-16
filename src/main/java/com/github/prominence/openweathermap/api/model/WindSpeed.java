@@ -36,8 +36,8 @@ import java.math.RoundingMode;
 @AllArgsConstructor
 public class WindSpeed {
 
-    private static final BigDecimal METER_PER_SECOND_TO_MILES_PER_HOUR_SCALE = new BigDecimal("2.236936");
-    private static final BigDecimal METER_PER_SECOND_TO_KILOMETERS_PER_HOUR_SCALE = new BigDecimal("3.6");
+    private static final BigDecimal METER_PER_SECOND_TO_MILES_PER_HOUR_SCALE = BigDecimal.valueOf(2.236936d);
+    private static final BigDecimal METER_PER_SECOND_TO_KILOMETERS_PER_HOUR_SCALE = BigDecimal.valueOf(3.6);
     private static final int DECIMAL_PLACES = 2;
     @NonNull
     private final BigDecimal value;

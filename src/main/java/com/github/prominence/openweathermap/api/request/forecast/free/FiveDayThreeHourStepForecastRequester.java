@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
@@ -32,8 +33,7 @@ import static com.github.prominence.openweathermap.api.request.RequestSettings.Q
 /**
  * The forecast requester.
  */
-public class FiveDayThreeHourStepForecastRequester {
-    private final RequestSettings requestSettings;
+public class FiveDayThreeHourStepForecastRequester extends GenericRequester<FiveDayThreeHourStepForecastRequester> {
 
     /**
      * Instantiates a new forecast requester.
@@ -41,7 +41,7 @@ public class FiveDayThreeHourStepForecastRequester {
      * @param requestSettings request settings object.
      */
     public FiveDayThreeHourStepForecastRequester(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
         this.requestSettings.appendToURL("data/2.5/forecast");
     }
 
