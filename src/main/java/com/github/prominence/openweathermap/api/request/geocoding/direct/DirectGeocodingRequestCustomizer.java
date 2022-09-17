@@ -22,7 +22,12 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
+import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+
+import java.util.List;
 
 public class DirectGeocodingRequestCustomizer {
     private final RequestSettings requestSettings;
@@ -36,11 +41,11 @@ public class DirectGeocodingRequestCustomizer {
         return this;
     }
 
-    public DirectGeocodingRequestTerminator retrieve() {
+    public JsonApiTerminator<List<Geocoding>> retrieve() {
         return new DirectGeocodingRequestTerminator(requestSettings);
     }
 
-    public DirectGeocodingRequestAsyncTerminator retrieveAsync() {
+    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
         return new DirectGeocodingRequestAsyncTerminator(requestSettings);
     }
 }

@@ -24,7 +24,10 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.COUNT_PARAM;
 
@@ -58,11 +61,11 @@ class FiveDayThreeHourStepForecastRequestCustomizer {
         return this;
     }
 
-    public FiveDayThreeHourStepForecastRequestTerminator retrieve() {
+    public JsonXmlApiTerminator<FiveDaysThreeHoursForecast> retrieve() {
         return new FiveDayThreeHourStepForecastRequestTerminator(requestSettings);
     }
 
-    public FiveDayThreeHourStepForecastAsyncRequestTerminator retrieveAsync() {
+    public JsonXmlAsyncApiTerminator<FiveDaysThreeHoursForecast> retrieveAsync() {
         return new FiveDayThreeHourStepForecastAsyncRequestTerminator(requestSettings);
     }
 }

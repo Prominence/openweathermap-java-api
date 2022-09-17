@@ -24,7 +24,10 @@ package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,11 +62,11 @@ public class ClimaticForecastRequestCustomizer {
         return this;
     }
 
-    public ClimaticForecastRequestTerminator retrieve() {
+    public JsonXmlApiTerminator<ThirtyDaysDailyForecast> retrieve() {
         return new ClimaticForecastRequestTerminator(requestSettings);
     }
 
-    public ClimaticForecastAsyncRequestTerminator retrieveAsync() {
+    public JsonXmlAsyncApiTerminator<ThirtyDaysDailyForecast> retrieveAsync() {
         return new ClimaticForecastAsyncRequestTerminator(requestSettings);
     }
 }

@@ -26,8 +26,13 @@ import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericListAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
-public class DirectGeocodingRequestAsyncTerminator extends GenericListAsyncRequestTerminator<Geocoding, GeocodingModel> {
+import java.util.List;
+
+public class DirectGeocodingRequestAsyncTerminator
+        extends GenericListAsyncRequestTerminator<Geocoding, GeocodingModel>
+        implements JsonAsyncApiTerminator<List<Geocoding>> {
     DirectGeocodingRequestAsyncTerminator(RequestSettings requestSettings) {
         super(new DirectGeocodingRequestTerminator(requestSettings));
     }

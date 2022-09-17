@@ -26,12 +26,14 @@ import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThre
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
 /**
  * Async request terminator.
  */
 class FiveDayThreeHourStepForecastAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<FiveDaysThreeHoursForecast, FiveDaysThreeHoursForecastModel> {
+        extends GenericAsyncRequestTerminator<FiveDaysThreeHoursForecast, FiveDaysThreeHoursForecastModel>
+        implements JsonXmlAsyncApiTerminator<FiveDaysThreeHoursForecast> {
 
     /**
      * Instantiates a new async request terminator.

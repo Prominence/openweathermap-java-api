@@ -28,14 +28,18 @@ import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyFore
 import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
 
-class FourDaysHourlyForecastRequestTerminator extends GenericRequestTerminator<HourlyForecast, HourlyForecastModel> {
+class FourDaysHourlyForecastRequestTerminator
+        extends GenericRequestTerminator<HourlyForecast, HourlyForecastModel>
+        implements JsonXmlApiTerminator<HourlyForecast> {
     FourDaysHourlyForecastRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
     }
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

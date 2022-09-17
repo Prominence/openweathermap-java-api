@@ -26,19 +26,24 @@ import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding
 import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
 
-public class ZipCodeGeocodingRequestTerminator extends GenericRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel> {
+public class ZipCodeGeocodingRequestTerminator
+        extends GenericRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel>
+        implements JsonApiTerminator<ZipCodeGeocoding> {
     ZipCodeGeocodingRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
     }
 
     @Override
     public String asXML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

@@ -22,7 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
+import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 public class ZipCodeGeocodingRequestCustomizer {
     private final RequestSettings requestSettings;
@@ -36,11 +39,11 @@ public class ZipCodeGeocodingRequestCustomizer {
         return this;
     }
 
-    public ZipCodeGeocodingRequestTerminator retrieve() {
+    public JsonApiTerminator<ZipCodeGeocoding> retrieve() {
         return new ZipCodeGeocodingRequestTerminator(requestSettings);
     }
 
-    public ZipCodeGeocodingRequestAsyncTerminator retrieveAsync() {
+    public JsonAsyncApiTerminator<ZipCodeGeocoding> retrieveAsync() {
         return new ZipCodeGeocodingRequestAsyncTerminator(requestSettings);
     }
 }

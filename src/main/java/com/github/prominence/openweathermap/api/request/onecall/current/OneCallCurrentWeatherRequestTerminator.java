@@ -25,11 +25,14 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
 
 /**
  * The type One call current weather request terminator.
  */
-class OneCallCurrentWeatherRequestTerminator extends GenericRequestTerminator<CurrentWeather, CurrentWeather> {
+class OneCallCurrentWeatherRequestTerminator
+        extends GenericRequestTerminator<CurrentWeather, CurrentWeather>
+        implements JsonApiTerminator<CurrentWeather> {
 
     /**
      * Instantiates a new One call current weather request terminator.
@@ -42,11 +45,13 @@ class OneCallCurrentWeatherRequestTerminator extends GenericRequestTerminator<Cu
 
     @Override
     public String asXML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

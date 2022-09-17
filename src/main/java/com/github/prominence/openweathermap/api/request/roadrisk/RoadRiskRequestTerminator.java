@@ -28,8 +28,13 @@ import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.model.roadrisk.RoadRiskModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericListRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
 
-public class RoadRiskRequestTerminator extends GenericListRequestTerminator<RoadRisk, RoadRiskModel> {
+import java.util.List;
+
+public class RoadRiskRequestTerminator
+        extends GenericListRequestTerminator<RoadRisk, RoadRiskModel>
+        implements UniversalFormatApiTerminator<List<RoadRisk>> {
     RoadRiskRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
     }

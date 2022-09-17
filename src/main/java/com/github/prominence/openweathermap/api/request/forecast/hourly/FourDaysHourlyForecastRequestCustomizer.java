@@ -23,7 +23,10 @@
 package com.github.prominence.openweathermap.api.request.forecast.hourly;
 
 import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.COUNT_PARAM;
 
@@ -44,11 +47,11 @@ class FourDaysHourlyForecastRequestCustomizer {
         return this;
     }
 
-    public FourDaysHourlyForecastRequestTerminator retrieve() {
+    public JsonXmlApiTerminator<HourlyForecast> retrieve() {
         return new FourDaysHourlyForecastRequestTerminator(requestSettings);
     }
 
-    public FourDaysHourlyForecastAsyncRequestTerminator retrieveAsync() {
+    public JsonXmlAsyncApiTerminator<HourlyForecast> retrieveAsync() {
         return new FourDaysHourlyForecastAsyncRequestTerminator(requestSettings);
     }
 }

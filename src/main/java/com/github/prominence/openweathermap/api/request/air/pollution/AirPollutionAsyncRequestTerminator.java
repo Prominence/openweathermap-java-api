@@ -26,11 +26,14 @@ import com.github.prominence.openweathermap.api.model.air.pollution.AirPollution
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetailsModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The type Air pollution async request terminator.
  */
-public class AirPollutionAsyncRequestTerminator extends GenericAsyncRequestTerminator<AirPollutionDetails, AirPollutionDetailsModel> {
+public class AirPollutionAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<AirPollutionDetails, AirPollutionDetailsModel>
+        implements JsonAsyncApiTerminator<AirPollutionDetails> {
 
     /**
      * Instantiates a new Air pollution async request terminator.

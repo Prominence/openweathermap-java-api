@@ -26,8 +26,11 @@ import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDa
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
-class ClimaticForecastAsyncRequestTerminator extends GenericAsyncRequestTerminator<ThirtyDaysDailyForecast, ThirtyDaysDailyForecastModel> {
+class ClimaticForecastAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<ThirtyDaysDailyForecast, ThirtyDaysDailyForecastModel>
+        implements JsonXmlAsyncApiTerminator<ThirtyDaysDailyForecast> {
 
     ClimaticForecastAsyncRequestTerminator(RequestSettings requestSettings) {
         super(new ClimaticForecastRequestTerminator(requestSettings));

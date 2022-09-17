@@ -25,11 +25,14 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The type One call current weather async request terminator.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator extends GenericAsyncRequestTerminator<CurrentWeather, CurrentWeather> {
+class OneCallCurrentWeatherAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<CurrentWeather, CurrentWeather>
+        implements JsonAsyncApiTerminator<CurrentWeather> {
 
     /**
      * Instantiates a new One call current weather async request terminator.

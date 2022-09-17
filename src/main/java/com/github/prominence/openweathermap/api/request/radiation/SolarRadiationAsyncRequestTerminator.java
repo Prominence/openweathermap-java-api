@@ -26,8 +26,11 @@ import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
 
-class SolarRadiationAsyncRequestTerminator extends GenericAsyncRequestTerminator<SolarRadiation, SolarRadiationModel> {
+class SolarRadiationAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<SolarRadiation, SolarRadiationModel>
+        implements UniversalFormatAsyncApiTerminator<SolarRadiation> {
     public SolarRadiationAsyncRequestTerminator(RequestSettings requestSettings) {
         super(new SolarRadiationRequestTerminator(requestSettings));
     }

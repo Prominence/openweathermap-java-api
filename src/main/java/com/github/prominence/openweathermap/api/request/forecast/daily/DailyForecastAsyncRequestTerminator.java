@@ -26,8 +26,11 @@ import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDays
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
-class DailyForecastAsyncRequestTerminator extends GenericAsyncRequestTerminator<SixteenDaysDailyForecast, SixteenDaysDailyForecastModel> {
+class DailyForecastAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<SixteenDaysDailyForecast, SixteenDaysDailyForecastModel>
+        implements JsonXmlAsyncApiTerminator<SixteenDaysDailyForecast> {
 
     DailyForecastAsyncRequestTerminator(RequestSettings requestSettings) {
         super(new DailyForecastRequestTerminator(requestSettings));

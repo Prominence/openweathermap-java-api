@@ -28,8 +28,11 @@ import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDa
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
 
-class ClimaticForecastRequestTerminator extends GenericRequestTerminator<ThirtyDaysDailyForecast, ThirtyDaysDailyForecastModel> {
+class ClimaticForecastRequestTerminator
+        extends GenericRequestTerminator<ThirtyDaysDailyForecast, ThirtyDaysDailyForecastModel>
+        implements JsonXmlApiTerminator<ThirtyDaysDailyForecast> {
 
     ClimaticForecastRequestTerminator(RequestSettings requestSettings)  {
         super(requestSettings);
@@ -37,6 +40,7 @@ class ClimaticForecastRequestTerminator extends GenericRequestTerminator<ThirtyD
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

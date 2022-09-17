@@ -26,8 +26,11 @@ import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding
 import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
-public class ZipCodeGeocodingRequestAsyncTerminator extends GenericAsyncRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel> {
+public class ZipCodeGeocodingRequestAsyncTerminator
+        extends GenericAsyncRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel>
+        implements JsonAsyncApiTerminator<ZipCodeGeocoding> {
     ZipCodeGeocodingRequestAsyncTerminator(RequestSettings requestSettings) {
         super(new ZipCodeGeocodingRequestTerminator(requestSettings));
     }

@@ -25,11 +25,14 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The type One call historical weather async request terminator.
  */
-class OneCallHistoricalWeatherAsyncRequestTerminator extends GenericAsyncRequestTerminator<HistoricalWeather, HistoricalWeather> {
+class OneCallHistoricalWeatherAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<HistoricalWeather, HistoricalWeather>
+        implements JsonAsyncApiTerminator<HistoricalWeather> {
 
     /**
      * Instantiates a new One call historical weather async request terminator.

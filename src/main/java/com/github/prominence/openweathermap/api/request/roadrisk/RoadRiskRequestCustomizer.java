@@ -22,7 +22,12 @@
 
 package com.github.prominence.openweathermap.api.request.roadrisk;
 
+import com.github.prominence.openweathermap.api.model.roadrisk.RoadRisk;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
+
+import java.util.List;
 
 public class RoadRiskRequestCustomizer {
     private final RequestSettings requestSettings;
@@ -31,11 +36,11 @@ public class RoadRiskRequestCustomizer {
         this.requestSettings = requestSettings;
     }
 
-    public RoadRiskRequestTerminator retrieve() {
+    public UniversalFormatApiTerminator<List<RoadRisk>> retrieve() {
         return new RoadRiskRequestTerminator(requestSettings);
     }
 
-    public RoadRiskAsyncRequestTerminator retrieveAsync() {
+    public UniversalFormatAsyncApiTerminator<List<RoadRisk>> retrieveAsync() {
         return new RoadRiskAsyncRequestTerminator(requestSettings);
     }
 }

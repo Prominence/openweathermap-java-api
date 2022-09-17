@@ -22,7 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
+import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The Air Pollution request customizer.
@@ -39,11 +42,11 @@ public class AirPollutionRequestCustomizer {
         this.requestSettings = requestSettings;
     }
 
-    public AirPollutionRequestTerminator retrieve() {
+    public JsonApiTerminator<AirPollutionDetails> retrieve() {
         return new AirPollutionRequestTerminator(requestSettings);
     }
 
-    public AirPollutionAsyncRequestTerminator retrieveAsync() {
+    public JsonAsyncApiTerminator<AirPollutionDetails> retrieveAsync() {
         return new AirPollutionAsyncRequestTerminator(requestSettings);
     }
 }

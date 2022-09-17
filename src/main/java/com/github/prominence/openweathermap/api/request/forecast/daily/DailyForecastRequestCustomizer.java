@@ -24,7 +24,10 @@ package com.github.prominence.openweathermap.api.request.forecast.daily;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,11 +62,11 @@ class DailyForecastRequestCustomizer {
         return this;
     }
 
-    public DailyForecastRequestTerminator retrieve() {
+    public JsonXmlApiTerminator<SixteenDaysDailyForecast> retrieve() {
         return new DailyForecastRequestTerminator(requestSettings);
     }
 
-    public DailyForecastAsyncRequestTerminator retrieveAsync() {
+    public JsonXmlAsyncApiTerminator<SixteenDaysDailyForecast> retrieveAsync() {
         return new DailyForecastAsyncRequestTerminator(requestSettings);
     }
 }

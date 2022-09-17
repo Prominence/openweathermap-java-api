@@ -26,8 +26,11 @@ import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyFore
 import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlAsyncApiTerminator;
 
-class FourDaysHourlyForecastAsyncRequestTerminator extends GenericAsyncRequestTerminator<HourlyForecast, HourlyForecastModel> {
+class FourDaysHourlyForecastAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<HourlyForecast, HourlyForecastModel>
+        implements JsonXmlAsyncApiTerminator<HourlyForecast> {
 
     FourDaysHourlyForecastAsyncRequestTerminator(RequestSettings requestSettings) {
         super(new FourDaysHourlyForecastRequestTerminator(requestSettings));

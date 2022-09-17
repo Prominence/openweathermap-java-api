@@ -22,7 +22,10 @@
 
 package com.github.prominence.openweathermap.api.request.radiation;
 
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
 
 public class SolarRadiationRequestCustomizer {
     private final RequestSettings requestSettings;
@@ -31,11 +34,11 @@ public class SolarRadiationRequestCustomizer {
         this.requestSettings = requestSettings;
     }
 
-    public SolarRadiationRequestTerminator retrieve() {
+    public UniversalFormatApiTerminator<SolarRadiation> retrieve() {
         return new SolarRadiationRequestTerminator(requestSettings);
     }
 
-    public SolarRadiationAsyncRequestTerminator retrieveAsync() {
+    public UniversalFormatAsyncApiTerminator<SolarRadiation> retrieveAsync() {
         return new SolarRadiationAsyncRequestTerminator(requestSettings);
     }
 }

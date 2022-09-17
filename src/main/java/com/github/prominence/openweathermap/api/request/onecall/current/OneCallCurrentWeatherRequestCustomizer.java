@@ -25,7 +25,10 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,11 +67,11 @@ class OneCallCurrentWeatherRequestCustomizer {
         return this;
     }
 
-    public OneCallCurrentWeatherRequestTerminator retrieve() {
+    public JsonApiTerminator<CurrentWeather> retrieve() {
         return new OneCallCurrentWeatherRequestTerminator(requestSettings);
     }
 
-    public OneCallCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+    public JsonAsyncApiTerminator<CurrentWeather> retrieveAsync() {
         return new OneCallCurrentWeatherAsyncRequestTerminator(requestSettings);
     }
 }

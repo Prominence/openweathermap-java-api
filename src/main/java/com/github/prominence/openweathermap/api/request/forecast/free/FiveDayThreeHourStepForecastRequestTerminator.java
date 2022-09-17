@@ -28,12 +28,14 @@ import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThre
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
 
 /**
  * The forecast request terminator.
  */
 class FiveDayThreeHourStepForecastRequestTerminator
-        extends GenericRequestTerminator<FiveDaysThreeHoursForecast, FiveDaysThreeHoursForecastModel> {
+        extends GenericRequestTerminator<FiveDaysThreeHoursForecast, FiveDaysThreeHoursForecastModel>
+        implements JsonXmlApiTerminator<FiveDaysThreeHoursForecast> {
 
     /**
      * Instantiates a new forecast request terminator.
@@ -46,6 +48,7 @@ class FiveDayThreeHourStepForecastRequestTerminator
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

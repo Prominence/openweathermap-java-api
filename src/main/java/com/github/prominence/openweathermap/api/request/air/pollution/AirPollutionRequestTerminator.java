@@ -28,11 +28,14 @@ import com.github.prominence.openweathermap.api.model.air.pollution.AirPollution
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetailsModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
 
 /**
  * The type Air pollution request terminator.
  */
-public class AirPollutionRequestTerminator extends GenericRequestTerminator<AirPollutionDetails, AirPollutionDetailsModel> {
+public class AirPollutionRequestTerminator
+        extends GenericRequestTerminator<AirPollutionDetails, AirPollutionDetailsModel>
+        implements JsonApiTerminator<AirPollutionDetails> {
 
     /**
      * Instantiates a new Air pollution request terminator.
@@ -45,11 +48,13 @@ public class AirPollutionRequestTerminator extends GenericRequestTerminator<AirP
 
     @Override
     public String asXML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

@@ -20,32 +20,8 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.reverse;
+package com.github.prominence.openweathermap.api.request.generic;
 
-import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+public interface JsonXmlAsyncApiTerminator<T> extends JsonAsyncApiTerminator<T>, XmlAsyncApiTerminator {
 
-import java.util.List;
-
-public class ReverseGeocodingRequestCustomizer {
-    private final RequestSettings requestSettings;
-
-    ReverseGeocodingRequestCustomizer(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
-
-    public ReverseGeocodingRequestCustomizer limit(int locationsNumber) {
-        requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
-        return this;
-    }
-
-    public JsonApiTerminator<List<Geocoding>> retrieve() {
-        return new ReverseGeocodingRequestTerminator(requestSettings);
-    }
-
-    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
-        return new ReverseGeocodingRequestAsyncTerminator(requestSettings);
-    }
 }

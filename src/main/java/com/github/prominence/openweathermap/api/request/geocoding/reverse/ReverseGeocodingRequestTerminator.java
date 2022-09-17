@@ -28,8 +28,13 @@ import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericListRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
 
-public class ReverseGeocodingRequestTerminator extends GenericListRequestTerminator<Geocoding, GeocodingModel> {
+import java.util.List;
+
+public class ReverseGeocodingRequestTerminator
+        extends GenericListRequestTerminator<Geocoding, GeocodingModel>
+        implements JsonApiTerminator<List<Geocoding>> {
     ReverseGeocodingRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
     }
@@ -40,11 +45,13 @@ public class ReverseGeocodingRequestTerminator extends GenericListRequestTermina
 
     @Override
     public String asXML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 

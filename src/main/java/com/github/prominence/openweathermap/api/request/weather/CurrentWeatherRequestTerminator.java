@@ -26,11 +26,14 @@ import com.github.prominence.openweathermap.api.model.weather.Weather;
 import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
 
 /**
  * The type Single result current weather request terminator.
  */
-public class CurrentWeatherRequestTerminator extends GenericRequestTerminator<Weather, WeatherModel> {
+public class CurrentWeatherRequestTerminator
+        extends GenericRequestTerminator<Weather, WeatherModel>
+        implements UniversalFormatApiTerminator<Weather> {
 
     /**
      * Instantiates a new Single result current weather request terminator.

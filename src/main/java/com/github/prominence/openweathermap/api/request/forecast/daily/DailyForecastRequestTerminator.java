@@ -28,8 +28,11 @@ import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDays
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
 
-class DailyForecastRequestTerminator extends GenericRequestTerminator<SixteenDaysDailyForecast, SixteenDaysDailyForecastModel> {
+class DailyForecastRequestTerminator
+        extends GenericRequestTerminator<SixteenDaysDailyForecast, SixteenDaysDailyForecastModel>
+        implements JsonXmlApiTerminator<SixteenDaysDailyForecast> {
 
     DailyForecastRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
@@ -37,6 +40,7 @@ class DailyForecastRequestTerminator extends GenericRequestTerminator<SixteenDay
 
     @Override
     public String asHTML() {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }
 
