@@ -24,15 +24,15 @@ package com.github.prominence.openweathermap.api.request.forecast.hourly;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ApiVariant;
-import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecast;
-import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyForecastModel;
+import com.github.prominence.openweathermap.api.model.forecast.hourly.FourDaysHourlyForecast;
+import com.github.prominence.openweathermap.api.model.forecast.hourly.FourDaysHourlyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
 
 class FourDaysHourlyForecastRequestTerminator
-        extends GenericRequestTerminator<HourlyForecast, HourlyForecastModel>
-        implements JsonXmlApiTerminator<HourlyForecast> {
+        extends GenericRequestTerminator<FourDaysHourlyForecast, FourDaysHourlyForecastModel>
+        implements JsonXmlApiTerminator<FourDaysHourlyForecast> {
     FourDaysHourlyForecastRequestTerminator(RequestSettings requestSettings) {
         super(requestSettings);
     }
@@ -49,7 +49,7 @@ class FourDaysHourlyForecastRequestTerminator
     }
 
     @Override
-    protected Class<HourlyForecastModel> getValueType() {
-        return HourlyForecastModel.class;
+    protected Class<FourDaysHourlyForecastModel> getValueType() {
+        return FourDaysHourlyForecastModel.class;
     }
 }

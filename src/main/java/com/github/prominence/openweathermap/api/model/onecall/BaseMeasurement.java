@@ -35,8 +35,8 @@ import com.github.prominence.openweathermap.api.model.BasePrecipitation;
 import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.WindSpeed;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -48,7 +48,7 @@ import java.util.List;
  * The current weather measurements.
  */
 @Data
-public class BaseMeasurement implements TimeAware, Wind {
+public class BaseMeasurement implements TimeAware, DetailedWindInfo {
 
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("dt")
@@ -115,7 +115,7 @@ public class BaseMeasurement implements TimeAware, Wind {
     }
 
     @JsonIgnore
-    public Wind getWind() {
+    public DetailedWindInfo getWind() {
         return this;
     }
 }

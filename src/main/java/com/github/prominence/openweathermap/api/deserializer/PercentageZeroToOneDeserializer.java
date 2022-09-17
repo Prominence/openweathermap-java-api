@@ -20,9 +20,24 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.deserializer;
 
-public interface Wind extends BaseWind {
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
-    WindSpeed getGust();
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Optional;
+
+public class PercentageZeroToOneDeserializer extends JsonDeserializer<Integer> {
+    @Override
+    public Integer deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+        return Optional.ofNullable(parser.readValueAs(BigDecimal.class))
+                .map(v -> v.multiply(BigDecimal.valueOf(100)))
+                .map(v -> v.setScale(0, RoundingMode.HALF_EVEN))
+                .map(BigDecimal::intValue)
+                .orElse(null);
+    }
 }

@@ -22,8 +22,8 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeatherModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
 import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
@@ -32,8 +32,8 @@ import com.github.prominence.openweathermap.api.request.generic.UniversalFormatA
  * The type Single result current weather async request terminator.
  */
 public class CurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<Weather, WeatherModel>
-        implements UniversalFormatAsyncApiTerminator<Weather> {
+        extends GenericAsyncRequestTerminator<CurrentWeather, CurrentWeatherModel>
+        implements UniversalFormatAsyncApiTerminator<CurrentWeather> {
 
     /**
      * Instantiates a new Single result current weather async request terminator.

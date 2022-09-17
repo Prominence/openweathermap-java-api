@@ -31,6 +31,9 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Entity for air pollution concentration measurement.
+ */
 @EqualsAndHashCode
 @ToString
 @AllArgsConstructor
@@ -39,6 +42,11 @@ public class Concentration {
     @NonNull
     private final BigDecimal value;
 
+    /**
+     * Returns the measured value in micrograms/m^3.
+     *
+     * @return value
+     */
     @JsonIgnore
     public BigDecimal asMicrogramsPerCubicMeters() {
         return value.setScale(DECIMAL_PLACES, RoundingMode.HALF_EVEN);

@@ -20,14 +20,30 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
-import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+import lombok.Data;
 
-public interface Location extends BaseLocation {
+import java.time.ZoneOffset;
 
-    OffsetDateTime getSunriseTime();
-
-    OffsetDateTime getSunsetTime();
-
+/**
+ * Represents location information.
+ */
+@Data
+public class BaseLocationModel implements BaseLocation {
+    @JsonProperty("id")
+    private long cityId;
+    @JsonProperty("name")
+    private String cityName;
+    @JsonProperty("coord")
+    private Coordinates coordinates;
+    @JsonProperty("country")
+    private String countryCode;
+    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
+    @JsonProperty("timezone")
+    private ZoneOffset timeZone;
 }

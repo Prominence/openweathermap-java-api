@@ -20,41 +20,91 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.climatic;
+package com.github.prominence.openweathermap.api.model.forecast.hourly;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.BaseWind;
+import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
-public interface Weather extends TimeAware {
+/**
+ * Forecast details for a single hour.
+ */
+public interface HourlyWeather extends TimeAware {
+    /**
+     * The temperature forecast.
+     *
+     * @return temperature
+     */
     @JsonIgnore
     Temperature getTemperature();
 
+    /**
+     * The humidity forecast.
+     *
+     * @return humidity
+     */
     @JsonIgnore
     Humidity getHumidity();
 
+    /**
+     * The atmospheric pressure forecast.
+     *
+     * @return pressure
+     */
     @JsonIgnore
-    BaseAtmosphericPressure getAtmosphericPressure();
+    AtmosphericPressure getAtmosphericPressure();
 
-    @JsonIgnore
-    BaseWind getWind();
+    /**
+     * The wind forecast.
+     *
+     * @return wind
+     */
+    DetailedWindInfo getWind();
 
+    /**
+     * The weather states.
+     *
+     * @return states
+     */
     List<WeatherCondition> getWeatherStates();
 
+    /**
+     * The forecasted cloud cover.
+     *
+     * @return clouds
+     */
+    Clouds getClouds();
+
+    /**
+     * The precipitation forecast.
+     *
+     * @return precipitation
+     */
     @JsonIgnore
-    Clouds getCloudCoverage();
+    PrecipitationForecast getHourlyPrecipitation();
 
+    /**
+     * The visibility forecast.
+     *
+     * @return visibility
+     */
+    Visibility getVisibility();
+
+    /**
+     * The part of day.
+     *
+     * @return part of day
+     */
     @JsonIgnore
-    DailyPrecipitation getPrecipitation();
-
-    OffsetDateTime getSunriseTime();
-
-    OffsetDateTime getSunsetTime();
+    DayTime getPartOfDay();
 }

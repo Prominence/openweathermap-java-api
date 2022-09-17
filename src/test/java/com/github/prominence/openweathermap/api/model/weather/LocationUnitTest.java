@@ -22,7 +22,8 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import com.github.prominence.openweathermap.api.model.Location;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
@@ -34,7 +35,7 @@ public class LocationUnitTest {
 
     @Test
     public void whenSet_thenValueIsSet() {
-        final WeatherModel weatherModel = new WeatherModel();
+        final CurrentWeatherModel weatherModel = new CurrentWeatherModel();
         final String name = "Minsk";
         final String country = "by";
         final OffsetDateTime sunrise = OffsetDateTime.now(ZoneOffset.UTC);
@@ -49,12 +50,14 @@ public class LocationUnitTest {
         weatherModel.setCityId(id);
         weatherModel.setCityName(name);
 
-        @SuppressWarnings("UnnecessaryLocalVariable") Location location = weatherModel;
+        @SuppressWarnings("UnnecessaryLocalVariable") BaseLocation location = weatherModel;
         assertEquals(id, location.getCityId());
         assertEquals(country, location.getCountryCode());
         assertEquals(name, location.getCityName());
-        assertEquals(sunrise, location.getSunriseTime());
-        assertEquals(sunset, location.getSunsetTime());
+
+        @SuppressWarnings("UnnecessaryLocalVariable") final SunlightStages sunlightStages = weatherModel;
+        assertEquals(sunrise, sunlightStages.getSunriseTime());
+        assertEquals(sunset, sunlightStages.getSunsetTime());
     }
 
 }

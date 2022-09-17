@@ -28,7 +28,7 @@ import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
-import com.github.prominence.openweathermap.api.model.forecast.free.Weather;
+import com.github.prominence.openweathermap.api.model.forecast.free.ThreeHourWeather;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +55,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (Weather weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -110,7 +110,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (Weather weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -165,7 +165,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (Weather weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());
@@ -219,7 +219,7 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        for (Weather weatherForecast : forecast.getWeatherForecasts()) {
+        for (ThreeHourWeather weatherForecast : forecast.getWeatherForecasts()) {
             assertNotNull(weatherForecast.getWeatherStates());
             assertNotNull(weatherForecast.getForecastTime());
             assertNotNull(weatherForecast.getTemperature());

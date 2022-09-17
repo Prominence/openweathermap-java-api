@@ -31,36 +31,81 @@ import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public interface Weather extends TimeAware {
+/**
+ * Weather forecasts for 3 hours.
+ */
+public interface ThreeHourWeather extends TimeAware {
+    /**
+     * The temperature forecast.
+     *
+     * @return temperature
+     */
     @JsonIgnore
     Temperature getTemperature();
 
+    /**
+     * The humidity forecast.
+     *
+     * @return humidity
+     */
     @JsonIgnore
     Humidity getHumidity();
 
+    /**
+     * The atmospheric pressure forecast.
+     *
+     * @return pressure
+     */
     @JsonIgnore
     AtmosphericPressure getAtmosphericPressure();
 
+    /**
+     * The wind forecast.
+     *
+     * @return wind
+     */
     @JsonIgnore
-    Wind getWind();
+    DetailedWindInfo getWind();
 
+    /**
+     * The weather states.
+     *
+     * @return states
+     */
     List<WeatherCondition> getWeatherStates();
 
+    /**
+     * The forecasted cloud cover.
+     *
+     * @return clouds
+     */
     Clouds getClouds();
 
-    Precipitation getRain();
+    /**
+     * The precipitation forecast.
+     *
+     * @return precipitation
+     */
+    @JsonIgnore
+    PrecipitationForecast getThreeHoursPrecipitation();
 
-    Precipitation getSnow();
-
+    /**
+     * The visibility forecast.
+     *
+     * @return visibility
+     */
     Visibility getVisibility();
 
-    BigDecimal getProbabilityOfPrecipitation();
-
+    /**
+     * The part of day.
+     *
+     * @return part of day
+     */
     @JsonIgnore
     DayTime getPartOfDay();
 }

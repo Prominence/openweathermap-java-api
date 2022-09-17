@@ -69,7 +69,7 @@ public class WeatherStateUnitTest {
     public void getWeatherIconUrl() {
         final WeatherCondition weatherState = WeatherCondition.getById(800);
 
-        String weatherIconUrl = weatherState.getDayIconUrl();
+        String weatherIconUrl = weatherState.getDayIconUrl(true);
 
         assertNotNull(weatherIconUrl);
         assertNotEquals("https://openweathermap.org/img/w/01.png", weatherIconUrl);

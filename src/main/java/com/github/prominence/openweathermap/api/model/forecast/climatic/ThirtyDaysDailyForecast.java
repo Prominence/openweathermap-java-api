@@ -23,13 +23,26 @@
 package com.github.prominence.openweathermap.api.model.forecast.climatic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
 
 import java.util.List;
 
+/**
+ * Root object for 30 days long daily forecasts.
+ */
 public interface ThirtyDaysDailyForecast {
-    @JsonIgnore
-    Location getLocation();
 
+    /**
+     * The location where the forecast belongs to.
+     * @return location
+     */
     @JsonIgnore
-    List<Weather> getWeatherForecasts();
+    BaseLocation getLocation();
+
+    /**
+     * The forecasts.
+     * @return days
+     */
+    @JsonIgnore
+    List<WeatherForecastDay> getWeatherForecasts();
 }

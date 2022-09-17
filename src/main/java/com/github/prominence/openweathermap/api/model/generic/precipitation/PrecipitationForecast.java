@@ -20,20 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.precipitation;
 
-import java.time.ZoneOffset;
+/**
+ * Expected precipitation values including the probability of precipitation.
+ */
+public interface PrecipitationForecast extends PrecipitationValues {
 
-public interface BaseLocation {
-
-    Coordinates getCoordinates();
-
-    ZoneOffset getTimeZone();
-
-    long getCityId();
-
-    String getCityName();
-
-    String getCountryCode();
-
+    /**
+     * The probability of precipitation in percentage (on 0-100 scale).
+     *
+     * @return precipitation probability.
+     */
+    Integer getProbabilityOfPrecipitation();
 }

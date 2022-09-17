@@ -20,15 +20,43 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.daily;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
-import java.math.BigDecimal;
+import com.github.prominence.openweathermap.api.model.CoordinateAware;
 
-public interface DailyPrecipitation {
+import java.time.ZoneOffset;
 
-    BigDecimal getRain();
+/**
+ * Contains basic location information.
+ */
+public interface BaseLocation extends CoordinateAware {
 
-    BigDecimal getSnow();
+    /**
+     * The time zone of the location.
+     *
+     * @return time zone
+     */
+    ZoneOffset getTimeZone();
 
-    BigDecimal getProbabilityOfPrecipitation();
+    /**
+     * The Id of the city.
+     *
+     * @return city Id
+     */
+    long getCityId();
+
+    /**
+     * The name of the city.
+     *
+     * @return city name
+     */
+    String getCityName();
+
+    /**
+     * The country code of the location.
+     *
+     * @return country code
+     */
+    String getCountryCode();
+
 }

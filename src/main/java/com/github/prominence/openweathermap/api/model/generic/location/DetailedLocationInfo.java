@@ -20,31 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.climatic;
-
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
 /**
- * The type Daily temperature.
+ * Location information containing additional details about population.
  */
-public interface Temperature {
-    TemperatureValue getMorning();
+public interface DetailedLocationInfo extends BaseLocation {
 
-    TemperatureValue getDay();
-
-    TemperatureValue getEve();
-
-    TemperatureValue getNight();
-
-    TemperatureValue getMin();
-
-    TemperatureValue getMax();
-
-    TemperatureValue getMorningFeelsLike();
-
-    TemperatureValue getDayFeelsLike();
-
-    TemperatureValue getEveFeelsLike();
-
-    TemperatureValue getNightFeelsLike();
+    /**
+     * The number of people living at this location.
+     *
+     * @return population
+     */
+    Long getPopulation();
 }

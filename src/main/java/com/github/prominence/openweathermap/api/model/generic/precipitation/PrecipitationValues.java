@@ -20,15 +20,26 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.hourly;
+package com.github.prominence.openweathermap.api.model.generic.precipitation;
 
-import com.github.prominence.openweathermap.api.model.Location;
+import java.math.BigDecimal;
 
-import java.util.List;
+/**
+ * Precipitation data representing forecasted values.
+ */
+public interface PrecipitationValues {
 
-public interface HourlyForecast {
+    /**
+     * The amount of rain expected in mm.
+     *
+     * @return rain mm
+     */
+    BigDecimal getRain();
 
-    Location getLocation();
-
-    List<Weather> getWeatherForecasts();
+    /**
+     * The amount of snow expected in mm.
+     *
+     * @return snow mm
+     */
+    BigDecimal getSnow();
 }

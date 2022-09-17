@@ -26,7 +26,7 @@ import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BasePrecipitation;
 import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.WindSpeed;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

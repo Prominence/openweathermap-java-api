@@ -25,7 +25,8 @@ package com.github.prominence.openweathermap.api.model.forecast.hourly;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.Location;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -37,27 +38,33 @@ import java.util.stream.Collectors;
  */
 @Data
 @JsonIgnoreProperties(value = {"cnt"})
-public class HourlyForecastModel implements HourlyForecast {
+public class FourDaysHourlyForecastModel implements FourDaysHourlyForecast {
 
     @JsonProperty("cod")
     private long cod;
     @JsonProperty("message")
     private BigDecimal message;
     @JsonProperty("list")
-    private List<WeatherForecast> forecasts;
+    private List<HourlyWeatherForecast> forecasts;
     @JsonProperty("city")
     private LocationModel locationModel;
 
     @Override
     @JsonIgnore
-    public Location getLocation() {
+    public BaseLocation getLocation() {
         return locationModel;
     }
 
     @Override
     @JsonIgnore
-    public List<Weather> getWeatherForecasts() {
-        return forecasts.stream().map(Weather.class::cast).collect(Collectors.toList());
+    public SunlightStages getSunlightStages() {
+        return locationModel;
+    }
+
+    @Override
+    @JsonIgnore
+    public List<HourlyWeather> getWeatherForecasts() {
+        return forecasts.stream().map(HourlyWeather.class::cast).collect(Collectors.toList());
     }
 
 }

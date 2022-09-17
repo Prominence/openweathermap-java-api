@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.PercentageZeroToOneDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
@@ -37,9 +38,10 @@ import com.github.prominence.openweathermap.api.model.MainMetrics;
 import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.WindModel;
 import com.github.prominence.openweathermap.api.model.forecast.MetaData;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindModel;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -53,7 +55,7 @@ import java.util.Optional;
  */
 @Data
 @JsonIgnoreProperties(value = {"dt_txt"})
-public class WeatherForecast implements TimeAware, Weather {
+public class WeatherForecast implements TimeAware, ThreeHourWeather, PrecipitationForecast {
 
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("dt")
@@ -67,14 +69,15 @@ public class WeatherForecast implements TimeAware, Weather {
     @JsonProperty("wind")
     private WindModel windModel;
     @JsonProperty("rain")
-    private Precipitation rain;
+    private Precipitation rainModel;
     @JsonProperty("snow")
-    private Precipitation snow;
+    private Precipitation snowModel;
     @JsonDeserialize(using = VisibilityDeserializer.class)
     @JsonProperty("visibility")
     private Visibility visibility;
+    @JsonDeserialize(using = PercentageZeroToOneDeserializer.class)
     @JsonProperty("pop")
-    private BigDecimal probabilityOfPrecipitation;
+    private Integer probabilityOfPrecipitation;
     @JsonProperty("sys")
     private MetaData sysMeta;
 
@@ -98,7 +101,7 @@ public class WeatherForecast implements TimeAware, Weather {
 
     @Override
     @JsonIgnore
-    public Wind getWind() {
+    public DetailedWindInfo getWind() {
         return windModel;
     }
 
@@ -106,5 +109,27 @@ public class WeatherForecast implements TimeAware, Weather {
     @JsonIgnore
     public DayTime getPartOfDay() {
         return Optional.ofNullable(sysMeta).map(MetaData::getPartOfDay).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public PrecipitationForecast getThreeHoursPrecipitation() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getRain() {
+        return Optional.ofNullable(rainModel)
+                .map(Precipitation::getThreeHourLevel)
+                .orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getSnow() {
+        return Optional.ofNullable(snowModel)
+                .map(Precipitation::getThreeHourLevel)
+                .orElse(null);
     }
 }

@@ -20,24 +20,20 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.onecall.current;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Represents location information.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class TemperatureDailyExtended extends TemperatureDaily {
-    @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("min")
-    private TemperatureValue min;
-    @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("max")
-    private TemperatureValue max;
+public class DetailedLocationModel extends BaseLocationModel implements DetailedLocationInfo {
+    @JsonProperty("population")
+    private Long population;
 }

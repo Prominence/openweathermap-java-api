@@ -20,31 +20,26 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.daily;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import java.time.OffsetDateTime;
 
 /**
- * The type Daily temperature.
+ * Represents the information about local sunlight stages.
  */
-public interface Temperature {
-    TemperatureValue getMorning();
+public interface SunlightStages {
 
-    TemperatureValue getDay();
+    /**
+     * The time when the sun rises.
+     *
+     * @return sunrise
+     */
+    OffsetDateTime getSunriseTime();
 
-    TemperatureValue getEve();
-
-    TemperatureValue getNight();
-
-    TemperatureValue getMin();
-
-    TemperatureValue getMax();
-
-    TemperatureValue getMorningFeelsLike();
-
-    TemperatureValue getDayFeelsLike();
-
-    TemperatureValue getEveFeelsLike();
-
-    TemperatureValue getNightFeelsLike();
+    /**
+     * The time when the sun sets.
+     *
+     * @return sunset
+     */
+    OffsetDateTime getSunsetTime();
 }

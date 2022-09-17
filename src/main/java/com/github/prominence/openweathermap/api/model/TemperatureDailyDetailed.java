@@ -20,32 +20,23 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.climatic;
+package com.github.prominence.openweathermap.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import java.time.ZoneOffset;
-
-/**
- * Represents location information.
- */
 @Data
-public class LocationModel implements Location {
-    @JsonProperty("id")
-    private long cityId;
-    @JsonProperty("name")
-    private String cityName;
-    @JsonProperty("coord")
-    private Coordinates coordinates;
-    @JsonProperty("country")
-    private String countryCode;
-    @JsonProperty("population")
-    private Long population;
-    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
-    @JsonProperty("timezone")
-    private ZoneOffset timeZone;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class TemperatureDailyDetailed extends TemperatureDailyBasic {
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("min")
+    private TemperatureValue min;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("max")
+    private TemperatureValue max;
 }

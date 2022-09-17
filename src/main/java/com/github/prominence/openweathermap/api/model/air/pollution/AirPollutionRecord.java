@@ -33,7 +33,7 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 
 /**
- * The type Air pollution record.
+ * The type representing an Air pollution record.
  */
 @Data
 public class AirPollutionRecord implements AirPollutionConcentration {

@@ -29,13 +29,14 @@ import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.forecast.daily.DailyPrecipitation;
-import com.github.prominence.openweathermap.api.model.forecast.daily.Location;
+import com.github.prominence.openweathermap.api.model.forecast.daily.DailyWeather;
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecastModel;
-import com.github.prominence.openweathermap.api.model.forecast.daily.Temperature;
-import com.github.prominence.openweathermap.api.model.forecast.daily.Weather;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -59,7 +60,7 @@ class DailyForecastResponseMapperTest {
         //then
         assertNotNull(actual);
 
-        final Location location = actual.getLocation();
+        final DetailedLocationInfo location = actual.getLocation();
         assertNotNull(location);
         assertEquals(new Coordinates(51.5085, -0.1258), location.getCoordinates());
         assertEquals(2643743, location.getCityId());
@@ -69,13 +70,14 @@ class DailyForecastResponseMapperTest {
         assertEquals(ZoneOffset.ofTotalSeconds(3600), location.getTimeZone());
 
         assertEquals(1, actual.getWeatherForecasts().size());
-        final Weather weatherForecast = actual.getWeatherForecasts().get(0);
+        final DailyWeather weatherForecast = actual.getWeatherForecasts().get(0);
         assertEquals(TestMappingUtils.parseDateTime(1568977200), weatherForecast.getForecastTime());
         // TODO: Does the API provide the sunrise and sunset info??? It is not officially described in the API but present in the example.
-        assertEquals(TestMappingUtils.parseDateTime(1568958164), weatherForecast.getSunriseTime());
-        assertEquals(TestMappingUtils.parseDateTime(1569002733), weatherForecast.getSunsetTime());
+        final SunlightStages sunlightStages = weatherForecast.getSunlightStages();
+        assertEquals(TestMappingUtils.parseDateTime(1568958164), sunlightStages.getSunriseTime());
+        assertEquals(TestMappingUtils.parseDateTime(1569002733), sunlightStages.getSunsetTime());
 
-        final Temperature temperature = weatherForecast.getTemperature();
+        final DailyTemperature temperature = weatherForecast.getTemperature();
         assertEquals(BigDecimal.valueOf(294), temperature.getDay().asKelvin());
         assertEquals(BigDecimal.valueOf(289), temperature.getMin().asKelvin());
         assertEquals(BigDecimal.valueOf(294), temperature.getMax().asKelvin());
@@ -93,7 +95,7 @@ class DailyForecastResponseMapperTest {
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(42, humidity.getHumidityPercentage());
 
-        final Wind wind = weatherForecast.getWind();
+        final DetailedWindInfo wind = weatherForecast.getWind();
         assertEquals(BigDecimal.valueOf(4.66), wind.getSpeed().asMetersPerSecond());
         assertEquals(102, wind.getDirectionDegrees());
         assertEquals(new BigDecimal("5.30"), wind.getGust().asMetersPerSecond());
@@ -108,9 +110,9 @@ class DailyForecastResponseMapperTest {
         assertEquals("clear sky", weatherState.getDescription());
         assertEquals("01d", weatherState.getIconId(DayTime.DAY));
 
-        final DailyPrecipitation precipitation = weatherForecast.getPrecipitation();
+        final PrecipitationForecast precipitation = weatherForecast.getPrecipitation();
         assertEquals(BigDecimal.valueOf(22.2), precipitation.getRain());
         assertEquals(BigDecimal.valueOf(24.2), precipitation.getSnow());
-        assertEquals(BigDecimal.valueOf(0.24), precipitation.getProbabilityOfPrecipitation());
+        assertEquals(24, precipitation.getProbabilityOfPrecipitation());
     }
 }

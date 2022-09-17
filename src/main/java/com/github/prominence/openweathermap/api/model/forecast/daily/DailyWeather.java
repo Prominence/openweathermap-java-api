@@ -20,47 +20,86 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.hourly;
+package com.github.prominence.openweathermap.api.model.forecast.daily;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.BasePrecipitation;
+import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.TimeAware;
-import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public interface Weather extends TimeAware {
-    @JsonIgnore
-    Temperature getTemperature();
+/**
+ * Interface for weather forecast data used by the SixteenDaysDailyForecast.
+ */
+public interface DailyWeather extends TimeAware {
 
+    /**
+     * The temperature data,
+     *
+     * @return temp
+     */
+    @JsonIgnore
+    DailyTemperature getTemperature();
+
+    /**
+     * The humidity.
+     *
+     * @return humidity
+     */
     @JsonIgnore
     Humidity getHumidity();
 
+    /**
+     * The atmospheric pressure.
+     *
+     * @return pressure
+     */
     @JsonIgnore
-    AtmosphericPressure getAtmosphericPressure();
+    BaseAtmosphericPressure getAtmosphericPressure();
 
+    /**
+     * The wind conditions.
+     *
+     * @return wind
+     */
+    @JsonIgnore
+    DetailedWindInfo getWind();
+
+    /**
+     * The weather states.
+     *
+     * @return weather
+     */
     List<WeatherCondition> getWeatherStates();
 
-    Clouds getClouds();
-
-    Wind getWind();
-
-    BasePrecipitation getRain();
-
-    BasePrecipitation getSnow();
-
-    Visibility getVisibility();
-
-    BigDecimal getProbabilityOfPrecipitation();
-
+    /**
+     * The cloud coverage.
+     *
+     * @return louds
+     */
     @JsonIgnore
-    DayTime getPartOfDay();
+    Clouds getCloudCoverage();
+
+    /**
+     * The precipitation.
+     *
+     * @return precipitation
+     */
+    @JsonIgnore
+    PrecipitationForecast getPrecipitation();
+
+    /**
+     * The sunlight stages.
+     *
+     * @return sunlight
+     */
+    @JsonIgnore
+    SunlightStages getSunlightStages();
 }

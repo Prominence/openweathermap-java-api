@@ -23,13 +23,27 @@
 package com.github.prominence.openweathermap.api.model.forecast.daily;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
 
 import java.util.List;
 
+/**
+ * Represents the daily forecast for the next sixteen days
+ */
 public interface SixteenDaysDailyForecast {
+    /**
+     * Information about the location.
+     *
+     * @return location
+     */
     @JsonIgnore
-    Location getLocation();
+    DetailedLocationInfo getLocation();
 
+    /**
+     * The daily forecasts.
+     *
+     * @return forecasts
+     */
     @JsonIgnore
-    List<Weather> getWeatherForecasts();
+    List<DailyWeather> getWeatherForecasts();
 }

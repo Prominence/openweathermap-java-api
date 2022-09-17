@@ -20,92 +20,118 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.hourly;
+package com.github.prominence.openweathermap.api.model.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
-import com.github.prominence.openweathermap.api.enums.DayTime;
+import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.BasePrecipitation;
 import com.github.prominence.openweathermap.api.model.Clouds;
+import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.MainMetrics;
 import com.github.prominence.openweathermap.api.model.Temperature;
-import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.WindModel;
-import com.github.prominence.openweathermap.api.model.forecast.MetaData;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindModel;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Represents weather forecast information for a particular timestamp.
+ * Represents weather information.
  */
 @Data
-@JsonIgnoreProperties(value = {"dt_txt"})
-public class WeatherForecast implements TimeAware, Weather {
+public class CurrentWeatherModel implements BaseLocation, SunlightStages, CurrentWeather {
 
-    @JsonDeserialize(using = EpochSecondsDeserializer.class)
-    @JsonProperty("dt")
-    private OffsetDateTime forecastTime;
-    @JsonProperty("main")
-    private MainMetrics mainMetrics;
+    @JsonProperty("coord")
+    private Coordinates coordinates;
     @JsonProperty("weather")
     private List<WeatherCondition> weatherStates = new ArrayList<>();
-    @JsonProperty("clouds")
-    private Clouds clouds;
-    @JsonProperty("wind")
-    private WindModel windModel;
-    @JsonProperty("rain")
-    private BasePrecipitation rain;
-    @JsonProperty("snow")
-    private BasePrecipitation snow;
+    @JsonProperty("base")
+    private String base;
+    @JsonProperty("main")
+    private MainMetrics main;
     @JsonDeserialize(using = VisibilityDeserializer.class)
     @JsonProperty("visibility")
     private Visibility visibility;
-    @JsonProperty("pop")
-    private BigDecimal probabilityOfPrecipitation;
+    @JsonProperty("wind")
+    private WindModel windModel;
+    @JsonProperty("clouds")
+    private Clouds clouds;
+    @JsonProperty("rain")
+    private Precipitation rain;
+    @JsonProperty("snow")
+    private Precipitation snow;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("dt")
+    private OffsetDateTime forecastTime;
     @JsonProperty("sys")
-    private MetaData sysMeta;
+    private City city;
+    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
+    @JsonProperty("timezone")
+    private ZoneOffset timeZone;
+    @JsonProperty("id")
+    private long cityId;
+    @JsonProperty("name")
+    private String cityName;
+    @JsonProperty("cod")
+    private long cod;
 
     @Override
     @JsonIgnore
     public Temperature getTemperature() {
-        return mainMetrics;
+        return main;
     }
 
     @Override
     @JsonIgnore
     public Humidity getHumidity() {
-        return mainMetrics;
+        return main;
     }
 
     @Override
     @JsonIgnore
     public AtmosphericPressure getAtmosphericPressure() {
-        return mainMetrics;
+        return main;
     }
 
     @Override
     @JsonIgnore
-    public Wind getWind() {
+    public BaseLocation getLocation() {
+        return this;
+    }
+
+    @JsonIgnore
+    public DetailedWindInfo getWind() {
         return windModel;
     }
 
     @Override
     @JsonIgnore
-    public DayTime getPartOfDay() {
-        return Optional.ofNullable(sysMeta).map(MetaData::getPartOfDay).orElse(null);
+    public String getCountryCode() {
+        return Optional.ofNullable(city).map(City::getCountryCode).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public OffsetDateTime getSunriseTime() {
+        return Optional.ofNullable(city).map(City::getSunriseTime).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public OffsetDateTime getSunsetTime() {
+        return Optional.ofNullable(city).map(City::getSunsetTime).orElse(null);
     }
 }

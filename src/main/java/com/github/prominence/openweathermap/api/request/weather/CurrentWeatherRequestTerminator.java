@@ -22,8 +22,8 @@
 
 package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.model.weather.Weather;
-import com.github.prominence.openweathermap.api.model.weather.WeatherModel;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeatherModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
@@ -32,8 +32,8 @@ import com.github.prominence.openweathermap.api.request.generic.UniversalFormatA
  * The type Single result current weather request terminator.
  */
 public class CurrentWeatherRequestTerminator
-        extends GenericRequestTerminator<Weather, WeatherModel>
-        implements UniversalFormatApiTerminator<Weather> {
+        extends GenericRequestTerminator<CurrentWeather, CurrentWeatherModel>
+        implements UniversalFormatApiTerminator<CurrentWeather> {
 
     /**
      * Instantiates a new Single result current weather request terminator.
@@ -45,8 +45,8 @@ public class CurrentWeatherRequestTerminator
     }
 
     @Override
-    protected Class<WeatherModel> getValueType() {
-        return WeatherModel.class;
+    protected Class<CurrentWeatherModel> getValueType() {
+        return CurrentWeatherModel.class;
     }
 
 }

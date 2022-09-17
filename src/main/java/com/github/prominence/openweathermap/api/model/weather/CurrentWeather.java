@@ -27,15 +27,15 @@ import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Location;
 import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.Visibility;
 import com.github.prominence.openweathermap.api.model.WeatherQueryResponse;
-import com.github.prominence.openweathermap.api.model.Wind;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
 import java.util.List;
 
-public interface Weather extends WeatherQueryResponse {
+public interface CurrentWeather extends WeatherQueryResponse {
 
     List<WeatherCondition> getWeatherStates();
 
@@ -49,12 +49,12 @@ public interface Weather extends WeatherQueryResponse {
     AtmosphericPressure getAtmosphericPressure();
 
     @JsonIgnore
-    Location getLocation();
+    BaseLocation getLocation();
 
     Visibility getVisibility();
 
     @JsonIgnore
-    Wind getWind();
+    DetailedWindInfo getWind();
 
     Clouds getClouds();
 

@@ -22,20 +22,14 @@
 
 package com.github.prominence.openweathermap.api.model.air.pollution;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.CoordinateAware;
 
 import java.util.List;
 
 /**
  * Interface of air pollution overview.
  */
-public interface AirPollutionDetails {
-    /**
-     * The coordinates of the measurement.
-     *
-     * @return coordinates
-     */
-    Coordinates getCoordinates();
+public interface AirPollutionDetails extends CoordinateAware {
 
     /**
      * The pollution details.

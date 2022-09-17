@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.request.forecast.free;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
-import com.github.prominence.openweathermap.api.model.forecast.free.Precipitation;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationValues;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -107,10 +107,10 @@ public class FiveDayThreeHourStepForecastResponseMapperUnitTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        assertEquals(BigDecimal.valueOf(2.44), forecast.getWeatherForecasts().get(0).getRain().getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(2.44), forecast.getWeatherForecasts().get(0).getThreeHoursPrecipitation().getRain());
         forecast.getWeatherForecasts().stream().skip(1)
-                .forEach(weatherForecast -> assertNull(Optional.ofNullable(weatherForecast.getRain())
-                        .map(Precipitation::getThreeHourLevel).orElse(null)));
+                .forEach(weatherForecast -> assertNull(Optional.ofNullable(weatherForecast.getThreeHoursPrecipitation())
+                        .map(PrecipitationValues::getRain).orElse(null)));
     }
 
     @Test
@@ -121,10 +121,10 @@ public class FiveDayThreeHourStepForecastResponseMapperUnitTest {
         assertNotNull(forecast);
         assertNotNull(forecast.getLocation());
         assertNotNull(forecast.getWeatherForecasts());
-        assertEquals(BigDecimal.valueOf(2.44), forecast.getWeatherForecasts().get(0).getSnow().getThreeHourLevel());
+        assertEquals(BigDecimal.valueOf(2.44), forecast.getWeatherForecasts().get(0).getThreeHoursPrecipitation().getSnow());
         forecast.getWeatherForecasts().stream().skip(1)
-                .forEach(weatherForecast -> assertNull(Optional.ofNullable(weatherForecast.getSnow())
-                        .map(Precipitation::getThreeHourLevel).orElse(null)));
+                .forEach(weatherForecast -> assertNull(Optional.ofNullable(weatherForecast.getThreeHoursPrecipitation())
+                        .map(PrecipitationValues::getSnow).orElse(null)));
     }
 
     @Test

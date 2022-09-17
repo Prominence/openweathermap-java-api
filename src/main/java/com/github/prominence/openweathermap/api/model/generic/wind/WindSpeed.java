@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.wind;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -31,6 +31,9 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Represents wind speed data using multiple supported measurement units.
+ */
 @EqualsAndHashCode
 @ToString
 @AllArgsConstructor
@@ -42,17 +45,32 @@ public class WindSpeed {
     @NonNull
     private final BigDecimal value;
 
+    /**
+     * Returns the value converted to m/s.
+     *
+     * @return speed m/s
+     */
     @JsonIgnore
     public BigDecimal asMetersPerSecond() {
         return value.setScale(DECIMAL_PLACES, RoundingMode.HALF_EVEN);
     }
 
+    /**
+     * Returns the value converted to mph.
+     *
+     * @return speed mph
+     */
     @JsonIgnore
     public BigDecimal asMilesPerHour() {
         return value.multiply(METER_PER_SECOND_TO_MILES_PER_HOUR_SCALE)
                 .setScale(DECIMAL_PLACES, RoundingMode.HALF_EVEN);
     }
 
+    /**
+     * Returns the value converted to kph.
+     *
+     * @return speed kph
+     */
     @JsonIgnore
     public BigDecimal asKilometersPerHour() {
         return value.multiply(METER_PER_SECOND_TO_KILOMETERS_PER_HOUR_SCALE)

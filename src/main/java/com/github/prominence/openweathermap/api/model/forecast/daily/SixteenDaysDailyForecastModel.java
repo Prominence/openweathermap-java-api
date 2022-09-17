@@ -26,6 +26,8 @@ package com.github.prominence.openweathermap.api.model.forecast.daily;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationModel;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -43,20 +45,20 @@ public class SixteenDaysDailyForecastModel implements SixteenDaysDailyForecast {
     @JsonProperty("message")
     private BigDecimal message;
     @JsonProperty("city")
-    private LocationModel locationModel;
+    private DetailedLocationModel locationModel;
     @JsonProperty("list")
     private List<WeatherForecast> forecasts;
 
     @Override
     @JsonIgnore
-    public Location getLocation() {
+    public DetailedLocationInfo getLocation() {
         return locationModel;
     }
 
     @Override
     @JsonIgnore
-    public List<Weather> getWeatherForecasts() {
-        return forecasts.stream().map(Weather.class::cast).collect(Collectors.toList());
+    public List<DailyWeather> getWeatherForecasts() {
+        return forecasts.stream().map(DailyWeather.class::cast).collect(Collectors.toList());
     }
 
 }

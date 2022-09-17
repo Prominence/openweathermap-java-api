@@ -29,9 +29,11 @@ import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageD
 import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.TemperatureDailyBasic;
+import com.github.prominence.openweathermap.api.model.TemperatureDailyDetailed;
 import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.TimeAware;
-import com.github.prominence.openweathermap.api.model.WindSpeed;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -63,9 +65,9 @@ public class Daily implements TimeAware {
     @JsonProperty("moon_phase")
     private MoonPhase moonPhase;
     @JsonProperty("temp")
-    private TemperatureDailyExtended temperature;
+    private TemperatureDailyDetailed temperature;
     @JsonProperty("feels_like")
-    private TemperatureDaily feelsLike;
+    private TemperatureDailyBasic feelsLike;
     @JsonProperty("pressure")
     private BigDecimal atmosphericPressureSeaLevel;
     @JsonDeserialize(using = RequiredPercentageDeserializer.class)

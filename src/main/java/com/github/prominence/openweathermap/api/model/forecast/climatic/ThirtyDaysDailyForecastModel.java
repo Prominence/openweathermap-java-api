@@ -25,6 +25,8 @@ package com.github.prominence.openweathermap.api.model.forecast.climatic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocationModel;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -41,20 +43,20 @@ public class ThirtyDaysDailyForecastModel implements ThirtyDaysDailyForecast {
     @JsonProperty("message")
     private BigDecimal message;
     @JsonProperty("city")
-    private LocationModel locationModel;
+    private BaseLocationModel locationModel;
     @JsonProperty("list")
     private List<WeatherForecast> forecasts;
 
     @Override
     @JsonIgnore
-    public Location getLocation() {
+    public BaseLocation getLocation() {
         return locationModel;
     }
 
     @Override
     @JsonIgnore
-    public List<Weather> getWeatherForecasts() {
-        return forecasts.stream().map(Weather.class::cast).collect(Collectors.toList());
+    public List<WeatherForecastDay> getWeatherForecasts() {
+        return forecasts.stream().map(WeatherForecastDay.class::cast).collect(Collectors.toList());
     }
 
 }

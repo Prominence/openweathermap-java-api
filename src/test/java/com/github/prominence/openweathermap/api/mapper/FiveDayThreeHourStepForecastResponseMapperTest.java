@@ -29,13 +29,13 @@ import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.LocationExtended;
 import com.github.prominence.openweathermap.api.model.Temperature;
-import com.github.prominence.openweathermap.api.model.Wind;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
-import com.github.prominence.openweathermap.api.model.forecast.free.Precipitation;
-import com.github.prominence.openweathermap.api.model.forecast.free.Weather;
+import com.github.prominence.openweathermap.api.model.forecast.free.ThreeHourWeather;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -61,27 +61,29 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         //then
         assertNotNull(actual);
 
-        final LocationExtended location = actual.getLocation();
+        final DetailedLocationInfo location = actual.getLocation();
         assertNotNull(location);
         assertEquals(new Coordinates(51.5073, -0.1277), location.getCoordinates());
         assertEquals(2643743, location.getCityId());
         assertEquals("London", location.getCityName());
         assertEquals("GB", location.getCountryCode());
         assertEquals(1000000, location.getPopulation());
-        assertEquals(TestMappingUtils.parseDateTime(1647324903), location.getSunriseTime());
-        assertEquals(TestMappingUtils.parseDateTime(1647367441), location.getSunsetTime());
         assertEquals(ZoneOffset.ofTotalSeconds(0), location.getTimeZone());
 
+        final SunlightStages sunlightStages = actual.getSunlightStages();
+        assertEquals(TestMappingUtils.parseDateTime(1647324903), sunlightStages.getSunriseTime());
+        assertEquals(TestMappingUtils.parseDateTime(1647367441), sunlightStages.getSunsetTime());
 
-        final List<Weather> weatherForecastList = actual.getWeatherForecasts();
+
+        final List<ThreeHourWeather> weatherForecastList = actual.getWeatherForecasts();
         assertEquals(2, weatherForecastList.size());
 
-        final Weather weatherForecast = weatherForecastList.get(0);
+        final ThreeHourWeather weatherForecast = weatherForecastList.get(0);
         assertNotNull(weatherForecast);
 
         assertEquals(TestMappingUtils.parseDateTime(1647345600), weatherForecast.getForecastTime());
         assertEquals(new BigDecimal("10000.00"), weatherForecast.getVisibility().asMeters());
-        assertEquals(new BigDecimal(0), weatherForecast.getProbabilityOfPrecipitation());
+        assertEquals(0, weatherForecast.getThreeHoursPrecipitation().getProbabilityOfPrecipitation());
         assertEquals(OffsetDateTime.of(2022, 3, 15, 12, 0, 0, 0, ZoneOffset.UTC),
                 weatherForecast.getForecastTime());
         assertEquals(DayTime.DAY, weatherForecast.getPartOfDay());
@@ -104,7 +106,7 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         final Clouds clouds = weatherForecast.getClouds();
         assertEquals(85, clouds.getValuePercentage());
 
-        final Wind wind = weatherForecast.getWind();
+        final DetailedWindInfo wind = weatherForecast.getWind();
         assertEquals(BigDecimal.valueOf(3.25), wind.getSpeed().asMetersPerSecond());
         assertEquals(134, wind.getDirectionDegrees());
         assertEquals(BigDecimal.valueOf(4.45), wind.getGust().asMetersPerSecond());
@@ -117,10 +119,10 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         assertEquals("overcast clouds: 85-100%", weatherState.getDescription());
         assertEquals("04d", weatherState.getIconId(weatherForecast.getPartOfDay()));
 
-        final Precipitation rain = weatherForecast.getRain();
-        assertEquals(BigDecimal.valueOf(22.1), rain.getThreeHourLevel());
+        final BigDecimal rain = weatherForecast.getThreeHoursPrecipitation().getRain();
+        assertEquals(BigDecimal.valueOf(22.1), rain);
 
-        final Precipitation snow = weatherForecast.getSnow();
-        assertEquals(BigDecimal.valueOf(13.6), snow.getThreeHourLevel());
+        final BigDecimal snow = weatherForecast.getThreeHoursPrecipitation().getSnow();
+        assertEquals(BigDecimal.valueOf(13.6), snow);
     }
 }

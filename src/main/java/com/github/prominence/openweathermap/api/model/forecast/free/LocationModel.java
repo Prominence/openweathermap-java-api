@@ -25,32 +25,22 @@ package com.github.prominence.openweathermap.api.model.forecast.free;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
-import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.LocationExtended;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationModel;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 /**
  * Represents location information.
  */
 @Data
-public class LocationModel implements LocationExtended {
-    @JsonProperty("id")
-    private long cityId;
-    @JsonProperty("name")
-    private String cityName;
-    @JsonProperty("coord")
-    private Coordinates coordinates;
-    @JsonProperty("country")
-    private String countryCode;
-    @JsonProperty("population")
-    private Long population;
-    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
-    @JsonProperty("timezone")
-    private ZoneOffset timeZone;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class LocationModel extends DetailedLocationModel implements DetailedLocationInfo, SunlightStages {
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("sunrise")
     private OffsetDateTime sunriseTime;

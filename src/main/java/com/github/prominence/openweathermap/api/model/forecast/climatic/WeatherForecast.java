@@ -28,17 +28,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
-import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.BaseWind;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Humidity;
+import com.github.prominence.openweathermap.api.model.TemperatureDailyBasic;
+import com.github.prominence.openweathermap.api.model.TemperatureDailyDetailed;
 import com.github.prominence.openweathermap.api.model.TemperatureValue;
-import com.github.prominence.openweathermap.api.model.WindSpeed;
-import com.github.prominence.openweathermap.api.model.onecall.current.TemperatureDaily;
-import com.github.prominence.openweathermap.api.model.onecall.current.TemperatureDailyExtended;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationValues;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.wind.BasicWind;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -51,15 +53,15 @@ import java.util.Optional;
  * Represents weather forecast information for a particular timestamp.
  */
 @Data
-public class WeatherForecast implements Weather, Temperature, BaseAtmosphericPressure, BaseWind, Humidity,
-        DailyPrecipitation {
+public class WeatherForecast implements WeatherForecastDay, DailyTemperature, BaseAtmosphericPressure, BasicWind, Humidity,
+        PrecipitationValues, SunlightStages {
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("dt")
     private OffsetDateTime forecastTime;
     @JsonProperty("temp")
-    private TemperatureDailyExtended temperature;
+    private TemperatureDailyDetailed temperature;
     @JsonProperty("feels_like")
-    private TemperatureDaily feelsLike;
+    private TemperatureDailyBasic feelsLike;
     @JsonProperty("weather")
     private List<WeatherCondition> weatherStates = new ArrayList<>();
     @JsonDeserialize(using = RequiredPercentageDeserializer.class)
@@ -79,9 +81,6 @@ public class WeatherForecast implements Weather, Temperature, BaseAtmosphericPre
     private BigDecimal rain;
     @JsonProperty("snow")
     private BigDecimal snow;
-    @JsonDeserialize(using = VisibilityDeserializer.class)
-    @JsonProperty("pop")
-    private BigDecimal probabilityOfPrecipitation;
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("sunrise")
     private OffsetDateTime sunriseTime;
@@ -91,74 +90,74 @@ public class WeatherForecast implements Weather, Temperature, BaseAtmosphericPre
 
     @Override
     @JsonIgnore
-    public Temperature getTemperature() {
+    public DailyTemperature getTemperature() {
         return this;
     }
 
     @Override
     @JsonIgnore
-    public BaseWind getWind() {
+    public BasicWind getWind() {
         return this;
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getMorning() {
-        return Optional.ofNullable(temperature).map(TemperatureDaily::getMorning).orElse(null);
+        return Optional.ofNullable(temperature).map(TemperatureDailyBasic::getMorning).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getDay() {
-        return Optional.ofNullable(temperature).map(TemperatureDaily::getDay).orElse(null);
+        return Optional.ofNullable(temperature).map(TemperatureDailyBasic::getDay).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getEve() {
-        return Optional.ofNullable(temperature).map(TemperatureDaily::getEve).orElse(null);
+        return Optional.ofNullable(temperature).map(TemperatureDailyBasic::getEve).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getNight() {
-        return Optional.ofNullable(temperature).map(TemperatureDaily::getNight).orElse(null);
+        return Optional.ofNullable(temperature).map(TemperatureDailyBasic::getNight).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getMin() {
-        return Optional.ofNullable(temperature).map(TemperatureDailyExtended::getMin).orElse(null);
+        return Optional.ofNullable(temperature).map(TemperatureDailyDetailed::getMin).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getMax() {
-        return Optional.ofNullable(temperature).map(TemperatureDailyExtended::getMax).orElse(null);
+        return Optional.ofNullable(temperature).map(TemperatureDailyDetailed::getMax).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getMorningFeelsLike() {
-        return Optional.ofNullable(feelsLike).map(TemperatureDaily::getMorning).orElse(null);
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getMorning).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getDayFeelsLike() {
-        return Optional.ofNullable(feelsLike).map(TemperatureDaily::getDay).orElse(null);
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getDay).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getEveFeelsLike() {
-        return Optional.ofNullable(feelsLike).map(TemperatureDaily::getEve).orElse(null);
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getEve).orElse(null);
     }
 
     @Override
     @JsonIgnore
     public TemperatureValue getNightFeelsLike() {
-        return Optional.ofNullable(feelsLike).map(TemperatureDaily::getNight).orElse(null);
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getNight).orElse(null);
     }
 
     @Override
@@ -181,7 +180,13 @@ public class WeatherForecast implements Weather, Temperature, BaseAtmosphericPre
 
     @Override
     @JsonIgnore
-    public DailyPrecipitation getPrecipitation() {
+    public PrecipitationValues getPrecipitation() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public SunlightStages getSunlightStages() {
         return this;
     }
 }

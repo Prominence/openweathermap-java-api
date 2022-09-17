@@ -23,8 +23,10 @@
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.TemperatureDailyBasic;
+import com.github.prominence.openweathermap.api.model.TemperatureDailyDetailed;
 import com.github.prominence.openweathermap.api.model.TemperatureValue;
-import com.github.prominence.openweathermap.api.model.WindSpeed;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -74,7 +76,7 @@ public class DailyUnitTest {
     @Test
     public void getTemperature() {
         final Daily daily = new Daily();
-        final TemperatureDailyExtended dailyTemperature = new TemperatureDailyExtended();
+        final TemperatureDailyDetailed dailyTemperature = new TemperatureDailyDetailed();
         dailyTemperature.setDay(new TemperatureValue(BigDecimal.valueOf(10.0)));
 
         daily.setTemperature(dailyTemperature);
@@ -85,7 +87,7 @@ public class DailyUnitTest {
     @Test
     public void getTemperatureFeelsLike() {
         final Daily daily = new Daily();
-        final TemperatureDaily dailyTemperature = new TemperatureDaily();
+        final TemperatureDailyBasic dailyTemperature = new TemperatureDailyBasic();
         dailyTemperature.setEve(new TemperatureValue(BigDecimal.valueOf(44.2)));
 
         daily.setFeelsLike(dailyTemperature);

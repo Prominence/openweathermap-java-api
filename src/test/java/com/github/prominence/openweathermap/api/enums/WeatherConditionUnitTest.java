@@ -101,7 +101,7 @@ public class WeatherConditionUnitTest {
         final WeatherCondition underTest = WeatherCondition.ASH;
 
         //when
-        final String actual = underTest.getDayIconUrl();
+        final String actual = underTest.getDayIconUrl(false);
 
         //then
         assertTrue(actual.endsWith(EXPECTED_ICON + "d.png"));
@@ -113,7 +113,7 @@ public class WeatherConditionUnitTest {
         final WeatherCondition underTest = WeatherCondition.ASH;
 
         //when
-        final String actual = underTest.getNightIconUrl();
+        final String actual = underTest.getNightIconUrl(true);
 
         //then
         assertTrue(actual.endsWith(EXPECTED_ICON + "n.png"));

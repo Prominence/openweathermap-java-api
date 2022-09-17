@@ -346,29 +346,36 @@ public enum WeatherCondition {
     /**
      * Gets day icon url.
      *
+     * @param secure Determines whether we need to use secure channel (HTTPS) for loading the image.
      * @return the day icon url
      */
-    public String getDayIconUrl() {
-        return getIconUrl(getDayIconId());
+    public String getDayIconUrl(boolean secure) {
+        return getIconUrl(getDayIconId(), secure);
     }
 
     /**
      * Gets night icon url.
      *
+     * @param secure Determines whether we need to use secure channel (HTTPS) for loading the image.
      * @return the night icon url
      */
-    public String getNightIconUrl() {
-        return getIconUrl(getNightIconId());
+    public String getNightIconUrl(boolean secure) {
+        return getIconUrl(getNightIconId(), secure);
     }
 
     /**
      * Gets icon url.
      *
      * @param iconId the icon id
+     * @param secure Determines whether we need to use secure channel (HTTPS) for loading the image.
      * @return the icon url
      */
-    public static String getIconUrl(String iconId) {
-        return "https://openweathermap.org/img/w/" + iconId + ".png";
+    public static String getIconUrl(String iconId, boolean secure) {
+        String scheme = "http";
+        if (secure) {
+            scheme = "https";
+        }
+        return scheme + "://openweathermap.org/img/w/" + iconId + ".png";
     }
 
     /**

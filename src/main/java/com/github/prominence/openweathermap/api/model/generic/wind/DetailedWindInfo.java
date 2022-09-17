@@ -20,21 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.climatic;
+package com.github.prominence.openweathermap.api.model.generic.wind;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+/**
+ * Detailed information about wind.
+ */
+public interface DetailedWindInfo extends BasicWind {
 
-import java.time.ZoneOffset;
-
-public interface Location {
-
-    Coordinates getCoordinates();
-
-    ZoneOffset getTimeZone();
-
-    long getCityId();
-
-    String getCityName();
-
-    String getCountryCode();
+    /**
+     * Wind speed for gust.
+     *
+     * @return gust
+     */
+    WindSpeed getGust();
 }

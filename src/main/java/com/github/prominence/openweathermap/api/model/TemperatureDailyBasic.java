@@ -24,20 +24,22 @@ package com.github.prominence.openweathermap.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
 import lombok.Data;
 
-/**
- * The type Wind.
- */
 @Data
-public class WindModel implements Wind {
-    @JsonDeserialize(using = WindSpeedDeserializer.class)
-    @JsonProperty("speed")
-    private WindSpeed speed;
-    @JsonProperty("deg")
-    private Integer directionDegrees;
-    @JsonDeserialize(using = WindSpeedDeserializer.class)
-    @JsonProperty("gust")
-    private WindSpeed gust;
+public class TemperatureDailyBasic {
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("morn")
+    private TemperatureValue morning;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("day")
+    private TemperatureValue day;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("eve")
+    private TemperatureValue eve;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("night")
+    private TemperatureValue night;
+
 }

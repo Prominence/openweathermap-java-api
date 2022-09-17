@@ -20,9 +20,10 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.exception;
 
-public interface LocationExtended extends Location {
-
-    Long getPopulation();
+public class ApiPayloadParseException extends RuntimeException {
+    public ApiPayloadParseException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

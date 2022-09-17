@@ -25,15 +25,16 @@ package com.github.prominence.openweathermap.api.mapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.BaseWind;
 import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.Location;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.Temperature;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.Weather;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.WeatherForecastDay;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.wind.BasicWind;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ import java.math.BigDecimal;
 import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ClimaticForecastResponseMapperTest {
 
@@ -56,20 +58,23 @@ class ClimaticForecastResponseMapperTest {
         //then
         assertNotNull(actual);
 
-        final Location location = actual.getLocation();
+        final BaseLocation location = actual.getLocation();
         assertNotNull(location);
         assertEquals(new Coordinates(51.5073, -0.1277), location.getCoordinates());
         assertEquals(2643743, location.getCityId());
+        assertNull(location.getTimeZone());
         assertEquals("London", location.getCityName());
         assertEquals("GB", location.getCountryCode());
 
         assertEquals(1, actual.getWeatherForecasts().size());
-        final Weather weatherForecast = actual.getWeatherForecasts().get(0);
+        final WeatherForecastDay weatherForecast = actual.getWeatherForecasts().get(0);
         assertEquals(TestMappingUtils.parseDateTime(1594382400), weatherForecast.getForecastTime());
-        assertEquals(TestMappingUtils.parseDateTime(1594353335), weatherForecast.getSunriseTime());
-        assertEquals(TestMappingUtils.parseDateTime(1594412149), weatherForecast.getSunsetTime());
 
-        final Temperature temperature = weatherForecast.getTemperature();
+        final SunlightStages sunlightStages = weatherForecast.getSunlightStages();
+        assertEquals(TestMappingUtils.parseDateTime(1594353335), sunlightStages.getSunriseTime());
+        assertEquals(TestMappingUtils.parseDateTime(1594412149), sunlightStages.getSunsetTime());
+
+        final DailyTemperature temperature = weatherForecast.getTemperature();
         assertEquals(BigDecimal.valueOf(287), temperature.getDay().asKelvin());
         assertEquals(BigDecimal.valueOf(285), temperature.getMin().asKelvin());
         assertEquals(BigDecimal.valueOf(288), temperature.getMax().asKelvin());
@@ -87,7 +92,7 @@ class ClimaticForecastResponseMapperTest {
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(84, humidity.getHumidityPercentage());
 
-        final BaseWind wind = weatherForecast.getWind();
+        final BasicWind wind = weatherForecast.getWind();
         assertEquals(BigDecimal.valueOf(6.78), wind.getSpeed().asMetersPerSecond());
         assertEquals(320, wind.getDirectionDegrees());
 

@@ -25,30 +25,22 @@ package com.github.prominence.openweathermap.api.model.forecast.hourly;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
-import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.Location;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocationModel;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 /**
  * Represents location information.
  */
 @Data
-public class LocationModel implements Location {
-    @JsonProperty("id")
-    private long cityId;
-    @JsonProperty("name")
-    private String cityName;
-    @JsonProperty("coord")
-    private Coordinates coordinates;
-    @JsonProperty("country")
-    private String countryCode;
-    @JsonDeserialize(using = ZoneOffsetDeserializer.class)
-    @JsonProperty("timezone")
-    private ZoneOffset timeZone;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class LocationModel extends BaseLocationModel implements BaseLocation, SunlightStages {
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("sunrise")
     private OffsetDateTime sunriseTime;

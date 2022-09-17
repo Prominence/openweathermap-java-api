@@ -20,10 +20,24 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.exception;
+package com.github.prominence.openweathermap.api.model.generic.wind;
 
-public class WeatherParseException extends RuntimeException {
-    public WeatherParseException(String message, Throwable cause) {
-        super(message, cause);
-    }
+/**
+ * Basic information about wind measurements/forecast.
+ */
+public interface BasicWind {
+
+    /**
+     * The wind speed.
+     *
+     * @return speed
+     */
+    WindSpeed getSpeed();
+
+    /**
+     * The wind direction in degrees.
+     *
+     * @return direction
+     */
+    Integer getDirectionDegrees();
 }

@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.request.weather;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.UniversalFormatApiTerminator;
 import com.github.prominence.openweathermap.api.request.generic.UniversalFormatAsyncApiTerminator;
@@ -54,11 +54,11 @@ public class CurrentWeatherRequestCustomizer {
         return this;
     }
 
-    public UniversalFormatApiTerminator<Weather> retrieve() {
+    public UniversalFormatApiTerminator<CurrentWeather> retrieve() {
         return new CurrentWeatherRequestTerminator(requestSettings);
     }
 
-    public UniversalFormatAsyncApiTerminator<Weather> retrieveAsync() {
+    public UniversalFormatAsyncApiTerminator<CurrentWeather> retrieveAsync() {
         return new CurrentWeatherAsyncRequestTerminator(requestSettings);
     }
 }

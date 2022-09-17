@@ -20,15 +20,40 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.climatic;
+package com.github.prominence.openweathermap.api.model.forecast.hourly;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 
-public interface DailyPrecipitation {
+import java.util.List;
 
-    BigDecimal getRain();
+/**
+ * Represents the hourly forecast for the next four days
+ */
+public interface FourDaysHourlyForecast {
 
-    BigDecimal getSnow();
+    /**
+     * Information about the location.
+     *
+     * @return location
+     */
+    @JsonIgnore
+    BaseLocation getLocation();
 
-    BigDecimal getProbabilityOfPrecipitation();
+    /**
+     * The expected sunlight stages.
+     *
+     * @return sunlight
+     */
+    @JsonIgnore
+    SunlightStages getSunlightStages();
+
+    /**
+     * The hourly forecasts.
+     *
+     * @return hours
+     */
+    @JsonIgnore
+    List<HourlyWeather> getWeatherForecasts();
 }

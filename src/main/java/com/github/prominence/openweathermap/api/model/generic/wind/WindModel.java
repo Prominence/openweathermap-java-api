@@ -20,11 +20,24 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.daily;
+package com.github.prominence.openweathermap.api.model.generic.wind;
 
-import com.github.prominence.openweathermap.api.model.BaseLocation;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
+import lombok.Data;
 
-public interface Location extends BaseLocation {
-
-    Long getPopulation();
+/**
+ * The type Wind.
+ */
+@Data
+public class WindModel implements DetailedWindInfo {
+    @JsonDeserialize(using = WindSpeedDeserializer.class)
+    @JsonProperty("speed")
+    private WindSpeed speed;
+    @JsonProperty("deg")
+    private Integer directionDegrees;
+    @JsonDeserialize(using = WindSpeedDeserializer.class)
+    @JsonProperty("gust")
+    private WindSpeed gust;
 }

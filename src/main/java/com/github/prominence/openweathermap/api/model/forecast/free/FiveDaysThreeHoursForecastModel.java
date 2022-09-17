@@ -25,7 +25,8 @@ package com.github.prominence.openweathermap.api.model.forecast.free;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.LocationExtended;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -50,13 +51,19 @@ public class FiveDaysThreeHoursForecastModel implements FiveDaysThreeHoursForeca
 
     @Override
     @JsonIgnore
-    public LocationExtended getLocation() {
+    public DetailedLocationInfo getLocation() {
         return locationModel;
     }
 
     @Override
     @JsonIgnore
-    public List<Weather> getWeatherForecasts() {
-        return forecasts.stream().map(Weather.class::cast).collect(Collectors.toList());
+    public SunlightStages getSunlightStages() {
+        return locationModel;
+    }
+
+    @Override
+    @JsonIgnore
+    public List<ThreeHourWeather> getWeatherForecasts() {
+        return forecasts.stream().map(ThreeHourWeather.class::cast).collect(Collectors.toList());
     }
 }

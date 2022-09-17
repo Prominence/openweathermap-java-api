@@ -23,14 +23,36 @@
 package com.github.prominence.openweathermap.api.model.forecast.free;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.prominence.openweathermap.api.model.LocationExtended;
+import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 
 import java.util.List;
 
+/**
+ * Represents the 3 hours forecast for the next five days
+ */
 public interface FiveDaysThreeHoursForecast {
+    /**
+     * Information about the location.
+     *
+     * @return location
+     */
     @JsonIgnore
-    LocationExtended getLocation();
+    DetailedLocationInfo getLocation();
 
+    /**
+     * The expected sunlight stages.
+     *
+     * @return sunlight
+     */
     @JsonIgnore
-    List<Weather> getWeatherForecasts();
+    SunlightStages getSunlightStages();
+
+    /**
+     * The 3-hourly forecasts.
+     *
+     * @return forecasts
+     */
+    @JsonIgnore
+    List<ThreeHourWeather> getWeatherForecasts();
 }

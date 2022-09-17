@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Air pollution.
+ * The type representing Air pollution data.
  */
 @Data
 public class AirPollutionDetailsModel implements AirPollutionDetails {
