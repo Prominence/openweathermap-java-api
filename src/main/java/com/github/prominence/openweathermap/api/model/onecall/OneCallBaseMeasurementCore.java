@@ -20,57 +20,38 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.forecast.daily;
+package com.github.prominence.openweathermap.api.model.onecall;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.Visibility;
 import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
-import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
-import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.pressure.SeaLevelAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DewPointAwareTemperature;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Interface for weather forecast data used by the SixteenDaysDailyForecast.
+ * Core behaviour of One Call API forecast classes.
  */
-public interface DailyWeather extends TimeAware {
+public interface OneCallBaseMeasurementCore extends TimeAware {
 
     /**
-     * The temperature data,
+     * The sunlight stages.
      *
-     * @return temp
+     * @return sunlight
      */
-    @JsonIgnore
-    DailyTemperature getTemperature();
+    SunlightStages getSunlightStages();
 
     /**
-     * The humidity.
-     *
-     * @return humidity
+     * The visibility.
+     * @return visibility
      */
-    @JsonIgnore
-    Humidity getHumidity();
-
-    /**
-     * The atmospheric pressure.
-     *
-     * @return pressure
-     */
-    @JsonIgnore
-    BaseAtmosphericPressure getAtmosphericPressure();
-
-    /**
-     * The wind conditions.
-     *
-     * @return wind
-     */
-    @JsonIgnore
-    DetailedWindInfo getWind();
+    Visibility getVisibility();
 
     /**
      * The weather states.
@@ -80,26 +61,44 @@ public interface DailyWeather extends TimeAware {
     List<WeatherCondition> getWeatherStates();
 
     /**
+     * The temperature values.
+     *
+     * @return temperature
+     */
+    DewPointAwareTemperature getTemperatures();
+
+    /**
+     * The wind conditions.
+     *
+     * @return wind
+     */
+    DetailedWindInfo getWind();
+
+    /**
+     * The expected humidity.
+     *
+     * @return humidity
+     */
+    Humidity getHumidity();
+
+    /**
      * The cloud coverage.
      *
-     * @return louds
+     * @return clouds
      */
-    @JsonIgnore
-    CloudCoverage getCloudCoverage();
+    CloudCoverage getClouds();
 
     /**
-     * The precipitation.
+     * The UV index.
      *
-     * @return precipitation
+     * @return UV
      */
-    @JsonIgnore
-    PrecipitationForecast getPrecipitation();
+    BigDecimal getUvIndex();
 
     /**
-     * The sunlight stages.
+     * The atmospheric pressure forecast.
      *
-     * @return sunlight
+     * @return pressure
      */
-    @JsonIgnore
-    SunlightStages getSunlightStages();
+    SeaLevelAtmosphericPressure getAtmosphericPressure();
 }

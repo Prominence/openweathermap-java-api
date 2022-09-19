@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
+import com.github.prominence.openweathermap.api.model.onecall.historical.OneCallHistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
 import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
@@ -54,11 +54,11 @@ class OneCallHistoricalWeatherRequestCustomizer {
         return this;
     }
 
-    public JsonApiTerminator<HistoricalWeather> retrieve() {
+    public JsonApiTerminator<OneCallHistoricalWeather> retrieve() {
         return new OneCallHistoricalWeatherRequestTerminator(requestSettings);
     }
 
-    public JsonAsyncApiTerminator<HistoricalWeather> retrieveAsync() {
+    public JsonAsyncApiTerminator<OneCallHistoricalWeather> retrieveAsync() {
         return new OneCallHistoricalWeatherAsyncRequestTerminator(requestSettings);
     }
 }

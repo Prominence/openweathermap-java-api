@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
 import com.github.prominence.openweathermap.api.enums.RoadState;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 import lombok.Data;
 
 @Data

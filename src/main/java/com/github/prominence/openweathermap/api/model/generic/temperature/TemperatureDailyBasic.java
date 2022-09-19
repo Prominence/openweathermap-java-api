@@ -20,23 +20,26 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.temperature;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class TemperatureDailyDetailed extends TemperatureDailyBasic {
+public class TemperatureDailyBasic {
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("min")
-    private TemperatureValue min;
+    @JsonProperty("morn")
+    private TemperatureValue morning;
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("max")
-    private TemperatureValue max;
+    @JsonProperty("day")
+    private TemperatureValue day;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("eve")
+    private TemperatureValue eve;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("night")
+    private TemperatureValue night;
+
 }

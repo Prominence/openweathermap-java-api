@@ -22,32 +22,21 @@
 
 package com.github.prominence.openweathermap.api.model.geocoding;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Map;
 
 @Data
-public class GeocodingModel implements Geocoding {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class GeocodingModel extends BasicPlaceModel implements Geocoding {
 
-    @JsonProperty("name")
-    private String name;
     @JsonProperty("local_names")
     private Map<String, String> localNames;
-    @JsonProperty("lat")
-    private double latitude;
-    @JsonProperty("lon")
-    private double longitude;
-    @JsonProperty("country")
-    private String countryCode;
     @JsonProperty("state")
     private String stateName;
 
-    @JsonIgnore
-    @Override
-    public Coordinates getCoordinates() {
-        return new Coordinates(latitude, longitude);
-    }
 }

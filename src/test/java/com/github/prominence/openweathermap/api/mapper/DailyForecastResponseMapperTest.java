@@ -25,16 +25,16 @@ package com.github.prominence.openweathermap.api.mapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.forecast.daily.DailyWeather;
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecastModel;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import org.junit.jupiter.api.Test;
@@ -100,8 +100,8 @@ class DailyForecastResponseMapperTest {
         assertEquals(102, wind.getDirectionDegrees());
         assertEquals(new BigDecimal("5.30"), wind.getGust().asMetersPerSecond());
 
-        final Clouds clouds = weatherForecast.getCloudCoverage();
-        assertEquals(0, clouds.getValuePercentage());
+        final CloudCoverage clouds = weatherForecast.getCloudCoverage();
+        assertEquals(0, clouds.getCoveragePercentage());
 
         assertEquals(1, weatherForecast.getWeatherStates().size());
         final WeatherCondition weatherState = weatherForecast.getWeatherStates().get(0);

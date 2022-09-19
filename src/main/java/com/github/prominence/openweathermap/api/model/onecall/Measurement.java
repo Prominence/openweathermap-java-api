@@ -20,22 +20,22 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.onecall;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationValues;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-/**
- * The Clouds type represents cloudiness value percentage.
- * Its value can only be an integer in [0, 100] range.
- */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Clouds {
-    @JsonProperty("all")
-    private Integer valuePercentage;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Measurement extends BaseMeasurement implements OneCallMeasurement {
 
+    @Override
+    @JsonIgnore
+    public PrecipitationValues getPrecipitation() {
+        return this;
+    }
 }

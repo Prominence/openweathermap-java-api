@@ -27,20 +27,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.ZoneIdDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
+import com.github.prominence.openweathermap.api.model.onecall.Measurement;
+import com.github.prominence.openweathermap.api.model.onecall.OneCallMeasurement;
 import lombok.Data;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The type Current weather data.
  */
 @Data
-public class HistoricalWeather implements CoordinateAware {
+public class HistoricalWeather implements OneCallHistoricalWeather {
     @JsonProperty("lat")
     private double latitude;
     @JsonProperty("lon")
@@ -52,7 +55,7 @@ public class HistoricalWeather implements CoordinateAware {
     @JsonProperty("timezone_offset")
     private ZoneOffset timezoneOffset;
     @JsonProperty("data")
-    private List<BaseMeasurement> data;
+    private List<Measurement> data;
 
     /**
      * Gets coordinate.
@@ -64,4 +67,12 @@ public class HistoricalWeather implements CoordinateAware {
         return new Coordinates(latitude, longitude);
     }
 
+    @Override
+    @JsonIgnore
+    public List<OneCallMeasurement> getDataPoints() {
+        return Optional.ofNullable(data)
+                .map(List::stream)
+                .map(s -> s.map(OneCallMeasurement.class::cast).collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+    }
 }

@@ -32,9 +32,15 @@ import com.github.prominence.openweathermap.api.deserializer.VisibilityDeseriali
 import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BasePrecipitation;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationValues;
+import com.github.prominence.openweathermap.api.model.generic.pressure.SeaLevelAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DewPointAwareTemperature;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import lombok.Data;
@@ -43,12 +49,15 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The current weather measurements.
  */
 @Data
-public class BaseMeasurement implements TimeAware, DetailedWindInfo {
+public class BaseMeasurement
+        implements TimeAware, SunlightStages, DetailedWindInfo, CloudCoverage, Humidity,
+        PrecipitationValues, SeaLevelAtmosphericPressure, DewPointAwareTemperature, OneCallBaseMeasurementCore {
 
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("dt")
@@ -61,12 +70,12 @@ public class BaseMeasurement implements TimeAware, DetailedWindInfo {
     private OffsetDateTime sunsetTime;
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
     @JsonProperty("temp")
-    private TemperatureValue temperature;
+    private TemperatureValue temperatureMeasured;
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
     @JsonProperty("feels_like")
-    private TemperatureValue temperatureFeelsLike;
+    private TemperatureValue feelsLike;
     @JsonProperty("pressure")
-    private BigDecimal atmosphericPressureSeaLevel;
+    private BigDecimal seaLevel;
     @JsonDeserialize(using = RequiredPercentageDeserializer.class)
     @JsonProperty("humidity")
     private int humidityPercentage;
@@ -75,7 +84,7 @@ public class BaseMeasurement implements TimeAware, DetailedWindInfo {
     private TemperatureValue dewPoint;
     @JsonDeserialize(using = RequiredPercentageDeserializer.class)
     @JsonProperty("clouds")
-    private int cloudsPercentage;
+    private Integer coveragePercentage;
     @JsonProperty("uvi")
     private BigDecimal uvIndex;
     @JsonDeserialize(using = VisibilityDeserializer.class)
@@ -83,39 +92,86 @@ public class BaseMeasurement implements TimeAware, DetailedWindInfo {
     private Visibility visibility;
     @JsonDeserialize(using = WindSpeedDeserializer.class)
     @JsonProperty("wind_speed")
-    private WindSpeed windSpeed;
+    private WindSpeed speed;
     @JsonProperty("wind_deg")
-    private Integer windDirectionDegrees;
+    private Integer directionDegrees;
     @JsonDeserialize(using = WindSpeedDeserializer.class)
     @JsonProperty("wind_gust")
-    private WindSpeed windSpeedGust;
+    private WindSpeed gust;
     @JsonProperty("rain")
-    private BasePrecipitation rain;
+    private BasePrecipitation rainModel;
     @JsonProperty("snow")
-    private BasePrecipitation snow;
+    private BasePrecipitation snowModel;
     @JsonProperty("weather")
     private List<WeatherCondition> weatherStates = new ArrayList<>();
 
-    @JsonIgnore
     @Override
-    public WindSpeed getSpeed() {
-        return windSpeed;
-    }
-
-    @JsonIgnore
-    @Override
-    public Integer getDirectionDegrees() {
-        return windDirectionDegrees;
-    }
-
-    @JsonIgnore
-    @Override
-    public WindSpeed getGust() {
-        return windSpeedGust;
-    }
-
     @JsonIgnore
     public DetailedWindInfo getWind() {
         return this;
     }
+
+    @Override
+    @JsonIgnore
+    public SunlightStages getSunlightStages() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public CloudCoverage getClouds() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public Humidity getHumidity() {
+        return this;
+    }
+
+    @Override
+    public BigDecimal getUvIndex() {
+        return uvIndex;
+    }
+
+    @Override
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    @Override
+    public List<WeatherCondition> getWeatherStates() {
+        return weatherStates;
+    }
+
+    @Override
+    @JsonIgnore
+    public DewPointAwareTemperature getTemperatures() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public TemperatureValue getTemperature() {
+        return temperatureMeasured;
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getRain() {
+        return Optional.ofNullable(rainModel).map(BasePrecipitation::getOneHourLevel).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getSnow() {
+        return Optional.ofNullable(snowModel).map(BasePrecipitation::getOneHourLevel).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public SeaLevelAtmosphericPressure getAtmosphericPressure() {
+        return this;
+    }
+
 }

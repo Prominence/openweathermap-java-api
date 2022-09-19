@@ -25,7 +25,6 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
-import com.github.prominence.openweathermap.api.model.TimeAware;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -35,7 +34,7 @@ import java.time.OffsetDateTime;
  * The type for minutely forecasts.
  */
 @Data
-public class Minutely implements TimeAware {
+public class Minutely implements OneCallMinutelyWeather {
     @JsonDeserialize(using = EpochSecondsDeserializer.class)
     @JsonProperty("dt")
     private OffsetDateTime forecastTime;

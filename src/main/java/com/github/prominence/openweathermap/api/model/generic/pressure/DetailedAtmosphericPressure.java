@@ -20,27 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.generic.pressure;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import java.math.BigDecimal;
 
 /**
- * The type One call current weather async request terminator.
+ * Atmospheric pressure details.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
+public interface DetailedAtmosphericPressure extends BaseAtmosphericPressure, SeaLevelAtmosphericPressure {
 
     /**
-     * Instantiates a new One call current weather async request terminator.
+     * Value at ground level.
      *
-     * @param requestSettings request settings object.
+     * @return pressure
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    BigDecimal getGroundLevel();
 }

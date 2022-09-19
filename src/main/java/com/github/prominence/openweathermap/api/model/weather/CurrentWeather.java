@@ -24,13 +24,13 @@ package com.github.prominence.openweathermap.api.model.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.Visibility;
 import com.github.prominence.openweathermap.api.model.WeatherQueryResponse;
+import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
 import java.util.List;
@@ -40,13 +40,13 @@ public interface CurrentWeather extends WeatherQueryResponse {
     List<WeatherCondition> getWeatherStates();
 
     @JsonIgnore
-    Temperature getTemperature();
+    TemperatureWithRange getTemperature();
 
     @JsonIgnore
     Humidity getHumidity();
 
     @JsonIgnore
-    AtmosphericPressure getAtmosphericPressure();
+    DetailedAtmosphericPressure getAtmosphericPressure();
 
     @JsonIgnore
     BaseLocation getLocation();

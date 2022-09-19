@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
+import com.github.prominence.openweathermap.api.model.onecall.Measurement;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 public class HistoricalWeatherDataUnitTest {
     @Test
@@ -65,9 +66,9 @@ public class HistoricalWeatherDataUnitTest {
     @Test
     public void getHistoricalWeather() {
         final HistoricalWeather historicalWeatherData = new HistoricalWeather();
-        final List<BaseMeasurement> historicalWeather = Collections.singletonList(new BaseMeasurement());
+        final List<Measurement> historicalWeather = Collections.singletonList(new Measurement());
         historicalWeatherData.setData(historicalWeather);
 
-        assertEquals(historicalWeather, historicalWeatherData.getData());
+        assertIterableEquals(historicalWeather, historicalWeatherData.getDataPoints());
     }
 }

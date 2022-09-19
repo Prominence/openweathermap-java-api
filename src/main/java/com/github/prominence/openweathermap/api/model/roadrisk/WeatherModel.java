@@ -29,8 +29,8 @@ import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDes
 import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
 import com.github.prominence.openweathermap.api.model.PrecipitationIntensity;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import lombok.Data;
 

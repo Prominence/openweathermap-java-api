@@ -24,8 +24,8 @@ package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BasePrecipitation;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import org.junit.jupiter.api.Test;
 
@@ -59,7 +59,7 @@ public class HourlyUnitTest {
     public void getTemperature() {
         final Hourly hourly = new Hourly();
         final TemperatureValue temperature = new TemperatureValue(BigDecimal.valueOf(10));
-        hourly.setTemperature(temperature);
+        hourly.setTemperatureMeasured(temperature);
 
         assertEquals(temperature, hourly.getTemperature());
     }
@@ -68,9 +68,9 @@ public class HourlyUnitTest {
     public void getAtmosphericPressure() {
         final Hourly hourly = new Hourly();
         final BigDecimal atmosphericPressure = BigDecimal.valueOf(100);
-        hourly.setAtmosphericPressureSeaLevel(atmosphericPressure);
+        hourly.setSeaLevel(atmosphericPressure);
 
-        assertEquals(atmosphericPressure, hourly.getAtmosphericPressureSeaLevel());
+        assertEquals(atmosphericPressure, hourly.getSeaLevel());
     }
 
     @Test
@@ -95,9 +95,9 @@ public class HourlyUnitTest {
     public void getClouds() {
         final Hourly hourly = new Hourly();
         final int clouds = 60;
-        hourly.setCloudsPercentage(clouds);
+        hourly.setCoveragePercentage(clouds);
 
-        assertEquals(clouds, hourly.getCloudsPercentage());
+        assertEquals(clouds, hourly.getClouds().getCoveragePercentage());
     }
 
     @Test
@@ -115,19 +115,19 @@ public class HourlyUnitTest {
         final WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
         final WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(15.2));
         final Integer windDirection = 123;
-        hourly.setWindSpeed(windSpeed);
-        hourly.setWindSpeedGust(windSpeedGust);
-        hourly.setWindDirectionDegrees(windDirection);
+        hourly.setSpeed(windSpeed);
+        hourly.setGust(windSpeedGust);
+        hourly.setDirectionDegrees(windDirection);
 
-        assertEquals(windSpeed, hourly.getWindSpeed());
-        assertEquals(windSpeedGust, hourly.getWindSpeedGust());
-        assertEquals(windDirection, hourly.getWindDirectionDegrees());
+        assertEquals(windSpeed, hourly.getSpeed());
+        assertEquals(windSpeedGust, hourly.getGust());
+        assertEquals(windDirection, hourly.getDirectionDegrees());
     }
 
     @Test
     public void getProbabilityOfPrecipitation() {
         final Hourly hourly = new Hourly();
-        final BigDecimal pop = BigDecimal.valueOf(0.84);
+        final Integer pop = 84;
         hourly.setProbabilityOfPrecipitation(pop);
 
         assertEquals(pop, hourly.getProbabilityOfPrecipitation());
@@ -138,18 +138,18 @@ public class HourlyUnitTest {
     public void getRain() {
         final Hourly hourly = new Hourly();
         final BasePrecipitation rain = new BasePrecipitation(BigDecimal.valueOf(20.2));
-        hourly.setRain(rain);
+        hourly.setRainModel(rain);
 
-        assertEquals(rain, hourly.getRain());
+        assertEquals(rain.getOneHourLevel(), hourly.getRain());
     }
 
     @Test
     public void getSnow() {
         final Hourly hourly = new Hourly();
         final BasePrecipitation snow = new BasePrecipitation(BigDecimal.valueOf(25.0));
-        hourly.setSnow(snow);
+        hourly.setSnowModel(snow);
 
-        assertEquals(snow, hourly.getSnow());
+        assertEquals(snow.getOneHourLevel(), hourly.getSnow());
     }
 
 }

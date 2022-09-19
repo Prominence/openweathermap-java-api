@@ -24,6 +24,14 @@ package com.github.prominence.openweathermap.api.model.geocoding;
 
 import com.github.prominence.openweathermap.api.model.CoordinateAware;
 
+/**
+ * Zip code aware representation of a place.
+ */
 public interface ZipCodeGeocoding extends Place, CoordinateAware {
+    /**
+     * The zip code of the place.
+     *
+     * @return zip
+     */
     String getZipCode();
 }

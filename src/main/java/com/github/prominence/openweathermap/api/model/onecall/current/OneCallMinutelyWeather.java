@@ -20,17 +20,20 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.onecall.current;
+
+import com.github.prominence.openweathermap.api.model.TimeAware;
+
+import java.math.BigDecimal;
 
 /**
- * The Humidity type represents humidity value percentage.
- * Its value can only be an integer in [0, 100] range.
+ * Minutely forecast representation for One Call API.
  */
-public interface Humidity {
+public interface OneCallMinutelyWeather extends TimeAware {
     /**
-     * Returns humidity percentage value.
+     * The expected volume of precipitation.
      *
-     * @return humidity percentage.
+     * @return precipitation
      */
-    int getHumidityPercentage();
+    BigDecimal getPrecipitationVolume();
 }

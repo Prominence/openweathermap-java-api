@@ -20,27 +20,22 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
-
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+package com.github.prominence.openweathermap.api.model.generic.temperature;
 
 /**
- * The type One call current weather async request terminator.
+ * Basic temperature representation.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
+public interface BaseTemperature {
 
     /**
-     * Instantiates a new One call current weather async request terminator.
-     *
-     * @param requestSettings request settings object.
+     * The temperature (objective).
+     * @return temperature
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    TemperatureValue getTemperature();
+
+    /**
+     * The temperature (as it feels like)
+     * @return feels like temp
+     */
+    TemperatureValue getFeelsLike();
 }

@@ -20,28 +20,67 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.geocoding;
+package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.onecall.OneCallMeasurement;
 
-import java.util.Map;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.List;
 
 /**
- * Interface for geocoding responses.
+ * Represents forecasts returned by the current weather more of the One Call API.
  */
-public interface Geocoding extends Place, CoordinateAware {
+public interface OneCallCurrentForecast extends CoordinateAware {
 
     /**
-     * Local names of the place.
+     * The time zone of the location.
      *
-     * @return names
+     * @return time zone
      */
-    Map<String, String> getLocalNames();
+    ZoneId getTimezone();
 
     /**
-     * The name of the state.
+     * The time zone offset of the location.
      *
-     * @return state
+     * @return zone offset
      */
-    String getStateName();
+    ZoneOffset getTimezoneOffset();
+
+    /**
+     * The current weather.
+     *
+     * @return current
+     */
+    OneCallMeasurement getCurrentWeather();
+
+    /**
+     * The minutely forecast.
+     *
+     * @return minutely
+     */
+    List<OneCallMinutelyWeather> getMinutelyForecast();
+
+    /**
+     * The hourly forecast.
+     *
+     * @return hourly
+     */
+    List<OneCallHourlyWeather> getHourlyForecast();
+
+    /**
+     * The daily forecast.
+     *
+     * @return daily
+     */
+    List<OneCallDailyWeather> getDailyForecast();
+
+
+    /**
+     * The weather alerts.
+     *
+     * @return alerts
+     */
+    List<Alert> getAlerts();
 }

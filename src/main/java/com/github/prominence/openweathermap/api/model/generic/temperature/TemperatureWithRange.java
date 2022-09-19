@@ -20,12 +20,26 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.temperature;
 
-public interface Temperature extends BaseTemperature {
+/**
+ * Temperature interface that can tell min and max temperatures
+ * expected over the forecast period.
+ */
+public interface TemperatureWithRange extends BaseTemperature {
 
+    /**
+     * Minimum temperature.
+     *
+     * @return min tmep.
+     */
     TemperatureValue getMax();
 
+    /**
+     * Maximum temperature.
+     *
+     * @return max temp
+     */
     TemperatureValue getMin();
 
 }

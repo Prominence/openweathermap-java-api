@@ -20,11 +20,9 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.clouds;
 
-import java.math.BigDecimal;
+public interface CloudCoverage {
 
-public interface BaseAtmosphericPressure {
-
-    BigDecimal getPressure();
+    Integer getCoveragePercentage();
 }

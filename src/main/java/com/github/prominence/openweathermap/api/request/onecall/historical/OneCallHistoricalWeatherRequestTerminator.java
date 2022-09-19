@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
+import com.github.prominence.openweathermap.api.model.onecall.historical.OneCallHistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequestTerminator;
 import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
@@ -31,8 +32,8 @@ import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminato
  * The type One call historical weather request terminator.
  */
 class OneCallHistoricalWeatherRequestTerminator
-        extends GenericRequestTerminator<HistoricalWeather, HistoricalWeather>
-        implements JsonApiTerminator<HistoricalWeather> {
+        extends GenericRequestTerminator<OneCallHistoricalWeather, HistoricalWeather>
+        implements JsonApiTerminator<OneCallHistoricalWeather> {
 
     /**
      * Instantiates a new One call historical weather request terminator.

@@ -20,27 +20,38 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.onecall.OneCallMeasurement;
+
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.List;
 
 /**
- * The type One call current weather async request terminator.
+ * Represents historical weather results returned by One Call API.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
+public interface OneCallHistoricalWeather extends CoordinateAware {
 
     /**
-     * Instantiates a new One call current weather async request terminator.
+     * The time zone of the location.
      *
-     * @param requestSettings request settings object.
+     * @return time zone
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    ZoneId getTimezone();
+
+    /**
+     * The time zone offset of the location.
+     *
+     * @return zone offset
+     */
+    ZoneOffset getTimezoneOffset();
+
+    /**
+     * The data points returned.
+     *
+     * @return data
+     */
+    List<OneCallMeasurement> getDataPoints();
 }

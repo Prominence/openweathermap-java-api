@@ -31,15 +31,16 @@ import com.github.prominence.openweathermap.api.deserializer.PercentageZeroToOne
 import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.MainMetrics;
-import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.TimeAware;
 import com.github.prominence.openweathermap.api.model.Visibility;
 import com.github.prominence.openweathermap.api.model.forecast.MetaData;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindModel;
 import lombok.Data;
@@ -83,7 +84,7 @@ public class WeatherForecast implements TimeAware, ThreeHourWeather, Precipitati
 
     @Override
     @JsonIgnore
-    public Temperature getTemperature() {
+    public TemperatureWithRange getTemperature() {
         return mainMetrics;
     }
 
@@ -95,7 +96,7 @@ public class WeatherForecast implements TimeAware, ThreeHourWeather, Precipitati
 
     @Override
     @JsonIgnore
-    public AtmosphericPressure getAtmosphericPressure() {
+    public DetailedAtmosphericPressure getAtmosphericPressure() {
         return mainMetrics;
     }
 
@@ -131,5 +132,10 @@ public class WeatherForecast implements TimeAware, ThreeHourWeather, Precipitati
         return Optional.ofNullable(snowModel)
                 .map(Precipitation::getThreeHourLevel)
                 .orElse(null);
+    }
+
+    @Override
+    public CloudCoverage getClouds() {
+        return clouds;
     }
 }

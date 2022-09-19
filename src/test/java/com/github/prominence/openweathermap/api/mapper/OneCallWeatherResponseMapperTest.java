@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.CurrentWeather;
+import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ class OneCallWeatherResponseMapperTest {
         final String resource = "/responses/valid/onecall-current.json";
 
         //when
-        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeather.class);
+        final OneCallCurrentForecastModel actual = loadDeserializedResourceAs(resource, OneCallCurrentForecastModel.class);
 
         //then
         assertNotNull(actual);

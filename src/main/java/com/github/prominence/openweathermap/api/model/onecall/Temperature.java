@@ -22,8 +22,8 @@
 
 package com.github.prominence.openweathermap.api.model.onecall;
 
-import com.github.prominence.openweathermap.api.model.BaseTemperature;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.temperature.BaseTemperature;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 
 /**
  * Represents temperature values and unit.

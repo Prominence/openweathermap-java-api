@@ -27,20 +27,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.ZoneIdDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
+import com.github.prominence.openweathermap.api.model.onecall.Measurement;
+import com.github.prominence.openweathermap.api.model.onecall.OneCallMeasurement;
 import lombok.Data;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The type Current weather data.
  */
 @Data
-public class CurrentWeather implements CoordinateAware {
+public class OneCallCurrentForecastModel implements OneCallCurrentForecast {
     @JsonProperty("lat")
     private double latitude;
     @JsonProperty("lon")
@@ -52,7 +55,7 @@ public class CurrentWeather implements CoordinateAware {
     @JsonProperty("timezone_offset")
     private ZoneOffset timezoneOffset;
     @JsonProperty("current")
-    private BaseMeasurement current;
+    private Measurement current;
     @JsonProperty("minutely")
     private List<Minutely> minutelyList;
     @JsonProperty("hourly")
@@ -62,14 +65,42 @@ public class CurrentWeather implements CoordinateAware {
     @JsonProperty("alerts")
     private List<Alert> alerts;
 
-    /**
-     * Gets coordinate.
-     *
-     * @return the coordinate
-     */
+    @Override
     @JsonIgnore
     public Coordinates getCoordinates() {
         return new Coordinates(latitude, longitude);
     }
 
+    @Override
+    @JsonIgnore
+    public OneCallMeasurement getCurrentWeather() {
+        return current;
+    }
+
+    @Override
+    @JsonIgnore
+    public List<OneCallMinutelyWeather> getMinutelyForecast() {
+        return Optional.ofNullable(minutelyList)
+                .map(List::stream)
+                .map(s -> s.map(OneCallMinutelyWeather.class::cast).collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+    }
+
+    @Override
+    @JsonIgnore
+    public List<OneCallHourlyWeather> getHourlyForecast() {
+        return Optional.ofNullable(hourlyList)
+                .map(List::stream)
+                .map(s -> s.map(OneCallHourlyWeather.class::cast).collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+    }
+
+    @Override
+    @JsonIgnore
+    public List<OneCallDailyWeather> getDailyForecast() {
+        return Optional.ofNullable(dailyList)
+                .map(List::stream)
+                .map(s -> s.map(OneCallDailyWeather.class::cast).collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
+    }
 }

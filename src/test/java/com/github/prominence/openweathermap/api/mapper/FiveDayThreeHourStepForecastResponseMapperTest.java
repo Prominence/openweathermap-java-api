@@ -25,16 +25,16 @@ package com.github.prominence.openweathermap.api.mapper;
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.free.ThreeHourWeather;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.DetailedLocationInfo;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import org.junit.jupiter.api.Test;
 
@@ -88,14 +88,14 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
                 weatherForecast.getForecastTime());
         assertEquals(DayTime.DAY, weatherForecast.getPartOfDay());
 
-        final Temperature temperature = weatherForecast.getTemperature();
+        final TemperatureWithRange temperature = weatherForecast.getTemperature();
         assertNotNull(temperature);
         assertEquals(BigDecimal.valueOf(287), temperature.getTemperature().asKelvin());
         assertEquals(BigDecimal.valueOf(286), temperature.getFeelsLike().asKelvin());
         assertEquals(BigDecimal.valueOf(287), temperature.getMin().asKelvin());
         assertEquals(BigDecimal.valueOf(287), temperature.getMax().asKelvin());
 
-        final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
+        final DetailedAtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
         assertEquals(BigDecimal.valueOf(1021), pressure.getPressure());
         assertEquals(BigDecimal.valueOf(1021), pressure.getSeaLevel());
         assertEquals(BigDecimal.valueOf(1018), pressure.getGroundLevel());
@@ -103,8 +103,8 @@ class FiveDayThreeHourStepForecastResponseMapperTest {
         final Humidity humidity = weatherForecast.getHumidity();
         assertEquals(62, humidity.getHumidityPercentage());
 
-        final Clouds clouds = weatherForecast.getClouds();
-        assertEquals(85, clouds.getValuePercentage());
+        final CloudCoverage clouds = weatherForecast.getClouds();
+        assertEquals(85, clouds.getCoveragePercentage());
 
         final DetailedWindInfo wind = weatherForecast.getWind();
         assertEquals(BigDecimal.valueOf(3.25), wind.getSpeed().asMetersPerSecond());

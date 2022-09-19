@@ -31,15 +31,16 @@ import com.github.prominence.openweathermap.api.deserializer.PercentageZeroToOne
 import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.TemperatureDailyBasic;
-import com.github.prominence.openweathermap.api.model.TemperatureDailyDetailed;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureDailyBasic;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureDailyDetailed;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import lombok.Data;
@@ -181,7 +182,7 @@ public class WeatherForecast
 
     @Override
     @JsonIgnore
-    public Clouds getCloudCoverage() {
+    public CloudCoverage getCloudCoverage() {
         return new Clouds(this.clouds);
     }
 

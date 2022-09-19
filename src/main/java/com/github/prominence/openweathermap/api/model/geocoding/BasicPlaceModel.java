@@ -20,27 +20,29 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.geocoding;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.Coordinates;
+import lombok.Data;
 
-/**
- * The type One call current weather async request terminator.
- */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
+@Data
+public class BasicPlaceModel implements Place, CoordinateAware {
 
-    /**
-     * Instantiates a new One call current weather async request terminator.
-     *
-     * @param requestSettings request settings object.
-     */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("lat")
+    private double latitude;
+    @JsonProperty("lon")
+    private double longitude;
+    @JsonProperty("country")
+    private String countryCode;
+
+    @JsonIgnore
+    @Override
+    public Coordinates getCoordinates() {
+        return new Coordinates(latitude, longitude);
     }
 }

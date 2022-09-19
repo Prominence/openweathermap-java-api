@@ -20,26 +20,20 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
-import lombok.Data;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.onecall.OneCallBaseMeasurementCore;
 
-@Data
-public class TemperatureDailyBasic {
-    @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("morn")
-    private TemperatureValue morning;
-    @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("day")
-    private TemperatureValue day;
-    @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("eve")
-    private TemperatureValue eve;
-    @JsonDeserialize(using = TemperatureValueDeserializer.class)
-    @JsonProperty("night")
-    private TemperatureValue night;
+/**
+ * Hourly forecast representation of One Call API.
+ */
+public interface OneCallHourlyWeather extends OneCallBaseMeasurementCore {
 
+    /**
+     * The precipitation forecast.
+     *
+     * @return precipitation
+     */
+    PrecipitationForecast getPrecipitation();
 }

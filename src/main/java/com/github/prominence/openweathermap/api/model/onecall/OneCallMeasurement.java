@@ -20,27 +20,20 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.onecall;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationValues;
 
 /**
- * The type One call current weather async request terminator.
+ * Current weather of One Call API forecast classes.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
+public interface OneCallMeasurement extends OneCallBaseMeasurementCore {
+
 
     /**
-     * Instantiates a new One call current weather async request terminator.
+     * The precipitation forecast.
      *
-     * @param requestSettings request settings object.
+     * @return precipitation
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    PrecipitationValues getPrecipitation();
 }

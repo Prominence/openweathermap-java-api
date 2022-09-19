@@ -22,19 +22,28 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.PercentageZeroToOneDeserializer;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
 import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Hourly extends BaseMeasurement {
+public class Hourly extends BaseMeasurement implements OneCallHourlyWeather, PrecipitationForecast {
 
+    @JsonDeserialize(using = PercentageZeroToOneDeserializer.class)
     @JsonProperty("pop")
-    private BigDecimal probabilityOfPrecipitation;
+    private Integer probabilityOfPrecipitation;
+
+    @Override
+    @JsonIgnore
+    public PrecipitationForecast getPrecipitation() {
+        return this;
+    }
 }

@@ -20,10 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.temperature;
 
-public interface BaseTemperature {
-    TemperatureValue getTemperature();
+/**
+ * Temperature interface which can tell the dew point as well.
+ */
+public interface DewPointAwareTemperature extends BaseTemperature {
 
-    TemperatureValue getFeelsLike();
+    /**
+     * The dew point.
+     *
+     * @return dew point
+     */
+    TemperatureValue getDewPoint();
 }

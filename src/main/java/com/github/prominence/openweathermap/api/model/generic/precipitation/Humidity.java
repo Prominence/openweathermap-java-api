@@ -20,27 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
-
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+package com.github.prominence.openweathermap.api.model.generic.precipitation;
 
 /**
- * The type One call current weather async request terminator.
+ * The Humidity type represents humidity value percentage.
+ * Its value can only be an integer in [0, 100] range.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
-
+public interface Humidity {
     /**
-     * Instantiates a new One call current weather async request terminator.
+     * Returns humidity percentage value.
      *
-     * @param requestSettings request settings object.
+     * @return humidity percentage.
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    int getHumidityPercentage();
 }

@@ -20,27 +20,35 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import com.github.prominence.openweathermap.api.model.onecall.current.MoonPhase;
+
+import java.time.OffsetDateTime;
 
 /**
- * The type One call current weather async request terminator.
+ * Represents the information about local moonlight stages.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
+public interface MoonlightStages {
 
     /**
-     * Instantiates a new One call current weather async request terminator.
+     * The time when the moon rises.
      *
-     * @param requestSettings request settings object.
+     * @return moonrise
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    OffsetDateTime getMoonriseTime();
+
+    /**
+     * The time when the moon sets.
+     *
+     * @return moon-set
+     */
+    OffsetDateTime getMoonsetTime();
+
+    /**
+     * The phase the moon is in.
+     *
+     * @return moon phase
+     */
+    MoonPhase getMoonPhase();
 }

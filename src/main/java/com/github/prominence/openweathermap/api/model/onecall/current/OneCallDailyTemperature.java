@@ -20,27 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 
 /**
- * The type One call current weather async request terminator.
+ * Extended temperature information including dew point.
  */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
-
+public interface OneCallDailyTemperature extends DailyTemperature {
     /**
-     * Instantiates a new One call current weather async request terminator.
+     * The dew point.
      *
-     * @param requestSettings request settings object.
+     * @return dew point
      */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+    TemperatureValue getDewPoint();
 }

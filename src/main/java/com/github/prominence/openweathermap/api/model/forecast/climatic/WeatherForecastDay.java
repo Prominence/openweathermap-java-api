@@ -24,12 +24,12 @@ package com.github.prominence.openweathermap.api.model.forecast.climatic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationValues;
+import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
 import com.github.prominence.openweathermap.api.model.generic.wind.BasicWind;
 
@@ -84,7 +84,7 @@ public interface WeatherForecastDay extends TimeAware {
      * @return clouds
      */
     @JsonIgnore
-    Clouds getCloudCoverage();
+    CloudCoverage getCloudCoverage();
 
     /**
      * The forecasted precipitation.

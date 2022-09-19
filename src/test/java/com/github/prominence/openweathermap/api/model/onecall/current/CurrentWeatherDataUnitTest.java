@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
+import com.github.prominence.openweathermap.api.model.onecall.Measurement;
 import org.junit.jupiter.api.Test;
 
 import java.time.ZoneId;
@@ -32,79 +32,100 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 public class CurrentWeatherDataUnitTest {
     @Test
     public void getCoordinates() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final Coordinates coordinates = new Coordinates(11.2, 43.2);
         currentWeatherData.setLatitude(coordinates.getLatitude());
         currentWeatherData.setLongitude(coordinates.getLongitude());
 
-        assertEquals(coordinates, currentWeatherData.getCoordinates());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertEquals(coordinates, underTest.getCoordinates());
     }
 
     @Test
     public void getTimezone() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final ZoneId timeZone = ZoneId.of("GMT");
         currentWeatherData.setTimezone(timeZone);
 
-        assertEquals(timeZone, currentWeatherData.getTimezone());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertEquals(timeZone, underTest.getTimezone());
     }
 
     @Test
     public void getTimezoneOffset() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final ZoneOffset offset = ZoneOffset.UTC;
         currentWeatherData.setTimezoneOffset(offset);
 
-        assertEquals(offset, currentWeatherData.getTimezoneOffset());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertEquals(offset, underTest.getTimezoneOffset());
     }
 
     @Test
     public void getCurrent() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
-        final BaseMeasurement current = new BaseMeasurement();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
+        final Measurement current = new Measurement();
         currentWeatherData.setCurrent(current);
 
-        assertEquals(current, currentWeatherData.getCurrent());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertEquals(current, underTest.getCurrentWeather());
     }
 
     @Test
     public void getMinutelyList() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final List<Minutely> minutelyList = new ArrayList<>();
+        minutelyList.add(new Minutely());
         currentWeatherData.setMinutelyList(minutelyList);
 
-        assertEquals(minutelyList, currentWeatherData.getMinutelyList());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertIterableEquals(minutelyList, underTest.getMinutelyForecast());
     }
 
     @Test
     public void getHourlyList() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final List<Hourly> hourlyList = new ArrayList<>();
+        hourlyList.add(new Hourly());
         currentWeatherData.setHourlyList(hourlyList);
 
-        assertEquals(hourlyList, currentWeatherData.getHourlyList());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertIterableEquals(hourlyList, underTest.getHourlyForecast());
     }
 
     @Test
     public void getDailyList() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final List<Daily> dailyList = new ArrayList<>();
+        dailyList.add(new Daily());
         currentWeatherData.setDailyList(dailyList);
 
-        assertEquals(dailyList, currentWeatherData.getDailyList());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertIterableEquals(dailyList, underTest.getDailyForecast());
     }
 
     @Test
     public void getAlerts() {
-        final CurrentWeather currentWeatherData = new CurrentWeather();
+        final OneCallCurrentForecastModel currentWeatherData = new OneCallCurrentForecastModel();
         final List<Alert> alerts = new ArrayList<>();
+        alerts.add(new Alert());
         currentWeatherData.setAlerts(alerts);
 
-        assertEquals(alerts, currentWeatherData.getAlerts());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallCurrentForecast underTest = currentWeatherData;
+
+        assertIterableEquals(alerts, underTest.getAlerts());
     }
 
 }

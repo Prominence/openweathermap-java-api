@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.model.onecall;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
 import com.github.prominence.openweathermap.api.model.BasePrecipitation;
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import org.junit.jupiter.api.Test;
 
@@ -78,20 +78,20 @@ public class CurrentUnitTest {
         final BaseMeasurement current = new BaseMeasurement();
         final TemperatureValue temperature = new TemperatureValue(BigDecimal.valueOf(10));
         final TemperatureValue temperatureFeelsLike = new TemperatureValue(BigDecimal.valueOf(100));
-        current.setTemperature(temperature);
-        current.setTemperatureFeelsLike(temperatureFeelsLike);
+        current.setTemperatureMeasured(temperature);
+        current.setFeelsLike(temperatureFeelsLike);
 
         assertEquals(temperature, current.getTemperature());
-        assertEquals(temperatureFeelsLike, current.getTemperatureFeelsLike());
+        assertEquals(temperatureFeelsLike, current.getFeelsLike());
     }
 
     @Test
     public void getAtmosphericPressure() {
         final BaseMeasurement current = new BaseMeasurement();
         final BigDecimal atmosphericPressure = BigDecimal.valueOf(22.3);
-        current.setAtmosphericPressureSeaLevel(atmosphericPressure);
+        current.setSeaLevel(atmosphericPressure);
 
-        assertEquals(atmosphericPressure, current.getAtmosphericPressureSeaLevel());
+        assertEquals(atmosphericPressure, current.getSeaLevel());
     }
 
     @Test
@@ -109,22 +109,22 @@ public class CurrentUnitTest {
         final WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
         final WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(15.2));
         final Integer windDirection = 123;
-        current.setWindSpeed(windSpeed);
-        current.setWindSpeedGust(windSpeedGust);
-        current.setWindDirectionDegrees(windDirection);
+        current.setSpeed(windSpeed);
+        current.setGust(windSpeedGust);
+        current.setDirectionDegrees(windDirection);
 
-        assertEquals(windSpeed, current.getWindSpeed());
-        assertEquals(windSpeedGust, current.getWindSpeedGust());
-        assertEquals(windDirection, current.getWindDirectionDegrees());
+        assertEquals(windSpeed, current.getSpeed());
+        assertEquals(windSpeedGust, current.getGust());
+        assertEquals(windDirection, current.getDirectionDegrees());
     }
 
     @Test
     public void getClouds() {
         final BaseMeasurement current = new BaseMeasurement();
         final int clouds = 25;
-        current.setCloudsPercentage(clouds);
+        current.setCoveragePercentage(clouds);
 
-        assertEquals(clouds, current.getCloudsPercentage());
+        assertEquals(clouds, current.getClouds().getCoveragePercentage());
     }
 
     @Test
@@ -144,17 +144,17 @@ public class CurrentUnitTest {
     public void getRain() {
         final BaseMeasurement current = new BaseMeasurement();
         final BasePrecipitation rain = new BasePrecipitation(BigDecimal.valueOf(20.2));
-        current.setRain(rain);
+        current.setRainModel(rain);
 
-        assertEquals(rain, current.getRain());
+        assertEquals(rain.getOneHourLevel(), current.getRain());
     }
 
     @Test
     public void getSnow() {
         final BaseMeasurement current = new BaseMeasurement();
         final BasePrecipitation snow = new BasePrecipitation(BigDecimal.valueOf(25.0));
-        current.setSnow(snow);
+        current.setSnowModel(snow);
 
-        assertEquals(snow, current.getSnow());
+        assertEquals(snow.getOneHourLevel(), current.getSnow());
     }
 }

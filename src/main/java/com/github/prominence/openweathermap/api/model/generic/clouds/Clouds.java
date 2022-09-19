@@ -20,13 +20,22 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.clouds;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public interface AtmosphericPressure extends BaseAtmosphericPressure {
+/**
+ * The Clouds type represents cloudiness value percentage.
+ * Its value can only be an integer in [0, 100] range.
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Clouds implements CloudCoverage {
+    @JsonProperty("all")
+    private Integer coveragePercentage;
 
-    BigDecimal getSeaLevel();
-
-    BigDecimal getGroundLevel();
 }

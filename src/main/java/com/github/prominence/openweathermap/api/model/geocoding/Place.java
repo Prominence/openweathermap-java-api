@@ -22,9 +22,22 @@
 
 package com.github.prominence.openweathermap.api.model.geocoding;
 
+/**
+ * Represents a place.
+ */
 public interface Place {
 
+    /**
+     * The name of the place.
+     *
+     * @return name
+     */
     String getName();
 
+    /**
+     * The country code where the place is.
+     *
+     * @return country
+     */
     String getCountryCode();
 }

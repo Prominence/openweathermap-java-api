@@ -29,7 +29,7 @@ import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
+import com.github.prominence.openweathermap.api.model.onecall.historical.OneCallHistoricalWeather;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +47,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     public void whenRetrieveHistoricalOneCallResponseAsJava_thenOk() {
         Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
-        final HistoricalWeather historicalWeatherData = getClient()
+        final OneCallHistoricalWeather historicalWeatherData = getClient()
                 .oneCall()
                 .historical()
                 .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
@@ -81,7 +81,7 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     public void whenRetrieveHistoricalOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
         Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
         Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
-        final CompletableFuture<HistoricalWeather> historicalWeatherDataFuture = getClient()
+        final CompletableFuture<OneCallHistoricalWeather> historicalWeatherDataFuture = getClient()
                 .oneCall()
                 .historical()
                 .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))

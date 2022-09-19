@@ -27,6 +27,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -36,7 +40,7 @@ import java.math.BigDecimal;
  */
 @Data
 @JsonIgnoreProperties(value = {"temp_kf"})
-public class MainMetrics implements Temperature, Humidity, AtmosphericPressure {
+public class MainMetrics implements TemperatureWithRange, Humidity, DetailedAtmosphericPressure {
     @JsonDeserialize(using = TemperatureValueDeserializer.class)
     @JsonProperty("temp")
     private TemperatureValue temperature;

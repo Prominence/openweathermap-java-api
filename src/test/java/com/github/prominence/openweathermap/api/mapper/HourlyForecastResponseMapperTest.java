@@ -24,16 +24,16 @@ package com.github.prominence.openweathermap.api.mapper;
 
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.FourDaysHourlyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.FourDaysHourlyForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.HourlyWeather;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import org.junit.jupiter.api.Test;
 
@@ -77,13 +77,13 @@ class HourlyForecastResponseMapperTest {
         assertEquals(new BigDecimal("10000.00"), weatherForecast.getVisibility().asMeters());
         assertEquals(4, weatherForecast.getHourlyPrecipitation().getProbabilityOfPrecipitation());
 
-        final Temperature temperature = weatherForecast.getTemperature();
+        final TemperatureWithRange temperature = weatherForecast.getTemperature();
         assertEquals(BigDecimal.valueOf(289), temperature.getTemperature().asKelvin());
         assertEquals(BigDecimal.valueOf(288), temperature.getFeelsLike().asKelvin());
         assertEquals(BigDecimal.valueOf(289), temperature.getMin().asKelvin());
         assertEquals(BigDecimal.valueOf(289), temperature.getMax().asKelvin());
 
-        final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
+        final DetailedAtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
         assertEquals(BigDecimal.valueOf(1013), pressure.getPressure());
         assertEquals(BigDecimal.valueOf(1013), pressure.getSeaLevel());
         assertEquals(BigDecimal.valueOf(1010), pressure.getGroundLevel());
@@ -97,8 +97,8 @@ class HourlyForecastResponseMapperTest {
         assertEquals("overcast clouds: 85-100%", weatherState.getDescription());
         assertEquals("04n", weatherState.getIconId(DayTime.NIGHT));
 
-        final Clouds clouds = weatherForecast.getClouds();
-        assertEquals(100, clouds.getValuePercentage());
+        final CloudCoverage clouds = weatherForecast.getClouds();
+        assertEquals(100, clouds.getCoveragePercentage());
 
         final DetailedWindInfo wind = weatherForecast.getWind();
         assertEquals(BigDecimal.valueOf(2.03), wind.getSpeed().asMetersPerSecond());

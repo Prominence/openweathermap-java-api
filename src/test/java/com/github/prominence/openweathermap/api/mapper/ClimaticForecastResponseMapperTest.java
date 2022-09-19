@@ -24,15 +24,15 @@ package com.github.prominence.openweathermap.api.mapper;
 
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.BaseAtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.WeatherForecastDay;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
 import com.github.prominence.openweathermap.api.model.generic.wind.BasicWind;
 import org.junit.jupiter.api.Test;
@@ -96,8 +96,8 @@ class ClimaticForecastResponseMapperTest {
         assertEquals(BigDecimal.valueOf(6.78), wind.getSpeed().asMetersPerSecond());
         assertEquals(320, wind.getDirectionDegrees());
 
-        final Clouds clouds = weatherForecast.getCloudCoverage();
-        assertEquals(81, clouds.getValuePercentage());
+        final CloudCoverage clouds = weatherForecast.getCloudCoverage();
+        assertEquals(81, clouds.getCoveragePercentage());
 
         assertEquals(1, weatherForecast.getWeatherStates().size());
         final WeatherCondition weatherState = weatherForecast.getWeatherStates().get(0);

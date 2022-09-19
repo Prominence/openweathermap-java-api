@@ -22,28 +22,16 @@
 
 package com.github.prominence.openweathermap.api.model.geocoding;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
-public class ZipCodeGeocodingModel implements ZipCodeGeocoding {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class ZipCodeGeocodingModel extends BasicPlaceModel implements ZipCodeGeocoding {
 
     @JsonProperty("zip")
     private String zipCode;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("lat")
-    private double latitude;
-    @JsonProperty("lon")
-    private double longitude;
-    @JsonProperty("country")
-    private String countryCode;
-
-    @JsonIgnore
-    @Override
-    public Coordinates getCoordinates() {
-        return new Coordinates(latitude, longitude);
-    }
 }

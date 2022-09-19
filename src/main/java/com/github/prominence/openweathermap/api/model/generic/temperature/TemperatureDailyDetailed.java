@@ -20,27 +20,23 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.onecall.current;
+package com.github.prominence.openweathermap.api.model.generic.temperature;
 
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
-import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecastModel;
-import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-/**
- * The type One call current weather async request terminator.
- */
-class OneCallCurrentWeatherAsyncRequestTerminator
-        extends GenericAsyncRequestTerminator<OneCallCurrentForecast, OneCallCurrentForecastModel>
-        implements JsonAsyncApiTerminator<OneCallCurrentForecast> {
-
-    /**
-     * Instantiates a new One call current weather async request terminator.
-     *
-     * @param requestSettings request settings object.
-     */
-    OneCallCurrentWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        super(new OneCallCurrentWeatherRequestTerminator(requestSettings));
-    }
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class TemperatureDailyDetailed extends TemperatureDailyBasic {
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("min")
+    private TemperatureValue min;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("max")
+    private TemperatureValue max;
 }

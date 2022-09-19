@@ -22,8 +22,6 @@
 
 package com.github.prominence.openweathermap.api.model.generic.temperature;
 
-import com.github.prominence.openweathermap.api.model.TemperatureValue;
-
 /**
  * The type Daily temperature.
  */

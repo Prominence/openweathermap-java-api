@@ -29,15 +29,15 @@ import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeseria
 import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.Clouds;
 import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.Humidity;
 import com.github.prominence.openweathermap.api.model.MainMetrics;
-import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindModel;
 import lombok.Data;
@@ -90,7 +90,7 @@ public class CurrentWeatherModel implements BaseLocation, SunlightStages, Curren
 
     @Override
     @JsonIgnore
-    public Temperature getTemperature() {
+    public TemperatureWithRange getTemperature() {
         return main;
     }
 
@@ -102,7 +102,7 @@ public class CurrentWeatherModel implements BaseLocation, SunlightStages, Curren
 
     @Override
     @JsonIgnore
-    public AtmosphericPressure getAtmosphericPressure() {
+    public DetailedAtmosphericPressure getAtmosphericPressure() {
         return main;
     }
 
