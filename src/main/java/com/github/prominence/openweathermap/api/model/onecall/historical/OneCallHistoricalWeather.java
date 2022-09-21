@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.generic.location.CoordinateAware;
 import com.github.prominence.openweathermap.api.model.onecall.OneCallMeasurement;
 
 import java.time.ZoneId;

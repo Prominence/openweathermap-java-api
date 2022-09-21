@@ -29,19 +29,22 @@ import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeseria
 import com.github.prominence.openweathermap.api.deserializer.VisibilityDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.MainMetrics;
-import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.MainMetrics;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindModel;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ import java.util.Optional;
  * Represents weather information.
  */
 @Data
-public class CurrentWeatherModel implements BaseLocation, SunlightStages, CurrentWeather {
+public class CurrentWeatherModel implements TimeAware, BaseLocation, SunlightStages, CurrentWeather, PrecipitationDetails {
 
     @JsonProperty("coord")
     private Coordinates coordinates;
@@ -68,7 +71,7 @@ public class CurrentWeatherModel implements BaseLocation, SunlightStages, Curren
     @JsonProperty("wind")
     private WindModel windModel;
     @JsonProperty("clouds")
-    private Clouds clouds;
+    private Clouds cloudsModel;
     @JsonProperty("rain")
     private Precipitation rain;
     @JsonProperty("snow")
@@ -119,6 +122,12 @@ public class CurrentWeatherModel implements BaseLocation, SunlightStages, Curren
 
     @Override
     @JsonIgnore
+    public PrecipitationDetails getPrecipitation() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
     public String getCountryCode() {
         return Optional.ofNullable(city).map(City::getCountryCode).orElse(null);
     }
@@ -133,5 +142,41 @@ public class CurrentWeatherModel implements BaseLocation, SunlightStages, Curren
     @JsonIgnore
     public OffsetDateTime getSunsetTime() {
         return Optional.ofNullable(city).map(City::getSunsetTime).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public SunlightStages getSunlightStages() {
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getOneHourRainLevel() {
+        return Optional.ofNullable(rain).map(Precipitation::getOneHourLevel).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getThreeHoursRainLevel() {
+        return Optional.ofNullable(rain).map(Precipitation::getThreeHourLevel).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getOneHourSnowLevel() {
+        return Optional.ofNullable(snow).map(Precipitation::getOneHourLevel).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public BigDecimal getThreeHoursSnowLevel() {
+        return Optional.ofNullable(snow).map(Precipitation::getThreeHourLevel).orElse(null);
+    }
+
+    @Override
+    @JsonIgnore
+    public CloudCoverage getClouds() {
+        return cloudsModel;
     }
 }

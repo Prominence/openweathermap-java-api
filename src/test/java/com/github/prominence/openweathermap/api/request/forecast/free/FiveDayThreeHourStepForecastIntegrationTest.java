@@ -26,9 +26,9 @@ import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
 import com.github.prominence.openweathermap.api.model.forecast.free.ThreeHourWeather;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 

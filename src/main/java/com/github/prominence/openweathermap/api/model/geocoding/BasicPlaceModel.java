@@ -24,8 +24,8 @@ package com.github.prominence.openweathermap.api.model.geocoding;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import lombok.Data;
 
 @Data

@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.model.roadrisk;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.serializer.EpochSecondsSerializer;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

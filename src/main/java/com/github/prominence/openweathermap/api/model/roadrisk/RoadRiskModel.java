@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import lombok.Data;
 
 import java.time.OffsetDateTime;

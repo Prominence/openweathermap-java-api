@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.model.weather;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.BasePrecipitation;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.BasePrecipitation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

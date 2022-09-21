@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

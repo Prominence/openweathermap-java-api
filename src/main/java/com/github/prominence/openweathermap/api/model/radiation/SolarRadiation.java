@@ -22,11 +22,19 @@
 
 package com.github.prominence.openweathermap.api.model.radiation;
 
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.generic.location.CoordinateAware;
 
 import java.util.List;
 
+/**
+ * Represents the solar radiation response.
+ */
 public interface SolarRadiation extends CoordinateAware {
 
+    /**
+     * The solar radiation records.
+     *
+     * @return radiation
+     */
     List<SolarRadiationEntry> getSolarRadiationRecords();
 }

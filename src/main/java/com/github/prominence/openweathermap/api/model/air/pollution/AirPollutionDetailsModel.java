@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.model.air.pollution;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import lombok.Data;
 
 import java.util.List;

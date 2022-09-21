@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.air.pollution;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

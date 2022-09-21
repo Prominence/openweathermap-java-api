@@ -20,8 +20,17 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
-public interface WeatherQueryResponse extends CoordinateAware, TimeAware {
+/**
+ * Indicates that the object can provide coordinate information.
+ */
+public interface CoordinateAware {
 
+    /**
+     * The coordinates of the data source.
+     *
+     * @return coordinated
+     */
+    Coordinates getCoordinates();
 }

@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.deserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
 
 import java.io.IOException;
 import java.math.BigDecimal;

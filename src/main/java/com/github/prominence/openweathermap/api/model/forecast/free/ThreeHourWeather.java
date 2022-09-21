@@ -25,13 +25,13 @@ package com.github.prominence.openweathermap.api.model.forecast.free;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.DayTime;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.TimeAware;
-import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
 import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
 import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
 import java.util.List;

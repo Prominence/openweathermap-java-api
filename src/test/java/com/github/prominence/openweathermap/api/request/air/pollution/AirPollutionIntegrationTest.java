@@ -23,8 +23,8 @@
 package com.github.prominence.openweathermap.api.request.air.pollution;
 
 import com.github.prominence.openweathermap.api.ApiTest;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 

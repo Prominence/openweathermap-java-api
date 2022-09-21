@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
 import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.MoonlightStages;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;

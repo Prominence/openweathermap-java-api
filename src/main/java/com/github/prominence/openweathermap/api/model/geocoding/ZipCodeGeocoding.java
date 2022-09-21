@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.geocoding;
 
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.generic.location.CoordinateAware;
 
 /**
  * Zip code aware representation of a place.

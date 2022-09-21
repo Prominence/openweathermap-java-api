@@ -25,7 +25,7 @@ package com.github.prominence.openweathermap.api.request.weather;
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.conf.TimeoutSettings;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;

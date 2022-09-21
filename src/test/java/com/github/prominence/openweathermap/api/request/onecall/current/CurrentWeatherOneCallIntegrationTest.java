@@ -25,11 +25,12 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.core.net.HttpClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
     @Test
@@ -134,10 +138,14 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRequestOnecallWithInvalidApiKey_thenThrowAnException() {
-        OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder().apiKey("invalidKey").build());
+        final HttpClient httpClient = mock(HttpClient.class);
+        when(httpClient.executeGetRequest(anyString())).thenThrow(InvalidAuthTokenException.class);
+        final OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder()
+                .apiKey("invalidKey")
+                .httpClient(httpClient)
+                .build());
         assertThrows(InvalidAuthTokenException.class, () ->
-                client
-                        .oneCall()
+                client.oneCall()
                         .current()
                         .byCoordinates(new Coordinates(53.54, 27.34))
                         .language(Language.ENGLISH)

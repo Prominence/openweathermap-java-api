@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.radiation;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;

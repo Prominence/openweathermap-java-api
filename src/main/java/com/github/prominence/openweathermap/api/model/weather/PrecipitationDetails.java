@@ -20,15 +20,40 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.weather;
 
-import java.time.OffsetDateTime;
+import java.math.BigDecimal;
 
-public interface TimeAware {
+/**
+ * Precipitation details.
+ */
+public interface PrecipitationDetails {
+
     /**
-     * Returns the time when the data was calculated.
+     * The rain amount under one hour.
      *
-     * @return timestamp
+     * @return rain 1h
      */
-    OffsetDateTime getForecastTime();
+    BigDecimal getOneHourRainLevel();
+
+    /**
+     * The rain amount under three hours.
+     *
+     * @return rain 3h
+     */
+    BigDecimal getThreeHoursRainLevel();
+
+    /**
+     * The snow amount under one hour.
+     *
+     * @return snow 1h
+     */
+    BigDecimal getOneHourSnowLevel();
+
+    /**
+     * The snow amount under three hours.
+     *
+     * @return snow 3h
+     */
+    BigDecimal getThreeHoursSnowLevel();
 }

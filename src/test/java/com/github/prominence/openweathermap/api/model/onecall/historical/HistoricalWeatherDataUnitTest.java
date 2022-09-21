@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.Measurement;
 import org.junit.jupiter.api.Test;
 

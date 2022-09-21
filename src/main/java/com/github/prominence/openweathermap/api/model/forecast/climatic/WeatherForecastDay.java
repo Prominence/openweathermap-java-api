@@ -24,7 +24,7 @@ package com.github.prominence.openweathermap.api.model.forecast.climatic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
 import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;

@@ -24,12 +24,12 @@ package com.github.prominence.openweathermap.api.mapper;
 
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.Coordinates;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.WeatherForecastDay;
 import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;

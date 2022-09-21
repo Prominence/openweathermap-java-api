@@ -25,6 +25,7 @@ package com.github.prominence.openweathermap.api.mapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
 import com.github.prominence.openweathermap.api.model.weather.CurrentWeatherModel;
+import com.github.prominence.openweathermap.api.model.weather.PrecipitationDetails;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -74,10 +75,11 @@ public class CurrentWeatherResponseMapperTest {
         assertWindDirectionSet(actual);
         assertWindSpeedGustSet(actual);
 
-        assert1HrRainSet(actual);
-        assert3HrRainSet(actual);
-        assert1HrSnowSet(actual);
-        assert3HrSnowSet(actual);
+        final PrecipitationDetails precipitation = actual.getPrecipitation();
+        assert1HrRainSet(precipitation);
+        assert3HrRainSet(precipitation);
+        assert1HrSnowSet(precipitation);
+        assert3HrSnowSet(precipitation);
     }
 
     @Test
@@ -192,11 +194,11 @@ public class CurrentWeatherResponseMapperTest {
         final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
         //then
-        assertNotNull(actual.getRain());
-        assertNull(actual.getRain().getOneHourLevel());
-        assert3HrRainSet(actual);
-        assertNull(actual.getSnow().getOneHourLevel());
-        assert3HrSnowSet(actual);
+        final PrecipitationDetails precipitation = actual.getPrecipitation();
+        assertNull(precipitation.getOneHourRainLevel());
+        assert3HrRainSet(precipitation);
+        assertNull(precipitation.getOneHourSnowLevel());
+        assert3HrSnowSet(precipitation);
     }
 
     @Test
@@ -208,11 +210,11 @@ public class CurrentWeatherResponseMapperTest {
         final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
         //then
-        assertNotNull(actual.getRain());
-        assert1HrRainSet(actual);
-        assertNull(actual.getRain().getThreeHourLevel());
-        assert1HrSnowSet(actual);
-        assertNull(actual.getSnow().getThreeHourLevel());
+        final PrecipitationDetails precipitation = actual.getPrecipitation();
+        assert1HrRainSet(precipitation);
+        assertNull(precipitation.getThreeHoursRainLevel());
+        assert1HrSnowSet(precipitation);
+        assertNull(precipitation.getThreeHoursSnowLevel());
     }
 
     @Test
@@ -270,19 +272,19 @@ public class CurrentWeatherResponseMapperTest {
         assertEquals(new BigDecimal("2.00"), weather.getWind().getSpeed().asMetersPerSecond());
     }
 
-    private void assert1HrRainSet(CurrentWeather weather) {
-        assertEquals(BigDecimal.valueOf(0.1), weather.getRain().getOneHourLevel());
+    private void assert1HrRainSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.1), weather.getOneHourRainLevel());
     }
 
-    private void assert3HrRainSet(CurrentWeather weather) {
-        assertEquals(BigDecimal.valueOf(0.6), weather.getRain().getThreeHourLevel());
+    private void assert3HrRainSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.6), weather.getThreeHoursRainLevel());
     }
 
-    private void assert1HrSnowSet(CurrentWeather weather) {
-        assertEquals(BigDecimal.valueOf(0.2), weather.getSnow().getOneHourLevel());
+    private void assert1HrSnowSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.2), weather.getOneHourSnowLevel());
     }
 
-    private void assert3HrSnowSet(CurrentWeather weather) {
-        assertEquals(BigDecimal.valueOf(0.7), weather.getSnow().getThreeHourLevel());
+    private void assert3HrSnowSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.7), weather.getThreeHoursSnowLevel());
     }
 }

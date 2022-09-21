@@ -22,44 +22,92 @@
 
 package com.github.prominence.openweathermap.api.model.weather;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.Visibility;
-import com.github.prominence.openweathermap.api.model.WeatherQueryResponse;
-import com.github.prominence.openweathermap.api.model.generic.clouds.Clouds;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.pressure.DetailedAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureWithRange;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
 import java.util.List;
 
-public interface CurrentWeather extends WeatherQueryResponse {
+/**
+ * Current weather forecast response.
+ */
+public interface CurrentWeather extends TimeAware {
 
-    List<WeatherCondition> getWeatherStates();
-
-    @JsonIgnore
-    TemperatureWithRange getTemperature();
-
-    @JsonIgnore
-    Humidity getHumidity();
-
-    @JsonIgnore
-    DetailedAtmosphericPressure getAtmosphericPressure();
-
-    @JsonIgnore
+    /**
+     * The location of the forecast.
+     *
+     * @return location
+     */
     BaseLocation getLocation();
 
-    Visibility getVisibility();
+    /**
+     * The sunlight stages.
+     *
+     * @return sunlight
+     */
+    SunlightStages getSunlightStages();
 
-    @JsonIgnore
+    /**
+     * The wind conditions.
+     *
+     * @return wind
+     */
     DetailedWindInfo getWind();
 
-    Clouds getClouds();
+    /**
+     * The weather states.
+     *
+     * @return weather
+     */
+    List<WeatherCondition> getWeatherStates();
 
-    Precipitation getRain();
+    /**
+     * The temperature forecast.
+     *
+     * @return temperature
+     */
+    TemperatureWithRange getTemperature();
 
-    Precipitation getSnow();
+    /**
+     * The precipitation forecast.
+     *
+     * @return precipitation
+     */
+    PrecipitationDetails getPrecipitation();
+
+    /**
+     * The expected humidity.
+     *
+     * @return humidity
+     */
+    Humidity getHumidity();
+
+    /**
+     * The cloud coverage.
+     *
+     * @return clouds
+     */
+    CloudCoverage getClouds();
+
+    /**
+     * The atmospheric pressure forecast.
+     *
+     * @return pressure
+     */
+    DetailedAtmosphericPressure getAtmosphericPressure();
+
+    /**
+     * The visibility information.
+     *
+     * @return visibility
+     */
+    Visibility getVisibility();
 
 }

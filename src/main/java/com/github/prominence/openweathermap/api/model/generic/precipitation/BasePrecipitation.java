@@ -20,36 +20,19 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.precipitation;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NonNull;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
-@EqualsAndHashCode
-@ToString
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class PrecipitationIntensity {
-
-    private static final BigDecimal MILLIMETER_PER_HOUR_TO_MILLIMETER_PER_MINUTE_SCALE = BigDecimal.valueOf(60.0);
-    private static final int DECIMAL_PLACES = 1;
-    @NonNull
-    private final BigDecimal value;
-
-    @JsonIgnore
-    public BigDecimal asMillimetersPerHour() {
-        return value.setScale(DECIMAL_PLACES, RoundingMode.HALF_EVEN);
-    }
-
-    @JsonIgnore
-    public BigDecimal asMillimetersPerMinute() {
-        return value.multiply(MILLIMETER_PER_HOUR_TO_MILLIMETER_PER_MINUTE_SCALE)
-                .setScale(DECIMAL_PLACES, RoundingMode.HALF_EVEN);
-    }
-
+public class BasePrecipitation {
+    @JsonProperty("1h")
+    private BigDecimal oneHourLevel;
 }

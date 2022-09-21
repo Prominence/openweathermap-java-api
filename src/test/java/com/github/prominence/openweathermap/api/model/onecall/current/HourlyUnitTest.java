@@ -23,9 +23,9 @@
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.BasePrecipitation;
-import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.BasePrecipitation;
 import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
 import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import org.junit.jupiter.api.Test;
 

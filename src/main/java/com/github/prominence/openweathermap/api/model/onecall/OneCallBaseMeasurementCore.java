@@ -23,13 +23,13 @@
 package com.github.prominence.openweathermap.api.model.onecall;
 
 import com.github.prominence.openweathermap.api.enums.WeatherCondition;
-import com.github.prominence.openweathermap.api.model.TimeAware;
-import com.github.prominence.openweathermap.api.model.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
 import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
 import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
 import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
 import com.github.prominence.openweathermap.api.model.generic.pressure.SeaLevelAtmosphericPressure;
 import com.github.prominence.openweathermap.api.model.generic.temperature.DewPointAwareTemperature;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
 import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
 
 import java.math.BigDecimal;

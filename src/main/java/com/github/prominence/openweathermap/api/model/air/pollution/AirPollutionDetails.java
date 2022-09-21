@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.air.pollution;
 
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
+import com.github.prominence.openweathermap.api.model.generic.location.CoordinateAware;
 
 import java.util.List;
 

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.prominence.openweathermap.api.deserializer.ZoneIdDeserializer;
 import com.github.prominence.openweathermap.api.deserializer.ZoneOffsetDeserializer;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.onecall.Measurement;
 import com.github.prominence.openweathermap.api.model.onecall.OneCallMeasurement;
 import lombok.Data;

@@ -20,15 +20,18 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model.onecall;
+package com.github.prominence.openweathermap.api.model.generic;
 
-import com.github.prominence.openweathermap.api.model.generic.temperature.BaseTemperature;
-import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import java.time.OffsetDateTime;
 
 /**
- * Represents temperature values and unit.
+ * Indicates that the implementation keeps track of the forecast time.
  */
-public interface Temperature extends BaseTemperature {
-
-    TemperatureValue getDewPoint();
+public interface TimeAware {
+    /**
+     * Returns the time when the data was calculated.
+     *
+     * @return timestamp
+     */
+    OffsetDateTime getForecastTime();
 }

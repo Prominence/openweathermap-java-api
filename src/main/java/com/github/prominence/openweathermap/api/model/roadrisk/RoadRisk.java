@@ -22,11 +22,15 @@
 
 package com.github.prominence.openweathermap.api.model.roadrisk;
 
-import com.github.prominence.openweathermap.api.model.WeatherQueryResponse;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.location.CoordinateAware;
 
 import java.util.List;
 
-public interface RoadRisk extends WeatherQueryResponse {
+/**
+ * Represents information about road risks.
+ */
+public interface RoadRisk extends CoordinateAware, TimeAware {
 
     /**
      * The weather data returned.

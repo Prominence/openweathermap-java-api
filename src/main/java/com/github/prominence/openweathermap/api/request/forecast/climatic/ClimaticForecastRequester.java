@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.GenericRequester;
 

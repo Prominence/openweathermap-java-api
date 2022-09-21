@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model;
 
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

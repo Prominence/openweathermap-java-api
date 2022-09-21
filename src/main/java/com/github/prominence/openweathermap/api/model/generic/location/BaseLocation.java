@@ -22,8 +22,6 @@
 
 package com.github.prominence.openweathermap.api.model.generic.location;
 
-import com.github.prominence.openweathermap.api.model.CoordinateAware;
-
 import java.time.ZoneOffset;
 
 /**

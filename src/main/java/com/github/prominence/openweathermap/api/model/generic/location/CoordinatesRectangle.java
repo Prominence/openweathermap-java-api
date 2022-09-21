@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.model;
+package com.github.prominence.openweathermap.api.model.generic.location;
 
 import java.util.Objects;
 

@@ -23,7 +23,7 @@
 package com.github.prominence.openweathermap.api.mapper;
 
 import com.github.prominence.openweathermap.api.context.TestMappingUtils;
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationEntry;
 import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;

@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.github.prominence.openweathermap.api.model.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
 import org.junit.jupiter.api.Test;

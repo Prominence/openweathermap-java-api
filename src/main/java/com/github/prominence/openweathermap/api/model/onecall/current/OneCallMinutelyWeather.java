@@ -22,7 +22,7 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
 
 import java.math.BigDecimal;
 
