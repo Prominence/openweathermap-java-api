@@ -22,9 +22,9 @@
 
 package com.github.prominence.openweathermap.api.conf;
 
-public class TimeoutSettings {
-    private Integer connectionTimeout;
-    private Integer readTimeout;
+public final class TimeoutSettings {
+    private final Integer connectionTimeout;
+    private final Integer readTimeout;
 
     public TimeoutSettings() {
         this(2000, 2000);
@@ -44,15 +44,7 @@ public class TimeoutSettings {
         return connectionTimeout;
     }
 
-    public void setConnectionTimeout(Integer connectionTimeout) {
-        this.connectionTimeout = connectionTimeout;
-    }
-
     public Integer getReadTimeout() {
         return readTimeout;
-    }
-
-    public void setReadTimeout(Integer readTimeout) {
-        this.readTimeout = readTimeout;
     }
 }

@@ -36,6 +36,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class HttpURLConnectionBasedHttpClient implements HttpClient {
     private static final Logger logger = LoggerFactory.getLogger(HttpURLConnectionBasedHttpClient.class);
@@ -55,7 +57,7 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
     private String doExecute(String url, RequestExecutor.Method method, String body) {
         InputStream resultStream = null;
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            HttpURLConnection connection = getConnection(url);
             configureTimeouts(connection);
             configureConnection(connection, method, body);
 
@@ -63,20 +65,29 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
             logger.debug("Executing OpenWeatherMap API request: " + url);
             return convertInputStreamToString(resultStream);
         } catch (IllegalStateException | IOException ex) {
-            if (resultStream != null) {
-                try {
-                    resultStream.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            closeQuietly(resultStream);
             logger.error("An error occurred during OpenWeatherMap API response parsing: ", ex);
             throw new NoDataFoundException(ex);
         }
     }
 
-    private static InputStream evaluateResponse(HttpURLConnection connection) throws IOException {
-        switch (connection.getResponseCode()) {
+    HttpURLConnection getConnection(String url) throws IOException {
+        return (HttpURLConnection) new URL(url).openConnection();
+    }
+
+    private void closeQuietly(InputStream resultStream) {
+        if (resultStream != null) {
+            try {
+                resultStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private InputStream evaluateResponse(HttpURLConnection connection) throws IOException {
+        final int responseCode = connection.getResponseCode();
+        switch (responseCode) {
             case HttpURLConnection.HTTP_OK:
                 return connection.getInputStream();
             case HttpURLConnection.HTTP_UNAUTHORIZED:
@@ -85,20 +96,18 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
             case HttpURLConnection.HTTP_BAD_REQUEST:
                 throw new NoDataFoundException();
             default:
-                throw new IllegalStateException("Unexpected value: " + connection.getResponseCode());
+                throw new IllegalStateException("Unexpected value: " + responseCode);
         }
     }
 
     private void configureTimeouts(HttpURLConnection connection) {
-        if (timeoutSettings != null) {
-            if (timeoutSettings.getConnectionTimeout() != null) {
-                connection.setConnectTimeout(timeoutSettings.getConnectionTimeout());
-            }
-
-            if (timeoutSettings.getReadTimeout() != null) {
-                connection.setReadTimeout(timeoutSettings.getReadTimeout());
-            }
-        }
+        Optional.ofNullable(timeoutSettings)
+                .ifPresent(ts -> {
+                    Optional.ofNullable(ts.getConnectionTimeout())
+                            .ifPresent(connection::setConnectTimeout);
+                    Optional.ofNullable(ts.getReadTimeout())
+                            .ifPresent(connection::setReadTimeout);
+                });
     }
 
     private void configureConnection(HttpURLConnection connection, RequestExecutor.Method method, String body) throws IOException {
@@ -130,19 +139,12 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
      * @return converted <code>InputStream</code> content.
      * @throws IllegalArgumentException in case if input stream is unable to be read.
      */
-    private static String convertInputStreamToString(InputStream inputStream) {
-        StringBuilder result = new StringBuilder();
-
+    private String convertInputStreamToString(InputStream inputStream) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
+            return reader.lines().collect(Collectors.joining("\n"));
         } catch (IOException ex) {
             logger.error("Error during response reading: ", ex);
             throw new IllegalArgumentException(ex);
         }
-
-        return result.toString();
     }
 }
