@@ -22,28 +22,38 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class ZipCodeGeocodingRequestCustomizer {
-    private final RequestSettings requestSettings;
+import java.util.concurrent.ExecutionException;
 
-    ZipCodeGeocodingRequestCustomizer(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+class ZipCodeGeocodingAsyncRequestTerminatorTest {
+
+    @Test
+    void testAsXML_ShouldThrowException_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final ZipCodeGeocodingAsyncRequestTerminator underTest =
+                new ZipCodeGeocodingAsyncRequestTerminator(requestSettings);
+
+        //when
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asXML().get());
+
+        //then + exception
     }
 
-    public ZipCodeGeocodingRequestCustomizer limit(int locationsNumber) {
-        requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
-        return this;
-    }
+    @Test
+    void testAsHTML_ShouldThrowException_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final ZipCodeGeocodingAsyncRequestTerminator underTest =
+                new ZipCodeGeocodingAsyncRequestTerminator(requestSettings);
 
-    public JsonApiTerminator<ZipCodeGeocoding> retrieve() {
-        return new ZipCodeGeocodingRequestTerminator(requestSettings);
-    }
+        //when
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML().get());
 
-    public JsonAsyncApiTerminator<ZipCodeGeocoding> retrieveAsync() {
-        return new ZipCodeGeocodingAsyncRequestTerminator(requestSettings);
+        //then + exception
     }
 }

@@ -20,32 +20,27 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.reverse;
+package com.github.prominence.openweathermap.api.request.forecast.free;
 
-import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-public class ReverseGeocodingRequestCustomizer {
-    private final RequestSettings requestSettings;
+class FiveDayThreeHourStepForecastAsyncRequestTerminatorTest {
 
-    ReverseGeocodingRequestCustomizer(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
+    @Test
+    void testAsHTML_ShouldThrowException_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final FiveDayThreeHourStepForecastAsyncRequestTerminator underTest =
+                new FiveDayThreeHourStepForecastAsyncRequestTerminator(requestSettings);
 
-    public ReverseGeocodingRequestCustomizer limit(int locationsNumber) {
-        requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
-        return this;
-    }
+        //when
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML().get());
 
-    public JsonApiTerminator<List<Geocoding>> retrieve() {
-        return new ReverseGeocodingRequestTerminator(requestSettings);
-    }
-
-    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
-        return new ReverseGeocodingAsyncRequestTerminator(requestSettings);
+        //then + exception
     }
 }

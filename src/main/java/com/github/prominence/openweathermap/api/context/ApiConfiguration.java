@@ -53,8 +53,8 @@ public class ApiConfiguration {
     private final ObjectReader objectReader;
     private final ObjectWriter objectWriter;
 
-    public ApiConfiguration(@NonNull String apiKey, @NonNull Map<ApiVariant, String> baseUrls, @NonNull HttpClient httpClient,
-                            @NonNull ObjectMapper objectMapper, @NonNull TimeoutSettings defaultTimeoutSettings) {
+    private ApiConfiguration(String apiKey, Map<ApiVariant, String> baseUrls, HttpClient httpClient,
+                            ObjectMapper objectMapper, TimeoutSettings defaultTimeoutSettings) {
         this.apiKey = apiKey;
         this.baseUrls = Collections.unmodifiableMap(baseUrls);
         this.httpClient = httpClient;

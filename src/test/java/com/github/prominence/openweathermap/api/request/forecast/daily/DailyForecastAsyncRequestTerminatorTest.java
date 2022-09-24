@@ -20,20 +20,27 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.reverse;
+package com.github.prominence.openweathermap.api.request.forecast.daily;
 
-import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
-import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericListAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-public class ReverseGeocodingRequestAsyncTerminator
-        extends GenericListAsyncRequestTerminator<Geocoding, GeocodingModel>
-        implements JsonAsyncApiTerminator<List<Geocoding>> {
-    ReverseGeocodingRequestAsyncTerminator(RequestSettings requestSettings) {
-        super(new ReverseGeocodingRequestTerminator(requestSettings));
+class DailyForecastAsyncRequestTerminatorTest {
+
+    @Test
+    void testAsHTML_ShouldThrowException_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final DailyForecastAsyncRequestTerminator underTest =
+                new DailyForecastAsyncRequestTerminator(requestSettings);
+
+        //when
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML().get());
+
+        //then + exception
     }
 }

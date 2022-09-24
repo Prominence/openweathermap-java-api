@@ -20,32 +20,28 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.reverse;
+package com.github.prominence.openweathermap.api.request.weather;
 
-import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeatherModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ReverseGeocodingRequestCustomizer {
-    private final RequestSettings requestSettings;
+class CurrentWeatherRequestTerminatorTest {
 
-    ReverseGeocodingRequestCustomizer(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
+    @Test
+    void testGetValueType_ShouldReturnExpectedClass_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final CurrentWeatherRequestTerminator underTest =
+                new CurrentWeatherRequestTerminator(requestSettings);
 
-    public ReverseGeocodingRequestCustomizer limit(int locationsNumber) {
-        requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
-        return this;
-    }
+        //when
+        final Class<CurrentWeatherModel> actual = underTest.getValueType();
 
-    public JsonApiTerminator<List<Geocoding>> retrieve() {
-        return new ReverseGeocodingRequestTerminator(requestSettings);
-    }
-
-    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
-        return new ReverseGeocodingAsyncRequestTerminator(requestSettings);
+        //then
+        assertEquals(CurrentWeatherModel.class, actual);
     }
 }

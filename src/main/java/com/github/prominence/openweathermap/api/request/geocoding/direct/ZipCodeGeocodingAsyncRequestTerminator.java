@@ -20,32 +20,18 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.reverse;
+package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
-import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding;
+import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
 import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
-import java.util.List;
-
-public class ReverseGeocodingRequestCustomizer {
-    private final RequestSettings requestSettings;
-
-    ReverseGeocodingRequestCustomizer(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
-    }
-
-    public ReverseGeocodingRequestCustomizer limit(int locationsNumber) {
-        requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
-        return this;
-    }
-
-    public JsonApiTerminator<List<Geocoding>> retrieve() {
-        return new ReverseGeocodingRequestTerminator(requestSettings);
-    }
-
-    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
-        return new ReverseGeocodingAsyncRequestTerminator(requestSettings);
+public class ZipCodeGeocodingAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel>
+        implements JsonAsyncApiTerminator<ZipCodeGeocoding> {
+    ZipCodeGeocodingAsyncRequestTerminator(RequestSettings requestSettings) {
+        super(new ZipCodeGeocodingRequestTerminator(requestSettings));
     }
 }

@@ -47,7 +47,7 @@ public abstract class GenericRequestTerminator<T, I extends T> {
     public T asJava() {
         requestSettings.setUnitSystem(UnitSystem.STANDARD);
         requestSettings.setResponseType(ResponseType.JSON);
-        return mapToWeather(getRawResponse());
+        return mapToObject(getRawResponse());
     }
 
     public String asJSON() {
@@ -69,7 +69,7 @@ public abstract class GenericRequestTerminator<T, I extends T> {
         return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
 
-    private I mapToWeather(String json) {
+    private I mapToObject(String json) {
         try {
             return requestSettings.getApiConfiguration().getObjectReader().readValue(json, getValueType());
         } catch (Exception e) {

@@ -46,6 +46,6 @@ public class DirectGeocodingRequestCustomizer {
     }
 
     public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
-        return new DirectGeocodingRequestAsyncTerminator(requestSettings);
+        return new DirectGeocodingAsyncRequestTerminator(requestSettings);
     }
 }

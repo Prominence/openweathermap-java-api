@@ -43,7 +43,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atMostOnce;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -75,6 +77,15 @@ class HttpURLConnectionBasedHttpClientTest {
                 .build();
     }
 
+    public static Stream<Arguments> cleanUpInputProvider() {
+        return Stream.<Arguments>builder()
+                .add(Arguments.of("http://localhost", 200, "response line 1\nline 2\n\n4"))
+                .add(Arguments.of("http://localhost", 301, "response line 1\nline 2\n\n4"))
+                .add(Arguments.of("http://127.0.0.1", 404, null))
+                .add(Arguments.of("http://127.0.0.1", 401, null))
+                .build();
+    }
+
     @Test
     void testSetTimeoutSettings_ShouldSetTimeOutValues_WhenCalled() throws IOException {
         //given
@@ -92,7 +103,6 @@ class HttpURLConnectionBasedHttpClientTest {
         //then
         verify(connection).setConnectTimeout(eq(timeoutSettings.getConnectionTimeout()));
         verify(connection).setReadTimeout(eq(timeoutSettings.getReadTimeout()));
-
     }
 
     @ParameterizedTest
@@ -166,6 +176,36 @@ class HttpURLConnectionBasedHttpClientTest {
         if (!shouldCallInputStream) {
             verify(connection, never()).getInputStream();
         }
+        assertEquals(url, urlCaptor.getValue());
+    }
+
+    @ParameterizedTest
+    @MethodSource("cleanUpInputProvider")
+    void testExecuteGetRequest_ShouldAttemptToCloseTheResponseInputStream_WhenCalled(
+            final String url,
+            final int responseCode,
+            final String response) throws IOException {
+        //given
+        HttpURLConnectionBasedHttpClient underTest = spy(new HttpURLConnectionBasedHttpClient());
+        HttpURLConnection connection = mock(HttpURLConnection.class);
+        when(connection.getResponseCode()).thenReturn(responseCode);
+        ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
+        if (response == null) {
+            when(connection.getInputStream()).thenReturn(null);
+        } else {
+            final ByteArrayInputStream stream = mock(ByteArrayInputStream.class);
+            doThrow(new IOException("fail")).when(stream).close();
+            when(connection.getInputStream()).thenReturn(stream);
+        }
+        doReturn(connection).when(underTest).getConnection(urlCaptor.capture());
+
+        //when
+        assertThrows(Exception.class, () -> underTest.executeGetRequest(url));
+
+        //then + exception
+        verify(connection).setRequestMethod("GET");
+        verify(connection).getResponseCode();
+        verify(connection, atMostOnce()).getInputStream();
         assertEquals(url, urlCaptor.getValue());
     }
 }

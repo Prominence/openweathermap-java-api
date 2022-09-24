@@ -65,9 +65,10 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
             logger.debug("Executing OpenWeatherMap API request: " + url);
             return convertInputStreamToString(resultStream);
         } catch (IllegalStateException | IOException ex) {
-            closeQuietly(resultStream);
             logger.error("An error occurred during OpenWeatherMap API response parsing: ", ex);
             throw new NoDataFoundException(ex);
+        } finally {
+            closeQuietly(resultStream);
         }
     }
 

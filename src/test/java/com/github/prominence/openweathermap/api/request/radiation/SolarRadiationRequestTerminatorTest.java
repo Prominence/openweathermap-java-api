@@ -20,18 +20,28 @@
  * SOFTWARE.
  */
 
-package com.github.prominence.openweathermap.api.request.geocoding.direct;
+package com.github.prominence.openweathermap.api.request.radiation;
 
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocoding;
-import com.github.prominence.openweathermap.api.model.geocoding.ZipCodeGeocodingModel;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.model.radiation.SolarRadiationModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import org.junit.jupiter.api.Test;
 
-public class ZipCodeGeocodingRequestAsyncTerminator
-        extends GenericAsyncRequestTerminator<ZipCodeGeocoding, ZipCodeGeocodingModel>
-        implements JsonAsyncApiTerminator<ZipCodeGeocoding> {
-    ZipCodeGeocodingRequestAsyncTerminator(RequestSettings requestSettings) {
-        super(new ZipCodeGeocodingRequestTerminator(requestSettings));
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class SolarRadiationRequestTerminatorTest {
+
+    @Test
+    void testGetValueType_ShouldReturnExpectedClass_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final SolarRadiationRequestTerminator underTest =
+                new SolarRadiationRequestTerminator(requestSettings);
+
+        //when
+        final Class<SolarRadiationModel> actual = underTest.getValueType();
+
+        //then
+        assertEquals(SolarRadiationModel.class, actual);
     }
 }

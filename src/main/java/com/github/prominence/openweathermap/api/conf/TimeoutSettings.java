@@ -22,6 +22,9 @@
 
 package com.github.prominence.openweathermap.api.conf;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public final class TimeoutSettings {
     private final Integer connectionTimeout;
     private final Integer readTimeout;

@@ -22,30 +22,38 @@
 
 package com.github.prominence.openweathermap.api.request.geocoding.reverse;
 
-import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
-import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-public class ReverseGeocodingRequestCustomizer {
-    private final RequestSettings requestSettings;
+class ReverseGeocodingAsyncRequestTerminatorTest {
 
-    ReverseGeocodingRequestCustomizer(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+    @Test
+    void testAsXML_ShouldThrowException_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final ReverseGeocodingAsyncRequestTerminator underTest =
+                new ReverseGeocodingAsyncRequestTerminator(requestSettings);
+
+        //when
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asXML().get());
+
+        //then + exception
     }
 
-    public ReverseGeocodingRequestCustomizer limit(int locationsNumber) {
-        requestSettings.putRequestParameter("limit", Integer.toString(locationsNumber));
-        return this;
-    }
+    @Test
+    void testAsHTML_ShouldThrowException_WhenCalled() {
+        //given
+        final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
+        final ReverseGeocodingAsyncRequestTerminator underTest =
+                new ReverseGeocodingAsyncRequestTerminator(requestSettings);
 
-    public JsonApiTerminator<List<Geocoding>> retrieve() {
-        return new ReverseGeocodingRequestTerminator(requestSettings);
-    }
+        //when
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML().get());
 
-    public JsonAsyncApiTerminator<List<Geocoding>> retrieveAsync() {
-        return new ReverseGeocodingAsyncRequestTerminator(requestSettings);
+        //then + exception
     }
 }
