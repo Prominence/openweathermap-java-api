@@ -25,9 +25,6 @@ package com.github.prominence.openweathermap.api.request.radiation;
 import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 import static com.github.prominence.openweathermap.api.request.RequestSettings.END_PARAM;
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LATITUDE_PARAM;
 import static com.github.prominence.openweathermap.api.request.RequestSettings.LONGITUDE_PARAM;
@@ -40,11 +37,11 @@ public class HistoricalSolarRadiationRequester {
         this.requestSettings = requestSettings;
     }
 
-    public SolarRadiationRequestCustomizer byCoordinates(Coordinates coordinates, LocalDateTime startDate, LocalDateTime endDate) {
+    public SolarRadiationRequestCustomizer byCoordinateAndPeriod(Coordinates coordinates, int startUnixTime, int endUnixTime) {
         requestSettings.putRequestParameter(LATITUDE_PARAM, String.valueOf(coordinates.getLatitude()));
         requestSettings.putRequestParameter(LONGITUDE_PARAM, String.valueOf(coordinates.getLongitude()));
-        requestSettings.putRequestParameter(START_PARAM, String.valueOf(startDate.atZone(ZoneId.systemDefault()).toEpochSecond()));
-        requestSettings.putRequestParameter(END_PARAM, String.valueOf(endDate.atZone(ZoneId.systemDefault()).toEpochSecond()));
+        requestSettings.putRequestParameter(START_PARAM, String.valueOf(startUnixTime));
+        requestSettings.putRequestParameter(END_PARAM, String.valueOf(endUnixTime));
         return new SolarRadiationRequestCustomizer(requestSettings);
     }
 }

@@ -30,8 +30,6 @@ import com.github.prominence.openweathermap.api.model.radiation.SolarRadiation;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -70,11 +68,11 @@ class RadiationIntegrationTest {
         final SolarRadiation actual = new OpenWeatherMapClient(configuration)
                 .solarRadiation()
                 .historical()
-                .byCoordinates(new Coordinates(53.54, 27.34), LocalDateTime.MIN, LocalDateTime.MAX)
+                .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 0, 10)
                 .retrieve()
                 .asJava();
 
         //then
-        assertEquals("https://api.openweathermap.org/data/2.5/solar_radiation/history?mode=json&appid=apiKeyValue&start=-31557014135601380&lon=27.34&end=31556889832777199&units=standard&lat=53.54", urlCaptor.getValue());
+        assertEquals("https://api.openweathermap.org/data/2.5/solar_radiation/history?mode=json&appid=apiKeyValue&start=0&lon=27.34&end=10&units=standard&lat=53.54", urlCaptor.getValue());
     }
 }
