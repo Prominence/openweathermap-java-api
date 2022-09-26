@@ -56,7 +56,8 @@ public class TemperatureValue {
 
     @JsonIgnore
     public BigDecimal asFahrenheit() {
-        return asCelsius().multiply(CELSIUS_TO_FAHRENHEIT_SCALE).add(CELSIUS_TO_FAHRENHEIT_OFFSET)
+        return value.subtract(KELVIN_TO_CELSIUS_OFFSET)
+                .multiply(CELSIUS_TO_FAHRENHEIT_SCALE).add(CELSIUS_TO_FAHRENHEIT_OFFSET)
                 .setScale(DECIMAL_PLACES, RoundingMode.HALF_EVEN);
     }
 }

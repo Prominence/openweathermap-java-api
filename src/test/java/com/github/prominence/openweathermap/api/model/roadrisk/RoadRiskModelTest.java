@@ -22,36 +22,43 @@
 
 package com.github.prominence.openweathermap.api.model.roadrisk;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
 import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
-import lombok.Data;
+import org.junit.jupiter.api.Test;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.Arrays;
 
-@Data
-public class RoadRiskModel implements RoadRisk {
-    @JsonDeserialize(using = EpochSecondsDeserializer.class)
-    @JsonProperty("dt")
-    private OffsetDateTime forecastTime;
-    @JsonProperty("coord")
-    private List<Double> coord;
-    @JsonProperty("weather")
-    private WeatherModel weather;
-    @JsonProperty("road")
-    private RoadDetails roadDetails;
-    @JsonProperty("alerts")
-    private List<Alert> alerts;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-    @JsonIgnore
-    @Override
-    public Coordinates getCoordinates() {
-        return Optional.ofNullable(coord)
-                .map(c -> new Coordinates(c.get(0), c.get(1)))
-                .orElse(null);
+class RoadRiskModelTest {
+
+    @Test
+    void testGetCoordinates_ShouldCreateCoordinatesFromList_WhenValidValuesProvided() {
+        //given
+        final RoadRiskModel underTest = new RoadRiskModel();
+        final double lat = 42.0;
+        final double lon = 23.4;
+        underTest.setCoord(Arrays.asList(lat, lon));
+
+        //when
+        final Coordinates actual = underTest.getCoordinates();
+
+        //then
+        assertNotNull(actual);
+        assertEquals(lat, actual.getLatitude());
+        assertEquals(lon, actual.getLongitude());
+    }
+
+    @Test
+    void testGetCoordinates_ShouldReturnNull_WhenListIsNull() {
+        //given
+        final RoadRiskModel underTest = new RoadRiskModel();
+
+        //when
+        final Coordinates actual = underTest.getCoordinates();
+
+        //then
+        assertNull(actual);
     }
 }
