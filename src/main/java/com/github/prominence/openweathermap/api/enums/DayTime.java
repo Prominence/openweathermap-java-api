@@ -63,6 +63,9 @@ public enum DayTime {
      */
     @JsonCreator
     public static DayTime findByValue(String value) {
-        return Arrays.stream(values()).filter(dayTime -> dayTime.getValue().equals(value)).findFirst().orElse(null);
+        return Arrays.stream(values())
+                .filter(dayTime -> dayTime.getValue().equals(value))
+                .findFirst()
+                .orElse(null);
     }
 }

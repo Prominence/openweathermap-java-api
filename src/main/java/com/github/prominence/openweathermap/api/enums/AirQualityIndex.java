@@ -26,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * The enum Air quality index.
@@ -76,8 +75,9 @@ public enum AirQualityIndex {
      */
     @JsonCreator
     public static AirQualityIndex getByIndex(@JsonProperty("aqi") int index) {
-        final Optional<AirQualityIndex> optionalAirQualityIndex =
-                Arrays.stream(values()).filter(airQualityIndex -> airQualityIndex.getValue() == index).findFirst();
-        return optionalAirQualityIndex.orElse(null);
+        return Arrays.stream(values())
+                .filter(airQualityIndex -> airQualityIndex.getValue() == index)
+                .findFirst()
+                .orElse(null);
     }
 }

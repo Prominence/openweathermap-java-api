@@ -23,6 +23,9 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.ApiTest;
+import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.core.net.HttpClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.NoDataFoundException;
@@ -31,15 +34,41 @@ import com.github.prominence.openweathermap.api.model.forecast.free.ThreeHourWea
 import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
+
+    @Test
+    public void testBuilder_ShouldGenerateExpectedUrl_whenCalledWithValidData() {
+        //given
+        final HttpClient httpClient = mock(HttpClient.class);
+        final ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
+        final ApiConfiguration configuration = ApiConfiguration.builder().apiKey("apiKeyValue").httpClient(httpClient).build();
+        when(httpClient.executeGetRequest(urlCaptor.capture())).thenReturn("{}");
+
+        //when
+        final FiveDaysThreeHoursForecast actual = new OpenWeatherMapClient(configuration)
+                .forecast5Day3HourStep()
+                .byCoordinates(new Coordinates(53.54, 27.34))
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava();
+
+        //then
+        assertEquals("https://api.openweathermap.org/data/2.5/forecast?mode=json&lon=27.34&units=standard&lang=en&lat=53.54&appid=apiKeyValue", urlCaptor.getValue());
+    }
+
     @Test
     public void whenGetForecastByCityNameRequestAsJava_thenReturnNotNull() {
         Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");

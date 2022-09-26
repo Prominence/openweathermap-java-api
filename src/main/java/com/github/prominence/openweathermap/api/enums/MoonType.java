@@ -52,8 +52,9 @@ public enum MoonType {
             return WANING_GIBBOUS;
         } else if (numericValue > 0.75 && numericValue < 1) {
             return WANING_CRESCENT;
+        } else {
+            return INVALID;
         }
-        return INVALID;
     }
 
     private static boolean equals(double d1, double d2) {

@@ -22,53 +22,33 @@
 
 package com.github.prominence.openweathermap.api.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
 
-public enum EventLevel {
-    /**
-     * Unknown event severity.
-     */
-    UNKNOWN(0),
-    /**
-     * Green alert.
-     */
-    GREEN(1),
-    /**
-     * Yellow alert.
-     */
-    YELLOW(2),
-    /**
-     * Orange alert.
-     */
-    ORANGE(3),
-    /**
-     * Red alert.
-     */
-    RED(4);
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    private final int value;
+class DayTimeTest {
 
-    EventLevel(int value) {
-        this.value = value;
+    public static Stream<Arguments> valueProvider() {
+        return Stream.<Arguments>builder()
+                .add(Arguments.of(DayTime.DAY.getValue(), DayTime.DAY))
+                .add(Arguments.of(DayTime.NIGHT.getValue(), DayTime.NIGHT))
+                .add(Arguments.of("N/A", null))
+                .build();
     }
 
-    public int getValue() {
-        return value;
-    }
+    @ParameterizedTest
+    @MethodSource("valueProvider")
+    void testFindByValue_ShouldReturnNull_WhenValueIsNotFound(final String value, final DayTime expected) {
+        //given
 
-    /**
-     * Finds the appropriate event level based on the numerical level.
-     *
-     * @param value the numerical level.
-     * @return event level
-     */
-    @JsonCreator
-    public static EventLevel findByValue(int value) {
-        return Arrays.stream(values())
-                .filter(eventLevel -> eventLevel.getValue() == value)
-                .findFirst()
-                .orElse(null);
+        //when
+        final DayTime actual = DayTime.findByValue(value);
+
+        //then
+        assertEquals(expected, actual);
     }
 }
