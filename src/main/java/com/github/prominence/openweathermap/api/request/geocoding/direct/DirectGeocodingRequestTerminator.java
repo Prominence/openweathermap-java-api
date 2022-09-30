@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
@@ -44,13 +45,13 @@ public class DirectGeocodingRequestTerminator
     }
 
     @Override
-    public String asXML() {
+    public String asXML(final UnitSystem unitSystem) {
         //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
     @Override
-    public String asHTML() {
+    public String asHTML(final UnitSystem unitSystem) {
         //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }

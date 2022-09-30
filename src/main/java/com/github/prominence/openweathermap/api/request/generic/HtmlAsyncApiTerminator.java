@@ -22,9 +22,26 @@
 
 package com.github.prominence.openweathermap.api.request.generic;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface HtmlAsyncApiTerminator {
 
-    CompletableFuture<String> asXML();
+    /**
+     * Terminates the chain of request configuration calls by setting the final parameter and fetches the response as HTML text.
+     *
+     * @param unitSystem The final parameter, defining whether we want to use standard, metric or imperial measurement units.
+     *                   Uses {@link UnitSystem#STANDARD} when null.
+     * @return HTML
+     */
+    CompletableFuture<String> asHTML(UnitSystem unitSystem);
+
+    /**
+     * Shorthand to {@link #asHTML(UnitSystem) using {@link UnitSystem#STANDARD}}.
+     * @return HTML
+     */
+    default CompletableFuture<String> asHTML() {
+        return asHTML(UnitSystem.STANDARD);
+    }
 }

@@ -61,7 +61,6 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -76,7 +75,6 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
                 .asJava();
@@ -101,10 +99,9 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertTrue(forecastJson.startsWith("{"));
     }
@@ -116,10 +113,9 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
-                .asXML();
+                .asXML(UnitSystem.METRIC);
 
         assertTrue(forecastXml.startsWith("<"));
     }
@@ -131,7 +127,6 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
                 .asJava();
@@ -156,10 +151,9 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertTrue(forecastJson.startsWith("{"));
     }
@@ -171,10 +165,9 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
-                .asXML();
+                .asXML(UnitSystem.METRIC);
 
         assertTrue(forecastXml.startsWith("<"));
     }
@@ -186,7 +179,6 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("New York")
                 .language(Language.CHINESE_TRADITIONAL)
-                .unitSystem(UnitSystem.STANDARD)
                 .count(15)
                 .retrieve()
                 .asJava();
@@ -211,10 +203,9 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("New York")
                 .language(Language.SPANISH)
-                .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.IMPERIAL);
 
         assertTrue(forecastJson.startsWith("{"));
     }
@@ -226,9 +217,8 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("New York")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asXML();
+                .asXML(UnitSystem.METRIC);
 
         assertTrue(forecastXml.startsWith("<"));
     }
@@ -240,7 +230,6 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCoordinates(new Coordinates(5, 5))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieve()
                 .asJava();
@@ -265,10 +254,9 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCoordinates(new Coordinates(5, 5))
                 .language(Language.SPANISH)
-                .unitSystem(UnitSystem.IMPERIAL)
                 .count(15)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.IMPERIAL);
 
         assertTrue(forecastJson.startsWith("{"));
     }
@@ -280,9 +268,8 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCoordinates(new Coordinates(5, 5))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asXML();
+                .asXML(UnitSystem.METRIC);
 
         assertTrue(forecastXml.startsWith("<"));
     }
@@ -294,7 +281,6 @@ public class FiveDayThreeHourStepForecastIntegrationTest extends ApiTest {
                 .forecast5Day3HourStep()
                 .byCityName("Minsk")
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .count(15)
                 .retrieveAsync()
                 .asJava();

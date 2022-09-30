@@ -56,7 +56,6 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .historical()
                 .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -72,9 +71,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .historical()
                 .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertNotNull(responseJson);
         assertNotEquals("", responseJson);
@@ -90,7 +88,6 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .historical()
                 .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asJava();
 
@@ -107,9 +104,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                 .historical()
                 .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertNotNull(responseJsonFuture);
         final String responseJson = responseJsonFuture.get();
@@ -132,9 +128,8 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
                         .byCoordinateAndTimestamp(new Coordinates(53.54, 27.34),
                                 LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                         .language(Language.ENGLISH)
-                        .unitSystem(UnitSystem.METRIC)
                         .retrieve()
-                        .asJSON()
+                        .asJSON(UnitSystem.METRIC)
         );
     }
 }

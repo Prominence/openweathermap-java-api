@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.request.air.pollution;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetailsModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
@@ -47,13 +48,13 @@ public class AirPollutionRequestTerminator
     }
 
     @Override
-    public String asXML() {
+    public String asXML(final UnitSystem unitSystem) {
         //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
     @Override
-    public String asHTML() {
+    public String asHTML(final UnitSystem unitSystem) {
         //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }

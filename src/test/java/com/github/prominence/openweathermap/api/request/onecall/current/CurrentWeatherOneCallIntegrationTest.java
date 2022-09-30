@@ -64,7 +64,6 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .exclude(OneCallResultOptions.CURRENT, OneCallResultOptions.MINUTELY)
                 .retrieve()
                 .asJava();
@@ -82,7 +81,6 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -98,9 +96,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertNotNull(responseJson);
         assertNotEquals("", responseJson);
@@ -116,7 +113,6 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .exclude(OneCallResultOptions.CURRENT, OneCallResultOptions.MINUTELY)
                 .retrieve()
                 .asJava();
@@ -135,7 +131,6 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asJava();
 
@@ -152,9 +147,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertNotNull(responseJsonFuture);
         final String responseJson = responseJsonFuture.get();
@@ -175,9 +169,8 @@ public class CurrentWeatherOneCallIntegrationTest extends ApiTest {
                         .current()
                         .byCoordinates(new Coordinates(53.54, 27.34))
                         .language(Language.ENGLISH)
-                        .unitSystem(UnitSystem.METRIC)
                         .retrieve()
-                        .asJSON()
+                        .asJSON(UnitSystem.METRIC)
         );
     }
 }

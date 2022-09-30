@@ -32,6 +32,7 @@ import com.github.prominence.openweathermap.api.request.RequestSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -53,17 +54,20 @@ public abstract class GenericListRequestTerminator<T, I extends T> {
         return castInternalToModel(mapToObject(getRawResponse()));
     }
 
-    public String asJSON() {
+    public String asJSON(final UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(Optional.ofNullable(unitSystem).orElse(UnitSystem.STANDARD));
         requestSettings.setResponseType(ResponseType.JSON);
         return getRawResponse();
     }
 
-    public String asXML() {
+    public String asXML(final UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(Optional.ofNullable(unitSystem).orElse(UnitSystem.STANDARD));
         requestSettings.setResponseType(ResponseType.XML);
         return getRawResponse();
     }
 
-    public String asHTML() {
+    public String asHTML(final UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(Optional.ofNullable(unitSystem).orElse(UnitSystem.STANDARD));
         requestSettings.setResponseType(ResponseType.HTML);
         return getRawResponse();
     }

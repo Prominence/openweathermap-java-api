@@ -26,7 +26,6 @@ import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.core.net.HttpClient;
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecast;
 import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Test;
@@ -51,7 +50,6 @@ class DailyForecastIntegrationTest {
                 .forecastDaily16Days()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 

@@ -23,7 +23,6 @@
 package com.github.prominence.openweathermap.api.request.forecast.daily;
 
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.daily.SixteenDaysDailyForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
@@ -44,11 +43,6 @@ class DailyForecastRequestCustomizer {
 
     public DailyForecastRequestCustomizer language(Language language) {
         requestSettings.setLanguage(language);
-        return this;
-    }
-
-    public DailyForecastRequestCustomizer unitSystem(UnitSystem unitSystem) {
-        requestSettings.setUnitSystem(unitSystem);
         return this;
     }
 

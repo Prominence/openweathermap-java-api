@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
 import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
@@ -41,7 +42,7 @@ class DirectGeocodingRequestTerminatorTest {
                 new DirectGeocodingRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(UnsupportedOperationException.class, underTest::asXML);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> underTest.asXML(UnitSystem.STANDARD));
 
         //then + exception
     }
@@ -54,7 +55,7 @@ class DirectGeocodingRequestTerminatorTest {
                 new DirectGeocodingRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(UnsupportedOperationException.class, underTest::asHTML);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> underTest.asHTML(UnitSystem.STANDARD));
 
         //then + exception
     }

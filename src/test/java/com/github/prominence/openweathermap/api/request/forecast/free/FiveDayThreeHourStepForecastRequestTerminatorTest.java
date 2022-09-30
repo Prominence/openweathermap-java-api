@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.junit.jupiter.api.Assertions;
@@ -40,7 +41,7 @@ class FiveDayThreeHourStepForecastRequestTerminatorTest {
                 new FiveDayThreeHourStepForecastRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(UnsupportedOperationException.class, underTest::asHTML);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> underTest.asHTML(UnitSystem.STANDARD));
 
         //then + exception
     }

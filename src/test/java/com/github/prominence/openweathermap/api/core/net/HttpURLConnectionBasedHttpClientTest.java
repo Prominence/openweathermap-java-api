@@ -54,9 +54,14 @@ import static org.mockito.Mockito.when;
 
 class HttpURLConnectionBasedHttpClientTest {
 
+    private static final String MULTI_LINE_RESPONSE = "response line 1" + System.lineSeparator()
+            + "line 2" + System.lineSeparator()
+            + System.lineSeparator()
+            + "4";
+
     public static Stream<Arguments> validGetRequestDataProvider() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("http://localhost", 200, "response line 1\nline 2\n\n4"))
+                .add(Arguments.of("http://localhost", 200, MULTI_LINE_RESPONSE))
                 .add(Arguments.of("http://127.0.0.1", 200, "{}"))
                 .build();
     }
@@ -72,15 +77,15 @@ class HttpURLConnectionBasedHttpClientTest {
 
     public static Stream<Arguments> validPostRequestDataProvider() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("http://localhost", "input", 200, "response line 1\nline 2\n\n4"))
+                .add(Arguments.of("http://localhost", "input", 200, MULTI_LINE_RESPONSE))
                 .add(Arguments.of("http://127.0.0.1", null, 200, "{}"))
                 .build();
     }
 
     public static Stream<Arguments> cleanUpInputProvider() {
         return Stream.<Arguments>builder()
-                .add(Arguments.of("http://localhost", 200, "response line 1\nline 2\n\n4"))
-                .add(Arguments.of("http://localhost", 301, "response line 1\nline 2\n\n4"))
+                .add(Arguments.of("http://localhost", 200, MULTI_LINE_RESPONSE))
+                .add(Arguments.of("http://localhost", 301, MULTI_LINE_RESPONSE))
                 .add(Arguments.of("http://127.0.0.1", 404, null))
                 .add(Arguments.of("http://127.0.0.1", 401, null))
                 .build();

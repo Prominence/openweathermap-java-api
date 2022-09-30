@@ -32,54 +32,72 @@ import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.spy;
 
-class GenericRequestTerminatorTest {
+class GenericListRequestTerminatorTest {
 
-    private static final String ALL_50 = "{\"all\":50}";
+    private static final String ALL_50 = "[{\"all\":50}]";
 
     @Test
     void testAsJava_ShouldMapRawResponseToJavObject_WhenRawResponseExists() {
         //given
         final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
-        GenericRequestTerminator<CloudCoverage, Clouds> underTest = new GenericRequestTerminator<CloudCoverage, Clouds>(requestSettings) {
-            @Override
-            protected Class<Clouds> getValueType() {
-                return Clouds.class;
-            }
+        final GenericListRequestTerminator<CloudCoverage, Clouds> underTest =
+                new GenericListRequestTerminator<CloudCoverage, Clouds>(requestSettings) {
+                    @Override
+                    protected Class<CloudCoverage> getValueType() {
+                        return CloudCoverage.class;
+                    }
 
-            @Override
-            protected String getRawResponse() {
-                return ALL_50;
-            }
-        };
+                    @Override
+                    protected Class<Clouds> getInnerType() {
+                        return Clouds.class;
+                    }
+
+
+                    @Override
+                    protected String getRawResponse() {
+                        return ALL_50;
+                    }
+                };
 
         //when
-        final CloudCoverage actual = underTest.asJava();
+        final List<CloudCoverage> actual = underTest.asJava();
 
         //then
-        assertEquals(new Clouds(50), actual);
+        assertIterableEquals(Collections.singletonList(new Clouds(50)), actual);
     }
 
     @Test
     void testAsJava_ShouldThrowApiPayloadParseException_WhenRawResponseCannotBeMapped() {
         //given
         final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
-        GenericRequestTerminator<CloudCoverage, Clouds> underTest = new GenericRequestTerminator<CloudCoverage, Clouds>(requestSettings) {
-            @Override
-            protected Class<Clouds> getValueType() {
-                return Clouds.class;
-            }
+        final GenericListRequestTerminator<CloudCoverage, Clouds> underTest =
+                new GenericListRequestTerminator<CloudCoverage, Clouds>(requestSettings) {
+                    @Override
+                    protected Class<CloudCoverage> getValueType() {
+                        return CloudCoverage.class;
+                    }
 
-            @Override
-            protected String getRawResponse() {
-                return "{\"all\":\"-\"}";
-            }
-        };
+                    @Override
+                    protected Class<Clouds> getInnerType() {
+                        return Clouds.class;
+                    }
+
+
+                    @Override
+                    protected String getRawResponse() {
+                        return "INVALID";
+                    }
+                };
 
         //when
         assertThrows(ApiPayloadParseException.class, underTest::asJava);
@@ -93,12 +111,18 @@ class GenericRequestTerminatorTest {
         final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
         requestSettings.setUnitSystem(UnitSystem.IMPERIAL);
         RequestSettings spyRequestSettings = spy(requestSettings);
-        GenericRequestTerminator<CloudCoverage, Clouds> underTest =
-                spy(new GenericRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
+        final GenericListRequestTerminator<CloudCoverage, Clouds> underTest =
+                spy(new GenericListRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
                     @Override
-                    protected Class<Clouds> getValueType() {
+                    protected Class<CloudCoverage> getValueType() {
+                        return CloudCoverage.class;
+                    }
+
+                    @Override
+                    protected Class<Clouds> getInnerType() {
                         return Clouds.class;
                     }
+
 
                     @Override
                     protected String getRawResponse() {
@@ -121,12 +145,18 @@ class GenericRequestTerminatorTest {
         final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
         requestSettings.setUnitSystem(UnitSystem.IMPERIAL);
         RequestSettings spyRequestSettings = spy(requestSettings);
-        GenericRequestTerminator<CloudCoverage, Clouds> underTest =
-                spy(new GenericRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
+        final GenericListRequestTerminator<CloudCoverage, Clouds> underTest =
+                spy(new GenericListRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
                     @Override
-                    protected Class<Clouds> getValueType() {
+                    protected Class<CloudCoverage> getValueType() {
+                        return CloudCoverage.class;
+                    }
+
+                    @Override
+                    protected Class<Clouds> getInnerType() {
                         return Clouds.class;
                     }
+
 
                     @Override
                     protected String getRawResponse() {
@@ -151,12 +181,18 @@ class GenericRequestTerminatorTest {
         final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
         requestSettings.setUnitSystem(UnitSystem.IMPERIAL);
         RequestSettings spyRequestSettings = spy(requestSettings);
-        GenericRequestTerminator<CloudCoverage, Clouds> underTest =
-                spy(new GenericRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
+        final GenericListRequestTerminator<CloudCoverage, Clouds> underTest =
+                spy(new GenericListRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
                     @Override
-                    protected Class<Clouds> getValueType() {
+                    protected Class<CloudCoverage> getValueType() {
+                        return CloudCoverage.class;
+                    }
+
+                    @Override
+                    protected Class<Clouds> getInnerType() {
                         return Clouds.class;
                     }
+
 
                     @Override
                     protected String getRawResponse() {
@@ -181,12 +217,18 @@ class GenericRequestTerminatorTest {
         final RequestSettings requestSettings = new RequestSettings(ApiConfiguration.builder().apiKey("-").build());
         requestSettings.setUnitSystem(UnitSystem.IMPERIAL);
         RequestSettings spyRequestSettings = spy(requestSettings);
-        GenericRequestTerminator<CloudCoverage, Clouds> underTest =
-                spy(new GenericRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
+        final GenericListRequestTerminator<CloudCoverage, Clouds> underTest =
+                spy(new GenericListRequestTerminator<CloudCoverage, Clouds>(spyRequestSettings) {
                     @Override
-                    protected Class<Clouds> getValueType() {
+                    protected Class<CloudCoverage> getValueType() {
+                        return CloudCoverage.class;
+                    }
+
+                    @Override
+                    protected Class<Clouds> getInnerType() {
                         return Clouds.class;
                     }
+
 
                     @Override
                     protected String getRawResponse() {

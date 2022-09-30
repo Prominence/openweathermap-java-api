@@ -30,6 +30,8 @@ import com.github.prominence.openweathermap.api.exception.ApiPayloadParseExcepti
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 /**
  * Generic implementation of the request termination logic.
  *
@@ -50,17 +52,20 @@ public abstract class GenericRequestTerminator<T, I extends T> {
         return mapToObject(getRawResponse());
     }
 
-    public String asJSON() {
+    public String asJSON(final UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(Optional.ofNullable(unitSystem).orElse(UnitSystem.STANDARD));
         requestSettings.setResponseType(ResponseType.JSON);
         return getRawResponse();
     }
 
-    public String asXML() {
+    public String asXML(final UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(Optional.ofNullable(unitSystem).orElse(UnitSystem.STANDARD));
         requestSettings.setResponseType(ResponseType.XML);
         return getRawResponse();
     }
 
-    public String asHTML() {
+    public String asHTML(final UnitSystem unitSystem) {
+        requestSettings.setUnitSystem(Optional.ofNullable(unitSystem).orElse(UnitSystem.STANDARD));
         requestSettings.setResponseType(ResponseType.HTML);
         return getRawResponse();
     }

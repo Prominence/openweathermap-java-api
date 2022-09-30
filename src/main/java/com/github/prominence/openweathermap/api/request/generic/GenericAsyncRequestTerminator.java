@@ -22,6 +22,7 @@
 
 package com.github.prominence.openweathermap.api.request.generic;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import lombok.NonNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -37,15 +38,15 @@ public class GenericAsyncRequestTerminator<T, I extends T> {
         return CompletableFuture.supplyAsync(sync::asJava);
     }
 
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(sync::asJSON);
+    public CompletableFuture<String> asJSON(final UnitSystem unitSystem) {
+        return CompletableFuture.supplyAsync(() -> sync.asJSON(unitSystem));
     }
 
-    public CompletableFuture<String> asXML() {
-        return CompletableFuture.supplyAsync(sync::asXML);
+    public CompletableFuture<String> asXML(final UnitSystem unitSystem) {
+        return CompletableFuture.supplyAsync(() -> sync.asXML(unitSystem));
     }
 
-    public CompletableFuture<String> asHTML() {
-        return CompletableFuture.supplyAsync(sync::asHTML);
+    public CompletableFuture<String> asHTML(final UnitSystem unitSystem) {
+        return CompletableFuture.supplyAsync(() -> sync.asHTML(unitSystem));
     }
 }

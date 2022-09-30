@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.forecast.climatic;
 
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.junit.jupiter.api.Assertions;
@@ -40,7 +41,7 @@ class ClimaticForecastRequestTerminatorTest {
                 new ClimaticForecastRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(UnsupportedOperationException.class, underTest::asHTML);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> underTest.asHTML(UnitSystem.STANDARD));
 
         //then + exception
     }

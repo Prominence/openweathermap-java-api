@@ -22,11 +22,34 @@
 
 package com.github.prominence.openweathermap.api.request.generic;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface JsonAsyncApiTerminator<T> {
 
+    /**
+     * Terminates the chain of request configuration calls and fetches the response as JSON, then maps it to Java Objects.
+     *
+     * @return deserialized the forecast data
+     */
     CompletableFuture<T> asJava();
 
-    CompletableFuture<String> asJSON();
+
+    /**
+     * Terminates the chain of request configuration calls by setting the final parameter and fetches the response as JSON text.
+     *
+     * @param unitSystem The final parameter, defining whether we want to use standard, metric or imperial measurement units.
+     *                   Uses {@link UnitSystem#STANDARD} when null.
+     * @return JSON
+     */
+    CompletableFuture<String> asJSON(UnitSystem unitSystem);
+
+    /**
+     * Shorthand to {@link #asJSON(UnitSystem) using {@link UnitSystem#STANDARD}}.
+     * @return JSON
+     */
+    default CompletableFuture<String> asJSON() {
+        return asJSON(UnitSystem.STANDARD);
+    }
 }

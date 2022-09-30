@@ -142,7 +142,7 @@ public class HttpURLConnectionBasedHttpClient implements HttpClient {
      */
     private String convertInputStreamToString(InputStream inputStream) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining("\n"));
+            return reader.lines().collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException ex) {
             logger.error("Error during response reading: ", ex);
             throw new IllegalArgumentException(ex);

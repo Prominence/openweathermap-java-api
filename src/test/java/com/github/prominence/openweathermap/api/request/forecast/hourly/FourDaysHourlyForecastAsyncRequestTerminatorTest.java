@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.forecast.hourly;
 
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class FourDaysHourlyForecastAsyncRequestTerminatorTest {
                 new FourDaysHourlyForecastAsyncRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML().get());
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML(UnitSystem.STANDARD).get());
 
         //then + exception
     }

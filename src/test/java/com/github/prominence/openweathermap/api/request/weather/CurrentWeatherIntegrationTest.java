@@ -41,7 +41,6 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
                 .currentWeather()
                 .withTimeoutSettings(new TimeoutSettings(3000, 3000))
                 .byCoordinates(new Coordinates(5, 5))
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -62,9 +61,8 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
         final String weatherJson = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertTrue(weatherJson.startsWith("{"));
     }
@@ -75,9 +73,8 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
         final String weatherXml = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asXML();
+                .asXML(UnitSystem.METRIC);
 
         assertTrue(weatherXml.startsWith("<"));
     }
@@ -88,9 +85,8 @@ public class CurrentWeatherIntegrationTest extends ApiTest {
         final String weatherHtml = getClient()
                 .currentWeather()
                 .byCoordinates(new Coordinates(5, 5))
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asHTML();
+                .asHTML(UnitSystem.METRIC);
 
         assertTrue(weatherHtml.startsWith("<"));
     }

@@ -23,7 +23,6 @@
 package com.github.prominence.openweathermap.api.request.forecast.free;
 
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.free.FiveDaysThreeHoursForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.JsonXmlApiTerminator;
@@ -48,11 +47,6 @@ class FiveDayThreeHourStepForecastRequestCustomizer {
 
     public FiveDayThreeHourStepForecastRequestCustomizer language(Language language) {
         requestSettings.setLanguage(language);
-        return this;
-    }
-
-    public FiveDayThreeHourStepForecastRequestCustomizer unitSystem(UnitSystem unitSystem) {
-        requestSettings.setUnitSystem(unitSystem);
         return this;
     }
 

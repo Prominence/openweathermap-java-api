@@ -24,6 +24,7 @@ package com.github.prominence.openweathermap.api.request.forecast.hourly;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
 import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.FourDaysHourlyForecast;
 import com.github.prominence.openweathermap.api.model.forecast.hourly.FourDaysHourlyForecastModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
@@ -38,7 +39,7 @@ class FourDaysHourlyForecastRequestTerminator
     }
 
     @Override
-    public String asHTML() {
+    public String asHTML(final UnitSystem unitSystem) {
         //Method meant to be hidden as only JsonApiTerminator is exposed
         throw new UnsupportedOperationException("HTML format not supported for this API.");
     }

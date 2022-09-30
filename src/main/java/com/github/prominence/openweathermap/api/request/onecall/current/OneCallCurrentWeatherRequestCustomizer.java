@@ -24,7 +24,6 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
@@ -50,11 +49,6 @@ class OneCallCurrentWeatherRequestCustomizer {
 
     public OneCallCurrentWeatherRequestCustomizer language(Language language) {
         requestSettings.setLanguage(language);
-        return this;
-    }
-
-    public OneCallCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
-        this.requestSettings.setUnitSystem(unitSystem);
         return this;
     }
 

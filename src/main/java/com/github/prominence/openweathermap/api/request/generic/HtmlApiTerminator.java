@@ -22,7 +22,24 @@
 
 package com.github.prominence.openweathermap.api.request.generic;
 
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+
 public interface HtmlApiTerminator {
 
-    String asHTML();
+    /**
+     * Terminates the chain of request configuration calls by setting the final parameter and fetches the response as HTML text.
+     *
+     * @param unitSystem The final parameter, defining whether we want to use standard, metric or imperial measurement units.
+     *                   Uses {@link UnitSystem#STANDARD} when null.
+     * @return HTML
+     */
+    String asHTML(UnitSystem unitSystem);
+
+    /**
+     * Shorthand to {@link #asHTML(UnitSystem) using {@link UnitSystem#STANDARD}}.
+     * @return HTML
+     */
+    default String asHTML() {
+        return asHTML(UnitSystem.STANDARD);
+    }
 }

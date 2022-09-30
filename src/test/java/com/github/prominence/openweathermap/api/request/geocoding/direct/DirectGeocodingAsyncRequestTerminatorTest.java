@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.geocoding.direct;
 
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class DirectGeocodingAsyncRequestTerminatorTest {
                 new DirectGeocodingAsyncRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(ExecutionException.class, () -> underTest.asXML().get());
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asXML(UnitSystem.STANDARD).get());
 
         //then + exception
     }
@@ -52,7 +53,7 @@ class DirectGeocodingAsyncRequestTerminatorTest {
                 new DirectGeocodingAsyncRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML().get());
+        Assertions.assertThrows(ExecutionException.class, () -> underTest.asHTML(UnitSystem.STANDARD).get());
 
         //then + exception
     }

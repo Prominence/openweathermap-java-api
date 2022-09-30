@@ -23,6 +23,7 @@
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.junit.jupiter.api.Assertions;
@@ -40,7 +41,7 @@ class OneCallHistoricalWeatherRequestTerminatorTest {
                 new OneCallHistoricalWeatherRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(UnsupportedOperationException.class, underTest::asXML);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> underTest.asXML(UnitSystem.STANDARD));
 
         //then + exception
     }
@@ -53,7 +54,7 @@ class OneCallHistoricalWeatherRequestTerminatorTest {
                 new OneCallHistoricalWeatherRequestTerminator(requestSettings);
 
         //when
-        Assertions.assertThrows(UnsupportedOperationException.class, underTest::asHTML);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> underTest.asHTML(UnitSystem.STANDARD));
 
         //then + exception
     }

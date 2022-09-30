@@ -26,6 +26,7 @@ import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.context.ApiConfiguration;
 import com.github.prominence.openweathermap.api.core.net.HttpClient;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.air.pollution.AirPollutionDetails;
 import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
 import org.junit.jupiter.api.Assumptions;
@@ -107,7 +108,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieve()
-                .asJSON();
+                .asJSON(null);
 
         assertNotNull(jsonString);
         System.out.println(jsonString);
@@ -135,7 +136,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .current()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieveAsync()
-                .asJSON();
+                .asJSON(UnitSystem.STANDARD);
 
         assertNotNull(jsonStringFuture);
         final String jsonString = jsonStringFuture.get();
@@ -168,7 +169,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .forecast()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.STANDARD);
 
         assertNotNull(jsonString);
         System.out.println(jsonString);
@@ -196,7 +197,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .forecast()
                 .byCoordinates(new Coordinates(53.54, 27.34))
                 .retrieveAsync()
-                .asJSON();
+                .asJSON(UnitSystem.STANDARD);
 
         assertNotNull(jsonStringFuture);
         final String jsonString = jsonStringFuture.get();
@@ -229,7 +230,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .historical()
                 .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 1606223802, 1606482999)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.STANDARD);
 
         assertNotNull(jsonString);
         System.out.println(jsonString);
@@ -257,7 +258,7 @@ public class AirPollutionIntegrationTest extends ApiTest {
                 .historical()
                 .byCoordinateAndPeriod(new Coordinates(53.54, 27.34), 1606223802, 1606482999)
                 .retrieveAsync()
-                .asJSON();
+                .asJSON(UnitSystem.STANDARD);
 
         assertNotNull(jsonStringFuture);
         final String jsonString = jsonStringFuture.get();
