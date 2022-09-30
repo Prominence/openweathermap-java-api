@@ -1,47 +1,39 @@
+/*
+ * Copyright (c) 2021-present Alexey Zinchenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.github.prominence.openweathermap.api.model.roadrisk;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
 import com.github.prominence.openweathermap.api.enums.RoadState;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import lombok.Data;
 
-import java.util.Objects;
-
+@Data
 public class RoadDetails {
+    @JsonProperty("state")
     private RoadState roadState;
-    private Double surfaceTemperature;
-
-    public RoadState getRoadState() {
-        return roadState;
-    }
-
-    public void setRoadState(RoadState roadState) {
-        this.roadState = roadState;
-    }
-
-    public Double getSurfaceTemperature() {
-        return surfaceTemperature;
-    }
-
-    public void setSurfaceTemperature(Double surfaceTemperature) {
-        this.surfaceTemperature = surfaceTemperature;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RoadDetails that = (RoadDetails) o;
-        return roadState == that.roadState && Objects.equals(surfaceTemperature, that.surfaceTemperature);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(roadState, surfaceTemperature);
-    }
-
-    @Override
-    public String toString() {
-        return "RoadDetails{" +
-                "roadState=" + roadState +
-                ", surfaceTemperature=" + surfaceTemperature +
-                '}';
-    }
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("temp")
+    private TemperatureValue surfaceTemperature;
 }

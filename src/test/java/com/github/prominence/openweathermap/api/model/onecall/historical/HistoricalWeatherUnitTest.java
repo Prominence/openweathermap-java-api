@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,26 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.historical;
 
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.onecall.Rain;
-import com.github.prominence.openweathermap.api.model.onecall.Snow;
-import com.github.prominence.openweathermap.api.model.onecall.Temperature;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.BasePrecipitation;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.visibility.Visibility;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
+import com.github.prominence.openweathermap.api.model.onecall.BaseMeasurement;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HistoricalWeatherUnitTest {
     @Test
     public void getForecastTime() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final LocalDateTime now = LocalDateTime.now();
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         historicalWeather.setForecastTime(now);
 
         assertEquals(now, historicalWeather.getForecastTime());
@@ -49,8 +49,8 @@ public class HistoricalWeatherUnitTest {
 
     @Test
     public void getSunriseTime() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final LocalDateTime now = LocalDateTime.now();
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         historicalWeather.setSunriseTime(now);
 
         assertEquals(now, historicalWeather.getSunriseTime());
@@ -58,8 +58,8 @@ public class HistoricalWeatherUnitTest {
 
     @Test
     public void getSunsetTime() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final LocalDateTime now = LocalDateTime.now();
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         historicalWeather.setSunsetTime(now);
 
         assertEquals(now, historicalWeather.getSunsetTime());
@@ -67,275 +67,97 @@ public class HistoricalWeatherUnitTest {
 
     @Test
     public void getWeatherState() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        historicalWeather.setWeatherStates(List.of(weatherState));
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
+        historicalWeather.setWeatherStates(Collections.singletonList(weatherState));
 
         assertEquals(weatherState, historicalWeather.getWeatherStates().get(0));
     }
 
     @Test
     public void getTemperature() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Temperature temperature = Temperature.withValue(10, "K");
-
-        historicalWeather.setTemperature(temperature);
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final TemperatureValue temperature = new TemperatureValue(BigDecimal.valueOf(10.0));
+        historicalWeather.setTemperatureMeasured(temperature);
 
         assertEquals(temperature, historicalWeather.getTemperature());
     }
 
     @Test
     public void getAtmosphericPressure() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(22.3);
-        historicalWeather.setAtmosphericPressure(atmosphericPressure);
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final BigDecimal atmosphericPressure = BigDecimal.valueOf(22.3);
+        historicalWeather.setSeaLevel(atmosphericPressure);
 
-        assertEquals(atmosphericPressure, historicalWeather.getAtmosphericPressure());
+        assertEquals(atmosphericPressure, historicalWeather.getSeaLevel());
     }
 
     @Test
     public void getHumidity() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Humidity humidity = Humidity.withValue((byte) 10);
-        historicalWeather.setHumidity(humidity);
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final int humidity = 10;
+        historicalWeather.setHumidityPercentage(humidity);
 
-        assertEquals(humidity, historicalWeather.getHumidity());
+        assertEquals(humidity, historicalWeather.getHumidityPercentage());
     }
 
     @Test
     public void getWind() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Wind wind = Wind.withValue(13.2, "m/s");
-        historicalWeather.setWind(wind);
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
+        WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(12.0));
+        int direction = 50;
+        historicalWeather.setSpeed(windSpeed);
+        historicalWeather.setGust(windSpeedGust);
+        historicalWeather.setDirectionDegrees(direction);
 
-        assertEquals(wind, historicalWeather.getWind());
+        assertEquals(windSpeed, historicalWeather.getWind().getSpeed());
+        assertEquals(windSpeedGust, historicalWeather.getWind().getGust());
+        assertEquals(direction, historicalWeather.getWind().getDirectionDegrees());
     }
 
     @Test
     public void getClouds() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Clouds clouds = Clouds.withValue((byte) 25);
-        historicalWeather.setClouds(clouds);
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final int clouds = 25;
+        historicalWeather.setCoveragePercentage(clouds);
 
-        assertEquals(clouds, historicalWeather.getClouds());
+        assertEquals(clouds, historicalWeather.getClouds().getCoveragePercentage());
     }
 
     @Test
     public void getUvIndex() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final double uvIndex = 22.4;
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final BigDecimal uvIndex = BigDecimal.valueOf(22.4);
         historicalWeather.setUvIndex(uvIndex);
 
-        assertEquals(uvIndex, historicalWeather.getUvIndex(), 0.00001);
-
-        historicalWeather.setUvIndex(null);
-
-        assertNull(historicalWeather.getUvIndex());
+        assertEquals(uvIndex, historicalWeather.getUvIndex());
     }
 
     @Test
-    public void getIllegalUvIndexValue() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
+    public void getVisibility() {
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final Visibility vim = new Visibility(new BigDecimal(120));
+        historicalWeather.setVisibility(vim);
 
-        assertThrows(IllegalArgumentException.class, () -> historicalWeather.setUvIndex(-1.2));
-    }
-
-    @Test
-    public void getProbabilityOfPrecipitation() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final double vim = 120;
-        historicalWeather.setVisibilityInMetres(vim);
-
-        assertEquals(vim, historicalWeather.getVisibilityInMetres(), 0.00001);
-
-        historicalWeather.setVisibilityInMetres(null);
-
-        assertNull(historicalWeather.getVisibilityInMetres());
-    }
-
-    @Test
-    public void getIllegalProbabilityOfPrecipitationValue_negative() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-
-        assertThrows(IllegalArgumentException.class, () -> historicalWeather.setVisibilityInMetres(-20.0));
+        assertEquals(vim, historicalWeather.getVisibility());
     }
 
     @Test
     public void getRain() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Rain rain = Rain.withOneHourLevelValue(20.2);
-        historicalWeather.setRain(rain);
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final BasePrecipitation rain = new BasePrecipitation(BigDecimal.valueOf(20.2));
+        historicalWeather.setRainModel(rain);
 
-        assertEquals(rain, historicalWeather.getRain());
+        assertEquals(rain.getOneHourLevel(), historicalWeather.getRain());
     }
 
     @Test
     public void getSnow() {
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-        final Snow snow = Snow.withOneHourLevelValue(25.0);
-        historicalWeather.setSnow(snow);
-
-        assertEquals(snow, historicalWeather.getSnow());
-    }
-
-    @Test
-    public void getEquals() {
-        final LocalDateTime now = LocalDateTime.now();
-        final HistoricalWeather first = new HistoricalWeather();
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        final HistoricalWeather second = new HistoricalWeather();
-
-        assertEquals(first, second);
-
-        first.setForecastTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setForecastTime(now);
-
-        assertEquals(first, second);
-
-        first.setSunriseTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setSunriseTime(now);
-
-        assertEquals(first, second);
-
-        first.setSunsetTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setSunsetTime(now);
-
-        assertEquals(first, second);
-
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-
-        first.setWeatherStates(List.of(weatherState));
-
-        assertNotEquals(first, second);
-
-        second.setWeatherStates(List.of(weatherState));
-
-        assertEquals(first, second);
-
-        final Temperature temperature = Temperature.withValue(10, "K");
-
-        first.setTemperature(temperature);
-
-        assertNotEquals(first, second);
-
-        second.setTemperature(temperature);
-
-        assertEquals(first, second);
-
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(22.3);
-
-        first.setAtmosphericPressure(atmosphericPressure);
-
-        assertNotEquals(first, second);
-
-        second.setAtmosphericPressure(atmosphericPressure);
-
-        assertEquals(first, second);
-
-        final Humidity humidity = Humidity.withValue((byte) 10);
-
-        first.setHumidity(humidity);
-
-        assertNotEquals(first, second);
-
-        second.setHumidity(humidity);
-
-        assertEquals(first, second);
-
-        final Wind wind = Wind.withValue(13.2, "m/s");
-
-        first.setWind(wind);
-
-        assertNotEquals(first, second);
-
-        second.setWind(wind);
-
-        assertEquals(first, second);
-
-        final Clouds clouds = Clouds.withValue((byte) 25);
-
-        first.setClouds(clouds);
-
-        assertNotEquals(first, second);
-
-        second.setClouds(clouds);
-
-        assertEquals(first, second);
-
-        final double uvIndex = 22.4;
-
-        first.setUvIndex(uvIndex);
-
-        assertNotEquals(first, second);
-
-        second.setUvIndex(uvIndex);
-
-        assertEquals(first, second);
-
-        final double vim = 250;
-
-        first.setVisibilityInMetres(vim);
-
-        assertNotEquals(first, second);
-
-        second.setVisibilityInMetres(vim);
-
-        assertEquals(first, second);
-
-        final Rain rain = Rain.withOneHourLevelValue(20.2);
-
-        first.setRain(rain);
-
-        assertNotEquals(first, second);
-
-        second.setRain(rain);
-
-        assertEquals(first, second);
-
-        final Snow snow = Snow.withOneHourLevelValue(25.0);
-
-        first.setSnow(snow);
-
-        assertNotEquals(first, second);
-
-        second.setSnow(snow);
-
-        assertEquals(first, second);
-    }
-
-    @Test
-    public void getHashCode() {
-        final HistoricalWeather first = new HistoricalWeather();
-        final HistoricalWeather second = new HistoricalWeather();
-
-        assertEquals(first.hashCode(), second.hashCode());
-
-        first.setForecastTime(LocalDateTime.now());
-
-        assertNotEquals(first.hashCode(), second.hashCode());
-    }
-
-    @Test
-    public void getToString() {
-        final LocalDateTime now = LocalDateTime.now();
-        final HistoricalWeather historicalWeather = new HistoricalWeather();
-
-        historicalWeather.setForecastTime(now);
-
-        assertNotNull(historicalWeather.toString());
-        assertNotEquals("", historicalWeather.toString());
+        final BaseMeasurement historicalWeather = new BaseMeasurement();
+        final BasePrecipitation snow = new BasePrecipitation(BigDecimal.valueOf(25.0));
+        historicalWeather.setSnowModel(snow);
+
+        assertEquals(snow.getOneHourLevel(), historicalWeather.getSnow());
     }
 }

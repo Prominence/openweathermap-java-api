@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,9 @@
  */
 
 package com.github.prominence.openweathermap.api.enums;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -277,7 +280,7 @@ public enum WeatherCondition {
     private final String description;
     private final String iconId;
 
-    private WeatherCondition(int id, String name, String description, String iconId) {
+    WeatherCondition(int id, String name, String description, String iconId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -311,13 +314,24 @@ public enum WeatherCondition {
         return description;
     }
 
+
+    /**
+     * Gets icon id based on part of day.
+     *
+     * @param partOfDay The part of day we need the icon for.
+     * @return the icon id
+     */
+    public String getIconId(DayTime partOfDay) {
+        return iconId + partOfDay.getValue();
+    }
+
     /**
      * Gets day icon id.
      *
      * @return the day icon id
      */
     public String getDayIconId() {
-        return iconId + 'd';
+        return getIconId(DayTime.DAY);
     }
 
     /**
@@ -326,35 +340,42 @@ public enum WeatherCondition {
      * @return the night icon id
      */
     public String getNightIconId() {
-        return iconId + 'n';
+        return getIconId(DayTime.NIGHT);
     }
 
     /**
      * Gets day icon url.
      *
+     * @param secure Determines whether we need to use secure channel (HTTPS) for loading the image.
      * @return the day icon url
      */
-    public String getDayIconUrl() {
-        return getIconUrl(getDayIconId());
+    public String getDayIconUrl(boolean secure) {
+        return getIconUrl(getDayIconId(), secure);
     }
 
     /**
      * Gets night icon url.
      *
+     * @param secure Determines whether we need to use secure channel (HTTPS) for loading the image.
      * @return the night icon url
      */
-    public String getNightIconUrl() {
-        return getIconUrl(getNightIconId());
+    public String getNightIconUrl(boolean secure) {
+        return getIconUrl(getNightIconId(), secure);
     }
 
     /**
      * Gets icon url.
      *
      * @param iconId the icon id
+     * @param secure Determines whether we need to use secure channel (HTTPS) for loading the image.
      * @return the icon url
      */
-    public static String getIconUrl(String iconId) {
-        return "https://openweathermap.org/img/w/" + iconId + ".png";
+    public static String getIconUrl(String iconId, boolean secure) {
+        String scheme = "http";
+        if (secure) {
+            scheme = "https";
+        }
+        return scheme + "://openweathermap.org/img/w/" + iconId + ".png";
     }
 
     /**
@@ -363,8 +384,10 @@ public enum WeatherCondition {
      * @param id the id
      * @return the by id
      */
-    public static WeatherCondition getById(int id) {
-        final Optional<WeatherCondition> optionalWeatherCondition = Arrays.stream(values()).filter(weatherCondition -> weatherCondition.getId() == id).findFirst();
+    @JsonCreator
+    public static WeatherCondition getById(@JsonProperty("id") int id) {
+        final Optional<WeatherCondition> optionalWeatherCondition =
+                Arrays.stream(values()).filter(weatherCondition -> weatherCondition.getId() == id).findFirst();
         return optionalWeatherCondition.orElse(null);
     }
 

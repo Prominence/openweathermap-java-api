@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,377 +22,238 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.location.MoonlightStages;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.pressure.SeaLevelAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureDailyBasic;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureDailyDetailed;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DailyUnitTest {
     @Test
     public void getForecastTime() {
         final Daily daily = new Daily();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         daily.setForecastTime(now);
 
-        assertEquals(now, daily.getForecastTime());
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallDailyWeather underTest = daily;
+
+        assertEquals(now, underTest.getForecastTime());
     }
 
     @Test
     public void getSunriseTime() {
         final Daily daily = new Daily();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         daily.setSunriseTime(now);
 
-        assertEquals(now, daily.getSunriseTime());
+        final SunlightStages underTest = daily.getSunlightStages();
+
+        assertEquals(now, underTest.getSunriseTime());
     }
 
     @Test
     public void getSunsetTime() {
         final Daily daily = new Daily();
-        final LocalDateTime now = LocalDateTime.now();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         daily.setSunsetTime(now);
 
-        assertEquals(now, daily.getSunsetTime());
+        final SunlightStages underTest = daily.getSunlightStages();
+
+        assertEquals(now, underTest.getSunsetTime());
+    }
+
+    @Test
+    public void getMoonsetTime() {
+        final Daily daily = new Daily();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
+        daily.setMoonsetTime(now);
+
+        final MoonlightStages underTest = daily.getMoonLightStages();
+
+        assertEquals(now, underTest.getMoonsetTime());
+    }
+
+    @Test
+    public void getMoonriseTime() {
+        final Daily daily = new Daily();
+        final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
+        daily.setMoonriseTime(now);
+
+        final MoonlightStages underTest = daily.getMoonLightStages();
+
+        assertEquals(now, underTest.getMoonriseTime());
+    }
+
+    @Test
+    public void getMoonPhase() {
+        final Daily daily = new Daily();
+        final MoonPhase phase = new MoonPhase(0.67);
+        daily.setMoonPhase(phase);
+
+        final MoonlightStages underTest = daily.getMoonLightStages();
+
+        assertEquals(phase, underTest.getMoonPhase());
     }
 
     @Test
     public void getWeatherState() {
         final Daily daily = new Daily();
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-        daily.setWeatherStates(List.of(weatherState));
+        final WeatherCondition weatherState = WeatherCondition.getById(800);
+        final List<WeatherCondition> weatherStates = Collections.singletonList(weatherState);
+        daily.setWeatherStates(weatherStates);
 
-        assertEquals(weatherState, daily.getWeatherStates().get(0));
+        @SuppressWarnings("UnnecessaryLocalVariable") final OneCallDailyWeather underTest = daily;
+
+        assertIterableEquals(weatherStates, underTest.getWeatherStates());
     }
 
     @Test
     public void getTemperature() {
         final Daily daily = new Daily();
-        final DailyTemperature dailyTemperature = new DailyTemperature();
-        dailyTemperature.setDay(10.0);
-        dailyTemperature.setEveFeelsLike(44.2);
+        final TemperatureDailyDetailed dailyTemperature = new TemperatureDailyDetailed();
+        dailyTemperature.setDay(new TemperatureValue(BigDecimal.valueOf(10.0)));
+        daily.setTemperatureMeasured(dailyTemperature);
 
-        daily.setTemperature(dailyTemperature);
+        final OneCallDailyTemperature underTest = daily.getTemperature();
 
-        assertEquals(dailyTemperature, daily.getTemperature());
+        assertNull(underTest.getMorningFeelsLike());
+        assertNull(underTest.getDayFeelsLike());
+        assertNull(underTest.getEveFeelsLike());
+        assertNull(underTest.getNightFeelsLike());
+        assertNull(underTest.getMorning());
+        assertEquals(dailyTemperature.getDay(), underTest.getDay());
+        assertNull(underTest.getEve());
+        assertNull(underTest.getNight());
+    }
+
+    @Test
+    public void getTemperatureFeelsLike() {
+        final Daily daily = new Daily();
+        final TemperatureDailyBasic dailyTemperature = new TemperatureDailyBasic();
+        dailyTemperature.setEve(new TemperatureValue(BigDecimal.valueOf(44.2)));
+        daily.setFeelsLike(dailyTemperature);
+
+        final OneCallDailyTemperature underTest = daily.getTemperature();
+
+        assertNull(underTest.getMorningFeelsLike());
+        assertNull(underTest.getDayFeelsLike());
+        assertEquals(dailyTemperature.getEve(), underTest.getEveFeelsLike());
+        assertNull(underTest.getNightFeelsLike());
+        assertNull(underTest.getMorning());
+        assertNull(underTest.getDay());
+        assertNull(underTest.getEve());
+        assertNull(underTest.getNight());
     }
 
     @Test
     public void getAtmosphericPressure() {
         final Daily daily = new Daily();
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(22.3);
-        daily.setAtmosphericPressure(atmosphericPressure);
+        final BigDecimal atmosphericPressure = BigDecimal.valueOf(22.3);
+        daily.setSeaLevel(atmosphericPressure);
 
-        assertEquals(atmosphericPressure, daily.getAtmosphericPressure());
+        final SeaLevelAtmosphericPressure underTest = daily.getAtmosphericPressure();
+
+        assertEquals(atmosphericPressure, underTest.getSeaLevel());
     }
 
     @Test
     public void getHumidity() {
         final Daily daily = new Daily();
-        final Humidity humidity = Humidity.withValue((byte) 10);
-        daily.setHumidity(humidity);
+        final int humidity = 10;
+        daily.setHumidityPercentage(humidity);
 
-        assertEquals(humidity, daily.getHumidity());
+        final Humidity underTest = daily.getHumidity();
+
+        assertEquals(humidity, underTest.getHumidityPercentage());
     }
 
     @Test
     public void getWind() {
         final Daily daily = new Daily();
-        final Wind wind = Wind.withValue(13.2, "m/s");
-        daily.setWind(wind);
+        final WindSpeed windSpeed = new WindSpeed(BigDecimal.valueOf(13.2));
+        final WindSpeed windSpeedGust = new WindSpeed(BigDecimal.valueOf(15.2));
+        final Integer windDirection = 123;
+        daily.setSpeed(windSpeed);
+        daily.setGust(windSpeedGust);
+        daily.setDirectionDegrees(windDirection);
 
-        assertEquals(wind, daily.getWind());
+        final DetailedWindInfo wind = daily.getWind();
+
+        assertEquals(windSpeed, wind.getSpeed());
+        assertEquals(windSpeedGust, wind.getGust());
+        assertEquals(windDirection, wind.getDirectionDegrees());
     }
 
     @Test
     public void getClouds() {
         final Daily daily = new Daily();
-        final Clouds clouds = Clouds.withValue((byte) 25);
-        daily.setClouds(clouds);
+        final int clouds = 25;
+        daily.setCoveragePercentage(clouds);
 
-        assertEquals(clouds, daily.getClouds());
+        final CloudCoverage coverage = daily.getClouds();
+
+        assertEquals(clouds, coverage.getCoveragePercentage());
     }
 
     @Test
     public void getUvIndex() {
         final Daily daily = new Daily();
-        final double uvIndex = 22.4;
+        final BigDecimal uvIndex = BigDecimal.valueOf(22.4);
         daily.setUvIndex(uvIndex);
 
-        assertEquals(uvIndex, daily.getUvIndex(), 0.00001);
+        @SuppressWarnings("UnnecessaryLocalVariable") OneCallDailyWeather underTest = daily;
 
-        daily.setUvIndex(null);
-
-        assertNull(daily.getUvIndex());
-    }
-
-    @Test
-    public void getIllegalUvIndexValue() {
-        final Daily daily = new Daily();
-
-        assertThrows(IllegalArgumentException.class, () -> daily.setUvIndex(-1.2));
+        assertEquals(uvIndex, underTest.getUvIndex());
     }
 
     @Test
     public void getProbabilityOfPrecipitation() {
         final Daily daily = new Daily();
-        final double pop = 0.84;
+        final int pop = 84;
         daily.setProbabilityOfPrecipitation(pop);
 
-        assertEquals(pop, daily.getProbabilityOfPrecipitation(), 0.00001);
-        assertEquals((byte) 84, daily.getProbabilityOfPrecipitationPercentage());
+        PrecipitationForecast underTest = daily.getPrecipitation();
 
-        daily.setProbabilityOfPrecipitation(null);
-
-        assertNull(daily.getProbabilityOfPrecipitation());
-        assertNull(daily.getProbabilityOfPrecipitationPercentage());
-    }
-
-    @Test
-    public void getIllegalProbabilityOfPrecipitationValue_negative() {
-        final Daily daily = new Daily();
-
-        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(-20.0));
-    }
-
-    @Test
-    public void getIllegalProbabilityOfPrecipitationValue_tooBig() {
-        final Daily daily = new Daily();
-
-        assertThrows(IllegalArgumentException.class, () -> daily.setProbabilityOfPrecipitation(120.0));
+        assertEquals(pop, underTest.getProbabilityOfPrecipitation());
     }
 
     @Test
     public void getRain() {
         final Daily daily = new Daily();
-        final DailyRain rain = DailyRain.withValue(20.2);
+        final BigDecimal rain = BigDecimal.valueOf(20.2);
         daily.setRain(rain);
 
-        assertEquals(rain, daily.getRain());
+        PrecipitationForecast underTest = daily.getPrecipitation();
+
+        assertEquals(rain, underTest.getRain());
     }
 
     @Test
     public void getSnow() {
         final Daily daily = new Daily();
-        final DailySnow snow = DailySnow.withValue(25.0);
+        final BigDecimal snow = BigDecimal.valueOf(25.0);
         daily.setSnow(snow);
 
-        assertEquals(snow, daily.getSnow());
-    }
+        PrecipitationForecast underTest = daily.getPrecipitation();
 
-    @Test
-    public void getEquals() {
-        final LocalDateTime now = LocalDateTime.now();
-        final Daily first = new Daily();
-
-        assertEquals(first, first);
-        assertNotEquals(first, null);
-        assertNotEquals(first, new Object());
-
-        final Daily second = new Daily();
-
-        assertEquals(first, second);
-
-        first.setForecastTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setForecastTime(now);
-
-        assertEquals(first, second);
-
-        first.setSunriseTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setSunriseTime(now);
-
-        assertEquals(first, second);
-
-        first.setSunsetTime(now);
-
-        assertNotEquals(first, second);
-
-        second.setSunsetTime(now);
-
-        assertEquals(first, second);
-
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-
-        first.setWeatherStates(List.of(weatherState));
-
-        assertNotEquals(first, second);
-
-        second.setWeatherStates(List.of(weatherState));
-
-        assertEquals(first, second);
-
-        final DailyTemperature dailyTemperature = new DailyTemperature();
-
-        first.setTemperature(dailyTemperature);
-
-        assertNotEquals(first, second);
-
-        second.setTemperature(dailyTemperature);
-
-        assertEquals(first, second);
-
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(22.3);
-
-        first.setAtmosphericPressure(atmosphericPressure);
-
-        assertNotEquals(first, second);
-
-        second.setAtmosphericPressure(atmosphericPressure);
-
-        assertEquals(first, second);
-
-        final Humidity humidity = Humidity.withValue((byte) 10);
-
-        first.setHumidity(humidity);
-
-        assertNotEquals(first, second);
-
-        second.setHumidity(humidity);
-
-        assertEquals(first, second);
-
-        final Wind wind = Wind.withValue(13.2, "m/s");
-
-        first.setWind(wind);
-
-        assertNotEquals(first, second);
-
-        second.setWind(wind);
-
-        assertEquals(first, second);
-
-        final Clouds clouds = Clouds.withValue((byte) 25);
-
-        first.setClouds(clouds);
-
-        assertNotEquals(first, second);
-
-        second.setClouds(clouds);
-
-        assertEquals(first, second);
-
-        final double uvIndex = 22.4;
-
-        first.setUvIndex(uvIndex);
-
-        assertNotEquals(first, second);
-
-        second.setUvIndex(uvIndex);
-
-        assertEquals(first, second);
-
-        final double pop = 70.5;
-
-        first.setProbabilityOfPrecipitation(pop);
-
-        assertNotEquals(first, second);
-
-        second.setProbabilityOfPrecipitation(pop);
-
-        assertEquals(first, second);
-
-        final DailyRain rain = DailyRain.withValue(20.2);
-
-        first.setRain(rain);
-
-        assertNotEquals(first, second);
-
-        second.setRain(rain);
-
-        assertEquals(first, second);
-
-        final DailySnow snow = DailySnow.withValue(25.0);
-
-        first.setSnow(snow);
-
-        assertNotEquals(first, second);
-
-        second.setSnow(snow);
-
-        assertEquals(first, second);
-    }
-
-    @Test
-    public void getHashCode() {
-        final Daily first = new Daily();
-        final Daily second = new Daily();
-
-        assertEquals(first.hashCode(), second.hashCode());
-
-        first.setForecastTime(LocalDateTime.now());
-
-        assertNotEquals(first.hashCode(), second.hashCode());
-    }
-
-    @Test
-    public void getToString() {
-        final LocalDateTime now = LocalDateTime.now();
-        final Daily daily = new Daily();
-
-        daily.setForecastTime(now);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final WeatherState weatherState = new WeatherState(800, "Clear", "clear sky");
-
-        daily.setWeatherStates(List.of(weatherState));
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final DailyTemperature dailyTemperature = new DailyTemperature();
-
-        daily.setTemperature(dailyTemperature);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final AtmosphericPressure atmosphericPressure = AtmosphericPressure.withValue(22.3);
-
-        daily.setAtmosphericPressure(atmosphericPressure);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final Wind wind = Wind.withValue(13.2, "m/s");
-
-        daily.setWind(wind);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final Clouds clouds = Clouds.withValue((byte) 25);
-
-        daily.setClouds(clouds);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final DailyRain rain = DailyRain.withValue(20.2);
-
-        daily.setRain(rain);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
-
-        final DailySnow snow = DailySnow.withValue(25.0);
-
-        daily.setSnow(snow);
-
-        assertNotNull(daily.toString());
-        assertNotEquals("", daily.toString());
+        assertEquals(snow, underTest.getSnow());
     }
 }

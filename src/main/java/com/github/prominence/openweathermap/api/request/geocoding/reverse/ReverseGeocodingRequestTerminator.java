@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,46 @@
 package com.github.prominence.openweathermap.api.request.geocoding.reverse;
 
 import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.GeocodingResponseMapper;
-import com.github.prominence.openweathermap.api.model.geocoding.GeocodingRecord;
+import com.github.prominence.openweathermap.api.enums.ApiVariant;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.geocoding.Geocoding;
+import com.github.prominence.openweathermap.api.model.geocoding.GeocodingModel;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.GenericListRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
 
 import java.util.List;
 
-public class ReverseGeocodingRequestTerminator {
-    private final RequestSettings requestSettings;
-
+public class ReverseGeocodingRequestTerminator
+        extends GenericListRequestTerminator<Geocoding, GeocodingModel>
+        implements JsonApiTerminator<List<Geocoding>> {
     ReverseGeocodingRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(requestSettings);
     }
 
-    public List<GeocodingRecord> asJava() {
-        return new GeocodingResponseMapper().mapGeocodingResponse(asJSON());
+    protected String getRawResponse() {
+        return new RequestExecutor(requestSettings).getResponse(ApiVariant.BASE);
     }
 
-    public String asJSON() {
-        return getRawResponse();
+    @Override
+    public String asXML(final UnitSystem unitSystem) {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
+        throw new UnsupportedOperationException("XML format not supported for this API.");
     }
 
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
+    @Override
+    public String asHTML(final UnitSystem unitSystem) {
+        //Method meant to be hidden as only JsonApiTerminator is exposed
+        throw new UnsupportedOperationException("HTML format not supported for this API.");
+    }
+
+    @Override
+    protected Class<Geocoding> getValueType() {
+        return Geocoding.class;
+    }
+
+    @Override
+    protected Class<GeocodingModel> getInnerType() {
+        return GeocodingModel.class;
     }
 }

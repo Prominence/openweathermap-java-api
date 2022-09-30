@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,10 @@ package com.github.prominence.openweathermap.api.request.onecall.current;
 
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.OneCallResultOptions;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.onecall.current.OneCallCurrentForecast;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,11 +52,6 @@ class OneCallCurrentWeatherRequestCustomizer {
         return this;
     }
 
-    public OneCallCurrentWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
-        this.requestSettings.setUnitSystem(unitSystem);
-        return this;
-    }
-
     public OneCallCurrentWeatherRequestCustomizer exclude(OneCallResultOptions... excludeOptions) {
         if (excludeOptions != null && excludeOptions.length > 0) {
             requestSettings.putRequestParameter("exclude", Stream.of(excludeOptions).map(OneCallResultOptions::getValue).collect(Collectors.joining(",")));
@@ -64,11 +61,11 @@ class OneCallCurrentWeatherRequestCustomizer {
         return this;
     }
 
-    public OneCallCurrentWeatherRequestTerminator retrieve() {
+    public JsonApiTerminator<OneCallCurrentForecast> retrieve() {
         return new OneCallCurrentWeatherRequestTerminator(requestSettings);
     }
 
-    public OneCallCurrentWeatherAsyncRequestTerminator retrieveAsync() {
+    public JsonAsyncApiTerminator<OneCallCurrentForecast> retrieveAsync() {
         return new OneCallCurrentWeatherAsyncRequestTerminator(requestSettings);
     }
 }

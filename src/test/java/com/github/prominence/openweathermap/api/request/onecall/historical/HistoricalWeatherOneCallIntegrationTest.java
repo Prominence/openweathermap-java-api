@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,14 @@ package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.ApiTest;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.context.ApiConfiguration;
+import com.github.prominence.openweathermap.api.core.net.HttpClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenException;
-import com.github.prominence.openweathermap.api.model.Coordinates;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
+import com.github.prominence.openweathermap.api.model.onecall.historical.OneCallHistoricalWeather;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -36,17 +39,23 @@ import java.time.ZoneOffset;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
     @Test
     public void whenRetrieveHistoricalOneCallResponseAsJava_thenOk() {
-        final HistoricalWeatherData historicalWeatherData = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
+        final OneCallHistoricalWeather historicalWeatherData = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
                 .asJava();
 
@@ -55,14 +64,15 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalOneCallResponseAsJSON_thenOk() {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final String responseJson = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieve()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertNotNull(responseJson);
         assertNotEquals("", responseJson);
@@ -71,12 +81,13 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalOneCallAsyncResponseAsJava_thenOk() throws ExecutionException, InterruptedException {
-        final CompletableFuture<HistoricalWeatherData> historicalWeatherDataFuture = getClient()
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
+        final CompletableFuture<OneCallHistoricalWeather> historicalWeatherDataFuture = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
                 .asJava();
 
@@ -86,14 +97,15 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRetrieveHistoricalOneCallAsyncResponseAsJSON_thenOk() throws ExecutionException, InterruptedException {
+        Assumptions.assumeTrue(System.getenv(OPENWEATHER_API_KEY) != null, "Api key is not set, skip.");
+        Assumptions.assumeTrue(System.getenv(RUN_ONE_CALL) != null, "Skipping one-call API calls.");
         final CompletableFuture<String> responseJsonFuture = getClient()
                 .oneCall()
                 .historical()
-                .byCoordinateAndTimestamp(Coordinates.of(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                .byCoordinateAndTimestamp(new Coordinates(60.99, 30.9), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                 .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
                 .retrieveAsync()
-                .asJSON();
+                .asJSON(UnitSystem.METRIC);
 
         assertNotNull(responseJsonFuture);
         final String responseJson = responseJsonFuture.get();
@@ -103,16 +115,21 @@ public class HistoricalWeatherOneCallIntegrationTest extends ApiTest {
 
     @Test
     public void whenRequestOnecallWithInvalidApiKey_thenThrowAnException() {
-        OpenWeatherMapClient client = new OpenWeatherMapClient("invalidKey");
+        final HttpClient httpClient = mock(HttpClient.class);
+        when(httpClient.executeGetRequest(anyString())).thenThrow(InvalidAuthTokenException.class);
+        OpenWeatherMapClient client = new OpenWeatherMapClient(ApiConfiguration.builder()
+                .httpClient(httpClient)
+                .apiKey("invalidKey")
+                .build());
         assertThrows(InvalidAuthTokenException.class, () ->
                 client
                         .oneCall()
                         .historical()
-                        .byCoordinateAndTimestamp(Coordinates.of(53.54, 27.34), LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
+                        .byCoordinateAndTimestamp(new Coordinates(53.54, 27.34),
+                                LocalDateTime.now().minusDays(5).toEpochSecond(ZoneOffset.UTC))
                         .language(Language.ENGLISH)
-                        .unitSystem(UnitSystem.METRIC)
                         .retrieve()
-                        .asJSON()
+                        .asJSON(UnitSystem.METRIC)
         );
     }
 }

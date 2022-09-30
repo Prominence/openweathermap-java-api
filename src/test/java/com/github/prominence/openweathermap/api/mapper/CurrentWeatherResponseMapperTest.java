@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,1233 +22,269 @@
 
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
-import org.junit.jupiter.api.Disabled;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeather;
+import com.github.prominence.openweathermap.api.model.weather.CurrentWeatherModel;
+import com.github.prominence.openweathermap.api.model.weather.PrecipitationDetails;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.math.BigDecimal;
+
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CurrentWeatherResponseMapperTest {
 
     @Test
-    public void mapToWeatherOfficialJsonExample() {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": -122.08,
-                    "lat": 37.39
-                  },
-                  "weather": [
-                    {
-                      "id": 800,
-                      "main": "Clear",
-                      "description": "clear sky",
-                      "icon": "01d"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 282.55,
-                    "feels_like": 281.86,
-                    "temp_min": 280.37,
-                    "temp_max": 284.26,
-                    "pressure": 1023,
-                    "humidity": 100
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 1.5,
-                    "deg": 350
-                  },
-                  "clouds": {
-                    "all": 1
-                  },
-                  "dt": 1560350645,
-                  "sys": {
-                    "type": 1,
-                    "id": 5122,
-                    "message": 0.0139,
-                    "country": "US",
-                    "sunrise": 1560343627,
-                    "sunset": 1560396563
-                  },
-                  "timezone": -25200,
-                  "id": 420006353,
-                  "name": "Mountain View",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldSucceed_WhenCalledWithOfficialJsonExample() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-official.json";
 
-        final Weather weather = new CurrentWeatherResponseMapper(UnitSystem.METRIC).mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather);
+        //then
+        assertNotNull(actual);
+        //TODO: Consider adding more assertions
     }
 
     @Test
-    public void mapToWeather() {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldSucceed_WhenCalledWithFullyPopulatedExample() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk.json";
 
-        final Weather weather = new CurrentWeatherResponseMapper(UnitSystem.METRIC).mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather);
+        //then
+        assertNotNull(actual);
+
+        assertLatitudeSet(actual);
+        assertLongitudeSet(actual);
+        assertCountryCodeSet(actual);
+
+        assertTemperatureSet(actual);
+        assertFeelsLikeSet(actual);
+        assertMinTempSet(actual);
+        assertMaxTempSet(actual);
+
+        assertWindSpeedSet(actual);
+        assertWindDirectionSet(actual);
+        assertWindSpeedGustSet(actual);
+
+        final PrecipitationDetails precipitation = actual.getPrecipitation();
+        assert1HrRainSet(precipitation);
+        assert3HrRainSet(precipitation);
+        assert1HrSnowSet(precipitation);
+        assert3HrSnowSet(precipitation);
     }
 
     @Test
-    public void mapToWeather_withDamagedJSON() {
-        final String jsonString = """
-                {
-                  "coord": "lon"
-                  :
-                  27.5667,
-                  "lat": 53.9
-                },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        assertThrows(RuntimeException.class, () -> new CurrentWeatherResponseMapper(null).mapToWeather(jsonString));
+    public void testDeserialize_ShouldThrowException_WhenCalledWithInvalidJson() {
+        //given
+        final String resource = "/responses/invalid/current-weather-minsk-invalid.json";
+
+        //when
+        assertThrows(JsonProcessingException.class, () -> loadDeserializedResourceAs(resource, CurrentWeatherModel.class));
+
+        //then + exception
     }
 
     @Test
-    public void mapToWeather_withoutDt() {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldLeaveOutForecastTime_WhenCalledWithJsonWithoutDt() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-dt.json";
 
-        final Weather weather = new CurrentWeatherResponseMapper(UnitSystem.METRIC).mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather);
-        assertNull(weather.getCalculationTime());
+        //then
+        assertNotNull(actual);
+        assertNull(actual.getForecastTime());
+    }
+
+
+    @Test
+    public void testDeserialize_ShouldLeaveOutFeelsLike_WhenCalledWithJsonWithoutFeelsLike() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-feelslike.json";
+
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
+
+        //then
+        assertNotNull(actual);
+        assertTemperatureSet(actual);
+        assertNull(actual.getTemperature().getFeelsLike());
+        assertMinTempSet(actual);
+        assertMaxTempSet(actual);
     }
 
     @Test
-    @Disabled
-    public void mapToWeather_withoutWeatherNode() {
-        final String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldLeaveOutMinTemp_WhenCalledWithJsonWithoutMinTemp() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-mintemp.json";
 
-        final Weather weather = new CurrentWeatherResponseMapper(UnitSystem.METRIC).mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather);
-        assertNull(weather.getWeatherStates());
+        //then
+        assertNotNull(actual);
+        assertTemperatureSet(actual);
+        assertFeelsLikeSet(actual);
+        assertNull(actual.getTemperature().getMin());
+        assertMaxTempSet(actual);
     }
 
     @Test
-    public void mapToWeather_withTemperatureVariations() {
-        String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
+    public void testDeserialize_ShouldLeaveOutMaxTemp_WhenCalledWithJsonWithoutMaxTemp() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-maxtemp.json";
 
-        Weather weather = mapper.mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather);
-        assertEquals(1.84, weather.getTemperature().getValue(), 0.00001);
-        assertEquals(-0.31, weather.getTemperature().getFeelsLike(), 0.00001);
-        assertEquals(1.67, weather.getTemperature().getMinTemperature(), 0.00001);
-        assertEquals(2, weather.getTemperature().getMaxTemperature(), 0.00001);
-
-        // without feels like node
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getTemperature());
-        assertNull(weather.getTemperature().getFeelsLike());
-        assertNotNull(weather.getTemperature().getMinTemperature());
-        assertNotNull(weather.getTemperature().getMaxTemperature());
-
-        // without min temperature node
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getTemperature());
-        assertNotNull(weather.getTemperature().getFeelsLike());
-        assertNull(weather.getTemperature().getMinTemperature());
-        assertNotNull(weather.getTemperature().getMaxTemperature());
-
-        // without max temperature node
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getTemperature());
-        assertNotNull(weather.getTemperature().getFeelsLike());
-        assertNotNull(weather.getTemperature().getMinTemperature());
-        assertNull(weather.getTemperature().getMaxTemperature());
+        //then
+        assertNotNull(actual);
+        assertTemperatureSet(actual);
+        assertFeelsLikeSet(actual);
+        assertMinTempSet(actual);
+        assertNull(actual.getTemperature().getMax());
     }
 
     @Test
-    public void mapToWeather_withWindVariations() {
-        String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldLeaveOutWindDirection_WhenCalledWithJsonWithoutWindDirection() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-wind-direction.json";
 
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
-        Weather weather = mapper.mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather);
-        assertEquals(2, weather.getWind().getSpeed(), 0.00001);
-        assertEquals(250, weather.getWind().getDegrees(), 0.00001);
-        assertNull(weather.getWind().getGust());
-
-        // without degrees
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getWind());
-        assertNull(weather.getWind().getDegrees());
-
-        // with gust
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250,
-                    "gust": 2.44
-                  },
-                  "snow": {
-                    "1h": 0.2
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-
-        assertNotNull(weather);
-        assertNotNull(weather.getWind());
-        assertNotNull(weather.getWind().getDegrees());
-        assertEquals(2.44, weather.getWind().getGust(), 0.00001);
+        //then
+        assertNotNull(actual);
+        assertWindSpeedSet(actual);
+        assertNull(actual.getWind().getDirectionDegrees());
+        assertWindSpeedGustSet(actual);
     }
 
     @Test
-    public void mapToWeather_withRainVariations() {
-        final String jsonWith1Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "rain": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWith3Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "rain": {
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWithBoth = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "rain": {
-                    "1h": 0.1,
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldLeaveOutWindSpeedGust_WhenCalledWithJsonWithoutWindSpeedGust() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-gust.json";
 
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
-        Weather weather = mapper.mapToWeather(jsonWith1Hr);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        // with 1h level only
-        assertNotNull(weather.getRain());
-        assertEquals(0.1, weather.getRain().getOneHourLevel(), 0.00001);
-        assertNull(weather.getRain().getThreeHourLevel());
-
-        weather = mapper.mapToWeather(jsonWith3Hr);
-
-        // with 3h level only
-        assertNotNull(weather.getRain());
-        assertNull(weather.getRain().getOneHourLevel());
-        assertEquals(0.3, weather.getRain().getThreeHourLevel(), 0.00001);
-
-        weather = mapper.mapToWeather(jsonWithBoth);
-
-        // with both levels
-        assertNotNull(weather.getRain());
-        assertEquals(0.1, weather.getRain().getOneHourLevel(), 0.00001);
-        assertEquals(0.3, weather.getRain().getThreeHourLevel(), 0.00001);
+        //then
+        assertNotNull(actual);
+        assertWindSpeedSet(actual);
+        assertWindDirectionSet(actual);
+        assertNull(actual.getWind().getGust());
     }
 
     @Test
-    public void mapToWeather_withSnowVariations() {
-        final String jsonWith1Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWith3Hr = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final String jsonWithBoth = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1,
-                    "3h": 0.3
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
+    public void testDeserialize_ShouldLeaveOut1HrPrecipitation_WhenCalledWithJsonWithout1HrPrecipitation() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-1h.json";
 
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
-        Weather weather = mapper.mapToWeather(jsonWith1Hr);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        // with 1h level only
-        assertNotNull(weather.getSnow());
-        assertEquals(0.1, weather.getSnow().getOneHourLevel(), 0.00001);
-        assertNull(weather.getSnow().getThreeHourLevel());
-
-        weather = mapper.mapToWeather(jsonWith3Hr);
-
-        // with 3h level only
-        assertNotNull(weather.getSnow());
-        assertNull(weather.getSnow().getOneHourLevel());
-        assertEquals(0.3, weather.getSnow().getThreeHourLevel(), 0.00001);
-
-        weather = mapper.mapToWeather(jsonWithBoth);
-
-        // with both levels
-        assertNotNull(weather.getSnow());
-        assertEquals(0.1, weather.getSnow().getOneHourLevel(), 0.00001);
-        assertEquals(0.3, weather.getSnow().getThreeHourLevel(), 0.00001);
+        //then
+        final PrecipitationDetails precipitation = actual.getPrecipitation();
+        assertNull(precipitation.getOneHourRainLevel());
+        assert3HrRainSet(precipitation);
+        assertNull(precipitation.getOneHourSnowLevel());
+        assert3HrSnowSet(precipitation);
     }
 
     @Test
-    public void mapToWeather_withLocationVariations() {
-        String jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667,
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        final CurrentWeatherResponseMapper mapper = new CurrentWeatherResponseMapper(UnitSystem.METRIC);
+    public void testDeserialize_ShouldLeaveOut3HrPrecipitation_WhenCalledWithJsonWithout3HrPrecipitation() throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-3h.json";
 
-        Weather weather = mapper.mapToWeather(jsonString);
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        assertNotNull(weather.getLocation().getCoordinates());
-        assertNotNull(weather.getLocation().getCountryCode());
+        //then
+        final PrecipitationDetails precipitation = actual.getPrecipitation();
+        assert1HrRainSet(precipitation);
+        assertNull(precipitation.getThreeHoursRainLevel());
+        assert1HrSnowSet(precipitation);
+        assertNull(precipitation.getThreeHoursSnowLevel());
+    }
 
-        // without coordinates and country code
-        jsonString = """
-                {
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinates());
-        assertNull(weather.getLocation().getCountryCode());
+    @Test
+    public void testDeserialize_ShouldLeaveOutCoordinatesAndCountry_WhenCalledWithJsonWithoutCoordinatesAndCountryCode()
+            throws JsonProcessingException {
+        //given
+        final String resource = "/responses/valid/current-weather-minsk-missing-coord-and-country.json";
 
-        // coordinates without latitude
-        jsonString = """
-                {
-                  "coord": {
-                    "lon": 27.5667
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinates());
-        assertNotNull(weather.getLocation().getCountryCode());
+        //when
+        final CurrentWeather actual = loadDeserializedResourceAs(resource, CurrentWeatherModel.class);
 
-        // coordinates without longitude
-        jsonString = """
-                {
-                  "coord": {
-                    "lat": 53.9
-                  },
-                  "weather": [
-                    {
-                      "id": 600,
-                      "main": "Snow",
-                      "description": "небольшой снег",
-                      "icon": "13n"
-                    }
-                  ],
-                  "base": "stations",
-                  "main": {
-                    "temp": 1.84,
-                    "feels_like": -0.31,
-                    "temp_min": 1.67,
-                    "temp_max": 2,
-                    "pressure": 1001,
-                    "humidity": 69
-                  },
-                  "visibility": 10000,
-                  "wind": {
-                    "speed": 2,
-                    "deg": 250
-                  },
-                  "snow": {
-                    "1h": 0.1
-                  },
-                  "clouds": {
-                    "all": 75
-                  },
-                  "dt": 1617746826,
-                  "sys": {
-                    "type": 1,
-                    "id": 8939,
-                    "country": "BY",
-                    "sunrise": 1617766068,
-                    "sunset": 1617814530
-                  },
-                  "timezone": 10800,
-                  "id": 0,
-                  "name": "Minsk",
-                  "cod": 200
-                }
-                """;
-        weather = mapper.mapToWeather(jsonString);
-        assertNull(weather.getLocation().getCoordinates());
-        assertNotNull(weather.getLocation().getCountryCode());
+        //then
+        assertNull(actual.getLocation().getCoordinates());
+        assertNull(actual.getLocation().getCountryCode());
+    }
+
+    private void assertCountryCodeSet(CurrentWeather weather) {
+        assertEquals("BY", weather.getLocation().getCountryCode());
+    }
+
+    private void assertLongitudeSet(CurrentWeather weather) {
+        assertEquals(27.5667D, weather.getLocation().getCoordinates().getLongitude());
+    }
+
+    private void assertLatitudeSet(CurrentWeather weather) {
+        assertEquals(53.9D, weather.getLocation().getCoordinates().getLatitude());
+    }
+
+
+    private void assertMaxTempSet(CurrentWeather weather) {
+        assertEquals(BigDecimal.valueOf(2), weather.getTemperature().getMax().asKelvin());
+    }
+
+    private void assertMinTempSet(CurrentWeather weather) {
+        assertEquals(BigDecimal.valueOf(2), weather.getTemperature().getMin().asKelvin());
+    }
+
+    private void assertFeelsLikeSet(CurrentWeather weather) {
+        assertEquals(BigDecimal.valueOf(0), weather.getTemperature().getFeelsLike().asKelvin());
+    }
+
+    private void assertTemperatureSet(CurrentWeather weather) {
+        assertEquals(BigDecimal.valueOf(2), weather.getTemperature().getTemperature().asKelvin());
+    }
+
+    private void assertWindSpeedGustSet(CurrentWeather weather) {
+        assertEquals(BigDecimal.valueOf(2.44), weather.getWind().getGust().asMetersPerSecond());
+    }
+
+    private void assertWindDirectionSet(CurrentWeather weather) {
+        assertEquals(250, weather.getWind().getDirectionDegrees());
+    }
+
+    private void assertWindSpeedSet(CurrentWeather weather) {
+        assertEquals(new BigDecimal("2.00"), weather.getWind().getSpeed().asMetersPerSecond());
+    }
+
+    private void assert1HrRainSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.1), weather.getOneHourRainLevel());
+    }
+
+    private void assert3HrRainSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.6), weather.getThreeHoursRainLevel());
+    }
+
+    private void assert1HrSnowSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.2), weather.getOneHourSnowLevel());
+    }
+
+    private void assert3HrSnowSet(PrecipitationDetails weather) {
+        assertEquals(BigDecimal.valueOf(0.7), weather.getThreeHoursSnowLevel());
     }
 }

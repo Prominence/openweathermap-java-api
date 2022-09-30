@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,10 @@
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
 import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import com.github.prominence.openweathermap.api.model.onecall.historical.OneCallHistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
+import com.github.prominence.openweathermap.api.request.generic.JsonApiTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The type One call historical weather request customizer.
@@ -46,16 +48,11 @@ class OneCallHistoricalWeatherRequestCustomizer {
         return this;
     }
 
-    public OneCallHistoricalWeatherRequestCustomizer unitSystem(UnitSystem unitSystem) {
-        requestSettings.setUnitSystem(unitSystem);
-        return this;
-    }
-
-    public OneCallHistoricalWeatherRequestTerminator retrieve() {
+    public JsonApiTerminator<OneCallHistoricalWeather> retrieve() {
         return new OneCallHistoricalWeatherRequestTerminator(requestSettings);
     }
 
-    public OneCallHistoricalWeatherAsyncRequestTerminator retrieveAsync() {
+    public JsonAsyncApiTerminator<OneCallHistoricalWeather> retrieveAsync() {
         return new OneCallHistoricalWeatherAsyncRequestTerminator(requestSettings);
     }
 }

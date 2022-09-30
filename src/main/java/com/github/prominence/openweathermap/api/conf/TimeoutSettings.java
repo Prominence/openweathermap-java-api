@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,12 @@
 
 package com.github.prominence.openweathermap.api.conf;
 
-public class TimeoutSettings {
-    private Integer connectionTimeout;
-    private Integer readTimeout;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
+public final class TimeoutSettings {
+    private final Integer connectionTimeout;
+    private final Integer readTimeout;
 
     public TimeoutSettings() {
         this(2000, 2000);
@@ -44,15 +47,7 @@ public class TimeoutSettings {
         return connectionTimeout;
     }
 
-    public void setConnectionTimeout(Integer connectionTimeout) {
-        this.connectionTimeout = connectionTimeout;
-    }
-
     public Integer getReadTimeout() {
         return readTimeout;
-    }
-
-    public void setReadTimeout(Integer readTimeout) {
-        this.readTimeout = readTimeout;
     }
 }

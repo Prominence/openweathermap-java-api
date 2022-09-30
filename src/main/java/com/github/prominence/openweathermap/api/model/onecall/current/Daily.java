@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,418 +22,200 @@
 
 package com.github.prominence.openweathermap.api.model.onecall.current;
 
-import com.github.prominence.openweathermap.api.model.Clouds;
-import com.github.prominence.openweathermap.api.model.Humidity;
-import com.github.prominence.openweathermap.api.model.WeatherState;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.onecall.AtmosphericPressure;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.prominence.openweathermap.api.deserializer.EpochSecondsDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.PercentageZeroToOneDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.RequiredPercentageDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.TemperatureValueDeserializer;
+import com.github.prominence.openweathermap.api.deserializer.WindSpeedDeserializer;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.generic.TimeAware;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.location.MoonlightStages;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.PrecipitationForecast;
+import com.github.prominence.openweathermap.api.model.generic.pressure.SeaLevelAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureDailyBasic;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureDailyDetailed;
+import com.github.prominence.openweathermap.api.model.generic.temperature.TemperatureValue;
+import com.github.prominence.openweathermap.api.model.generic.wind.DetailedWindInfo;
+import com.github.prominence.openweathermap.api.model.generic.wind.WindSpeed;
+import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
- * The type Daily.
+ * The daily weather forecast type.
  */
-public class Daily {
-    private LocalDateTime forecastTime;
-    private LocalDateTime sunriseTime;
-    private LocalDateTime sunsetTime;
+@Data
+public class Daily
+        implements TimeAware, SunlightStages, MoonlightStages, DetailedWindInfo, OneCallDailyTemperature, PrecipitationForecast,
+        Humidity, SeaLevelAtmosphericPressure, CloudCoverage, OneCallDailyWeather {
 
-    private LocalDateTime moonriseTime;
-    private LocalDateTime moonsetTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("dt")
+    private OffsetDateTime forecastTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunrise")
+    private OffsetDateTime sunriseTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("sunset")
+    private OffsetDateTime sunsetTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("moonrise")
+    private OffsetDateTime moonriseTime;
+    @JsonDeserialize(using = EpochSecondsDeserializer.class)
+    @JsonProperty("moonset")
+    private OffsetDateTime moonsetTime;
+    @JsonProperty("moon_phase")
     private MoonPhase moonPhase;
+    @JsonProperty("temp")
+    private TemperatureDailyDetailed temperatureMeasured;
+    @JsonProperty("feels_like")
+    private TemperatureDailyBasic feelsLike;
+    @JsonProperty("pressure")
+    private BigDecimal seaLevel;
+    @JsonDeserialize(using = RequiredPercentageDeserializer.class)
+    @JsonProperty("humidity")
+    private int humidityPercentage;
+    @JsonDeserialize(using = TemperatureValueDeserializer.class)
+    @JsonProperty("dew_point")
+    private TemperatureValue dewPoint;
+    @JsonDeserialize(using = WindSpeedDeserializer.class)
+    @JsonProperty("wind_speed")
+    private WindSpeed speed;
+    @JsonProperty("wind_deg")
+    private Integer directionDegrees;
+    @JsonDeserialize(using = WindSpeedDeserializer.class)
+    @JsonProperty("wind_gust")
+    private WindSpeed gust;
+    @JsonDeserialize(using = RequiredPercentageDeserializer.class)
+    @JsonProperty("clouds")
+    private Integer coveragePercentage;
+    @JsonProperty("uvi")
+    private BigDecimal uvIndex;
+    @JsonDeserialize(using = PercentageZeroToOneDeserializer.class)
+    @JsonProperty("pop")
+    private Integer probabilityOfPrecipitation;
+    @JsonProperty("rain")
+    private BigDecimal rain;
+    @JsonProperty("snow")
+    private BigDecimal snow;
+    @JsonProperty("weather")
+    private List<WeatherCondition> weatherStates = new ArrayList<>();
 
-    private List<WeatherState> weatherStates;
-    private DailyTemperature temperature;
-    private AtmosphericPressure atmosphericPressure;
-    private Humidity humidity;
-    private Wind wind;
-    private Clouds clouds;
-    private Double uvIndex;
-    private Double probabilityOfPrecipitation;
-    private DailyRain rain;
-    private DailySnow snow;
-
-    /**
-     * Gets forecast time.
-     *
-     * @return the forecast time
-     */
-    public LocalDateTime getForecastTime() {
-        return forecastTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getMorning() {
+        return Optional.ofNullable(temperatureMeasured).map(TemperatureDailyDetailed::getMorning).orElse(null);
     }
 
-    /**
-     * Sets forecast time.
-     *
-     * @param forecastTime the forecast time
-     */
-    public void setForecastTime(LocalDateTime forecastTime) {
-        this.forecastTime = forecastTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getDay() {
+        return Optional.ofNullable(temperatureMeasured).map(TemperatureDailyDetailed::getDay).orElse(null);
     }
 
-    /**
-     * Gets sunrise time.
-     *
-     * @return the sunrise time
-     */
-    public LocalDateTime getSunriseTime() {
-        return sunriseTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getEve() {
+        return Optional.ofNullable(temperatureMeasured).map(TemperatureDailyDetailed::getEve).orElse(null);
     }
 
-    /**
-     * Sets sunrise time.
-     *
-     * @param sunriseTime the sunrise time
-     */
-    public void setSunriseTime(LocalDateTime sunriseTime) {
-        this.sunriseTime = sunriseTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getNight() {
+        return Optional.ofNullable(temperatureMeasured).map(TemperatureDailyDetailed::getNight).orElse(null);
     }
 
-    /**
-     * Gets sunset time.
-     *
-     * @return the sunset time
-     */
-    public LocalDateTime getSunsetTime() {
-        return sunsetTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getMin() {
+        return Optional.ofNullable(temperatureMeasured).map(TemperatureDailyDetailed::getMin).orElse(null);
     }
 
-    /**
-     * Sets sunset time.
-     *
-     * @param sunsetTime the sunset time
-     */
-    public void setSunsetTime(LocalDateTime sunsetTime) {
-        this.sunsetTime = sunsetTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getMax() {
+        return Optional.ofNullable(temperatureMeasured).map(TemperatureDailyDetailed::getMax).orElse(null);
     }
 
-    /**
-     * Gets moonrise time.
-     *
-     * @return the moonrise time
-     */
-    public LocalDateTime getMoonriseTime() {
-        return moonriseTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getMorningFeelsLike() {
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getMorning).orElse(null);
     }
 
-    /**
-     * Sets moonrise time.
-     *
-     * @param moonriseTime the moonrise time
-     */
-    public void setMoonriseTime(LocalDateTime moonriseTime) {
-        this.moonriseTime = moonriseTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getDayFeelsLike() {
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getDay).orElse(null);
     }
 
-    /**
-     * Gets moonset time.
-     *
-     * @return the moonset time
-     */
-    public LocalDateTime getMoonsetTime() {
-        return moonsetTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getEveFeelsLike() {
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getEve).orElse(null);
     }
 
-    /**
-     * Sets moonset time.
-     *
-     * @param moonsetTime the moonset time
-     */
-    public void setMoonsetTime(LocalDateTime moonsetTime) {
-        this.moonsetTime = moonsetTime;
+    @Override
+    @JsonIgnore
+    public TemperatureValue getNightFeelsLike() {
+        return Optional.ofNullable(feelsLike).map(TemperatureDailyBasic::getNight).orElse(null);
     }
 
-    /**
-     * Gets moon phase.
-     *
-     * @return the moon phase
-     */
-    public MoonPhase getMoonPhase() {
-        return moonPhase;
+    @Override
+    @JsonIgnore
+    public SunlightStages getSunlightStages() {
+        return this;
     }
 
-    /**
-     * Sets moon phase.
-     *
-     * @param moonPhase the moon phase
-     */
-    public void setMoonPhase(MoonPhase moonPhase) {
-        this.moonPhase = moonPhase;
+    @Override
+    @JsonIgnore
+    public MoonlightStages getMoonLightStages() {
+        return this;
     }
 
-    /**
-     * Gets weather state.
-     *
-     * @return the weather state
-     */
-    public List<WeatherState> getWeatherStates() {
-        return weatherStates;
+    @Override
+    @JsonIgnore
+    public DetailedWindInfo getWind() {
+        return this;
     }
 
-    /**
-     * Sets weather state.
-     *
-     * @param weatherStates the weather state
-     */
-    public void setWeatherStates(List<WeatherState> weatherStates) {
-        this.weatherStates = weatherStates;
+    @Override
+    @JsonIgnore
+    public OneCallDailyTemperature getTemperature() {
+        return this;
     }
 
-    /**
-     * Gets temperature.
-     *
-     * @return the temperature
-     */
-    public DailyTemperature getTemperature() {
-        return temperature;
+    @Override
+    @JsonIgnore
+    public PrecipitationForecast getPrecipitation() {
+        return this;
     }
 
-    /**
-     * Sets temperature.
-     *
-     * @param temperature the temperature
-     */
-    public void setTemperature(DailyTemperature temperature) {
-        this.temperature = temperature;
-    }
-
-    /**
-     * Gets atmospheric pressure.
-     *
-     * @return the atmospheric pressure
-     */
-    public AtmosphericPressure getAtmosphericPressure() {
-        return atmosphericPressure;
-    }
-
-    /**
-     * Sets atmospheric pressure.
-     *
-     * @param atmosphericPressure the atmospheric pressure
-     */
-    public void setAtmosphericPressure(AtmosphericPressure atmosphericPressure) {
-        this.atmosphericPressure = atmosphericPressure;
-    }
-
-    /**
-     * Gets humidity.
-     *
-     * @return the humidity
-     */
+    @Override
+    @JsonIgnore
     public Humidity getHumidity() {
-        return humidity;
-    }
-
-    /**
-     * Sets humidity.
-     *
-     * @param humidity the humidity
-     */
-    public void setHumidity(Humidity humidity) {
-        this.humidity = humidity;
-    }
-
-    /**
-     * Gets wind.
-     *
-     * @return the wind
-     */
-    public Wind getWind() {
-        return wind;
-    }
-
-    /**
-     * Sets wind.
-     *
-     * @param wind the wind
-     */
-    public void setWind(Wind wind) {
-        this.wind = wind;
-    }
-
-    /**
-     * Gets clouds.
-     *
-     * @return the clouds
-     */
-    public Clouds getClouds() {
-        return clouds;
-    }
-
-    /**
-     * Sets clouds.
-     *
-     * @param clouds the clouds
-     */
-    public void setClouds(Clouds clouds) {
-        this.clouds = clouds;
-    }
-
-    /**
-     * Gets uv index.
-     *
-     * @return the uv index
-     */
-    public Double getUvIndex() {
-        return uvIndex;
-    }
-
-    /**
-     * Sets uv index.
-     *
-     * @param uvIndex the uv index
-     */
-    public void setUvIndex(Double uvIndex) {
-        if (uvIndex != null && uvIndex < 0) {
-            throw new IllegalArgumentException("UV index must not be negative.");
-        }
-        this.uvIndex = uvIndex;
-    }
-
-    /**
-     * Gets probability of precipitation.
-     *
-     * @return the probability of precipitation
-     */
-    public Double getProbabilityOfPrecipitation() {
-        return probabilityOfPrecipitation;
-    }
-
-    /**
-     * Sets probability of precipitation.
-     *
-     * @param probabilityOfPrecipitation the probability of precipitation
-     */
-    public void setProbabilityOfPrecipitation(Double probabilityOfPrecipitation) {
-        if (probabilityOfPrecipitation != null && (probabilityOfPrecipitation < 0 || probabilityOfPrecipitation > 100))  {
-            throw new IllegalArgumentException("Probability of precipitation value must be in [0, 100] range.");
-        }
-        this.probabilityOfPrecipitation = probabilityOfPrecipitation;
-    }
-
-    /**
-     * Gets probability of precipitation percentage.
-     *
-     * @return the probability of precipitation percentage
-     */
-    public Byte getProbabilityOfPrecipitationPercentage() {
-        if (probabilityOfPrecipitation != null) {
-            return (byte)(probabilityOfPrecipitation * 100);
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets rain.
-     *
-     * @return the rain
-     */
-    public DailyRain getRain() {
-        return rain;
-    }
-
-    /**
-     * Sets rain.
-     *
-     * @param rain the rain
-     */
-    public void setRain(DailyRain rain) {
-        this.rain = rain;
-    }
-
-    /**
-     * Gets snow.
-     *
-     * @return the snow
-     */
-    public DailySnow getSnow() {
-        return snow;
-    }
-
-    /**
-     * Sets snow.
-     *
-     * @param snow the snow
-     */
-    public void setSnow(DailySnow snow) {
-        this.snow = snow;
+        return this;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Daily daily = (Daily) o;
-        return Objects.equals(forecastTime, daily.forecastTime) &&
-                Objects.equals(sunriseTime, daily.sunriseTime) &&
-                Objects.equals(sunsetTime, daily.sunsetTime) &&
-                Objects.equals(moonriseTime, daily.moonriseTime) &&
-                Objects.equals(moonsetTime, daily.moonsetTime) &&
-                Objects.equals(moonPhase, daily.moonPhase) &&
-                Objects.equals(weatherStates, daily.weatherStates) &&
-                Objects.equals(temperature, daily.temperature) &&
-                Objects.equals(atmosphericPressure, daily.atmosphericPressure) &&
-                Objects.equals(humidity, daily.humidity) &&
-                Objects.equals(wind, daily.wind) &&
-                Objects.equals(clouds, daily.clouds) &&
-                Objects.equals(uvIndex, daily.uvIndex) &&
-                Objects.equals(probabilityOfPrecipitation, daily.probabilityOfPrecipitation) &&
-                Objects.equals(rain, daily.rain) &&
-                Objects.equals(snow, daily.snow);
+    @JsonIgnore
+    public SeaLevelAtmosphericPressure getAtmosphericPressure() {
+        return this;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(forecastTime, sunriseTime, sunsetTime, moonriseTime, moonsetTime, moonPhase, weatherStates, temperature, atmosphericPressure, humidity, wind, clouds, uvIndex, probabilityOfPrecipitation, rain, snow);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Weather on ");
-        stringBuilder.append(forecastTime);
-        stringBuilder.append(".");
-        if (weatherStates != null && weatherStates.size() > 0) {
-            stringBuilder.append(" Weather: ");
-            stringBuilder.append(weatherStates.get(0).getDescription());
-            stringBuilder.append('.');
-        }
-        if (temperature != null) {
-            stringBuilder.append(" Temperature(day): ");
-            stringBuilder.append(temperature.getDay());
-            stringBuilder.append(' ');
-            stringBuilder.append(temperature.getUnit());
-            stringBuilder.append('.');
-        }
-        if (atmosphericPressure != null) {
-            stringBuilder.append(" Atmospheric pressure: ");
-            stringBuilder.append(atmosphericPressure.getSeaLevelValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(atmosphericPressure.getUnit());
-            stringBuilder.append('.');
-        }
-        if (clouds != null) {
-            stringBuilder.append(" Clouds: ");
-            stringBuilder.append(clouds);
-            stringBuilder.append('.');
-        }
-        if (rain != null) {
-            stringBuilder.append(" Rain: ");
-            stringBuilder.append(rain.getValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(rain.getUnit());
-            stringBuilder.append('.');
-        }
-        if (snow != null) {
-            stringBuilder.append(". Snow: ");
-            stringBuilder.append(snow.getValue());
-            stringBuilder.append(' ');
-            stringBuilder.append(snow.getUnit());
-            stringBuilder.append('.');
-        }
-        return stringBuilder.toString();
+    @JsonIgnore
+    public CloudCoverage getClouds() {
+        return this;
     }
 }

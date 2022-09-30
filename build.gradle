@@ -3,22 +3,23 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'jacoco'
+    id 'io.freefair.lombok' version '6.5.0.3'
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-    testImplementation 'org.junit.platform:junit-platform-runner:1.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
-    annotationProcessor 'com.github.bsideup.jabel:jabel-javac-plugin:0.4.2'
+    testImplementation 'org.junit.platform:junit-platform-runner:1.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.0'
+    testImplementation 'ch.qos.logback:logback-classic:1.2.11'
+    testImplementation 'commons-io:commons-io:2.11.0'
+    testImplementation 'org.mockito:mockito-core:4.8.0'
 }
 
 group = 'com.github.prominence'
@@ -26,12 +27,7 @@ version = '3.0.0-SNAPSHOT'
 description = 'Java OpenWeatherMap API'
 
 configure([tasks.compileJava]) {
-    sourceCompatibility = 17 // for the IDE support
-    options.release = 8
-
-    javaCompiler = javaToolchains.compilerFor {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
+    sourceCompatibility = 8
 }
 
 ext {

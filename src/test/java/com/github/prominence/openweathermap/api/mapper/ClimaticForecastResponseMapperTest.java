@@ -1,126 +1,115 @@
+/*
+ * Copyright (c) 2021-present Alexey Zinchenko
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.github.prominence.openweathermap.api.mapper;
 
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.Wind;
-import com.github.prominence.openweathermap.api.model.*;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.AtmosphericPressure;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.Temperature;
-import com.github.prominence.openweathermap.api.model.forecast.climatic.*;
-import com.github.prominence.openweathermap.api.utils.TestMappingUtils;
+import com.github.prominence.openweathermap.api.context.TestMappingUtils;
+import com.github.prominence.openweathermap.api.enums.WeatherCondition;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecast;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.ThirtyDaysDailyForecastModel;
+import com.github.prominence.openweathermap.api.model.forecast.climatic.WeatherForecastDay;
+import com.github.prominence.openweathermap.api.model.generic.clouds.CloudCoverage;
+import com.github.prominence.openweathermap.api.model.generic.location.BaseLocation;
+import com.github.prominence.openweathermap.api.model.generic.location.Coordinates;
+import com.github.prominence.openweathermap.api.model.generic.location.SunlightStages;
+import com.github.prominence.openweathermap.api.model.generic.precipitation.Humidity;
+import com.github.prominence.openweathermap.api.model.generic.pressure.BaseAtmosphericPressure;
+import com.github.prominence.openweathermap.api.model.generic.temperature.DailyTemperature;
+import com.github.prominence.openweathermap.api.model.generic.wind.BasicWind;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
+import java.math.BigDecimal;
+
+import static com.github.prominence.openweathermap.api.context.TestMappingUtils.loadDeserializedResourceAs;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ClimaticForecastResponseMapperTest {
 
     @Test
-    public void mapToForecast() {
-        final String jsonResponse = """
-                {
-                  "cod": "200",
-                  "city": {
-                    "id": 2643743,
-                    "name": "London",
-                    "coord": {
-                      "lon": -0.1277,
-                      "lat": 51.5073
-                    },
-                    "country": "GB"
-                  },
-                  "message": 0.353472054,
-                  "list": [
-                    {
-                      "dt": 1594382400,
-                      "sunrise": 1594353335,
-                      "sunset": 1594412149,
-                      "temp": {
-                        "day": 286.98,
-                        "min": 285.22,
-                        "max": 287.97,
-                        "night": 285.22,
-                        "eve": 287.97,
-                        "morn": 287.29
-                      },
-                      "feels_like": {
-                        "day": 282.61,
-                        "night": 283.19,
-                        "eve": 284.98,
-                        "morn": 282.68
-                      },
-                      "pressure": 1016,
-                      "humidity": 84,
-                      "weather": [
-                        {
-                          "id": 500,
-                          "main": "Rain",
-                          "description": "light rain",
-                          "icon": "10d"
-                        }
-                      ],
-                      "speed": 6.78,
-                      "deg": 320,
-                      "clouds": 81,
-                      "rain": 1.96,
-                      "snow": 2.21
-                    }
-                  ]
-                }
-                """;
+    public void testDeserialize_ShouldSucceed_WhenCalledWithFullyPopulatedJson() throws IOException {
+        //given
+        final String resource = "/responses/valid/climatic.json";
 
-        final Forecast forecast = new ClimaticForecastResponseMapper(UnitSystem.METRIC).mapToForecast(jsonResponse);
-        assertNotNull(forecast);
+        //when
+        final ThirtyDaysDailyForecast actual = loadDeserializedResourceAs(resource, ThirtyDaysDailyForecastModel.class);
 
-        final Location location = forecast.getLocation();
+        //then
+        assertNotNull(actual);
+
+        final BaseLocation location = actual.getLocation();
         assertNotNull(location);
-        assertEquals(Coordinates.of(51.5073, -0.1277), location.getCoordinates());
-        assertEquals(2643743, location.getId());
-        assertEquals("London", location.getName());
+        assertEquals(new Coordinates(51.5073, -0.1277), location.getCoordinates());
+        assertEquals(2643743, location.getCityId());
+        assertNull(location.getTimeZone());
+        assertEquals("London", location.getCityName());
         assertEquals("GB", location.getCountryCode());
-        assertNull(location.getPopulation());
-        assertNull(location.getZoneOffset());
 
-        assertEquals(1, forecast.getWeatherForecasts().size());
-        final WeatherForecast weatherForecast = forecast.getWeatherForecasts().get(0);
+        assertEquals(1, actual.getWeatherForecasts().size());
+        final WeatherForecastDay weatherForecast = actual.getWeatherForecasts().get(0);
         assertEquals(TestMappingUtils.parseDateTime(1594382400), weatherForecast.getForecastTime());
-        assertEquals(TestMappingUtils.parseDateTime(1594353335), weatherForecast.getSunriseTime());
-        assertEquals(TestMappingUtils.parseDateTime(1594412149), weatherForecast.getSunsetTime());
 
-        final Temperature temperature = weatherForecast.getTemperature();
-        assertEquals(286.98, temperature.getDay());
-        assertEquals(285.22, temperature.getMin());
-        assertEquals(287.97, temperature.getMax());
-        assertEquals(285.22, temperature.getNight());
-        assertEquals(287.97, temperature.getEve());
-        assertEquals(287.29, temperature.getMorning());
-        assertEquals(282.61, temperature.getDayFeelsLike());
-        assertEquals(283.19, temperature.getNightFeelsLike());
-        assertEquals(284.98, temperature.getEveFeelsLike());
-        assertEquals(282.68, temperature.getMorningFeelsLike());
+        final SunlightStages sunlightStages = weatherForecast.getSunlightStages();
+        assertEquals(TestMappingUtils.parseDateTime(1594353335), sunlightStages.getSunriseTime());
+        assertEquals(TestMappingUtils.parseDateTime(1594412149), sunlightStages.getSunsetTime());
 
-        final AtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
-        assertEquals(1016, pressure.getSeaLevelValue());
+        final DailyTemperature temperature = weatherForecast.getTemperature();
+        assertEquals(BigDecimal.valueOf(287), temperature.getDay().asKelvin());
+        assertEquals(BigDecimal.valueOf(285), temperature.getMin().asKelvin());
+        assertEquals(BigDecimal.valueOf(288), temperature.getMax().asKelvin());
+        assertEquals(BigDecimal.valueOf(285), temperature.getNight().asKelvin());
+        assertEquals(BigDecimal.valueOf(288), temperature.getEve().asKelvin());
+        assertEquals(BigDecimal.valueOf(287), temperature.getMorning().asKelvin());
+        assertEquals(BigDecimal.valueOf(283), temperature.getDayFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(283), temperature.getNightFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(285), temperature.getEveFeelsLike().asKelvin());
+        assertEquals(BigDecimal.valueOf(283), temperature.getMorningFeelsLike().asKelvin());
+
+        final BaseAtmosphericPressure pressure = weatherForecast.getAtmosphericPressure();
+        assertEquals(BigDecimal.valueOf(1016), pressure.getPressure());
 
         final Humidity humidity = weatherForecast.getHumidity();
-        assertEquals(84, humidity.getValue());
+        assertEquals(84, humidity.getHumidityPercentage());
 
-        final Wind wind = weatherForecast.getWind();
-        assertEquals(6.78, wind.getSpeed());
-        assertEquals(320, wind.getDegrees());
+        final BasicWind wind = weatherForecast.getWind();
+        assertEquals(BigDecimal.valueOf(6.78), wind.getSpeed().asMetersPerSecond());
+        assertEquals(320, wind.getDirectionDegrees());
 
-        final Clouds clouds = weatherForecast.getClouds();
-        assertEquals(81, clouds.getValue());
+        final CloudCoverage clouds = weatherForecast.getCloudCoverage();
+        assertEquals(81, clouds.getCoveragePercentage());
 
         assertEquals(1, weatherForecast.getWeatherStates().size());
-        final WeatherState weatherState = weatherForecast.getWeatherStates().get(0);
+        final WeatherCondition weatherState = weatherForecast.getWeatherStates().get(0);
         assertEquals(500, weatherState.getId());
         assertEquals("Rain", weatherState.getName());
         assertEquals("light rain", weatherState.getDescription());
-        assertEquals("10d", weatherState.getIconId());
+        assertEquals("10d", weatherState.getDayIconId());
 
-        final Rain rain = weatherForecast.getRain();
-        assertEquals(1.96, rain.getLevel());
+        final BigDecimal rain = weatherForecast.getPrecipitation().getRain();
+        assertEquals(BigDecimal.valueOf(1.96), rain);
 
-        final Snow snow = weatherForecast.getSnow();
-        assertEquals(2.21, snow.getLevel());
+        final BigDecimal snow = weatherForecast.getPrecipitation().getSnow();
+        assertEquals(BigDecimal.valueOf(2.21), snow);
     }
 }

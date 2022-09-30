@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Alexey Zinchenko
+ * Copyright (c) 2021-present Alexey Zinchenko
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,18 @@
 
 package com.github.prominence.openweathermap.api.request.onecall.historical;
 
-import com.github.prominence.openweathermap.api.core.net.RequestExecutor;
-import com.github.prominence.openweathermap.api.mapper.OneCallWeatherResponseMapper;
-import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeatherData;
+import com.github.prominence.openweathermap.api.model.onecall.historical.HistoricalWeather;
+import com.github.prominence.openweathermap.api.model.onecall.historical.OneCallHistoricalWeather;
 import com.github.prominence.openweathermap.api.request.RequestSettings;
-
-import java.util.concurrent.CompletableFuture;
+import com.github.prominence.openweathermap.api.request.generic.GenericAsyncRequestTerminator;
+import com.github.prominence.openweathermap.api.request.generic.JsonAsyncApiTerminator;
 
 /**
  * The type One call historical weather async request terminator.
  */
-class OneCallHistoricalWeatherAsyncRequestTerminator {
-    private final RequestSettings requestSettings;
+class OneCallHistoricalWeatherAsyncRequestTerminator
+        extends GenericAsyncRequestTerminator<OneCallHistoricalWeather, HistoricalWeather>
+        implements JsonAsyncApiTerminator<OneCallHistoricalWeather> {
 
     /**
      * Instantiates a new One call historical weather async request terminator.
@@ -41,18 +41,7 @@ class OneCallHistoricalWeatherAsyncRequestTerminator {
      * @param requestSettings request settings object.
      */
     public OneCallHistoricalWeatherAsyncRequestTerminator(RequestSettings requestSettings) {
-        this.requestSettings = requestSettings;
+        super(new OneCallHistoricalWeatherRequestTerminator(requestSettings));
     }
 
-    public CompletableFuture<HistoricalWeatherData> asJava() {
-        return CompletableFuture.supplyAsync(() -> new OneCallWeatherResponseMapper(requestSettings.getUnitSystem()).mapToHistorical(getRawResponse()));
-    }
-
-    public CompletableFuture<String> asJSON() {
-        return CompletableFuture.supplyAsync(this::getRawResponse);
-    }
-
-    private String getRawResponse() {
-        return new RequestExecutor(requestSettings).getResponse();
-    }
 }
