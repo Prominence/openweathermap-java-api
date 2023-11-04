@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
 public final class RequestUtils {
 
     private static final String OWM_URL_BASE = "http://api.openweathermap.org/data/2.5/";
+    private static final String OWM_URL_BASE_3_0 = "http://api.openweathermap.org/data/3.0/";
 
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
@@ -53,6 +54,9 @@ public final class RequestUtils {
 
     public static String getResponse(RequestSettings requestSettings) {
         StringBuilder requestUrlBuilder = new StringBuilder(OWM_URL_BASE);
+        if(requestSettings.getUseApi3()) {
+            requestUrlBuilder = new StringBuilder(OWM_URL_BASE_3_0);
+        }
         requestUrlBuilder.append(requestSettings.getUrlAppender());
         requestUrlBuilder.append('?');
         String parameters = requestSettings.getRequestParameters().entrySet().stream()

@@ -85,6 +85,18 @@ public class OpenWeatherMapClient {
     }
 
     /**
+     * One Call 3 API <a href="https://openweathermap.org/api/one-call-3">API</a>.
+     * Includes a weather summary statement in addition to the information provided by {@link #oneCall()}
+     * @return requester for retrieving one call weather information for the OneCall 3 API.
+     */
+    @SubscriptionAvailability(plans = ALL)
+    public OneCallWeatherRequester oneCall3() {
+        RequestSettings requestSettings = new RequestSettings(apiKey, timeoutSettings);
+        requestSettings.setUseApi3();
+        return new OneCallWeatherRequester(requestSettings);
+    }
+
+    /**
      * Air Pollution <a href="https://openweathermap.org/api/air-pollution">API</a>.
      * Air Pollution API provides current, forecast and historical air pollution data for any coordinates on the globe.
      * @return requester for air pollution information retrieval.
