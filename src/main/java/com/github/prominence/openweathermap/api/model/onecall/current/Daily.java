@@ -43,6 +43,7 @@ public class Daily {
     private LocalDateTime moonsetTime;
     private MoonPhase moonPhase;
 
+    private String summary;
     private WeatherState weatherState;
     private DailyTemperature temperature;
     private AtmosphericPressure atmosphericPressure;
@@ -160,6 +161,24 @@ public class Daily {
      */
     public void setMoonPhase(MoonPhase moonPhase) {
         this.moonPhase = moonPhase;
+    }
+
+    /**
+     * Gets summary.
+     *
+     * @return the summary
+     */
+    public String getSummary() {
+        return summary;
+    }
+
+    /**
+     * Sets summary.
+     *
+     * @param summary the summary
+     */
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     /**
@@ -435,4 +454,5 @@ public class Daily {
         }
         return stringBuilder.toString();
     }
+
 }

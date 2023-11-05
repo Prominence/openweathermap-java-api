@@ -45,6 +45,7 @@ public class RequestSettings {
 
     private Language language = Language.ENGLISH;
     private UnitSystem unitSystem = UnitSystem.STANDARD;
+    private boolean useApi3 = false;
 
     public RequestSettings(String apiKey, TimeoutSettings timeoutSettings) {
         this.putRequestParameter(API_KEY_PARAM_NAME, apiKey);
@@ -92,6 +93,14 @@ public class RequestSettings {
 
     public void appendToURL(String appendix) {
         urlAppenderBuilder.append(appendix);
+    }
+
+    public void setUseApi3() {
+        this.useApi3 = true;
+    }
+
+    public boolean getUseApi3() {
+        return this.useApi3;
     }
 
     public StringBuilder getUrlAppender() {
