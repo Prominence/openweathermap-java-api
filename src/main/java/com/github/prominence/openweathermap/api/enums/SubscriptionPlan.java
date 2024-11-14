@@ -56,4 +56,9 @@ public enum SubscriptionPlan {
      * All existing subscription plans.
      */
     ALL,
+
+    /**
+     * Special subscription cases.
+     */
+    SPECIAL,
 }

@@ -213,6 +213,7 @@ public class OneCallWeatherResponseMapper {
                 daily.setMoonPhase(new MoonPhase(moonPhaseNode.asDouble()));
             }
 
+            daily.setSummary(parseSummary(dailyNode));
             daily.setWeatherState(parseWeatherState(dailyNode.get("weather").get(0)));
             daily.setTemperature(parseDailyTemperature(dailyNode));
             daily.setAtmosphericPressure(parsePressure(dailyNode));
@@ -437,6 +438,14 @@ public class OneCallWeatherResponseMapper {
             return Clouds.withValue((byte) cloudsNode.asInt());
         }
 
+        return null;
+    }
+
+    private String parseSummary(JsonNode dailyNode) {
+        final JsonNode summaryNode = dailyNode.get("summary");
+        if(summaryNode != null) {
+            return summaryNode.asText();
+        }
         return null;
     }
 }

@@ -31,6 +31,7 @@ import com.github.prominence.openweathermap.api.request.onecall.OneCallWeatherRe
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 
 import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.ALL;
+import static com.github.prominence.openweathermap.api.enums.SubscriptionPlan.SPECIAL;
 
 /**
  * The main public API client to communicate with OpenWeatherMap services.
@@ -80,8 +81,27 @@ public class OpenWeatherMapClient {
      * @return requester for retrieving one call weather information.
      */
     @SubscriptionAvailability(plans = ALL)
+    @Deprecated
     public OneCallWeatherRequester oneCall() {
         return new OneCallWeatherRequester(new RequestSettings(apiKey, timeoutSettings));
+    }
+
+    /**
+     * One Call 3 API <a href="https://openweathermap.org/api/one-call-3">API</a>.
+     * Includes a weather summary statement in addition to the information provided by {@link #oneCall()}
+     *
+     * Please note, that One Call API 3.0 is included in the "One Call by Call" subscription only.
+     * This separate subscription includes 1,000 calls/day for free and allows you to pay only for the number of API calls made to this product.
+     * Please note, that you do not need to subscribe to any other OpenWeather subscription plans to get access to the One Call API 3.0.
+     * Please find more details on the pricing page and FAQ or ask Ulla, OpenWeather AI assistant.
+     *
+     * @return requester for retrieving one call weather information for the OneCall 3 API.
+     */
+    @SubscriptionAvailability(plans = SPECIAL)
+    public OneCallWeatherRequester oneCall3() {
+        RequestSettings requestSettings = new RequestSettings(apiKey, timeoutSettings);
+        requestSettings.setUseApi3();
+        return new OneCallWeatherRequester(requestSettings);
     }
 
     /**
