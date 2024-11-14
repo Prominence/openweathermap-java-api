@@ -29,13 +29,11 @@ import com.github.prominence.openweathermap.api.request.RequestSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
@@ -44,8 +42,8 @@ import java.util.stream.Collectors;
  */
 public final class RequestUtils {
 
-    private static final String OWM_URL_BASE = "http://api.openweathermap.org/data/2.5/";
-    private static final String OWM_URL_BASE_3_0 = "http://api.openweathermap.org/data/3.0/";
+    private static final String OWM_URL_BASE = "https://api.openweathermap.org/data/2.5/";
+    private static final String OWM_URL_BASE_3_0 = "https://api.openweathermap.org/data/3.0/";
 
     private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
@@ -60,7 +58,13 @@ public final class RequestUtils {
         requestUrlBuilder.append(requestSettings.getUrlAppender());
         requestUrlBuilder.append('?');
         String parameters = requestSettings.getRequestParameters().entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .map(entry -> {
+                    try {
+                        return entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.joining("&"));
         requestUrlBuilder.append(parameters);
 
