@@ -418,7 +418,7 @@ public class OneCallWeatherResponseMapper {
         if (snowNode != null) {
             final JsonNode OneHourNode = snowNode.get("1h");
             if (OneHourNode != null) {
-                Rain.withOneHourLevelValue(OneHourNode.asDouble());
+                return Snow.withOneHourLevelValue(OneHourNode.asDouble());
             }
         }
         return null;
