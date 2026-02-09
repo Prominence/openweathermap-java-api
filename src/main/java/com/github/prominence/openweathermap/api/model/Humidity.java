@@ -44,15 +44,13 @@ public class Humidity {
     }
 
     /**
-     * Creates {@link Humidity} object with correctness check.
+     * Creates {@link Humidity} object with safeguard to have min 0 and max 100 as value
      * @param value humidity
      * @return created {@link Humidity} object
      */
     public static Humidity withValue(byte value) {
-        if (value < 0 || value > 100)  {
-            throw new IllegalArgumentException("Humidity value must be in [0, 100] range.");
-        }
-        return new Humidity(value);
+        int v = Math.max(0, Math.min(100, value));
+        return new Humidity((byte) v);
     }
 
     /**
@@ -68,13 +66,10 @@ public class Humidity {
      * Sets humidity percentage value.
      *
      * @param value new humidity value.
-     * @throws IllegalArgumentException in case if provided value isn't in allowed range.
+     * Rounds to 0 or 100 if provided value isn't in allowed range.
      */
     public void setValue(int value) {
-        if (value < 0 || value > 100)  {
-            throw new IllegalArgumentException("Humidity value must be in [0, 100] range.");
-        }
-        this.value = value;
+        this.value = Math.max(0, Math.min(100, value));
     }
 
     /**
