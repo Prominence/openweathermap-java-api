@@ -37,13 +37,15 @@ public class HumidityUnitTest {
     }
 
     @Test
-    public void whenCreateHumidityByConstructorWithInvalidDataAboveHundred_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> Humidity.withValue((byte) 112));
+    public void whenCreateHumidityByConstructorWithInvalidDataAboveHundred_thenValueIsMaxHundred() {
+        Humidity h = Humidity.withValue((byte) 112);
+        assertEquals(100, h.getValue());
     }
 
     @Test
-    public void whenCreateHumidityByConstructorWithInvalidDataNegative_thenThrowAnException() {
-        assertThrows(IllegalArgumentException.class, () -> Humidity.withValue((byte) -33));
+    public void whenCreateHumidityByConstructorWithInvalidDataNegative_thenValueIsMinZero() {
+        Humidity h = Humidity.withValue((byte) -33);
+        assertEquals(0, h.getValue());
     }
 
     @Test
@@ -59,15 +61,17 @@ public class HumidityUnitTest {
     }
 
     @Test
-    public void whenCreateHumidityAndSetInvalidDataAboveHundred_thenThrowAnException() {
+    public void whenCreateHumidityAndSetInvalidDataAboveHundred_thenValueIsMaxHundred() {
         Humidity humidity = Humidity.withValue((byte) 12);
-        assertThrows(IllegalArgumentException.class, () -> humidity.setValue((byte) 112));
+        humidity.setValue(112);
+        assertEquals(100, humidity.getValue());
     }
 
     @Test
-    public void whenCreateHumidityAndSetInvalidDataNegative_thenThrowAnException() {
+    public void whenCreateHumidityAndSetInvalidDataNegative_thenValueIsMinZero() {
         Humidity humidity = Humidity.withValue((byte) 88);
-        assertThrows(IllegalArgumentException.class, () -> humidity.setValue((byte) -89));
+        humidity.setValue(-89);
+        assertEquals(0, humidity.getValue());
     }
 
     @Test
